@@ -18,10 +18,10 @@ class Dbconnection {
 	//This is a constructor to creat database connection
 	function __construct() {
 
-		 $this->Database_name = 'galaxon';
+		 $this->Database_name = 'galaxon_max';
 	     $this->Host_name = 'localhost';
-	     $this->Database_user = 'root';
-	     $this->Database_pass = '';
+	     $this->Database_user = 'labs_admin';
+	     $this->Database_pass = 'Zz?B^%cGPWuM';
 
 		$this->conn = new mysqli($this->Host_name, $this->Database_user, $this->Database_pass, $this->Database_name);
 		if ($this->conn->connect_error) {

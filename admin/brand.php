@@ -151,7 +151,9 @@ brands_data();
 </script>
 <script type="text/javascript">
   $("#add_brand").click(function(){
+
      $("#add_brand_modal").modal('show');
+     $("#brand_name").focus();
   })
 </script>
 <script type="text/javascript">
@@ -280,7 +282,7 @@ success: function(res){
 function edit_modal(e){
    $("#edit_brand_modal").modal('show');
    $("#edit_brand_id").val($(e).data('id'));
-   $("#edit_brand_name").val($(e).data('form'));
+   $("#edit_brand_name").val($(e).data('form')).focus();
 
 
 }

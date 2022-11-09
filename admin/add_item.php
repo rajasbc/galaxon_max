@@ -37,11 +37,11 @@ $category =  $category_obj->get_category_data();
               <div class="card-body row col-12">
                 <div class="col-12 form-group mb-3">
                    <label>Product Name</label>
-              <input type="text" id='item_name' class="form-control" placeholder="Product Name">
+              <input type="text" id='item_name' class="form-control enterKeyclass" placeholder="Product Name">
                 </div>
                  <div class="col-6 form-group mb-3">
                   <label>Brand</label>
-                  <select class="form-control select2" id='brand' style="width: 100%;">
+                  <select class="form-control select2 enterKeyclass" id='brand' style="width: 100%;">
                     <option value="">Select Brand</option>
                     <?php foreach ($brand as $key => $value) {?>
                       <option  value="<?=$value['id']?>"><?=$value['name']?></option>
@@ -51,11 +51,11 @@ $category =  $category_obj->get_category_data();
                 </div>
                  <div class="col-6 form-group mb-3">
                    <label>Mrp</label>
-              <input type="text" class="form-control" id="mrp" placeholder="Mrp">
+              <input type="text" class="form-control enterKeyclass" id="mrp" placeholder="Mrp">
                 </div>
                 <div class="col-6 form-group mb-3">
                   <label>Category</label>
-                  <select class="form-control select2" id="category" style="width: 100%;">
+                  <select class="form-control select2 enterKeyclass" id="category" style="width: 100%;">
                     <option value="">Select Category</option>
                     <?php foreach ($category as $key => $value) {?>
                       <option  value="<?=$value['id']?>"><?=$value['name']?></option>
@@ -66,30 +66,30 @@ $category =  $category_obj->get_category_data();
                 
                 <div class="col-6 form-group mb-3">
                    <label>Sale Price</label>
-              <input type="text" class="form-control" id="sale_price" placeholder="Sale Price">
+              <input type="text" class="form-control enterKeyclass" id="sale_price" placeholder="Sale Price">
                 </div>
                 <div class="col-6 form-group mb-3">
                   <label>Sub Category</label>
-                  <select class="form-control select2" id="sub_category" style="width: 100%;">
+                  <select class="form-control select2 enterKeyclass" id="sub_category" style="width: 100%;">
                     <option value="">Select Sub Category</option>
                     
                   </select>
                 </div>
                 <div class="col-6 form-group mb-3">
                    <label>Discount</label>
-              <input type="text" class="form-control" id="discount" placeholder="Discount">
+              <input type="text" class="form-control enterKeyclass" id="discount" placeholder="Discount">
                 </div>
                
                
                 <div class="col-6 form-group mb-3"></div>
                 <div class="col-6 form-group mb-3">
                    <label>GST</label>
-              <input type="text" class="form-control" id="gst" placeholder="Gst">
+              <input type="text" class="form-control enterKeyclass" id="gst" placeholder="Gst">
                 </div>
                 <div class="col-6 form-group mb-3"></div>
                 <div class="col-6 form-group mb-3">
                    <label>Quantity</label>
-              <input type="text" class="form-control" id="quantity" placeholder="Quantity">
+              <input type="text" class="form-control enterKeyclass" id="quantity" placeholder="Quantity">
                 </div>
               </div>
               <!-- /.card-body -->
@@ -231,4 +231,20 @@ else{
 
 });
   })
+$(".enterKeyclass").keypress(function (event) {
+          item_add='on';
+    if (event.keyCode == 13) {
+        textboxes = $("input.enterKeyclass");        
+        currentBoxNumber = textboxes.index(this);
+        if (textboxes[currentBoxNumber + 1] != null) {
+            nextBox = textboxes[currentBoxNumber + 1];
+            nextBox.focus();
+            nextBox.select();
+            event.preventDefault();
+            return false; 
+            }else{
+              $("#item_add_btn").click();
+            }
+    }
+});
 </script>

@@ -13,6 +13,7 @@ $output=array();
     $temp_array['name']=$row['item_name'];
     $temp_array['brand']=$row['brand'];
     $temp_array['category']=$row['category'];
+    $temp_array['sub_category']=$row['sub_category'];
     $temp_array['qty']=$row['qty'];
     $temp_array['sale_price']=$row['sales_price'];
     $temp_array['mrp']=$row['mrp'];

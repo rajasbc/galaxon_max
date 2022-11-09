@@ -96,55 +96,55 @@ include 'header.php';
                   <div class="input-group-prepend">
                     <span class="input-group-text" style="width: 8.3rem">Name</span>
                   </div>
-                  <input type="text" id='vendor_name' class="form-control" placeholder="Enter Vendor Name">
+                  <input type="text" id='vendor_name' class="form-control enterKeyclass" placeholder="Enter Vendor Name">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text">Company Name</span>
                   </div>
-                  <input type="text" id='vendor_company_name' class="form-control" placeholder="Enter Company Name">
+                  <input type="text" id='vendor_company_name' class="form-control enterKeyclass" placeholder="Enter Company Name">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text" style="width: 8.3rem">Mobile.No</span>
                   </div>
-                  <input type="number" id='mobile_no' class="form-control" placeholder="Enter Mobile Number">
+                  <input type="number" id='mobile_no' class="form-control enterKeyclass" placeholder="Enter Mobile Number">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text" style="width: 8.3rem">Email</span>
                   </div>
-                  <input type="text" id='email' class="form-control" placeholder="Enter Email">
+                  <input type="text" id='email' class="form-control enterKeyclass" placeholder="Enter Email">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text" style="width: 8.3rem">Address</span>
                   </div>
-                  <input type="text" id='address' class="form-control" placeholder="Enter Address">
+                  <input type="text" id='address' class="form-control enterKeyclass" placeholder="Enter Address">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text" style="width: 8.3rem">City</span>
                   </div>
-                  <input type="text" id='city' class="form-control" placeholder="Enter City">
+                  <input type="text" id='city' class="form-control enterKeyclass" placeholder="Enter City">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text" style="width: 8.3rem">State</span>
                   </div>
-                  <input type="text" id='state' class="form-control" placeholder="Enter State">
+                  <input type="text" id='state' class="form-control enterKeyclass" placeholder="Enter State">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text" style="width: 8.3rem">Country</span>
                   </div>
-                  <input type="text" id='country' class="form-control" placeholder="Enter Country">
+                  <input type="text" id='country' class="form-control enterKeyclass" placeholder="Enter Country">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text" style="width: 8.3rem">Pincode</span>
                   </div>
-                  <input type="text" id='pincode' class="form-control" placeholder="Enter Pincode">
+                  <input type="text" id='pincode' class="form-control enterKeyclass" placeholder="Enter Pincode">
                 </div>
             </div>
             <div class="modal-footer justify-content-between">
@@ -402,4 +402,26 @@ function delete_modal(e){
    $("#delete_vendor_id").val($(e).data('id'));
    
 }
+$(".enterKeyclass").keypress(function (event) {
+          item_add='on';
+    if (event.keyCode == 13) {
+        textboxes = $("input.enterKeyclass");        
+        currentBoxNumber = textboxes.index(this);
+        if (textboxes[currentBoxNumber + 1] != null) {
+            nextBox = textboxes[currentBoxNumber + 1];
+            nextBox.focus();
+            nextBox.select();
+            event.preventDefault();
+            return false; 
+            }else{
+              if($("#add_vendor_btn").css('display')!='none'){
+                $("#add_vendor_btn").click();
+              }
+              if($("#edit_vendor_btn").css('display')!='none'){
+                $("#edit_vendor_btn").click();
+              }
+              
+            }
+    }
+});
 </script>

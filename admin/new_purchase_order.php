@@ -125,11 +125,11 @@ $category =  $category_obj->get_category_data();
                    <label>Product Name</label>
                    <input type="hidden" name="item_id" id="item_id">
                    
-              <input type="text" id='item_name' class="form-control" placeholder="Product Name">
+              <input type="text" id='item_name' class="form-control enterKeyclass" placeholder="Product Name">
                 </div>
                 <div class="col-3 form-group mb-3">
                    <label>Brand</label>
-              <select class="form-control " id='brand' style="width: 100%;">
+              <select class="form-control enterKeyclass" id='brand' style="width: 100%;">
                     <option value="">Select Brand</option>
                     <?php foreach ($brand as $key => $value) {?>
                       <option  value="<?=$value['id']?>"><?=$value['name']?></option>
@@ -139,7 +139,7 @@ $category =  $category_obj->get_category_data();
                 </div>
                 <div class="col-3 form-group mb-3">
                    <label>Category</label>
-              <select class="form-control " id="category" style="width: 100%;">
+              <select class="form-control enterKeyclass" id="category" style="width: 100%;">
                     <option value="">Select Category</option>
                     <?php foreach ($category as $key => $value) {?>
                       <option  value="<?=$value['id']?>"><?=$value['name']?></option>
@@ -149,30 +149,30 @@ $category =  $category_obj->get_category_data();
                 </div>
                 <div class="col-3 form-group mb-3">
                    <label>Sub Category</label>
-              <select class="form-control " id="sub_category" style="width: 100%;">
+              <select class="form-control enterKeyclass" id="sub_category" style="width: 100%;">
                     <option value="">Select Sub Category</option>
                     
                   </select>
                 </div>
                 <div class="col-3 form-group mb-3">
                    <label>MRP</label>
-              <input type="text" id='mrp' class="form-control" placeholder="Mrp">
+              <input type="text" id='mrp' class="form-control enterKeyclass" placeholder="Mrp">
                 </div>
                 <div class="col-3 form-group mb-3">
                    <label>Sale Price</label>
-              <input type="text" id='sale_price' class="form-control" placeholder="Sale Price">
+              <input type="text" id='sale_price' class="form-control enterKeyclass" placeholder="Sale Price">
                 </div>
                 <div class="col-3 form-group mb-3">
                    <label>Discount</label>
-              <input type="text" id='discount' class="form-control" placeholder="Discount">
+              <input type="text" id='discount' class="form-control enterKeyclass" placeholder="Discount">
                 </div>
                 <div class="col-3 form-group mb-3">
                    <label>GST</label>
-              <input type="text" id='gst' class="form-control" placeholder="GST">
+              <input type="text" id='gst' class="form-control enterKeyclass" placeholder="GST">
                 </div>
                 <div class="col-3 form-group mb-3">
                    <label>Quantity</label>
-              <input type="text" id='quantity' class="form-control" placeholder="Quantity">
+              <input type="text" id='quantity' class="form-control enterKeyclass" placeholder="Quantity">
                 </div>
                 <div class="col-9 form-group mt-3 text-center">
                    <button class="btn btn-primary" id="add_item">Add</button>
@@ -350,7 +350,7 @@ include 'footer.php';
 <script type="text/javascript">
   $("#category").change(function(){
     if ($(this).val()!='') {
-       select_sub_category($(this).val());
+       select_sub_category($(this).val(),0);
     }
   });
   $("#vendor_id").change(function(){
@@ -370,7 +370,7 @@ success: function(res){
 });
   })
 
-  function select_sub_category(e){
+  function select_sub_category(e,val){
     $.ajax({
 type: "POST",
 dataType:"json",
@@ -378,6 +378,10 @@ url: '../ajaxCalls/get_category_data.php',
 data: {'category_id':e,'type':'option'},
 success: function(res){
 $('#sub_category').html(res);
+if (val!=0 && val!='') {
+  $("#sub_category").val(val);
+}
+
 }
 
 });
@@ -405,12 +409,13 @@ $('#sub_category').html(res);
         $('#item_name').val(ui.item.value);
         $("#brand").val(ui.item.brand);
         $("#category").val(ui.item.category);
-        select_sub_category(ui.item.category);
-        $("#sub_category").val(ui.item.sub_category);
+        select_sub_category(ui.item.category,ui.item.sub_category);
+        
         $("#mrp").val(ui.item.mrp);
         $("#sale_price").val(ui.item.sale_price);
         $("#discount").val(ui.item.discount);
         $("#gst").val(ui.item.gst);
+        $("#sub_category").val(ui.item.sub_category);
           
     }
      
@@ -754,4 +759,21 @@ $("#paid_amt").on('keyup',function(){
   var balance_amt=total_amt - paid_amt;
   $("#balance").val(balance_amt);
 })
+$(".enterKeyclass").keypress(function (event) {
+          item_add='on';
+    if (event.keyCode == 13) {
+        textboxes = $("input.enterKeyclass");        
+        currentBoxNumber = textboxes.index(this);
+        if (textboxes[currentBoxNumber + 1] != null) {
+            nextBox = textboxes[currentBoxNumber + 1];
+            nextBox.focus();
+            nextBox.select();
+            event.preventDefault();
+            return false; 
+            }else{
+               $("#add_item").click();
+              
+            }
+    }
+});
 </script>

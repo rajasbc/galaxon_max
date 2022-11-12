@@ -36,6 +36,7 @@ include 'header.php';
                   <thead>
                   <tr>
                     <th>S.No</th>
+                    <th>Vendor Code</th>
                     <th>Name</th>
                     <th>Company Name</th>
                     <th>Mobile No</th>

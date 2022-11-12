@@ -4,10 +4,12 @@ $obj = new PurchaseOrder();
 $result =  $obj->get_purchase_order($_GET['id']);
 $item_result =  $obj->get_purchase_order_item($_GET['id']);
 $payment_result =  $obj->get_purchase_order_log($_GET['id']);
+$purchase_history_result =  $obj->get_purchase_order_history($_GET['id']);
 $vendor_obj=new Vendors();
 $output=array();
 $main=array();
 $vendor_dt=$vendor_obj->get_vendor_dt($result[0]['vendor_id']);
+$total_amount_dt=0;
 ?>
 <div class="container-fluid">
 	<div class="form-row">
@@ -19,10 +21,6 @@ $vendor_dt=$vendor_obj->get_vendor_dt($result[0]['vendor_id']);
 			<span class="font-weight-bold"><?=$result[0]['purchase_no']?></span>
 		</div>
 		<!-- <div class="form-group col-lg-1">&nbsp;</div> -->
-		<div class="form-group col-lg-3">Bill No</div><div class="form-group col-lg-3">: 
-			<span class="font-weight-bold"><?=$result[0]['bill_no']?></span>
-		</div>
-		<div class="form-group col-lg-3">Received Date</div><div class="form-group col-lg-3">: <span class="font-weight-bold"><?=date('d-m-Y',strtotime($result[0]['received_date']))?></span></div>
 		<div class="form-group col-lg-3">Created Date</div><div class="form-group col-lg-3">: <span class="font-weight-bold"><?=date('d-m-Y',strtotime($result[0]['created_at']))?></span></div>
 	</div>
 	<hr>
@@ -58,10 +56,8 @@ $vendor_dt=$vendor_obj->get_vendor_dt($result[0]['vendor_id']);
                 <tr class="font-weight-bold" style="font-size:<?=$fontsize?>px">
                   <td>S.No</td>
                   <td class="text-left">Products</td>
-                  <td class="text-rigth">Quantity</td>
-                  <td class="text-rigth">Rate</td>
-                  <td class="text-rigth">Discount</td>
-                  <td class="text-rigth">Amount</td>
+                  <td class="text-rigth">Order Quantity</td>
+                  <td class="text-rigth">Received Quantity</td>
                 </tr>
               </thead>
               <tbody class="text-center" id="tdata">
@@ -72,37 +68,49 @@ $vendor_dt=$vendor_obj->get_vendor_dt($result[0]['vendor_id']);
                     
                     <td class="text-left" style="width:150px"><?php echo strtoupper($item['item_name']); ?></td>
                    
-                 <td style="width:100px" class="text-center"><?php echo $item['qty']; ?></td>
- 
-                    <td style="text-align: center;"><?php echo ($item['mrp']); ?></td>
-                    <td style="text-align: center;"><?php echo ($item['discount']); ?></td>
-                  
-                    <td style="text-align: center" ><?php echo ($item['total'] ); ?>
+                 <td class="text-center">
+                 	<?php echo $item['qty']; ?>
+                 		
+                 	</td>
+                 	<td style="text-align: center" >
+                    	<?php echo ($item['received_qty'] ); ?>
                     
                     </td>
                   </tr>
                   <?php $sno++;
               }
                   ?>
-              </tbody></table> 
-              <table class="table">
+              </tbody>
+          </table> 
+          <table class="table">
 				<thead>
 					<tr>
-						<th colspan="2">Taxable</th>
+						<th>Bill No</th>
+						<th>Received Date</th>
+						<th>Taxable</th>
 						<th>Tax</th>
 						<th>Discount</th>
-						<th colspan="2" class="text-center">Total Amount</th>
+						<th>Total Amount</th>
 					</tr>
 				</thead>
 				<tbody>
-				<tr>
-						<th colspan="2"><?=$result[0]['taxable_amt']?></th>
-						<th><?=$result[0]['tax_amt']?></th>
-						<th><?=$result[0]['discount_amt']?></th>
-						<th colspan="2" class="text-center"><?=$result[0]['grand_total']?></th>
-					</tr>
+				
+						<?php foreach ($purchase_history_result as $key => $val) {
+							$total_amount_dt=$total_amount_dt+$val['grand_total']
+							?>
+							<tr>
+							<td><?=$val['bill_no']?></td>
+						<td><?=date('d-m-Y',strtotime($val['received_date']))?></td>
+						<td><?=$val['taxable_amt']?></td>
+						<td><?=$val['tax_amt']?></td>
+						<td><?=$val['discount_amt']?></td>
+						<td><?=$val['grand_total']?></td>
+						</tr>
+						<?php }?>
+					
 				</tbody>
 			</table>
+            
 		</div>
 	</div>
 	<hr>
@@ -124,9 +132,9 @@ $vendor_dt=$vendor_obj->get_vendor_dt($result[0]['vendor_id']);
 					$balance=0;
 					$paid=0;
 					
-					echo"<tr><td>".$i."</td><td>".date('d-M-Y h:i:s',strtotime($result[0]['created_at']))."</td><td>Total Purchase Amount</td><td class='text-right'></td><td class='text-right'></td><td class='text-right'>".$result[0]['grand_total']."</td></tr>";
+					echo"<tr><td>".$i."</td><td>".date('d-M-Y h:i:s',strtotime($result[0]['created_at']))."</td><td>Total Purchase Amount</td><td class='text-right'></td><td class='text-right'></td><td class='text-right'>".$total_amount_dt."</td></tr>";
 					// print_r($payment_details);
-					$balance=$balance+$result[0]['grand_total'];
+					$balance=$balance+$total_amount_dt;
 					foreach($payment_result as $payment){
 						$i++;
 						$balance=$balance-($payment['credit']+$payment['debit']);

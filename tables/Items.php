@@ -22,6 +22,7 @@ class Items extends Dbconnection {
 		$item['shop_id']=$_SESSION['shop_id'];
 		$item['brand']=$this->db->getpost('brand');
 		$item['category']=$this->db->getpost('category');
+		$item['units']=$this->db->getpost('units');
 		if ($this->db->getpost('sub_category')!='' && $this->db->getpost('sub_category') !=0) {
 		 $item['sub_category']=$this->db->getpost('sub_category');
 		}else{

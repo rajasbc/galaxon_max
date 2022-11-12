@@ -65,13 +65,23 @@ $category =  $category_obj->get_category_data();
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Purchase Order</h1>
+            <?php if ($_GET['type']=='new') {
+              echo '<h1 class="m-0">Purchase Order</h1>';
+            }else{
+              echo '<h1 class="m-0">Received Purchase Order</h1>';
+            } ?>
+            
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
               <li class="breadcrumb-item "><a href="purchase_order.php">Orders List</a></li>
-              <li class="breadcrumb-item active">New Order</li>
+              <?php if ($_GET['type']=='new') {
+                echo '<li class="breadcrumb-item active">New Order</li>';
+              }else{
+                echo '<li class="breadcrumb-item active">Received Order</li>';
+              } ?>
+              
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -155,6 +165,14 @@ $category =  $category_obj->get_category_data();
                   </select>
                 </div>
                 <div class="col-3 form-group mb-3">
+                   <label>Units</label>
+              <select class="form-control enterKeyclass" id="units">
+                <option value="">Select Units</option>
+                    <option value="Kg">Kg</option>
+                    <option value="Liter">Liter</option>  
+              </select>
+                </div>
+                <div class="col-3 form-group mb-3">
                    <label>MRP</label>
               <input type="text" id='mrp' class="form-control enterKeyclass" placeholder="Mrp">
                 </div>
@@ -174,7 +192,7 @@ $category =  $category_obj->get_category_data();
                    <label>Quantity</label>
               <input type="text" id='quantity' class="form-control enterKeyclass" placeholder="Quantity">
                 </div>
-                <div class="col-9 form-group mt-3 text-center">
+                <div class="col-6 form-group mt-3 text-center">
                    <button class="btn btn-primary" id="add_item">Add</button>
                 </div>
               </form>
@@ -185,6 +203,7 @@ $category =  $category_obj->get_category_data();
                     <tr>
                       <th>S.No</th>
                       <th>Product</th>
+                      <th>Units</th>
                       <th>Mrp</th>
                       <th>Sale Price</th>
                       <th>Discount</th>
@@ -206,15 +225,38 @@ $category =  $category_obj->get_category_data();
      <td>&nbsp;</td>
      <td>&nbsp;</td>
      <td>&nbsp;</td>
+     <td>&nbsp;</td>
    </tr>
  <?php }?>
 </tbody>
 <tfoot>
 <tr>
   <td colspan="13" class="td-last-1">
+ <div class="row">
+<div class="col-lg-4 col-sm-4 col-md-4">
+  <div class="">
+   <span class="">Total Qty : </span>
+   <span class="" id="tot_qty">0</span>
+ </div>
+</div>
 
+  <div class="col-lg-4 col-sm-4 col-md-4">
+   <div class="">
+    <span class="">Total Ton : </span>
+    <span class="" id="tot_ton">0</span>
+  </div>
+</div>
+
+  <div class="col-lg-4 col-sm-4 col-md-4">
+   <div class="">
+    <span class="">Discount ₹</span>
+    <span class="" id="discid">0</span>
+  </div>
+</div>
+
+</div>
   <div class="row">
-<div class="col-lg-3 col-sm-3 col-md-3">
+<div class="col-lg-4 col-sm-4 col-md-4">
   <div class="">
    <span class="">Taxable Amount ₹</span>
    <span class="" id="subid">0</span>
@@ -222,20 +264,15 @@ $category =  $category_obj->get_category_data();
  </div>
 </div>
 
-  <div class="col-lg-3 col-sm-3 col-md-3">
-   <div class="">
-    <span class="">Discount ₹</span>
-    <span class="" id="discid">0</span>
-  </div>
-</div>
 
- <div class="col-lg-3 col-sm-3 col-md-3">
+
+ <div class="col-lg-4 col-sm-4 col-md-4">
   <div class="">
    <span class="">Tax ₹</span>
    <span class="" id="taxid">0</span>
  </div>
 </div>
-<div class="col-lg-3 col-sm-3 col-md-3">
+<div class="col-lg-4 col-sm-4 col-md-4">
   <div class="">
    <span class="">Purchase Amount (Include Tax ₹)</span>
    <span class="" id="grandid">0</span>
@@ -250,6 +287,7 @@ $category =  $category_obj->get_category_data();
 </tfoot>
                 </table>
               </div>
+              <?php if ($_GET['type']=='received') {?>
                <div class="row col-12">
                   <div class="col-4">&nbsp;</div>
                   <div class="col-8 text-right">
@@ -311,6 +349,22 @@ $category =  $category_obj->get_category_data();
                     </div>
                   </div>
                 </div>
+              <?php }else{?>
+                <div class="row col-12">
+                  <div class="col-4">&nbsp;</div>
+                  <div class="col-8 text-right">
+                    <div class="row col-12 mt-2 text-right">
+                      <div class="col-6">
+                        &nbsp;
+                      </div>
+                      <div class="col-6 text-center">
+                        <button class="col-12 btn btn-primary" id="place_order">Place Order</button>
+                      </div>
+                      
+                    </div>
+                  </div>
+                </div>
+              <?php }?>
               </div>
               <!-- /.card-body -->
             </div>
@@ -412,6 +466,7 @@ if (val!=0 && val!='') {
         select_sub_category(ui.item.category,ui.item.sub_category);
         
         $("#mrp").val(ui.item.mrp);
+        $("#units").val(ui.item.units);
         $("#sale_price").val(ui.item.sale_price);
         $("#discount").val(ui.item.discount);
         $("#gst").val(ui.item.gst);
@@ -438,6 +493,7 @@ if (val!=0 && val!='') {
      var discount=$("#discount").val();
      var gst=$("#gst").val();
      var quantity=$("#quantity").val();
+     var units=$("#units").val();
 
 
      if (item_name=='' && item_name==0) {
@@ -466,6 +522,15 @@ if (val!=0 && val!='') {
         }
        else{
         $("#category").css("border","1px solid lightgray");
+       }
+       if (units=='' && units==0) {
+      global_alert_modal('warning','Enter Product Units...');
+      $("#units").css("border","1px solid red");
+                    $("#quantity").focus();
+                    return false;
+        }
+       else{
+        $("#units").css("border","1px solid lightgray");
        }
         if (mrp=='' && mrp==0) {
       global_alert_modal('warning','Enter MRP Rate...');
@@ -505,6 +570,7 @@ if (val!=0 && val!='') {
        data["discount"]=discount;
        data["gst"]=gst;
        data["quantity"]=quantity;
+       data["units"]=units;
        total1=Number(data["mrp"])*Number(data["quantity"]);
        total2=Number(total1)-Number(total1)*Number(data["discount"])/100;
        total=Number(total2);
@@ -519,6 +585,7 @@ if (val!=0 && val!='') {
       "brand":brand,
       "category":category,
       "sub_category":sub_category,
+      "units":units,
       "mrp":mrp,
       "sale_price":sale_price,
       "discount":discount,
@@ -536,6 +603,7 @@ if (val!=0 && val!='') {
             '<tr id="trItem_{{sno}}">',
             '<td class=" ch-4"><span></span></td>',
             '<td class="text-left ch-10">{{itemname}}</td>',
+            '<td class="text-left ch-10">{{units}}</td>',
             '<td class="text-left ch-4">',
 
                 '<input onkeyup=fieldupdate({{sno}},this) class="form-control mrp" name="mrp[]" id="mrp{{sno}}" value="{{mrp}}" style="width:5rem; height:1.75rem">',
@@ -572,6 +640,7 @@ if (val!=0 && val!='') {
                 tr = trItemTemplate;
                 tr = tr.replace(getRegEx('sno'), sno);
                 tr = tr.replace(getRegEx('itemname'), data['item_name']);
+                tr = tr.replace(getRegEx('units'), data['units']);
               tr = tr.replace(getRegEx('mrp'), data['mrp']);
               tr = tr.replace(getRegEx('sale_price'), data['sale_price']);
               tr = tr.replace(getRegEx('discount'), data['discount']);
@@ -630,6 +699,7 @@ if (val!=0 && val!='') {
     var total=0;
     var tax=0;
     var grand_total=0;
+    var total_qty=0;
     var subtotal1=0;
     var subtotal2=0;
     var qty;
@@ -643,8 +713,8 @@ if (val!=0 && val!='') {
     var tempItem;
      for(vale in itemslist) {
         tempItem = itemslist[vale];
-        availableQty = tempItem['availableQty'];
         val=Number(tempItem["quantity"]);
+        total_qty=total_qty+Number(tempItem["quantity"]);
         total= Number(tempItem["mrp"])*Number(tempItem["quantity"]);
 
 
@@ -658,7 +728,9 @@ if (val!=0 && val!='') {
     subtotal2=Number(subtotal1)+Number(tax);
   grand_total=Number(subtotal2);
   $("#balance").val(grand_total);
-  grand_total= grand_total.toFixed(2)  
+  grand_total= grand_total.toFixed(2) ;
+       $("#tot_qty").html(total_qty);
+       $("#tot_ton").html(total_qty/1000); 
        $("#subid").html(subtotal1.toFixed(2));
        $("#taxid").html(tax.toFixed(2));
        $("#discid").html(discount.toFixed(2));
@@ -689,7 +761,9 @@ $("#place_order").click(function(){
         $("#item_name").focus();
         return false;
       }
-      if (bill_no=='' && bill_no==0) {
+
+      if ("<?=$_GET['type']?>"=='received') {
+        if (bill_no=='' && bill_no==0) {
       global_alert_modal('warning','Enter Bill Number...');
       $("#bill_no").css("border","1px solid red");
       $("#bill_no").focus();
@@ -716,6 +790,8 @@ $("#place_order").click(function(){
       else{
       $("#paid_amt").css("border","1px solid lightgray");
       }
+      }
+      
       detailsarray = [];
       detailsarray['vendor_id']=vendor_id;
       detailsarray['bill_no']=bill_no;
@@ -727,6 +803,7 @@ $("#place_order").click(function(){
       detailsarray['discount']=Number($("#discid").text());
       detailsarray['tax_amount']=Number($("#taxid").text());
       detailsarray['grand_total']=Number($("#grandid").text());
+      detailsarray['order_type']="<?=$_GET['type']?>";
 
 var dobj=$.extend({},detailsarray);
 var obj = $.extend({}, items);

@@ -28,26 +28,33 @@ class PurchaseOrder extends Dbconnection {
 
 		$purchase['shop_id']=$_SESSION['shop_id'];
 		$purchase['purchase_no']=$purchase_no;
-		$purchase['bill_no']=$this->db->getpost('bill_no');
 		$purchase['vendor_id']=$this->db->getpost('vendor_id');
 		$purchase['discount_amt']=$this->db->getpost('discount');
 		$purchase['taxable_amt']=$this->db->getpost('taxable_amount');
 		$purchase['tax_amt']=$this->db->getpost('tax_amount');
 		$purchase['grand_total']=$this->db->getpost('grand_total');
+		$purchase['created_by']=$_SESSION['uid'];
+		$purchase['created_at']=date('Y-m-d H:i:s');
+if ($this->db->getpost('order_type')=='received') {
+		$purchase['bill_no']=$this->db->getpost('bill_no');
 		$purchase['received_date']=$this->db->getpost('received_date');
 		$purchase['paid_amt']=$this->db->getpost('paid_amt');
 		$purchase['balance_amt']=$this->db->getpost('balance');
-		$purchase['created_by']=$_SESSION['uid'];
-		$purchase['created_at']=date('Y-m-d H:i:s');
+		$purchase['order_type']='RECEIVED';
 		if ($this->db->getpost('balance')==0) {
 		$purchase['status']='PAID';
 		}
+}else{
+	$purchase['order_type']='NEW';
+}
+
+		
 		$purchase_id = $this->db->mysql_insert($this->tablename, $purchase);
 		foreach ($item as $itemvar) {
 
 					if ((isset($itemvar["item_name"]) && $itemvar["item_name"] !== '') && $itemvar["mrp"] != 0) {
-						if ($itemvar['item_id']==0) {
-							$items=array();
+						if ($itemvar['item_id']==0 && $this->db->getpost('order_type')=='received') {
+					   $items=array();
                        $items['shop_id']=$_SESSION['shop_id'];
                        $items['brand']=$itemvar["brand"];
                        $items['category']=$itemvar["category"];
@@ -62,6 +69,7 @@ class PurchaseOrder extends Dbconnection {
                        $items['sales_price']=$itemvar["sale_price"];
                        $items['discount']=$itemvar["discount"];
                        $items['gst']=$itemvar["gst"];
+                       $items['units']=$itemvar["units"];
                        $items['qty']=0;
                        $items['created_by']=$_SESSION['uid'];
                        $items['created_at']=date('Y-m-d H:i:s');
@@ -95,7 +103,7 @@ class PurchaseOrder extends Dbconnection {
                        $purchase_items['created_at']=date('Y-m-d H:i:s');
                       $details_id=$this->db->mysql_insert($this->tablename2, $purchase_items);
 
-                       if ($details_id!=0) {
+                       if ($details_id!=0 && $this->db->getpost('order_type')=='received') {
                        	$item_sql='select * from items where id='.$item_id;
                        	$item_res=$this->db->GetResultsArray($item_sql);
                        	$update_item=array();
@@ -105,15 +113,17 @@ class PurchaseOrder extends Dbconnection {
 
 					}
 				}
-
-				$purchase_log['shop_id']=$_SESSION['shop_id'];
-				$purchase_log['purchase_id']=$purchase_id;
-				$purchase_log['credit']=$this->db->getpost('paid_amt');
-				$purchase_log['payment_mode']=$this->db->getpost('payment_mode');
-				$purchase_log['description']='Balance Collection';
-				$purchase_log['created_by']=$_SESSION['uid'];
-				$purchase_log['created_at']=date('Y-m-d H:i:s');
-				$this->db->mysql_insert($this->tablename3, $purchase_log);
+if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
+		$purchase_log['shop_id']=$_SESSION['shop_id'];
+		$purchase_log['purchase_id']=$purchase_id;
+		$purchase_log['credit']=$this->db->getpost('paid_amt');
+		$purchase_log['payment_mode']=$this->db->getpost('payment_mode');
+		$purchase_log['description']='Balance Collection';
+		$purchase_log['created_by']=$_SESSION['uid'];
+		$purchase_log['created_at']=date('Y-m-d H:i:s');
+		$this->db->mysql_insert($this->tablename3, $purchase_log);
+}
+				
 
      return ['status'=>'success'];
 		

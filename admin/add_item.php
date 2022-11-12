@@ -81,7 +81,14 @@ $category =  $category_obj->get_category_data();
                 </div>
                
                
-                <div class="col-6 form-group mb-3"></div>
+                <div class="col-6 form-group mb-3">
+                   <label>Units</label>
+                  <select class="form-control enterKeyclass" id="units" style="width: 100%;">
+                    <option value="">Select Units</option>
+                    <option value="Kg">Kg</option>
+                    <option value="Liter">Liter</option>                  
+                  </select>
+                </div>
                 <div class="col-6 form-group mb-3">
                    <label>GST</label>
               <input type="text" class="form-control enterKeyclass" id="gst" placeholder="Gst">
@@ -141,6 +148,7 @@ $('#sub_category').html(res);
      var item_name=$("#item_name").val();
      var brand=$("#brand").val();
      var category=$("#category").val();
+     var units=$("#units").val();
      var sub_category=$("#sub_category").val();
      var mrp=$("#mrp").val();
      var sale_price=$("#sale_price").val();
@@ -176,6 +184,15 @@ $('#sub_category').html(res);
        else{
         $("#category").css("border","1px solid lightgray");
        }
+        if (units=='' && units==0) {
+      global_alert_modal('warning','Select Units...');
+      $("#units").css("border","1px solid red");
+                    $("#units").focus();
+                    return false;
+        }
+       else{
+        $("#units").css("border","1px solid lightgray");
+       }
         if (mrp=='' && mrp==0) {
       global_alert_modal('warning','Enter MRP Rate...');
       $("#mrp").css("border","1px solid red");
@@ -207,7 +224,7 @@ $.ajax({
 type: "POST",
 dataType:"json",
 url: '../ajaxCalls/add_items.php',
-data: {'item_name':item_name,'brand':brand,'category':category,'sub_category':sub_category,"mrp":mrp,'sale_price':sale_price,'discount':discount,'gst':gst,'quantity':quantity},
+data: {'item_name':item_name,'brand':brand,'category':category,'sub_category':sub_category,"mrp":mrp,'sale_price':sale_price,'discount':discount,'gst':gst,'quantity':quantity,'units':units},
 success: function(res){
 if (res.status=='failed') {
   

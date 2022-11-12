@@ -17,6 +17,7 @@ $output=array();
     $temp_array['qty']=$row['qty'];
     $temp_array['sale_price']=$row['sales_price'];
     $temp_array['mrp']=$row['mrp'];
+    $temp_array['units']=$row['units'];
     $temp_array['discount']=$row['discount'];
     $temp_array['gst']=$row['gst'];
 

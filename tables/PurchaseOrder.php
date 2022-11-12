@@ -83,6 +83,7 @@ if ($this->db->getpost('order_type')=='received') {
                        $purchase_items['purchase_id']=$purchase_id;
                        $purchase_items['item_id']=$item_id;
                        $purchase_items['brand']=$itemvar["brand"];
+                       $purchase_items['units']=$itemvar["units"];
                        $purchase_items['category']=$itemvar["category"];
                        if ($itemvar['sub_category']!='') {
                        	$purchase_items['sub_category']=$itemvar["sub_category"];

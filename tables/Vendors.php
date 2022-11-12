@@ -17,10 +17,20 @@ class Vendors extends Dbconnection {
 		if (count($check_res)>0) {
 			return ['status'=>'alert'];
 		}
+		$sql='select max(vendor_code) as code from '.$this->tablename;
+		$result=$this->db->GetResultsArray($sql);
+		if ($result[0]['code']!='') {
+			$vendor_code=$result[0]['code'];
+			$vendor_code++;
+		}else{
+			$vendor_code='GLXV0001';
+		}
+
 		$vendor=array();
 		$vendor['name']=$this->db->getpost('vendor_name');
 		$vendor['company_name']=$this->db->getpost('vendor_company_name');
 		$vendor['mobile_no']=$this->db->getpost('mobile_no');
+		$vendor['vendor_code']=$vendor_code;
 		$vendor['email']=$this->db->getpost('email');
 		$vendor['address']=$this->db->getpost('address');
 		$vendor['city']=$this->db->getpost('city');

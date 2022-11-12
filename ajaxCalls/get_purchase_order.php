@@ -14,7 +14,17 @@ if (count($result)>0) {
 
 		$i++;
 		$vendor_dt=$vendor_obj->get_vendor_dt($value['vendor_id']);
-		$output [$j] =[$i,$value['purchase_no'],$value['bill_no'],$vendor_dt['name'],date('d-m-Y',strtotime($value['received_date'])),$value['discount_amt'],$value['tax_amt'],$value['grand_total'],$value['paid_amt'],$value['balance_amt'],$value['status'],'<button type="button" id="'.$value['id'].'" class="btn btn-default btn-sm" onclick="detail_modal('.$value['id'].')"><span class="glyphicon glyphicon-eye"><i class="fas fa-eye"></i></span></button>'];
+		if ($value['order_type']!='RECEIVED') {
+			$output [$j] =[$i,$value['purchase_no'],($vendor_dt['name'].' - '. $vendor_dt['vendor_code']),$value['discount_amt'],$value['tax_amt'],$value['grand_total'],$value['paid_amt'],$value['balance_amt'],$value['order_type'],$value['status'],'<button type="button" id="'.$value['id'].'" class="btn btn-default btn-sm" onclick="new_detail_page('.$value['id'].')"><span class="glyphicon glyphicon-eye"><i class="fas fa-upload"></i></span></button> <button type="button" id="'.$value['id'].'" class="btn btn-default btn-sm" onclick="new_detail_modal('.$value['id'].')"><span class="glyphicon glyphicon-eye"><i class="fas fa-eye"></i></span></button>'];
+		}else{
+			if ($value['order_orgin']=='NEW') {
+				$btn='<button type="button" id="'.$value['id'].'" class="btn btn-default btn-sm" onclick="new_detail_modal('.$value['id'].')"><span class="glyphicon glyphicon-eye"><i class="fas fa-eye"></i></span></button>';
+			}else{
+				$btn='<button type="button" id="'.$value['id'].'" class="btn btn-default btn-sm" onclick="detail_modal('.$value['id'].')"><span class="glyphicon glyphicon-eye"><i class="fas fa-eye"></i></span></button>';
+			}
+			$output [$j] =[$i,$value['purchase_no'],$value['bill_no'],($vendor_dt['name'].' - '. $vendor_dt['vendor_code']),date('d-m-Y',strtotime($value['received_date'])),$value['discount_amt'],$value['tax_amt'],$value['grand_total'],$value['paid_amt'],$value['balance_amt'],$value['status'],$btn];
+		}
+		
 		$j++;
 	}
 	

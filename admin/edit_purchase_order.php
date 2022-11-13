@@ -147,6 +147,7 @@ $items=json_encode($items);
                     <tr>
                       <th>S.No</th>
                       <th>Product</th>
+                      <th>Tons</th>
                       <th>Order Qty</th>
                       <th>Received Qty</th>
                       <th>Mrp</th>
@@ -163,6 +164,7 @@ $items=json_encode($items);
    echo '<tr id="trItem_'.$sno.'">';
            echo '<td class=" ch-4"><span></span></td>';
             echo '<td class="text-left ch-10">'.$row['item_name'].'</td>';
+            echo '<td class="text-left ch-10" id="tons'.$sno.'"></td>';
              echo '<td class="text-left ch-10" id="order_qty'.$sno.'">'.$row['qty'].'</td>';
              echo '<td class="text-left ch-10" id="rec_qty'.$sno.'">'.$row['received_qty'].'</td>';
             echo '<td class="text-left ch-4">';
@@ -407,9 +409,12 @@ if (val!=0 && val!='') {
       var discount = $("#discount"+idval).val();
       var gst = $("#gst"+idval).val();
       var quantity = $("#quantity"+idval).val();
+      
      prototal=Number(mrp*quantity)-(Number(mrp*quantity)*(discount/100));
      gstamount=prototal*(gst/100);
      $("#totalid"+idval).html((prototal).toFixed(2));
+     var tons=Number($("#quantity"+idval).val())/1000;
+     $("#tons"+idval).html(tons);
     items[ref].sale_price=sale_price;
     items[ref].mrp=mrp;
     items[ref].enter_qty=quantity;
@@ -435,6 +440,8 @@ if (val!=0 && val!='') {
      prototal=Number(mrp*quantity)-(Number(mrp*quantity)*(discount/100));
      gstamount=prototal*(gst/100);
      $("#totalid"+idval).html((prototal).toFixed(2));
+     var tons=Number($("#quantity"+idval).val())/1000;
+     $("#tons"+idval).html(tons);
     items[ref].sale_price=sale_price;
     items[ref].mrp=mrp;
     items[ref].enter_qty=$("#quantity"+idval).val();

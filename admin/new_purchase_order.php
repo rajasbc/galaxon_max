@@ -204,6 +204,7 @@ $category =  $category_obj->get_category_data();
                       <th>S.No</th>
                       <th>Product</th>
                       <th>Units</th>
+                      <th>Tons</th>
                       <th>Mrp</th>
                       <th>Sale Price</th>
                       <th>Discount</th>
@@ -216,6 +217,7 @@ $category =  $category_obj->get_category_data();
                   <tbody class="text-left css-serial" id="tdata">
    <?php for ($i = 1; $i < 8; $i++) {?>
     <tr class="emptyTr">
+     <td>&nbsp;</td>
      <td>&nbsp;</td>
      <td>&nbsp;</td>
      <td>&nbsp;</td>
@@ -571,6 +573,8 @@ if (val!=0 && val!='') {
        data["gst"]=gst;
        data["quantity"]=quantity;
        data["units"]=units;
+       var tons=quantity/1000;
+       data["tons"]=tons;
        total1=Number(data["mrp"])*Number(data["quantity"]);
        total2=Number(total1)-Number(total1)*Number(data["discount"])/100;
        total=Number(total2);
@@ -604,6 +608,7 @@ if (val!=0 && val!='') {
             '<td class=" ch-4"><span></span></td>',
             '<td class="text-left ch-10">{{itemname}}</td>',
             '<td class="text-left ch-10">{{units}}</td>',
+            '<td class="text-left ch-10" id="tons{{sno}}">{{tons}}</td>',
             '<td class="text-left ch-4">',
 
                 '<input onkeyup=fieldupdate({{sno}},this) class="form-control mrp" name="mrp[]" id="mrp{{sno}}" value="{{mrp}}" style="width:5rem; height:1.75rem">',
@@ -647,6 +652,7 @@ if (val!=0 && val!='') {
               tr = tr.replace(getRegEx('gst'), data['gst']);
               tr = tr.replace(getRegEx('quantity'), data['quantity']);
               tr = tr.replace(getRegEx('total'), data['total']);
+              tr = tr.replace(getRegEx('tons'), data['tons']);
 
               var emptyTr = $('#tdata .emptyTr').first();
               if (emptyTr.length === 0) {
@@ -672,9 +678,11 @@ if (val!=0 && val!='') {
       var discount = $("#discount"+idval).val();
       var gst = $("#gst"+idval).val();
       var quantity = $("#quantity"+idval).val();
+      var tons=Number($("#quantity"+idval).val())/1000;
      prototal=Number(mrp*quantity)-(Number(mrp*quantity)*(discount/100));
      gstamount=prototal*(gst/100);
      $("#totalid"+idval).html((prototal).toFixed(2));
+     $("#tons"+idval).html(tons);
     items[ref].sale_price=sale_price;
     items[ref].mrp=mrp;
     items[ref].quantity=quantity;

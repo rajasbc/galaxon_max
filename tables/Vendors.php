@@ -27,6 +27,25 @@ class Vendors extends Dbconnection {
 		}
 
 		$vendor=array();
+		if ($_FILES["image"]["name"]!='') {
+			$uploadedFile = '';
+		$filename = basename($_FILES["image"]["name"]);
+
+		$tmp_name = $vendor_code."_" . $filename;
+		$path = '../uploads/vendor/'; // upload directory
+
+		$targetpath = $path . $tmp_name;
+
+		if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetpath)) {
+
+			$uploadedFile = $tmp_name;
+
+
+		}
+		if ($uploadedFile != '') {
+			$vendor['vendor_logo'] = $uploadedFile;
+		}
+		}
 		$vendor['name']=$this->db->getpost('vendor_name');
 		$vendor['company_name']=$this->db->getpost('vendor_company_name');
 		$vendor['mobile_no']=$this->db->getpost('mobile_no');
@@ -47,12 +66,33 @@ class Vendors extends Dbconnection {
 	}
 	public function edit_vendor()
 	{
-		$check_sql='select * from '.$this->tablename.' where name="'.$this->db->getpost('vendor_name').'" and id!='.$this->db->getpost('vendor_id').' and status="ENABLED"';
+		$check_sql='select * from '.$this->tablename.' where name="'.$this->db->getpost('vendor_name').'" and id!='.$this->db->getpost('edit_vendor_id').' and status="ENABLED"';
 		$check_res=$this->db->GetResultsArray($check_sql);
+		$sql='select * from '.$this->tablename.' where id='.$this->db->getpost('edit_vendor_id');
+		$res=$this->db->GetResultsArray($sql);
 		if (count($check_res)>0) {
 			return ['status'=>'alert'];
 		}
 		$vendor=array();
+		if ($_FILES["image"]["name"]!='') {
+			$uploadedFile = '';
+		$filename = basename($_FILES["image"]["name"]);
+
+		$tmp_name = $res[0]['vendor_code']."_" . $filename;
+		$path = '../uploads/vendor/'; // upload directory
+
+		$targetpath = $path . $tmp_name;
+
+		if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetpath)) {
+
+			$uploadedFile = $tmp_name;
+
+
+		}
+		if ($uploadedFile != '') {
+			$vendor['vendor_logo'] = $uploadedFile;
+		}
+		}
 		$vendor['name']=$this->db->getpost('vendor_name');
 		$vendor['company_name']=$this->db->getpost('vendor_company_name');
 		$vendor['mobile_no']=$this->db->getpost('mobile_no');
@@ -62,7 +102,7 @@ class Vendors extends Dbconnection {
 		$vendor['state']=$this->db->getpost('state');
 		$vendor['country']=$this->db->getpost('country');
 		$vendor['pincode']=$this->db->getpost('pincode');
-		$id = $this->db->mysql_update($this->tablename, $vendor,'id='.$this->db->getpost('vendor_id'));
+		$id = $this->db->mysql_update($this->tablename, $vendor,'id='.$this->db->getpost('edit_vendor_id'));
 		if ($id!=0) {
 			return ['status'=>'success'];
 		}else{

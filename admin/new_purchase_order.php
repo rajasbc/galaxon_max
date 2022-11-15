@@ -108,7 +108,10 @@ $category =  $category_obj->get_category_data();
                    <input type="hidden" name="vendor_id" id="vendor_id" value="0">
                   <input type="text" name="vendor" id="vendor" class="form-control" placeholder="Enter Vendor">
                 </div>
-                <div class="col-9" id="vendor_dt" style="display: none;">
+                </div>
+                <div class="row col-12" id="vendor_dt" style="display: none;">
+                  
+                <div class="col-11">
                   <label>Vendor Details</label><br>
                   <div class="row col-12">
                     <div class="col-6">
@@ -124,6 +127,9 @@ $category =  $category_obj->get_category_data();
                       <label>Email :</label><span id="vendor_email"></span>
                     </div>
                   </div>
+                </div>
+                <div class="col-1">
+                  <img src="" id="vendor_image" style="width: 100px;height: 100px;border-radius: 50px;">
                 </div>
                 </div>
                 <form id="add_product" class="row col-12" onsubmit="return(false);">
@@ -416,7 +422,9 @@ success: function(res){
     $("#vendor_company_name").html(res.company_name);
     $("#vendor_mobile").html(res.mobile_no);
     $("#vendor_email").html(res.email);
+    $("#vendor_image").attr('src','../uploads/vendor/'+res.vendor_logo);
     $("#vendor_dt").css('display','');
+
   }
 
 });

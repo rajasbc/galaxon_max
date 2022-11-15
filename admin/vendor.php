@@ -91,68 +91,78 @@ include 'header.php';
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
+            <form method="POST" id="vendorForm" enctype="multipart/form-data" >
             <div class="modal-body">
+              
               <input type="hidden" name="edit_vendor_id" id="edit_vendor_id" value="0">
               <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text" style="width: 8.3rem">Name</span>
                   </div>
-                  <input type="text" id='vendor_name' class="form-control enterKeyclass" placeholder="Enter Vendor Name">
+                  <input type="text" id='vendor_name' name='vendor_name' class="form-control enterKeyclass" placeholder="Enter Vendor Name">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text">Company Name</span>
                   </div>
-                  <input type="text" id='vendor_company_name' class="form-control enterKeyclass" placeholder="Enter Company Name">
+                  <input type="text" id='vendor_company_name' name='vendor_company_name' class="form-control enterKeyclass" placeholder="Enter Company Name">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text" style="width: 8.3rem">Mobile.No</span>
                   </div>
-                  <input type="number" id='mobile_no' class="form-control enterKeyclass" placeholder="Enter Mobile Number">
+                  <input type="number" id='mobile_no' name='mobile_no' class="form-control enterKeyclass" placeholder="Enter Mobile Number">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text" style="width: 8.3rem">Email</span>
                   </div>
-                  <input type="text" id='email' class="form-control enterKeyclass" placeholder="Enter Email">
+                  <input type="text" id='email' name='email' class="form-control enterKeyclass" placeholder="Enter Email">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text" style="width: 8.3rem">Address</span>
                   </div>
-                  <input type="text" id='address' class="form-control enterKeyclass" placeholder="Enter Address">
+                  <input type="text" id='address' name='address' class="form-control enterKeyclass" placeholder="Enter Address">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text" style="width: 8.3rem">City</span>
                   </div>
-                  <input type="text" id='city' class="form-control enterKeyclass" placeholder="Enter City">
+                  <input type="text" id='city' name='city' class="form-control enterKeyclass" placeholder="Enter City">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text" style="width: 8.3rem">State</span>
                   </div>
-                  <input type="text" id='state' class="form-control enterKeyclass" placeholder="Enter State">
+                  <input type="text" id='state' name='state' class="form-control enterKeyclass" placeholder="Enter State">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text" style="width: 8.3rem">Country</span>
                   </div>
-                  <input type="text" id='country' class="form-control enterKeyclass" placeholder="Enter Country">
+                  <input type="text" id='country' name='country' class="form-control enterKeyclass" placeholder="Enter Country">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text" style="width: 8.3rem">Pincode</span>
                   </div>
-                  <input type="text" id='pincode' class="form-control enterKeyclass" placeholder="Enter Pincode">
+                  <input type="text" id='pincode' name='pincode' class="form-control enterKeyclass" placeholder="Enter Pincode">
                 </div>
+                 <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">Image</span>
+                  </div>
+                  <input type="file" id='image' name='image' class="form-control " placeholder="Enter Pincode">
+                </div>
+              
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" id="add_vendor_btn" class="btn btn-primary">Save</button>
+              <button type="submit" id="add_vendor_btn" class="btn btn-primary">Save</button>
               <button type="button" style="display: none" id="edit_vendor_btn" class="btn btn-primary">Update</button>
             </div>
+            </form>
           </div>
           <!-- /.modal-content -->
         </div>
@@ -178,8 +188,11 @@ include 'footer.php';
      $("#add_vendor_modal").modal('show');
         $("#add_vendor_btn").css('display','');
    $("#edit_vendor_btn").css('display','none');
+   $("#vendorForm")[0].reset();
+
   });
-    $('#add_vendor_btn').on('click',function(e){
+    $("#vendorForm").on('submit', function(e){
+        e.preventDefault();
       var vendor_name=$("#vendor_name").val();
       var vendor_company_name=$("#vendor_company_name").val();
       var mobile_no=$("#mobile_no").val();
@@ -216,12 +229,17 @@ include 'footer.php';
        else{
         $("#mobile_no").css("border","1px solid lightgray");
        }
-      
+      var formData = new FormData(this); 
+            formData.append('type','add');
   $.ajax({
 type: "POST",
 dataType:"json",
 url: '../ajaxCalls/add_vendor.php',
-data: {"vendor_name": vendor_name,"mobile_no": mobile_no,"vendor_company_name": vendor_company_name,"email": email,"address": address,"city": city,"state": state,"country": country,"pincode": pincode,"type":'add'},
+data: formData,
+            dataType: 'json',
+            contentType: false,
+            cache: false,
+            processData:false,
 success: function(res){
 if (res.status=='failed') {
   
@@ -248,6 +266,7 @@ else{
     $("#country").val('');
     $("#pincode").val('');
     $("#add_vendor_modal").modal('hide');
+    $("#vendorForm")[0].reset();
     get_data();
 }
 }
@@ -292,12 +311,17 @@ else{
        else{
         $("#mobile_no").css("border","1px solid lightgray");
        }
-      
+      var formData = new FormData($("#vendorForm")[0]);
+      formData.append('type','edit');
   $.ajax({
 type: "POST",
 dataType:"json",
 url: '../ajaxCalls/add_vendor.php',
-data: {"vendor_name": vendor_name,"mobile_no": mobile_no,"vendor_company_name": vendor_company_name,"email": email,"address": address,"city": city,"state": state,"country": country,"pincode": pincode,"vendor_id": vendor_id,"type":'edit'},
+data: formData,
+            dataType: 'json',
+            contentType: false,
+            cache: false,
+            processData:false,
 success: function(res){
 if (res.status=='failed') {
   
@@ -324,6 +348,7 @@ else{
     $("#country").val('');
     $("#pincode").val('');
     $("#add_vendor_modal").modal('hide');
+    $("#vendorForm")[0].reset();
     get_data();
 }
 }

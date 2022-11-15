@@ -80,12 +80,12 @@ $items=json_encode($items);
      position: -webkit-sticky;
      position: sticky;
      bottom: 0;
-     background: #e9ecef;
+     background-color: transparent !important;
      z-index:4;
    }
 
    .table-scroll tfoot td {
-     background: #fff;
+     background-color: transparent !important;
    }
 </style>
   <!-- Content Wrapper. Contains page content -->

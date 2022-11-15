@@ -22,6 +22,7 @@ $main = $output;
 echo json_encode($main);
 }else{
 	$result=$obj->get_vendor_dt($_POST['vendor_id']);
+	// print_r($result);die();
 	echo json_encode($result);
 }
 ?>

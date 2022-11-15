@@ -65,6 +65,21 @@
 <script src="../plugins/sweetalert2/sweetalert2.min.js"></script>
 <!-- Toastr -->
 <script src="../plugins/toastr/toastr.min.js"></script>
+
+<script src="../plugins/jquery/jquery.validate.js"></script>
+<script src="../plugins/jquery/jquery.validate.min.js"></script>
+
+<script src="../js/jquery.validate.min.js"></script>
+
+
+
+
+
+
+
+
+
+
 <script type="text/javascript">
 function global_alert_modal(type,msg){
     let Toast = Swal.mixin({

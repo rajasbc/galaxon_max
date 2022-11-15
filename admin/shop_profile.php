@@ -2,7 +2,7 @@
 include 'header.php';
 // error_reporting(E_ALL);
 // error_reporting(E_ALL);
-$obj = new Shops();
+$obj = new Users();
 $result = $obj->get_user();
 
 $result1 = $obj->get_shop_details();
@@ -128,11 +128,37 @@ $result1 = $obj->get_shop_details();
               <div class='form-group col-lg-4 mt-5'>
               <input type="file" name='shop_logo' id='shop_logo' value='' accept="image/*" onchange="readURL(this);">
               </div>
+              <?php if($result1[0]['shop_logo']!=''){ ?>
             <div class='form-group col-lg-4' id="shop_logo_preview1">
-              <img id="shop_logo_preview" src="../uploads/<?=$result1[0]['shop_logo']?>" alt="Shop_logo" style="max-width: 201px;max-height: 175px;
+              <img id="shop_logo_preview" src="../uploads/shop/<?=$result1[0]['shop_logo']?>" alt="Shop_logo" style="max-width: 201px;max-height: 175px;
 ">
-              </div>
+              </div><?php } else { ?>
+                <div class='form-group col-lg-4' id="shop_logo_preview1">
+              <img id="shop_logo_preview" src="../uploads/shop/no_image.png" alt="Shop_logo" style="max-width: 201px;max-height: 175px;
+">
+
+              <?php } ?>
             </div>
+             <div class='form-row'>
+               <div class="form-group col-lg-4 mt-5">Signature</div>
+              <div class='form-group col-lg-4 mt-5'>
+              <input type="file" name='sign_logo' id='sign_logo' value='' accept="image/*" onchange="readURL(this);">
+              </div>
+              <?php if($result1[0]['sign_logo']!=''){ ?>
+            <div class='form-group col-lg-4' id="sign_logo_preview1">
+              <img id="sign_logo_preview" src="../uploads/shop/<?=$result1[0]['sign_logo']?>" alt="Sign_logo" style="width: 250px;max-height: 100px;
+">
+              </div><?php } else { ?>
+                <div class='form-group col-lg-4' id="sign_logo_preview1">
+              <img id="sign_logo_preview" src="../uploads/shop/no_image.png" alt="Sign_logo" style="width: 250px;max-height: 100px;
+">
+
+              <?php } ?>
+            </div>
+          </div>
+
+
+
             <!-- <div class='form-row'>
               <div class="form-group col-lg-4">Shop Description</div><div class='form-group col-lg-8 mt-2'>
                 <textarea name='shop_des' id='shop_des'></textarea>

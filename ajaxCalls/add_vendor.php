@@ -1,6 +1,7 @@
 <?php
 include '../tables/config.php';
 // print_r($_POST);die();
+
  $obj = new Vendors();
 if ($_POST['type']=='add') {
 	 $result =  $obj->add_vendor();

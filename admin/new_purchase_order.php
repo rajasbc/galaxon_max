@@ -312,7 +312,7 @@ $category =  $category_obj->get_category_data();
                         <label>Received Date :</label>
                       </div>
                        <div class="col-6">
-                        <input type="date" id='received_date' class="form-control" >
+                        <input type="date" id='received_date' class="form-control" value="<?=date('Y-m-d')?>">
                       </div>
                     </div>
                      <div class="row col-12 mt-2">
@@ -821,7 +821,7 @@ $("#place_order").click(function(){
       detailsarray['tax_amount']=Number($("#taxid").text());
       detailsarray['grand_total']=Number($("#grandid").text());
       detailsarray['order_type']="<?=$_GET['type']?>";
-
+$("#place_order").attr('disabled','disabled');
 var dobj=$.extend({},detailsarray);
 var obj = $.extend({}, items);
 $.ajax({

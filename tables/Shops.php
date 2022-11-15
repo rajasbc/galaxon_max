@@ -94,7 +94,7 @@ $result1 = $this->db->GetResultsArray($sql);
 public function get_user(){
 
 
-   $sql = "select * from users where shop_id = '".$_SESSION['shop_id']."' and username = '".$_SESSION['username']."'";
+   $sql = "select * from users where shop_id = '".$_SESSION['shop_id']."'";
 
   $result = $this->db->GetResultsArray($sql);
   
@@ -105,7 +105,7 @@ public function get_user(){
 public function get_shop_details(){
 
 
-   $sql = "select * from ".$this->tablename." where shop_id = '".$_SESSION['shop_id']."' and email = '".$_SESSION['email']."'";
+   $sql = "select * from ".$this->tablename." where shop_id = '".$_SESSION['shop_id']."'";
 
   $result = $this->db->GetResultsArray($sql);
   

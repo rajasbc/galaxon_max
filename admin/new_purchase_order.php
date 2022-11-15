@@ -4,6 +4,8 @@ $vendor_obj= new Vendors();
 $vendor= $vendor_obj->get_vendor_data(); 
 $brand_obj = new Brand();
 $brand =  $brand_obj->get_brand_data();
+$description_obj = new Description();
+$description =  $description_obj->get_description_data();
 $category_obj = new Category();
 $category =  $category_obj->get_category_data();
 ?>
@@ -103,13 +105,8 @@ $category =  $category_obj->get_category_data();
                   <div class="col-3 form-group mb-3">
                    <label>Vendor Name</label>
                    <input type="hidden" name="sno" id="sno" value="0">
-              <select class="form-control " id='vendor_id' style="width: 100%;">
-                    <option value="">Select Vendor</option>
-                    <?php foreach ($vendor as $key => $value) {?>
-                      <option  value="<?=$value['id']?>"><?=$value['name']?></option>
-                    <?php }?>
-                    
-                  </select>
+                   <input type="hidden" name="vendor_id" id="vendor_id" value="0">
+                  <input type="text" name="vendor" id="vendor" class="form-control" placeholder="Enter Vendor">
                 </div>
                 <div class="col-9" id="vendor_dt" style="display: none;">
                   <label>Vendor Details</label><br>
@@ -158,9 +155,12 @@ $category =  $category_obj->get_category_data();
                   </select>
                 </div>
                 <div class="col-3 form-group mb-3">
-                   <label>Sub Category</label>
+                   <label>Description</label>
               <select class="form-control enterKeyclass" id="sub_category" style="width: 100%;">
-                    <option value="">Select Sub Category</option>
+                    <option value="">Select Description</option>
+                    <?php foreach ($description as $key => $value) {?>
+                      <option  value="<?=$value['id']?>"><?=$value['name']?></option>
+                    <?php }?>
                     
                   </select>
                 </div>
@@ -404,19 +404,15 @@ include 'footer.php';
 ?>
 
 <script type="text/javascript">
-  $("#category").change(function(){
-    if ($(this).val()!='') {
-       select_sub_category($(this).val(),0);
-    }
-  });
-  $("#vendor_id").change(function(){
-        $.ajax({
+
+  function get_vendor_dt(e){
+          $.ajax({
 type: "POST",
 dataType:"json",
 url: '../ajaxCalls/get_vendor_data.php',
-data: {'vendor_id':$('#vendor_id option:selected').val()},
+data: {'vendor_id':e},
 success: function(res){
-    $("#vendor_name").html(res.name);
+    $("#vendor_name").html(res.name+' - '+res.vendor_code);
     $("#vendor_company_name").html(res.company_name);
     $("#vendor_mobile").html(res.mobile_no);
     $("#vendor_email").html(res.email);
@@ -424,24 +420,8 @@ success: function(res){
   }
 
 });
-  })
-
-  function select_sub_category(e,val){
-    $.ajax({
-type: "POST",
-dataType:"json",
-url: '../ajaxCalls/get_category_data.php',
-data: {'category_id':e,'type':'option'},
-success: function(res){
-$('#sub_category').html(res);
-if (val!=0 && val!='') {
-  $("#sub_category").val(val);
-}
-
-}
-
-});
   }
+
 </script>
 <script type="text/javascript">
   $(document).ready(function(){
@@ -464,15 +444,37 @@ if (val!=0 && val!='') {
         $('#item_id').val(ui.item.label);
         $('#item_name').val(ui.item.value);
         $("#brand").val(ui.item.brand);
-        $("#category").val(ui.item.category);
-        select_sub_category(ui.item.category,ui.item.sub_category);
-        
+        $("#category").val(ui.item.category);        
         $("#mrp").val(ui.item.mrp);
         $("#units").val(ui.item.units);
         $("#sale_price").val(ui.item.sale_price);
         $("#discount").val(ui.item.discount);
         $("#gst").val(ui.item.gst);
         $("#sub_category").val(ui.item.sub_category);
+          
+    }
+     
+    }).data('ui-autocomplete')._renderItem = function(ul, item){
+      return $("<li class='ui-autocomplete-row'></li>")
+        .data("item.autocomplete", item)
+        .append(item.value)
+        .appendTo(ul);
+    };
+     $('#vendor').autocomplete({
+      source: "../ajaxCalls/autocomplete_vendor_list.php",
+      minLength: 1,
+      select: function(event, ui)
+      {
+        if(ui.item.value == ' '){
+      $("#vendor_id").val(0);
+    }
+    else
+    {
+       get_vendor_dt(ui.item.label);
+       $("#vendor_id").val(ui.item.label);
+    }
+
+        
           
     }
      
@@ -748,21 +750,20 @@ if (val!=0 && val!='') {
   return new RegExp('{{' + str + '}}', 'g');
 }
 $("#place_order").click(function(){
-      var vendor_id = $("#vendor_id option:selected").val();
+      var vendor_id = $("#vendor_id").val();
       var bill_no = $("#bill_no").val();
       var received_date = $("#received_date").val();
       var paid_amt = $("#paid_amt").val();
       var balance = $("#balance").val();
       var payment_mode = $("#payment_mode option:selected").val();
-
-      if (vendor_id=='' && vendor_id==0) {
+      if (vendor_id==0) {
       global_alert_modal('warning','Select Vendor Name...');
-      $("#vendor_id").css("border","1px solid red");
-      $("#vendor_id").focus();
+      $("#vendor").css("border","1px solid red");
+      $("#vendor").focus();
       return false;
       }
       else{
-      $("#vendor_id").css("border","1px solid lightgray");
+      $("#vendor").css("border","1px solid lightgray");
       }
       if (jQuery.isEmptyObject(items)==true) {
         global_alert_modal('fail','Add One Product To Purchase...');

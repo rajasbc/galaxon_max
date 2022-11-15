@@ -91,5 +91,13 @@ class Vendors extends Dbconnection {
 		$result=$this->db->getAsIsArray($sql);
 		return $result;
 	}
+	public function get_Autocomplete_Vendor()
+	{
+		$sql = "select  * from ".$this->tablename." where (name like '%" . $this->db->getpost('term') . "%' or vendor_code like '%" . $this->db->getpost('term') . "%') and shop_id = " .$_SESSION['shop_id']. " and status = 'ENABLED' ";
+
+
+	$result = $this->db->GetResultsArray($sql);
+	return $result;
+	}
 }
 ?>

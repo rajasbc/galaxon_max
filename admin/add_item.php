@@ -4,6 +4,8 @@ $brand_obj = new Brand();
 $brand =  $brand_obj->get_brand_data();
 $category_obj = new Category();
 $category =  $category_obj->get_category_data();
+$description_obj = new Description();
+$description =  $description_obj->get_description_data();
 ?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -69,10 +71,12 @@ $category =  $category_obj->get_category_data();
               <input type="text" class="form-control enterKeyclass" id="sale_price" placeholder="Sale Price">
                 </div>
                 <div class="col-6 form-group mb-3">
-                  <label>Sub Category</label>
+                  <label>Sub Description</label>
                   <select class="form-control select2 enterKeyclass" id="sub_category" style="width: 100%;">
-                    <option value="">Select Sub Category</option>
-                    
+                    <option value="">Select Description</option>
+                    <?php foreach ($description as $key => $value) {?>
+                      <option  value="<?=$value['id']?>"><?=$value['name']?></option>
+                    <?php }?>
                   </select>
                 </div>
                 <div class="col-6 form-group mb-3">
@@ -127,22 +131,7 @@ include 'footer.php';
 
   });
 </script>
-<script type="text/javascript">
-  $("#category").change(function(){
-    if ($(this).val()!='') {
-       $.ajax({
-type: "POST",
-dataType:"json",
-url: '../ajaxCalls/get_category_data.php',
-data: {'category_id':$(this).val(),'type':'option'},
-success: function(res){
-$('#sub_category').html(res);
-}
 
-});
-    }
-  })
-</script>
 <script type="text/javascript">
   $("#item_add_btn").click(function(){
      var item_name=$("#item_name").val();

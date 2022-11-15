@@ -8,6 +8,7 @@ class PurchaseOrder extends Dbconnection {
 	var $tablename2 = "`purchase_order_details`";
 	var $tablename3 = "`purchase_order_log`";
 	var $tablename4 = "`purchase_order_history`";
+	var $tablename5 = "`purchase_order_history_details`";
 	// Create Db Connection for this class operations
 	function __construct() {
 		parent::__construct();
@@ -159,7 +160,7 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
 		$purchase['balance_amt']=$this->db->getpost('balance');
 		
 		
-	  $this->db->mysql_insert($this->tablename4, $purchase);
+	 $main_purchase_id= $this->db->mysql_insert($this->tablename4, $purchase);
 		foreach ($item as $itemvar) {
 
 					if ((isset($itemvar["item_name"]) && $itemvar["item_name"] !== '') && $itemvar["mrp"] != 0 && ($itemvar["enter_qty"] != 0 && $itemvar["enter_qty"] !='')) {
@@ -192,6 +193,35 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
                        $purchase_items['item_id']=$item_id;
                        $purchase_items['received_qty']=$itemvar["rec_qty"]+$itemvar['enter_qty'];
                       $details_id=$this->db->mysql_update($this->tablename2, $purchase_items,'id='.$itemvar['po_id']);
+
+                      $purchase__history_items=array();
+                       $purchase__history_items['shop_id']=$_SESSION['shop_id'];
+                       $purchase__history_items['purchase_id']=$main_purchase_id;
+                       $purchase__history_items['item_id']=$item_id;
+                       $purchase__history_items['brand']=$itemvar["brand"];
+                       $purchase__history_items['units']=$itemvar["units"];
+                       $purchase__history_items['category']=$itemvar["category"];
+                       if ($itemvar['sub_category']!='') {
+                       	$purchase__history_items['sub_category']=$itemvar["sub_category"];
+                       }else{
+                       	$purchase__history_items['sub_category']=0;
+                       }
+                       
+                       $purchase__history_items['item_name']=$itemvar["item_name"];
+                       $purchase__history_items['mrp']=$itemvar["mrp"];
+                       $purchase__history_items['sales_price']=$itemvar["sale_price"];
+                       $purchase__history_items['discount']=$itemvar["discount"];
+                       $purchase__history_items['gst']=$itemvar["gst"];
+                       $purchase__history_items['qty']=$itemvar["quantity"];
+                       if ($this->db->getpost('order_type')=='received') {
+                       	$purchase__history_items['received_qty']=$itemvar["quantity"];
+                       }
+                       $purchase__history_items['taxable_amt']=$itemvar['total']-$itemvar["gstamount"];
+                       $purchase__history_items['tax_amt']=$itemvar["gstamount"];
+                       $purchase__history_items['total']=$itemvar["total"];
+                       $purchase__history_items['created_by']=$_SESSION['uid'];
+                       $purchase__history_items['created_at']=date('Y-m-d H:i:s');
+                      $this->db->mysql_insert($this->tablename5, $purchase__history_items);
 
                        if ($details_id!=0) {
                        	$item_sql='select * from items where id='.$item_id;

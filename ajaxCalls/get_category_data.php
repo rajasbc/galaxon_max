@@ -12,7 +12,7 @@ if (count($result)>0) {
 	$j=0;
 	foreach ($result as $key => $value) {
 		$i++;
-		$output [$j] =[$i,$value['name'],'<button type="button" class="btn btn-primary" data-id="'.$value['id'].'" data-form="'.$value['name'].'" onclick="edit_modal(this);">Edit</button> <button type="button"  class="btn btn-success" data-id="'.$value['id'].'" onclick="add_sub_modal(this);">Add Sub Category</button> <button type="button"  class="btn btn-info" data-id="'.$value['id'].'" onclick="view_sub_modal(this);">Sub Category</button> <button type="button" class="btn btn-danger" data-id="'.$value['id'].'" onclick="delete_modal(this);">Delete</button>'];
+		$output [$j] =[$i,$value['name'],'<button type="button" class="btn btn-primary" data-id="'.$value['id'].'" data-form="'.$value['name'].'" onclick="edit_modal(this);">Edit</button> <button type="button" class="btn btn-danger" data-id="'.$value['id'].'" onclick="delete_modal(this);">Delete</button>'];
 		$j++;
 	}
 	

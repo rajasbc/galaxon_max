@@ -192,10 +192,16 @@ if (empty($_SESSION)==true) {
                   <p>Brands</p>
                 </a>
               </li>
-              <li class="nav-item">
+               <li class="nav-item">
                 <a href="category.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Category</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="description.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Description</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -239,9 +245,32 @@ if (empty($_SESSION)==true) {
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="purchase_order.php" class="nav-link">
+                <a href="purchase_order.php?type=NEW" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Orders</p>
+                </a>
+              </li>
+              <!-- <li class="nav-item">
+                <a href="" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Payment Details</p>
+                </a>
+              </li> -->
+            </ul>
+          </li>
+           <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-globe"></i>
+              <p>
+                Setting
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="shop_profile.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Profile</p>
                 </a>
               </li>
               <!-- <li class="nav-item">

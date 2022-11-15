@@ -71,14 +71,25 @@ if (empty($_SESSION)==true) {
     background-color: #fff;
     border-bottom: 1px solid #ccc;
 }
+.watermark_img {
+   background-image: url('../dist/img/watermark1.png');
+     /*background-image: url('w3css.gif');*/
+
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center; 
+  /*flex: 1;*/
+  /*z-index: 1;*/
+}
   </style>
+}
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
   <!-- Preloader -->
   <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="../dist/img/g.png" alt="AdminLTELogo" height="60" width="60">
+    <img class="animation__shake" src="../dist/img/watermark1.png" alt="AdminLTELogo" height="60" width="60">
   </div>
 
   <!-- Navbar -->
@@ -136,7 +147,7 @@ if (empty($_SESSION)==true) {
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="dashboard.php" class="brand-link">
-      <img src="../dist/img/g.png" alt="Admin" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <img src="../dist/img/watermark1.png" alt="Admin" class="brand-image img-circle elevation-3" style="background-color: white">
       <span class="brand-text font-weight-light">Galaxon Max</span>
     </a>
 
@@ -145,7 +156,7 @@ if (empty($_SESSION)==true) {
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          <img src="../dist/img/userlogo.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a  class="d-block">Admin</a>

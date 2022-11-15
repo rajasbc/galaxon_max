@@ -51,7 +51,9 @@ $items=json_encode($items);
      z-index: 1;
      margin: auto;
      overflow: auto;
+     <?php if (count($purchase_order_item_dt)>=7) { ?>
      height: 350px;
+   <?php }?>
    }
    .table-scroll table {
      width: 98%;
@@ -164,7 +166,7 @@ $items=json_encode($items);
    echo '<tr id="trItem_'.$sno.'">';
            echo '<td class=" ch-4"><span></span></td>';
             echo '<td class="text-left ch-10">'.$row['item_name'].'</td>';
-            echo '<td class="text-left ch-10" id="tons'.$sno.'"></td>';
+            echo '<td class="text-left ch-10" id="tons'.$sno.'">0</td>';
              echo '<td class="text-left ch-10" id="order_qty'.$sno.'">'.$row['qty'].'</td>';
              echo '<td class="text-left ch-10" id="rec_qty'.$sno.'">'.$row['received_qty'].'</td>';
             echo '<td class="text-left ch-4">';
@@ -271,7 +273,7 @@ $items=json_encode($items);
                         <label>Received Date :</label>
                       </div>
                        <div class="col-6">
-                        <input type="date" id='received_date' class="form-control" >
+                        <input type="date" id='received_date' class="form-control" value="<?=date('Y-m-d')?>">
                       </div>
                     </div>
                      <div class="row col-12 mt-2">
@@ -559,7 +561,7 @@ $("#place_order").click(function(){
       detailsarray['tax_amount']=Number($("#taxid").text());
       detailsarray['grand_total']=Number($("#grandid").text());
       detailsarray['po_id']="<?=base64_decode($_GET['id'])?>";
-
+$("#place_order").attr('disabled','disabled');
 var dobj=$.extend({},detailsarray);
 var obj = $.extend({}, items);
 $.ajax({

@@ -239,7 +239,6 @@ $category =  $category_obj->get_category_data();
 </tbody>
                 </table>
 </div>
-
 <table style="width: 96.4%; margin:-1px 30px 20px auto;">
   
 <tr>

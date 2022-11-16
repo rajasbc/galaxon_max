@@ -97,19 +97,19 @@ include 'header.php';
               <input type="hidden" name="edit_vendor_id" id="edit_vendor_id" value="0">
               <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text" style="width: 8.3rem">Name</span>
+                    <span class="input-group-text" style="width: 8.3rem">Name&nbsp;<span class="text-danger">*</span></span>
                   </div>
                   <input type="text" id='vendor_name' name='vendor_name' class="form-control enterKeyclass" placeholder="Enter Vendor Name">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Company Name</span>
+                    <span class="input-group-text">Company Name&nbsp;<span class="text-danger">*</span></span>
                   </div>
                   <input type="text" id='vendor_company_name' name='vendor_company_name' class="form-control enterKeyclass" placeholder="Enter Company Name">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text" style="width: 8.3rem">Mobile.No</span>
+                    <span class="input-group-text" style="width: 8.3rem">Mobile.No&nbsp;<span class="text-danger">*</span></span>
                   </div>
                   <input type="number" id='mobile_no' name='mobile_no' class="form-control enterKeyclass" placeholder="Enter Mobile Number">
                 </div>

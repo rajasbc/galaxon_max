@@ -103,10 +103,10 @@ $category =  $category_obj->get_category_data();
               <div class="card-body row col-12">
                 <div class="row col-12">
                   <div class="col-3 form-group mb-3">
-                   <label>Vendor Name</label>
+                   <label>Vendor Name&nbsp;<label class="text-danger">*</label></label>
                    <input type="hidden" name="sno" id="sno" value="0">
                    <input type="hidden" name="vendor_id" id="vendor_id" value="0">
-                  <input type="text" name="vendor" id="vendor" class="form-control" placeholder="Enter Vendor">
+                  <input type="text" name="vendor" id="vendor" class="form-control" placeholder="Enter Vendor" autofocus>
                 </div>
                 </div>
                 <div class="row col-12" id="vendor_dt" style="display: none;">
@@ -135,13 +135,13 @@ $category =  $category_obj->get_category_data();
                 <form id="add_product" class="row col-12" onsubmit="return(false);">
                  <div class="col-12 mb-3" style="border-bottom: 1px solid gray"></div>
                <div class="col-3 form-group mb-3">
-                   <label>Product Name</label>
+                   <label>Product Name&nbsp;<label class="text-danger">*</label></label>
                    <input type="hidden" name="item_id" id="item_id">
                    
               <input type="text" id='item_name' class="form-control enterKeyclass" placeholder="Product Name">
                 </div>
                 <div class="col-3 form-group mb-3">
-                   <label>Brand</label>
+                   <label>Brand&nbsp;<label class="text-danger">*</label></label>
               <select class="form-control enterKeyclass" id='brand' style="width: 100%;">
                     <option value="">Select Brand</option>
                     <?php foreach ($brand as $key => $value) {?>
@@ -151,7 +151,7 @@ $category =  $category_obj->get_category_data();
                   </select>
                 </div>
                 <div class="col-3 form-group mb-3">
-                   <label>Category</label>
+                   <label>Category&nbsp;<label class="text-danger">*</label></label>
               <select class="form-control enterKeyclass" id="category" style="width: 100%;">
                     <option value="">Select Category</option>
                     <?php foreach ($category as $key => $value) {?>
@@ -171,7 +171,7 @@ $category =  $category_obj->get_category_data();
                   </select>
                 </div>
                 <div class="col-3 form-group mb-3">
-                   <label>Units</label>
+                   <label>Units&nbsp;<label class="text-danger">*</label></label>
               <select class="form-control enterKeyclass" id="units">
                 <option value="">Select Units</option>
                     <option value="Kg">Kg</option>
@@ -179,11 +179,11 @@ $category =  $category_obj->get_category_data();
               </select>
                 </div>
                 <div class="col-3 form-group mb-3">
-                   <label>MRP</label>
+                   <label>MRP&nbsp;<label class="text-danger">*</label></label>
               <input type="text" id='mrp' class="form-control enterKeyclass" placeholder="Mrp">
                 </div>
                 <div class="col-3 form-group mb-3">
-                   <label>Sale Price</label>
+                   <label>Sale Price&nbsp;<label class="text-danger">*</label></label>
               <input type="text" id='sale_price' class="form-control enterKeyclass" placeholder="Sale Price">
                 </div>
                 <div class="col-3 form-group mb-3">
@@ -195,7 +195,7 @@ $category =  $category_obj->get_category_data();
               <input type="text" id='gst' class="form-control enterKeyclass" placeholder="GST">
                 </div>
                 <div class="col-3 form-group mb-3">
-                   <label>Quantity</label>
+                   <label>Quantity&nbsp;<label class="text-danger">*</label></label>
               <input type="text" id='quantity' class="form-control enterKeyclass" placeholder="Quantity">
                 </div>
                 <div class="col-6 form-group mt-3 text-center">

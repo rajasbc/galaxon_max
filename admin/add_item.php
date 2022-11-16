@@ -38,11 +38,11 @@ $description =  $description_obj->get_description_data();
             <div class="card">
               <div class="card-body row col-12">
                 <div class="col-12 form-group mb-3">
-                   <label>Product Name</label>
-              <input type="text" id='item_name' class="form-control enterKeyclass" placeholder="Product Name">
+                   <label>Product Name&nbsp;<label class="text-danger enterAsTab">*</label></label>
+              <input type="text" id='item_name' class="form-control enterKeyclass" placeholder="Product Name" autofocus>
                 </div>
                  <div class="col-6 form-group mb-3">
-                  <label>Brand</label>
+                  <label>Brand&nbsp;<label class="text-danger">*</label></label>
                   <select class="form-control select2 enterKeyclass" id='brand' style="width: 100%;">
                     <option value="">Select Brand</option>
                     <?php foreach ($brand as $key => $value) {?>
@@ -52,11 +52,11 @@ $description =  $description_obj->get_description_data();
                   </select>
                 </div>
                  <div class="col-6 form-group mb-3">
-                   <label>Mrp</label>
+                   <label>Mrp&nbsp;<label class="text-danger">*</label></label>
               <input type="text" class="form-control enterKeyclass" id="mrp" placeholder="Mrp">
                 </div>
                 <div class="col-6 form-group mb-3">
-                  <label>Category</label>
+                  <label>Category&nbsp;<label class="text-danger">*</label></label>
                   <select class="form-control select2 enterKeyclass" id="category" style="width: 100%;">
                     <option value="">Select Category</option>
                     <?php foreach ($category as $key => $value) {?>
@@ -67,7 +67,7 @@ $description =  $description_obj->get_description_data();
                 </div>
                 
                 <div class="col-6 form-group mb-3">
-                   <label>Sale Price</label>
+                   <label>Sale Price&nbsp;<label class="text-danger">*</label></label>
               <input type="text" class="form-control enterKeyclass" id="sale_price" placeholder="Sale Price">
                 </div>
                 <div class="col-6 form-group mb-3">
@@ -86,7 +86,7 @@ $description =  $description_obj->get_description_data();
                
                
                 <div class="col-6 form-group mb-3">
-                   <label>Units</label>
+                   <label>Units&nbsp;<label class="text-danger">*</label></label>
                   <select class="form-control enterKeyclass" id="units" style="width: 100%;">
                     <option value="">Select Units</option>
                     <option value="Kg">Kg</option>
@@ -99,13 +99,13 @@ $description =  $description_obj->get_description_data();
                 </div>
                 <div class="col-6 form-group mb-3"></div>
                 <div class="col-6 form-group mb-3">
-                   <label>Quantity</label>
+                   <label>Quantity&nbsp;<label class="text-danger">*</label></label>
               <input type="text" class="form-control enterKeyclass" id="quantity" placeholder="Quantity">
                 </div>
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
-                <button type="button" id="item_add_btn" class="btn btn-primary float-right">Save</button>
+                <button type="button" id="item_add_btn" class="btn btn-primary float-right enterAsTab">Save</button>
               </div>
             </div>
           </div>
@@ -120,6 +120,26 @@ $description =  $description_obj->get_description_data();
 include 'footer.php';
 ?>
 <script>
+<script type="text/javascript">
+       
+       $('.enterAsTab').keydown(function (e) {
+
+     if (e.which === 13) {
+         var index = $('.enterAsTab').index(this)+1;
+         // $('.enterAsTab').eq(index).focus();
+         if ($(this).attr('id')=='password') {
+          $("#item_add_btn").click();
+         }
+     }
+ });
+
+    </script>
+
+
+
+
+
+
   $(function () {
      //Initialize Select2 Elements
     $('.select2').select2()

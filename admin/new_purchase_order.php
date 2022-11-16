@@ -223,7 +223,7 @@ $category =  $category_obj->get_category_data();
                   <tbody class="text-left css-serial" id="tdata">
    <?php for ($i = 1; $i < 8; $i++) {?>
     <tr class="emptyTr">
-     <td>&nbsp;</td>
+     <td style="height: 45px;">&nbsp;</td>
      <td>&nbsp;</td>
      <td>&nbsp;</td>
      <td>&nbsp;</td>
@@ -237,9 +237,13 @@ $category =  $category_obj->get_category_data();
    </tr>
  <?php }?>
 </tbody>
-<tfoot>
+                </table>
+</div>
+
+<table style="width: 96.4%; margin:-1px 30px 20px auto; border: 1px solid #333; border-collapse: collapse;">
+  
 <tr>
-  <td colspan="13" class="td-last-1">
+  <td style="padding: 5px 5px; border-top:none; border-left:1px;">
  <div class="row">
 <div class="col-lg-4 col-sm-4 col-md-4">
   <div class="">
@@ -292,9 +296,11 @@ $category =  $category_obj->get_category_data();
 </td>
 </tr>
 
-</tfoot>
-                </table>
-              </div>
+
+</table>
+
+
+              
               <?php if ($_GET['type']=='received') {?>
                <div class="row col-12">
                   <div class="col-4">&nbsp;</div>

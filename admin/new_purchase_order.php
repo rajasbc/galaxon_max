@@ -223,7 +223,7 @@ $category =  $category_obj->get_category_data();
                   <tbody class="text-left css-serial" id="tdata">
    <?php for ($i = 1; $i < 8; $i++) {?>
     <tr class="emptyTr">
-     <td style="height: 45px;">&nbsp;</td>
+     <td style="height: 44px;">&nbsp;</td>
      <td>&nbsp;</td>
      <td>&nbsp;</td>
      <td>&nbsp;</td>
@@ -240,7 +240,7 @@ $category =  $category_obj->get_category_data();
                 </table>
 </div>
 
-<table style="width: 96.4%; margin:-1px 30px 20px auto; border: 1px solid #333; border-collapse: collapse;">
+<table style="width: 96.4%; margin:-1px 30px 20px auto;">
   
 <tr>
   <td style="padding: 5px 5px; border-top:none; border-left:1px;">

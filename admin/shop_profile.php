@@ -32,20 +32,20 @@ $result1 = $obj->get_shop_details();
             <!-- <a href='template.php' >Add Invoice Template</a><br><br> -->
             <input type="hidden" name='id' value='<?=$result[0]['id']?>'>
             <div class="form-row">
-              <div class="form-group col-lg-4"><span>Shop Name</span></div><div class="form-group col-lg-8"><input type="text" name='shop_name' id='shop_name' value="<?=$result1[0]['name']?>"class="form-control mt-2" ></div>
+              <div class="form-group col-lg-4"><span>Shop Name&nbsp;<label class="text-danger">*</label></span></div><div class="form-group col-lg-8"><input type="text" name='shop_name' id='shop_name' value="<?=$result1[0]['name']?>"class="form-control mt-2"  autofocus></div>
             </div>
             
             <div class="form-row">
-              <div class="form-group col-lg-4"><span>Shop Registration  Number</span></div><div class="form-group col-lg-8"><input type="text" value='<?=$result1[0]['shop_registration_number']?>' name='registration_no' id='registration_no' class="form-control mt-2" onKeyPress="if(this.value.length==16)return false;"></div>
+              <div class="form-group col-lg-4"><span>Shop Registration  Number&nbsp;<label class="text-danger">*</label></span></div><div class="form-group col-lg-8"><input type="text" value='<?=$result1[0]['shop_registration_number']?>' name='registration_no' id='registration_no' class="form-control mt-2" onKeyPress="if(this.value.length==16)return false;"></div>
             </div>
             <div class="form-row">
-              <div class="form-group col-lg-4"><span>DL No</span></div><div class="form-group col-lg-8"><input type="text" value='<?=$result1[0]['dl_no']?>' name='dl_no' id='dl_no' class="form-control mt-2" onKeyPress="if(this.value.length==15)return false;"></div>
+              <div class="form-group col-lg-4"><span>DL No&nbsp;<label class="text-danger">*</label></span></div><div class="form-group col-lg-8"><input type="text" value='<?=$result1[0]['dl_no']?>' name='dl_no' id='dl_no' class="form-control mt-2" onKeyPress="if(this.value.length==15)return false;"></div>
             </div>
             <div class="form-row">
-              <div class="form-group col-lg-4"><span>Shop GST Number</span></div><div class="form-group col-lg-8"><input type="text" name='shop_gst_no' id='shop_gst_no' value='<?=$result1[0]['shop_gst_no']?>' class="form-control mt-2" onKeyPress="if(this.value.length==15)return false;"></div>
+              <div class="form-group col-lg-4"><span>Shop GST Number&nbsp;<label class="text-danger">*</label></span></div><div class="form-group col-lg-8"><input type="text" name='shop_gst_no' id='shop_gst_no' value='<?=$result1[0]['shop_gst_no']?>' class="form-control mt-2" onKeyPress="if(this.value.length==15)return false;"></div>
             </div>
             <div class="form-row">
-              <div class="form-group col-lg-4"><span>Email Address</span></div><div class="form-group col-lg-8"><input type="email" name='shop_email' id='shop_email' value="<?=$result1[0]['email']?>" class="form-control mt-2" onKeyPress="if(this.value.length==100)return false;"></div>
+              <div class="form-group col-lg-4"><span>Email Address&nbsp;<label class="text-danger">*</label></span></div><div class="form-group col-lg-8"><input type="email" name='shop_email' id='shop_email' value="<?=$result1[0]['email']?>" class="form-control mt-2" onKeyPress="if(this.value.length==100)return false;"></div>
             </div>
 
             <!-- <div class="form-row">
@@ -69,31 +69,31 @@ $result1 = $obj->get_shop_details();
 
  -->
             <div class="form-row">
-              <div class="form-group col-lg-4"><span>Address Line 1</span></div><div class="form-group col-lg-8"><input type="text" name='address1' id='address1' value='<?=$result1[0]['address1']?>' class="form-control mt-2"></div>
+              <div class="form-group col-lg-4"><span>Address Line 1&nbsp;<label class="text-danger">*</label></span></div><div class="form-group col-lg-8"><input type="text" name='address1' id='address1' value='<?=$result1[0]['address1']?>' class="form-control mt-2"></div>
             </div>
             <div class="form-row">
-              <div class="form-group col-lg-4"><span>Address Line 2</span></div><div class="form-group col-lg-8"><input type="text" name='address2' id='address2' value='<?=$result1[0]['address2']?>'class="form-control mt-2"></div>
+              <div class="form-group col-lg-4"><span>Address Line 2&nbsp;<label class="text-danger">*</label></span></div><div class="form-group col-lg-8"><input type="text" name='address2' id='address2' value='<?=$result1[0]['address2']?>'class="form-control mt-2"></div>
             </div>
             <div class="form-row">
-              <div class="form-group col-lg-4"><span>Area</span></div><div class="form-group col-lg-8"><input type="text" value='<?=$result1[0]['area']?>' name='area' id='area' class="form-control mt-2" ></div>
+              <div class="form-group col-lg-4"><span>Area&nbsp;<label class="text-danger">*</label></span></div><div class="form-group col-lg-8"><input type="text" value='<?=$result1[0]['area']?>' name='area' id='area' class="form-control mt-2" ></div>
             </div>
             <div class="form-row">
-              <div class="form-group col-lg-4"><span>City</span></div><div class="form-group col-lg-8"><input type="text" name='city' id='city' value='<?=$result1[0]['city']?>' class="form-control mt-2"></div>
+              <div class="form-group col-lg-4"><span>City&nbsp;<label class="text-danger">*</label></span></div><div class="form-group col-lg-8"><input type="text" name='city' id='city' value='<?=$result1[0]['city']?>' class="form-control mt-2"></div>
             </div>
             <div class="form-row">
-              <div class="form-group col-lg-4"><span>State</span></div><div class="form-group col-lg-8"><input type="text" name='state' id='state' value='<?=$result1[0]['state']?>' class="form-control mt-2" ></div>
+              <div class="form-group col-lg-4"><span>State&nbsp;<label class="text-danger">*</label></span></div><div class="form-group col-lg-8"><input type="text" name='state' id='state' value='<?=$result1[0]['state']?>' class="form-control mt-2" ></div>
             </div>
             <div class="form-row">
-              <div class="form-group col-lg-4"><span>State Code</span></div><div class="form-group col-lg-8"><input type="number" name='state_code' id='state_code' value='<?=$result1[0]['state_code']?>' class="form-control  number_only mt-2" ></div>
+              <div class="form-group col-lg-4"><span>State Code&nbsp;<label class="text-danger">*</label></span></div><div class="form-group col-lg-8"><input type="number" name='state_code' id='state_code' value='<?=$result1[0]['state_code']?>' class="form-control  number_only mt-2" ></div>
             </div>
             <div class="form-row">
-              <div class="form-group col-lg-4"><span>Country</span></div><div class="form-group col-lg-8"><input type="text" name='country' id='country' class="form-control mt-2" value="INDIA" readonly></div>
+              <div class="form-group col-lg-4"><span>Country&nbsp;<label class="text-danger">*</label></span></div><div class="form-group col-lg-8"><input type="text" name='country' id='country' class="form-control mt-2" value="INDIA" readonly></div>
             </div>
             <div class="form-row">
-              <div class="form-group col-lg-4"><span>Pincode</span></div><div class="form-group col-lg-8"><input type="text" name='pincode' id='pincode' value='<?=$result1[0]['pincode']?>' class="form-control mt-2" maxlength="6" ></div>
+              <div class="form-group col-lg-4"><span>Pincode&nbsp;<label class="text-danger">*</label></span></div><div class="form-group col-lg-8"><input type="text" name='pincode' id='pincode' value='<?=$result1[0]['pincode']?>' class="form-control mt-2" maxlength="6" ></div>
             </div><div class="form-row">
               <div class="form-group col-lg-4 mt-2">
-                <span>Mobile Number</span>
+                <span>Mobile Number&nbsp;<label class="text-danger">*</label></span>
               </div>
               <div class="form-group col-lg-8">
               <div class="form-row">
@@ -107,7 +107,7 @@ $result1 = $obj->get_shop_details();
             </div>
             <div class="form-row">
               <div class="form-group col-lg-4 mt-2">
-                <span>Alternative Mobile Number</span>
+                <span>Alternative Mobile Number&nbsp;<label class="text-danger">*</label></span>
               </div>
               <div class="form-group col-lg-8">
               <div class="form-row">
@@ -120,7 +120,7 @@ $result1 = $obj->get_shop_details();
               </div>
             </div>
             <div class="form-row">
-              <div class="form-group col-lg-4 mt-2"><span>Landline Number</span></div><div class="form-group col-lg-8"><input type="text" name='Landline_no' id='Landline_no' value='<?=$result1[0]['landline_no']?>' class="form-control " ></div>
+              <div class="form-group col-lg-4 mt-2"><span>Landline Number&nbsp;<label class="text-danger">*</label></span></div><div class="form-group col-lg-8"><input type="text" name='Landline_no' id='Landline_no' value='<?=$result1[0]['landline_no']?>' class="form-control " ></div>
             </div>
             
             <div class='form-row'>
@@ -158,6 +158,7 @@ $result1 = $obj->get_shop_details();
 <?php
 include 'footer.php';
 ?>
+
 
 
 <script type="text/javascript">
@@ -426,6 +427,24 @@ $('#Landline_no').keypress(function(event){
        if($("#Landline_no").val()!="")
        {
          $('#shop_type').focus();
+         return false
+       }
+       else{
+         global_alert_modal('warning','Please Enter Landline number...');
+       
+       }
+       
+     
+    }
+
+});
+$('#submit').keypress(function(event){
+    
+    var keycode = (event.keyCode ? event.keyCode : event.which);
+    if(keycode == '13'){
+       if($("#submit").val()!="")
+       {
+         $('#submit').click();
          return false
        }
        else{

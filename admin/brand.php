@@ -55,7 +55,7 @@ include 'header.php';
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  <div class="modal fade" id="add_brand_modal" data-backdrop='static'>
+  <div class="modal fade" id="add_brand_modal" tabindex="1" data-backdrop='static'>
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
@@ -67,14 +67,14 @@ include 'header.php';
             <div class="modal-body">
               <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Name</span>
+                    <label class="input-group-text">Name&nbsp;<span class="text-danger">*</span></label>
                   </div>
-                  <input type="text" id='brand_name' class="form-control" placeholder="Enter Brand Name">
+                  <input type="text" id="brand_name" class="form-control enterTab" placeholder="Enter Brand Name" autofocus="true">
                 </div>
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" id="add_brand_btn" class="btn btn-primary">Save</button>
+              <button type="button" id="add_brand_btn" class="btn btn-primary enterTab">Save</button>
             </div>
           </div>
           <!-- /.modal-content -->
@@ -95,14 +95,14 @@ include 'header.php';
               <input type="hidden" name="edit_brand_id" id="edit_brand_id">
               <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Name</span>
+                    <span class="input-group-text">Name&nbsp;<span class="text-danger">*</span></span>
                   </div>
-                  <input type="text" id='edit_brand_name' class="form-control" placeholder="Enter Brand Name">
+                  <input type="text" id='edit_brand_name' class="form-control enterAsTab" placeholder="Enter Brand Name">
                 </div>
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" id="edit_brand_btn" class="btn btn-primary">Save</button>
+              <input  type="button" id="edit_brand_btn" class="btn btn-primary enterAsTab" value="Save">
             </div>
           </div>
           <!-- /.modal-content -->
@@ -136,6 +136,40 @@ include 'header.php';
   <?php 
 include 'footer.php';
 ?>
+<script type="text/javascript">
+       
+       $('.enterTab').keydown(function (e) {
+
+     if (e.which === 13) {
+         var index = $('.enterTab').index(this) + 1;
+         $('.enterTab').eq(index).focus();
+         if ($(this).attr('id')=='password') {
+          $("#add_brand_btn").click();
+         }
+     }
+ });
+
+    </script>
+
+
+
+
+<script type="text/javascript">
+       
+       $('.enterAsTab').keydown(function (e) {
+
+     if (e.which === 13) {
+         var index = $('.enterAsTab').index(this) + 1;
+         $('.enterAsTab').eq(index).focus();
+         if ($(this).attr('id')=='password') {
+          $("#edit_brand_btn").click();
+         }
+     }
+ });
+
+    </script>
+
+
 <script>
   $(function () {
     var main_table= $("#brand_table").DataTable({
@@ -149,12 +183,18 @@ include 'footer.php';
 brands_data();
   })
 </script>
+
 <script type="text/javascript">
   $("#add_brand").click(function(){
 
+    // $("#brand_name").focus();
      $("#add_brand_modal").modal('show');
-     $("#brand_name").focus();
-  })
+     
+     // $('[autofocus]', $("#add_brand_modal").modal()).focus();
+
+     // $('[autofocus]', $("#brand_name")).focus();
+
+  });
 </script>
 <script type="text/javascript">
   $('#add_brand_btn').on('click',function(e){
@@ -280,6 +320,7 @@ success: function(res){
 </script>
 <script type="text/javascript">
 function edit_modal(e){
+  $("#edit_brand_name").val($(e).data('form')).focus();
    $("#edit_brand_modal").modal('show');
    $("#edit_brand_id").val($(e).data('id'));
    $("#edit_brand_name").val($(e).data('form')).focus();

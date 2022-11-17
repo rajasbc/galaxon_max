@@ -67,14 +67,14 @@ include 'header.php';
             <div class="modal-body">
               <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Name</span>
+                    <span class="input-group-text">Name&nbsp;<span class="text-danger">*</span></span>
                   </div>
-                  <input type="text" id='category_name' class="form-control" placeholder="Enter Category Name">
+                  <input type="text" id='category_name' class="form-control enterTab" placeholder="Enter Category Name">
                 </div>
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" id="add_category_btn" class="btn btn-primary">Save</button>
+              <button type="button" id="add_category_btn" class="btn btn-primary enterTab">Save</button>
             </div>
           </div>
           <!-- /.modal-content -->
@@ -95,14 +95,14 @@ include 'header.php';
               <input type="hidden" name="edit_category_id" id="edit_category_id">
               <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Name</span>
+                    <span class="input-group-text">Name&nbsp;<span class="text-danger">*</span></span>
                   </div>
-                  <input type="text" id='edit_category_name' class="form-control" placeholder="Enter Category Name">
+                  <input type="text" id='edit_category_name' class="form-control enterAsTab" placeholder="Enter Category Name">
                 </div>
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" id="edit_category_btn" class="btn btn-primary">Save</button>
+              <button type="button" id="edit_category_btn" class="btn btn-primary enterAsTab">Save</button>
             </div>
           </div>
           <!-- /.modal-content -->
@@ -198,6 +198,41 @@ include 'header.php';
   <?php 
 include 'footer.php';
 ?>
+
+<script type="text/javascript">
+       
+       $('.enterTab').keydown(function (e) {
+
+     if (e.which === 13) {
+         var index = $('.enterTab').index(this) + 1;
+         $('.enterTab').eq(index).focus();
+         if ($(this).attr('id')=='password') {
+          $("#add_brand_btn").click();
+         }
+     }
+ });
+
+</script>
+<script type="text/javascript">
+       
+       $('.enterAsTab').keydown(function (e) {
+
+     if (e.which === 13) {
+         var index = $('.enterAsTab').index(this) + 1;
+         $('.enterAsTab').eq(index).focus();
+         if ($(this).attr('id')=='password') {
+          $("#edit_brand_btn").click();
+         }
+     }
+ });
+
+    </script>
+
+
+
+
+
+
 <script>
   $(function () {
     $("#category_table").DataTable({

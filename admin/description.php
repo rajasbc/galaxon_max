@@ -67,14 +67,14 @@ include 'header.php';
             <div class="modal-body">
               <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Name</span>
+                    <span class="input-group-text">Name&nbsp;<span class="text-danger">*</span></span>
                   </div>
-                  <input type="text" id='description_name' class="form-control" placeholder="Enter Description Name">
+                  <input type="text" id='description_name' class="form-control enterTab" placeholder="Enter Description Name">
                 </div>
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" id="add_description_btn" class="btn btn-primary">Save</button>
+              <button type="button" id="add_description_btn" class="btn btn-primary enterTab">Save</button>
             </div>
           </div>
           <!-- /.modal-content -->
@@ -95,14 +95,14 @@ include 'header.php';
               <input type="hidden" name="edit_description_id" id="edit_description_id">
               <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Name</span>
+                    <span class="input-group-text">Name&nbsp;<span class="text-danger">*</span></span>
                   </div>
-                  <input type="text" id='edit_description_name' class="form-control" placeholder="Enter Description Name">
+                  <input type="text" id='edit_description_name' class="form-control enterAsTab" placeholder="Enter Description Name">
                 </div>
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" id="edit_description_btn" class="btn btn-primary">Save</button>
+              <button type="button" id="edit_description_btn" class="btn btn-primary enterAsTab">Save</button>
             </div>
           </div>
           <!-- /.modal-content -->
@@ -136,6 +136,41 @@ include 'header.php';
   <?php 
 include 'footer.php';
 ?>
+
+<script type="text/javascript">
+       
+       $('.enterTab').keydown(function (e) {
+
+     if (e.which === 13) {
+         var index = $('.enterTab').index(this) + 1;
+         $('.enterTab').eq(index).focus();
+         if ($(this).attr('id')=='password') {
+          $("#add_description_btn").click();
+         }
+     }
+ });
+
+</script>
+<script type="text/javascript">
+       
+       $('.enterAsTab').keydown(function (e) {
+
+     if (e.which === 13) {
+         var index = $('.enterAsTab').index(this) + 1;
+         $('.enterAsTab').eq(index).focus();
+         if ($(this).attr('id')=='password') {
+          $("#edit_description_btn").click();
+         }
+     }
+ });
+
+    </script>
+
+
+
+
+
+
 <script>
   $(function () {
     var main_table= $("#description_table").DataTable({

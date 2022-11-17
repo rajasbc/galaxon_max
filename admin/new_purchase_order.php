@@ -52,12 +52,12 @@ $category =  $category_obj->get_category_data();
      position: -webkit-sticky;
      position: sticky;
      bottom: 0;
-     background-color: transparent !important;
+     background-color: #fff !important;
      z-index:4;
    }
 
    .table-scroll tfoot td {
-     background-color: transparent !important;
+     background-color: #fff !important;
    }
 </style>
   <!-- Content Wrapper. Contains page content -->
@@ -179,12 +179,12 @@ $category =  $category_obj->get_category_data();
               </select>
                 </div>
                 <div class="col-3 form-group mb-3">
-                   <label>MRP&nbsp;<label class="text-danger">*</label></label>
-              <input type="text" id='mrp' class="form-control enterKeyclass" placeholder="Mrp">
+                   <label>Purchase Price&nbsp;<label class="text-danger">*</label></label>
+              <input type="text" id='mrp' class="form-control enterKeyclass" placeholder="Purchase Price">
                 </div>
                 <div class="col-3 form-group mb-3">
-                   <label>Sale Price&nbsp;<label class="text-danger">*</label></label>
-              <input type="text" id='sale_price' class="form-control enterKeyclass" placeholder="Sale Price">
+                   <label>Mrp&nbsp;</label>
+              <input type="text" id='sale_price' class="form-control enterKeyclass" placeholder="Mrp">
                 </div>
                 <div class="col-3 form-group mb-3">
                    <label>Discount</label>
@@ -211,8 +211,8 @@ $category =  $category_obj->get_category_data();
                       <th>Product</th>
                       <th>Units</th>
                       <th>Tons</th>
+                      <th>Purchase Price</th>
                       <th>Mrp</th>
-                      <th>Sale Price</th>
                       <th>Discount</th>
                       <th>Gst</th>
                       <th>Quantity</th>
@@ -223,7 +223,7 @@ $category =  $category_obj->get_category_data();
                   <tbody class="text-left css-serial" id="tdata">
    <?php for ($i = 1; $i < 8; $i++) {?>
     <tr class="emptyTr">
-     <td style="height: 44px;">&nbsp;</td>
+     <td>&nbsp;</td>
      <td>&nbsp;</td>
      <td>&nbsp;</td>
      <td>&nbsp;</td>
@@ -237,12 +237,9 @@ $category =  $category_obj->get_category_data();
    </tr>
  <?php }?>
 </tbody>
-                </table>
-</div>
-<table style="width: 96.4%; margin:-1px 30px 20px auto;">
-  
+<tfoot>
 <tr>
-  <td style="padding: 5px 5px; border-top:none; border-left:1px;">
+  <td colspan="13" class="td-last-1">
  <div class="row">
 <div class="col-lg-4 col-sm-4 col-md-4">
   <div class="">
@@ -295,8 +292,10 @@ $category =  $category_obj->get_category_data();
 </td>
 </tr>
 
+</tfoot>
+                </table>
+</div>
 
-</table>
 
 
               
@@ -558,15 +557,15 @@ success: function(res){
        else{
         $("#mrp").css("border","1px solid lightgray");
        }
-        if (sale_price=='' && sale_price==0) {
-      global_alert_modal('warning','Enter Sale Price Name...');
-      $("#sale_price").css("border","1px solid red");
-                    $("#sale_price").focus();
-                    return false;
-        }
-       else{
-        $("#sale_price").css("border","1px solid lightgray");
-       }
+      //   if (sale_price=='' && sale_price==0) {
+      // global_alert_modal('warning','Enter Sale Price Name...');
+      // $("#sale_price").css("border","1px solid red");
+      //               $("#sale_price").focus();
+      //               return false;
+      //   }
+      //  else{
+      //   $("#sale_price").css("border","1px solid lightgray");
+      //  }
         if (quantity=='' && quantity==0) {
       global_alert_modal('warning','Enter Product Quantity...');
       $("#quantity").css("border","1px solid red");

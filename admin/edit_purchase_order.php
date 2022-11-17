@@ -80,12 +80,12 @@ $items=json_encode($items);
      position: -webkit-sticky;
      position: sticky;
      bottom: 0;
-     background-color: transparent !important;
+     background-color: #fff !important;
      z-index:4;
    }
 
    .table-scroll tfoot td {
-     background-color: transparent !important;
+     background-color: #fff !important;
    }
 </style>
   <!-- Content Wrapper. Contains page content -->
@@ -152,8 +152,8 @@ $items=json_encode($items);
                       <th>Tons</th>
                       <th>Order Qty</th>
                       <th>Received Qty</th>
+                      <th>Purchase Price</th>
                       <th>Mrp</th>
-                      <th>Sale Price</th>
                       <th>Discount</th>
                       <th>Gst</th>
                       <th>Quantity</th>

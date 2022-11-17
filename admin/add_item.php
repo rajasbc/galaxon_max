@@ -71,7 +71,7 @@ $description =  $description_obj->get_description_data();
               <input type="text" class="form-control enterKeyclass" id="sale_price" placeholder="Sale Price">
                 </div>
                 <div class="col-6 form-group mb-3">
-                  <label>Sub Description</label>
+                  <label>Description</label>
                   <select class="form-control select2 enterKeyclass" id="sub_category" style="width: 100%;">
                     <option value="">Select Description</option>
                     <?php foreach ($description as $key => $value) {?>

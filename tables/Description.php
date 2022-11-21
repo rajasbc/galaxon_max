@@ -59,5 +59,11 @@ class Description extends Dbconnection {
 		$result=$this->db->GetResultsArray($sql);
 		return $result;
 	}
+	public function get_description_dt($id)
+	{
+		$sql='select * from '.$this->tablename.' where id='.$id;
+		$result=$this->db->GetResultsArray($sql);
+		return $result;
+	}
 }
 ?>

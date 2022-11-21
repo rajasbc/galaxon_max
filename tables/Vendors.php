@@ -51,6 +51,7 @@ class Vendors extends Dbconnection {
 		$vendor['mobile_no']=$this->db->getpost('mobile_no');
 		$vendor['vendor_code']=$vendor_code;
 		$vendor['email']=$this->db->getpost('email');
+		$vendor['gst']=$this->db->getpost('gst');
 		$vendor['address']=$this->db->getpost('address');
 		$vendor['city']=$this->db->getpost('city');
 		$vendor['state']=$this->db->getpost('state');
@@ -97,6 +98,7 @@ class Vendors extends Dbconnection {
 		$vendor['company_name']=$this->db->getpost('vendor_company_name');
 		$vendor['mobile_no']=$this->db->getpost('mobile_no');
 		$vendor['email']=$this->db->getpost('email');
+		$vendor['gst']=$this->db->getpost('gst');
 		$vendor['address']=$this->db->getpost('address');
 		$vendor['city']=$this->db->getpost('city');
 		$vendor['state']=$this->db->getpost('state');

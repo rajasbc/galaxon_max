@@ -19,6 +19,7 @@ class Items extends Dbconnection {
 		}
 		$item=array();
 		$item['item_name']=$this->db->getpost('item_name');
+		$item['item_code']=$this->db->getpost('item_code');
 		$item['shop_id']=$_SESSION['shop_id'];
 		$item['brand']=$this->db->getpost('brand');
 		$item['category']=$this->db->getpost('category');

@@ -102,12 +102,17 @@ $category =  $category_obj->get_category_data();
             
               <div class="card-body row col-12">
                 <div class="row col-12">
-                  <div class="col-3 form-group mb-3">
+                  <div class="col-3 form-group mb-2">
                    <label>Vendor Name&nbsp;<label class="text-danger">*</label></label>
                    <input type="hidden" name="sno" id="sno" value="0">
                    <input type="hidden" name="vendor_id" id="vendor_id" value="0">
                   <input type="text" name="vendor" id="vendor" class="form-control" placeholder="Enter Vendor" autofocus>
                 </div>
+                <?php if ($_GET['type']=='new') {?>
+                 <div class="col-9 form-group mb-2 text-right">
+                   <i class="nav-icon fas fa-solid fa-truck" style="font-size: xx-large;cursor: pointer;" data-toggle='modal' data-target="#shipping_modal" id="shipping_modal_btn"></i>
+                </div>
+              <?php }?>
                 </div>
                 <div class="row col-12" id="vendor_dt" style="display: none;">
                   
@@ -123,8 +128,11 @@ $category =  $category_obj->get_category_data();
                     <div class="col-6">
                       <label>Mobile No :</label><span id="vendor_mobile"></span>
                     </div>
-                    <div class="col-6">
+                    <div class="col-6" id="v_email">
                       <label>Email :</label><span id="vendor_email"></span>
+                    </div>
+                    <div class="col-6" id="v_gst">
+                      <label>GST No :</label><span id="vendor_gst"></span>
                     </div>
                   </div>
                 </div>
@@ -139,6 +147,11 @@ $category =  $category_obj->get_category_data();
                    <input type="hidden" name="item_id" id="item_id">
                    
               <input type="text" id='item_name' class="form-control enterKeyclass" placeholder="Product Name">
+                </div>
+                <div class="col-3 form-group mb-3">
+                   <label>Product Code&nbsp;<label class="text-danger">*</label></label>
+                   
+              <input type="text" id='item_code' class="form-control enterKeyclass" placeholder="Product Code">
                 </div>
                 <div class="col-3 form-group mb-3">
                    <label>Brand&nbsp;<label class="text-danger">*</label></label>
@@ -179,8 +192,8 @@ $category =  $category_obj->get_category_data();
               </select>
                 </div>
                 <div class="col-3 form-group mb-3">
-                   <label>Purchase Price&nbsp;<label class="text-danger">*</label></label>
-              <input type="text" id='mrp' class="form-control enterKeyclass" placeholder="Purchase Price">
+                   <label>Vendor Price&nbsp;<label class="text-danger">*</label></label>
+              <input type="text" id='mrp' class="form-control enterKeyclass" placeholder="Vendor Price">
                 </div>
                 <div class="col-3 form-group mb-3">
                    <label>Mrp&nbsp;</label>
@@ -192,13 +205,20 @@ $category =  $category_obj->get_category_data();
                 </div>
                 <div class="col-3 form-group mb-3">
                    <label>GST</label>
-              <input type="text" id='gst' class="form-control enterKeyclass" placeholder="GST">
+              
+              <select class="form-control enterKeyclass" id="gst">
+                <option value="0">0</option>
+                <option value="5">5</option>
+                <option value="12">12</option>
+                <option value="18">18</option>
+                <option value="28">28</option>
+              </select>
                 </div>
                 <div class="col-3 form-group mb-3">
                    <label>Quantity&nbsp;<label class="text-danger">*</label></label>
               <input type="text" id='quantity' class="form-control enterKeyclass" placeholder="Quantity">
                 </div>
-                <div class="col-6 form-group mt-3 text-center">
+                <div class="col-3 form-group mb-3 text-center" style="vertical-align: center">
                    <button class="btn btn-primary" id="add_item">Add</button>
                 </div>
               </form>
@@ -209,13 +229,14 @@ $category =  $category_obj->get_category_data();
                     <tr>
                       <th>S.No</th>
                       <th>Product</th>
+                      <th>Quantity</th>
+                      <th>Description</th>
                       <th>Units</th>
                       <th>Tons</th>
-                      <th>Purchase Price</th>
+                      <th>Vendor Price</th>
                       <th>Mrp</th>
                       <th>Discount</th>
                       <th>Gst</th>
-                      <th>Quantity</th>
                       <th>Total</th>
                       <th>Action</th>
                     </tr>
@@ -223,6 +244,7 @@ $category =  $category_obj->get_category_data();
                   <tbody class="text-left css-serial" id="tdata">
    <?php for ($i = 1; $i < 8; $i++) {?>
     <tr class="emptyTr">
+     <td>&nbsp;</td>
      <td>&nbsp;</td>
      <td>&nbsp;</td>
      <td>&nbsp;</td>
@@ -388,21 +410,107 @@ $category =  $category_obj->get_category_data();
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  <div class="modal fade" id="add_vendor_modal" data-backdrop='static'>
+  <div class="modal fade" id="shipping_modal" data-backdrop='static'>
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Add Vendor Details</h4>
+              <h4 class="modal-title">Add Shipping Details</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-          
+            <div class="modal-body">
+              <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">Name&nbsp;<span class="text-danger">*</span></span>
+                  </div>
+                  <input type="text" id='shipping_name' name='shipping_name' class="form-control enterKeyclass" placeholder="Enter Name">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Company Name&nbsp;<span class="text-danger">*</span></span>
+                  </div>
+                  <input type="text" id='shipping_company_name' name='shipping_company_name' class="form-control enterKeyclass" placeholder="Enter Company Name">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">Mobile.No&nbsp;<span class="text-danger">*</span></span>
+                  </div>
+                  <input type="number" id='mobile_no' name='mobile_no' class="form-control enterKeyclass" placeholder="Enter Mobile Number">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">Email</span>
+                  </div>
+                  <input type="text" id='email' name='email' class="form-control enterKeyclass" placeholder="Enter Email">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">Gst.No</span>
+                  </div>
+                  <input type="text" id='gst' name='gst' class="form-control enterKeyclass" placeholder="Enter GST No">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">Address</span>
+                  </div>
+                  <input type="text" id='address' name='address' class="form-control enterKeyclass" placeholder="Enter Address">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">City</span>
+                  </div>
+                  <input type="text" id='city' name='city' class="form-control enterKeyclass" placeholder="Enter City">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">State</span>
+                  </div>
+                  <input type="text" id='state' name='state' class="form-control enterKeyclass" placeholder="Enter State">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">Country</span>
+                  </div>
+                  <input type="text" id='country' name='country' class="form-control enterKeyclass" placeholder="Enter Country">
+                </div>
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">Pincode</span>
+                  </div>
+                  <input type="text" id='pincode' name='pincode' class="form-control enterKeyclass" placeholder="Enter Pincode">
+                </div>
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">Shipping Terms</span>
+                  </div>
+                  <input type="text" id='ship_terms' name='ship_terms' class="form-control enterKeyclass" placeholder="Enter Pincode">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Shipping Medthod</span>
+                  </div>
+                  <select class="form-control" id="shipping_method">
+                    <option value="FEDEX">FEDEX</option>
+                    <option value="UPS">UPS</option>
+                    <option value="USPS">USPS</option>
+                  </select>
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">Delivery Date</span>
+                  </div>
+                  <input type="date" id='shipping_d_date' name='shipping_d_date' class="form-control enterKeyclass" value="<?=date('Y-m-d')?>">
+                </div>
             </div>
-            <div class="modal-footer justify-content-between">
+          <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save</button>
+              <button type="button" class="btn btn-primary" id="shipping_dt_add">Add</button>
             </div>
+            </div>
+            
           </div>
           <!-- /.modal-content -->
         </div>
@@ -425,8 +533,26 @@ success: function(res){
     $("#vendor_name").html(res.name+' - '+res.vendor_code);
     $("#vendor_company_name").html(res.company_name);
     $("#vendor_mobile").html(res.mobile_no);
-    $("#vendor_email").html(res.email);
-    $("#vendor_image").attr('src','../uploads/vendor/'+res.vendor_logo);
+    if (res.email!='') {
+      $("#vendor_email").html(res.email);
+      $("#v_email").css('display','');
+    }else{
+      $("#v_email").css('display','none');
+    }
+     if (res.gst!='' && res.gst!=null) {
+      $("#vendor_gst").html(res.gst);
+      $("#v_gst").css('display','');
+    }else{
+      $("#v_gst").css('display','none');
+    }
+    
+    if (res.vendor_logo!='') {
+      $("#vendor_image").attr('src','../uploads/vendor/'+res.vendor_logo);
+      $("#vendor_image").css('display','');
+    }else{
+      $("#vendor_image").css('display','none');
+    }
+    
     $("#vendor_dt").css('display','');
 
   }
@@ -438,6 +564,7 @@ success: function(res){
 <script type="text/javascript">
   $(document).ready(function(){
  items = [];
+ shipping_data = [];
  data=[];
      $('#item_name').autocomplete({
       source: "../ajaxCalls/autocomplete_item_list.php",
@@ -455,6 +582,7 @@ success: function(res){
 
         $('#item_id').val(ui.item.label);
         $('#item_name').val(ui.item.value);
+        $('#item_code').val(ui.item.item_code);
         $("#brand").val(ui.item.brand);
         $("#category").val(ui.item.category);        
         $("#mrp").val(ui.item.mrp);
@@ -510,6 +638,7 @@ success: function(res){
      var gst=$("#gst").val();
      var quantity=$("#quantity").val();
      var units=$("#units").val();
+     var item_code=$("#item_code").val();
 
 
      if (item_name=='' && item_name==0) {
@@ -530,7 +659,16 @@ success: function(res){
        else{
         $("#brand").css("border","1px solid lightgray");
        }
-        if (category=='' && category==0) {
+        if (sub_category=='' && sub_category==0) {
+      global_alert_modal('warning','Select Category...');
+      $("#sub_category").css("border","1px solid red");
+                    $("#sub_category").focus();
+                    return false;
+        }
+       else{
+        $("#sub_category").css("border","1px solid lightgray");
+       }
+       if (category=='' && category==0) {
       global_alert_modal('warning','Select Category...');
       $("#category").css("border","1px solid red");
                     $("#category").focus();
@@ -578,6 +716,7 @@ success: function(res){
        sno=Number($("#sno").val())+1;
        data["item_id"]=$("#item_id").val();
        data["item_name"]=item_name;
+       data["item_code"]=item_code;
        data["brand"]=brand;
        data["category"]=category;
        data["sub_category"]=sub_category;
@@ -600,6 +739,7 @@ success: function(res){
       items["sid"+sno] = {
       "item_id":$("#item_id").val(),
       "item_name":$("#item_name").val(),
+      "item_code":$("#item_code").val(),
       "brand":brand,
       "category":category,
       "sub_category":sub_category,
@@ -621,6 +761,10 @@ success: function(res){
             '<tr id="trItem_{{sno}}">',
             '<td class=" ch-4"><span></span></td>',
             '<td class="text-left ch-10">{{itemname}}</td>',
+            '<td class="text-left ch-4">',
+                '<input onkeyup=fieldupdate({{sno}},this) class="form-control quantity" name="quantity[]" id="quantity{{sno}}" value="{{quantity}}" style="width:5rem; height:1.75rem">',
+                '</td>',
+            '<td class="text-left ch-10">{{description}}</td>',
             '<td class="text-left ch-10">{{units}}</td>',
             '<td class="text-left ch-10" id="tons{{sno}}">{{tons}}</td>',
             '<td class="text-left ch-4">',
@@ -641,10 +785,6 @@ success: function(res){
 
                 '<input onkeyup=fieldupdate({{sno}},this) class="form-control gst" name="gst[]" id="gst{{sno}}" value="{{gst}}" style="width:5rem; height:1.75rem">',
 
-                '</td>','<td class="text-left ch-4">',
-
-                '<input onkeyup=fieldupdate({{sno}},this) class="form-control quantity" name="quantity[]" id="quantity{{sno}}" value="{{quantity}}" style="width:5rem; height:1.75rem">',
-
                 '</td>',
                 '<td class="text-left ch-6" id="totalid{{sno}}">{{total}}</td>',
                 '<td class="text-center ch-4">',
@@ -661,6 +801,7 @@ success: function(res){
                 tr = tr.replace(getRegEx('itemname'), data['item_name']);
                 tr = tr.replace(getRegEx('units'), data['units']);
               tr = tr.replace(getRegEx('mrp'), data['mrp']);
+              tr = tr.replace(getRegEx('description'), $("#sub_category option:selected").text());
               tr = tr.replace(getRegEx('sale_price'), data['sale_price']);
               tr = tr.replace(getRegEx('discount'), data['discount']);
               tr = tr.replace(getRegEx('gst'), data['gst']);
@@ -828,11 +969,12 @@ $("#place_order").click(function(){
 $("#place_order").attr('disabled','disabled');
 var dobj=$.extend({},detailsarray);
 var obj = $.extend({}, items);
+var shipobj = $.extend({}, shipping_data);
 $.ajax({
 type: "POST",
 dataType:"json",
 url: '../ajaxCalls/add_purchase_order.php',
-data: $.param(obj)+'&'+$.param(dobj),
+data: $.param(obj)+'&'+$.param(dobj)+'&'+$.param(shipobj),
 success: function(res){
     if (res.status=='success') {
       global_alert_modal('success','Purchase Added SuccessFully...');
@@ -874,4 +1016,23 @@ $(".enterKeyclass").keypress(function (event) {
             }
     }
 });
+</script>
+<script type="text/javascript">
+  $("#shipping_dt_add").click(function(){
+       shipping_data["shipping_name"]=$("#shipping_name").val();
+       shipping_data["shipping_company_name"]=$("#shipping_company_name").val();
+       shipping_data["smobile_no"]=$("#mobile_no").val();
+       shipping_data["semail"]=$("#email").val();
+       shipping_data["sgst"]=$("#gst").val();
+       shipping_data["saddress"]=$("#address").val();
+       shipping_data["scity"]=$("#city").val();
+       shipping_data["sstate"]=$("#state").val();
+       shipping_data["scountry"]=$("#country").val();
+       shipping_data["spincode"]=$("#pincode").val();
+       shipping_data["ship_terms"]=$("#ship_terms").val();
+       shipping_data["shipping_method"]=$("#shipping_method").val();
+       shipping_data["shipping_d_date"]=$("#shipping_d_date").val();
+       $("#shipping_modal").modal('hide');
+       
+  })
 </script>

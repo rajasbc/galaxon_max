@@ -37,9 +37,13 @@ $description =  $description_obj->get_description_data();
                       <!-- Input addon -->
             <div class="card">
               <div class="card-body row col-12">
-                <div class="col-12 form-group mb-3">
+                <div class="col-6 form-group mb-3">
                    <label>Product Name&nbsp;<label class="text-danger enterAsTab">*</label></label>
               <input type="text" id='item_name' class="form-control enterKeyclass" placeholder="Product Name" autofocus>
+                </div>
+                 <div class="col-6 form-group mb-3">
+                   <label>Product Code&nbsp;<label class="text-danger enterAsTab">*</label></label>
+              <input type="text" id='item_code' class="form-control enterKeyclass" placeholder="Product Code" autofocus>
                 </div>
                  <div class="col-6 form-group mb-3">
                   <label>Brand&nbsp;<label class="text-danger">*</label></label>
@@ -155,6 +159,7 @@ include 'footer.php';
 <script type="text/javascript">
   $("#item_add_btn").click(function(){
      var item_name=$("#item_name").val();
+     var item_code=$("#item_code").val();
      var brand=$("#brand").val();
      var category=$("#category").val();
      var units=$("#units").val();
@@ -174,6 +179,15 @@ include 'footer.php';
         }
        else{
         $("#item_name").css("border","1px solid lightgray");
+       }
+       if (item_code=='' && item_code==0) {
+      global_alert_modal('warning','Enter Product Code...');
+      $("#item_code").css("border","1px solid red");
+                    $("#item_code").focus();
+                    return false;
+        }
+       else{
+        $("#item_code").css("border","1px solid lightgray");
        }
         if (brand=='' && brand==0) {
       global_alert_modal('warning','Select Brand...');
@@ -233,7 +247,7 @@ $.ajax({
 type: "POST",
 dataType:"json",
 url: '../ajaxCalls/add_items.php',
-data: {'item_name':item_name,'brand':brand,'category':category,'sub_category':sub_category,"mrp":mrp,'sale_price':sale_price,'discount':discount,'gst':gst,'quantity':quantity,'units':units},
+data: {'item_name':item_name,'item_code':item_code,'brand':brand,'category':category,'sub_category':sub_category,"mrp":mrp,'sale_price':sale_price,'discount':discount,'gst':gst,'quantity':quantity,'units':units},
 success: function(res){
 if (res.status=='failed') {
   

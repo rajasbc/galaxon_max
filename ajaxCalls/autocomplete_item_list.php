@@ -11,6 +11,7 @@ $output=array();
     $temp_array['value']=strtoupper($row['item_name']);
     $temp_array['label']=$row['id'];
     $temp_array['name']=$row['item_name'];
+    $temp_array['item_code']=$row['item_code'];
     $temp_array['brand']=$row['brand'];
     $temp_array['category']=$row['category'];
     $temp_array['sub_category']=$row['sub_category'];

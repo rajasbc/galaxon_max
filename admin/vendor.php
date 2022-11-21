@@ -121,6 +121,12 @@ include 'header.php';
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">Gst.No</span>
+                  </div>
+                  <input type="text" id='gst' name='gst' class="form-control enterKeyclass" placeholder="Enter GST No">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
                     <span class="input-group-text" style="width: 8.3rem">Address</span>
                   </div>
                   <input type="text" id='address' name='address' class="form-control enterKeyclass" placeholder="Enter Address">
@@ -410,6 +416,7 @@ success: function(res){
     $("#email").val(res.email);
     $("#address").val(res.address);
     $("#city").val(res.city);
+    $("#gst").val(res.gst);
     $("#state").val(res.state);
     $("#country").val(res.country);
     $("#pincode").val(res.pincode);

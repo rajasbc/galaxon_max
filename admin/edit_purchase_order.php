@@ -7,8 +7,8 @@ $vendor_obj= new Vendors();
 $vendor= $vendor_obj->get_vendor_dt($purchase_order_dt[0]['vendor_id']); 
 $brand_obj = new Brand();
 $brand =  $brand_obj->get_brand_data();
-$category_obj = new Category();
-$category =  $category_obj->get_category_data();
+$description_obj = new Description();
+
 $items=array();
 $i=0;
 foreach ($purchase_order_item_dt as $key => $value) {
@@ -134,9 +134,17 @@ $items=json_encode($items);
                     <div class="col-6">
                       <label>Mobile No :</label><span id="vendor_mobile"> <?=$vendor['mobile_no']?></span>
                     </div>
+                    <?php if ($vendor['email']!='') { ?>
                     <div class="col-6">
                       <label>Email :</label><span id="vendor_email"> <?=$vendor['email']?></span>
                     </div>
+                  <?php }?>
+                   <?php if ($vendor['gst']!='') { ?>
+                    <div class="col-6">
+                      <label>GST No :</label><span id="vendor_gst"> <?=$vendor['gst']?></span>
+                    </div>
+                  <?php }?>
+
                   </div>
                 </div>
                 </div>
@@ -149,6 +157,9 @@ $items=json_encode($items);
                     <tr>
                       <th>S.No</th>
                       <th>Product</th>
+                      <th>Quantity</th>
+                      <th>Description</th>
+                      <th>Units</th>
                       <th>Tons</th>
                       <th>Order Qty</th>
                       <th>Received Qty</th>
@@ -156,16 +167,29 @@ $items=json_encode($items);
                       <th>Mrp</th>
                       <th>Discount</th>
                       <th>Gst</th>
-                      <th>Quantity</th>
+                      
                       <th>Total</th>
                     </tr>
                   </thead>
                   <tbody class="text-left css-serial" id="tdata">
  <?php $sno=0; foreach ($purchase_order_item_dt as $key => $row) {
    $sno++;
+   $description='';
+   if ($row['sub_category']!='' && $row['sub_category']!=0) {
+     $description =  $description_obj->get_description_dt($row['sub_category']);
+     $description_name=$description[0]['name'];
+   }
+   
    echo '<tr id="trItem_'.$sno.'">';
            echo '<td class=" ch-4"><span></span></td>';
             echo '<td class="text-left ch-10">'.$row['item_name'].'</td>';
+            echo '<td class="text-left ch-4">';
+
+                echo '<input onkeyup=quantityupdate('.$sno.',this) class="form-control quantity" name="quantity[]" id="quantity'.$sno.'" value="0" style="width:5rem; height:1.75rem">';
+
+                echo '</td>';
+                echo '<td class="text-left ch-10">'.$description_name.'</td>';
+                echo '<td class="text-left ch-10">'.$row['units'].'</td>';
             echo '<td class="text-left ch-10" id="tons'.$sno.'">0</td>';
              echo '<td class="text-left ch-10" id="order_qty'.$sno.'">'.$row['qty'].'</td>';
              echo '<td class="text-left ch-10" id="rec_qty'.$sno.'">'.$row['received_qty'].'</td>';
@@ -187,11 +211,6 @@ $items=json_encode($items);
                 echo '<td class="text-left ch-4">';
 
                 echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control gst" name="gst[]" id="gst'.$sno.'" value="'.$row['gst'].'" style="width:5rem; height:1.75rem">';
-
-                echo '</td>';
-                echo '<td class="text-left ch-4">';
-
-                echo '<input onkeyup=quantityupdate('.$sno.',this) class="form-control quantity" name="quantity[]" id="quantity'.$sno.'" value="0" style="width:5rem; height:1.75rem">';
 
                 echo '</td>';
                 echo '<td class="text-left ch-6" id="totalid'.$sno.'"></td>';

@@ -9,6 +9,7 @@ class PurchaseOrder extends Dbconnection {
 	var $tablename3 = "`purchase_order_log`";
 	var $tablename4 = "`purchase_order_history`";
 	var $tablename5 = "`purchase_order_history_details`";
+	var $tablename6 = "`purchase_shipping_details`";
 	// Create Db Connection for this class operations
 	function __construct() {
 		parent::__construct();
@@ -20,6 +21,7 @@ class PurchaseOrder extends Dbconnection {
 		$item = $_POST;
 		$purchase=array();
 		$purchase_log=array();
+		$shipping_array=array();
 		$sql='select max(purchase_no) as purchase_no from '.$this->tablename.' where shop_id='.$_SESSION['shop_id'];
 		$result=$this->db->GetResultsArray($sql);
 		if ($result[0]['purchase_no']=='' && $result[0]['purchase_no']==0) {
@@ -69,6 +71,7 @@ if ($this->db->getpost('order_type')=='received') {
                        }
                        
                        $items['item_name']=$itemvar["item_name"];
+                       $items['item_code']=$itemvar["item_code"];
                        $items['mrp']=$itemvar["mrp"];
                        $items['sales_price']=$itemvar["sale_price"];
                        $items['discount']=$itemvar["discount"];
@@ -96,6 +99,7 @@ if ($this->db->getpost('order_type')=='received') {
                        }
                        
                        $purchase_items['item_name']=$itemvar["item_name"];
+                       $purchase_items['item_code']=$itemvar["item_code"];
                        $purchase_items['mrp']=$itemvar["mrp"];
                        $purchase_items['sales_price']=$itemvar["sale_price"];
                        $purchase_items['discount']=$itemvar["discount"];
@@ -132,6 +136,51 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
 		$this->db->mysql_insert($this->tablename3, $purchase_log);
 }
 				
+		if ($this->db->getpost('shipping_name')!='') {
+	$shipping_array['name']=$this->db->getpost('shipping_name');
+}
+if ($this->db->getpost('shipping_company_name')!='') {
+	$shipping_array['company_name']=$this->db->getpost('shipping_company_name');
+}
+if ($this->db->getpost('smobile_no')!='') {
+	$shipping_array['mobile_no']=$this->db->getpost('smobile_no');
+}
+if ($this->db->getpost('semail')!='') {
+	$shipping_array['email']=$this->db->getpost('semail');
+}
+if ($this->db->getpost('sgst')!='') {
+	$shipping_array['gst_no']=$this->db->getpost('sgst');
+}
+if ($this->db->getpost('saddress')!='') {
+	$shipping_array['address']=$this->db->getpost('saddress');
+}
+if ($this->db->getpost('scity')!='') {
+	$shipping_array['city']=$this->db->getpost('scity');
+}
+if ($this->db->getpost('sstate')!='') {
+	$shipping_array['state']=$this->db->getpost('sstate');
+}
+if ($this->db->getpost('scountry')!='') {
+	$shipping_array['country']=$this->db->getpost('scountry');
+}
+if ($this->db->getpost('spincode')!='') {
+	$shipping_array['pincode']=$this->db->getpost('spincode');
+}
+if ($this->db->getpost('ship_terms')!='') {
+	$shipping_array['shipping_terms']=$this->db->getpost('ship_terms');
+}
+if ($this->db->getpost('shipping_method')!='') {
+	$shipping_array['method']=$this->db->getpost('shipping_method');
+}
+if ($this->db->getpost('shipping_d_date')!='') {
+	$shipping_array['delivery_date']=$this->db->getpost('shipping_d_date');
+}
+if (!empty($shipping_array)) {
+	$shipping_array['po_id']=$purchase_id;
+	$shipping_array['shop_id']=$_SESSION['shop_id'];
+	$this->db->mysql_insert($this->tablename6, $shipping_array);
+}
+
 
      return ['status'=>'success'];
 		
@@ -176,6 +225,7 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
                        }
                        
                        $items['item_name']=$itemvar["item_name"];
+                       $items['item_code']=$itemvar["item_code"];
                        $items['mrp']=$itemvar["mrp"];
                        $items['sales_price']=$itemvar["sale_price"];
                        $items['discount']=$itemvar["discount"];
@@ -208,6 +258,7 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
                        }
                        
                        $purchase__history_items['item_name']=$itemvar["item_name"];
+                       $purchase__history_items['item_code']=$itemvar["item_code"];
                        $purchase__history_items['mrp']=$itemvar["mrp"];
                        $purchase__history_items['sales_price']=$itemvar["sale_price"];
                        $purchase__history_items['discount']=$itemvar["discount"];

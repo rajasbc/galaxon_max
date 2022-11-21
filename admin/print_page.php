@@ -3,6 +3,7 @@ include '../tables/config.php';
 $obj=new PurchaseOrder();
 $purchase_order_dt=$obj->get_purchase_order(base64_decode($_GET['id']));
 $purchase_order_item_dt=$obj->get_purchase_order_item(base64_decode($_GET['id']));
+$purchase_order_shipping=$obj->get_purchase_order_shipping(base64_decode($_GET['id']));
 $vendor_obj= new Vendors();
 $vendor= $vendor_obj->get_vendor_dt($purchase_order_dt[0]['vendor_id']); 
 $brand_obj = new Brand();
@@ -10,6 +11,9 @@ $brand =  $brand_obj->get_brand_data();
 $description_obj = new Description();
 
 $items=array();
+$total_qty=0;
+$total_ton=0;
+$total_amount=0;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,6 +38,12 @@ $items=array();
   font-size:14px !important;
   padding:0px !important;
 }
+<?php if(count($purchase_order_shipping)==0){
+ ?>
+ .ship_cls{
+  display: none;
+ }
+<?php }?>
 .body {
 margin: 0;
 padding: 0;
@@ -53,7 +63,7 @@ margin: 1cm auto;
 border: 1px #D3D3D3 solid;
 border-radius: 5px;
 /*background: white;*/
-background-image: url('../dist/img/invoice.png');
+background-image: url('../dist/img/invoice.jpeg');
     background-size: 100% 109%;
     background-position-y: -116px;
     background-repeat: no-repeat;
@@ -88,7 +98,7 @@ width: initial;
 min-height: 37cm;
 box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 /*background: initial;*/
-background-image: url('../dist/img/invoice.png');
+background-image: url('../dist/img/invoice.jpeg');
 background-size: 100% 109%;
     background-position-y: -116px;
     background-repeat: no-repeat;
@@ -127,8 +137,8 @@ height: 700px;
 height: 440px;
 }
 .bill-table tr.line_1 {
-height: 20px;
-line-height: 20px;
+height: 30px;
+line-height: 30px;
 }
 .shippingDetails {
 font-size: 10px;
@@ -182,58 +192,169 @@ margin-bottom: 0px !important;
 
 </div>
 <div class="row">
-<div class="col-sm-6 col-md-6 col-lg-6" style="
+<div class="col-sm-6 col-md-6 col-lg-6 border border-dark" style="
                     padding-left: 25px;">
+                    <div class="col-sm-12 col-md-12 col-lg-12  ">
+<div class="row col-12 ">
+ <div class="col-6"><h5>Purchase No</h5></div>
+  <div class="col-1"><h5>:</h5></div>
+  <div class="col-5"><h5><?=$purchase_order_dt[0]['purchase_no']?></h5></div>
+</div>
+<div class="row col-12 ">
+ <div class="col-6"><h5>Purchase Date</h5></div>
+  <div class="col-1"><h5>:</h5></div>
+  <div class="col-5"><h5><?=date('d-m-Y',strtotime($purchase_order_dt[0]['created_at']))?></h5></div>
+</div>
+
+</div>
+<br>
 <div class="row" style="font-size:15px"><h6><b>Vendor Details :</b></h6></div>
 <div class="row col-12 mb-2" >
   <div class="col-4"><b>Name</b></div>
   <div class="col-1">:</div>
-  <div class="col-7"><b>Amar - GLAX001</b></div>
+  <div class="col-7"><b><?=$vendor['name']?> - <?=$vendor['vendor_code']?> </b></div>
 </div>
 <div class="row col-12 mb-2" >
   <div class="col-4"><b>Company Name</b></div>
   <div class="col-1">:</div>
-  <div class="col-7"><b>Amar Company</b></div>
+  <div class="col-7"><b><?=$vendor['company_name']?></b></div>
 </div>
-<div class="row col-12 mb-2" >
-  <div class="col-4"><b>Mobile.No</b></div>
-  <div class="col-1">:</div>
-  <div class="col-7"><b>9442686630</b></div>
-</div>
-<div class="row col-12 mb-2" >
-  <div class="col-4"><b>Email</b></div>
-  <div class="col-1">:</div>
-  <div class="col-7"><b>amar@gmail.com</b></div>
-</div>
+<?php if ($vendor['address']!='' || $vendor['city']!='' || $vendor['state']!='' || $vendor['country']!='' || $vendor['pincode']!='') {?>
 <div class="row col-12 mb-2" >
   <div class="col-4"><b>Address</b></div>
   <div class="col-1">:</div>
-  <div class="col-7"><b>73,Priyar St,Salem - 636001.</b></div>
+  <div class="col-7"><b>
+    <?php 
+if ($vendor['address']!='') {
+   echo $vendor['address'];
+}
+if ($vendor['city']!='') {
+   echo ','.$vendor['city'];
+}
+if ($vendor['state']!='') {
+   echo ','.$vendor['state'];
+}
+if ($vendor['country']!='') {
+   echo ','.$vendor['country'];
+}
+if ($vendor['pincode']!='') {
+   echo ','.$vendor['pincode'];
+}
+    ?>
+  </b></div>
+</div>
+<?php }?>
+<div class="row col-12 mb-2" >
+  <div class="col-4"><b>Mobile.No</b></div>
+  <div class="col-1">:</div>
+  <div class="col-7"><b><?=$vendor['mobile_no']?></b></div>
+</div>
+<?php if ($vendor['email']!='') {?>
+<div class="row col-12 mb-2" >
+  <div class="col-4"><b>Email</b></div>
+  <div class="col-1">:</div>
+  <div class="col-7"><b><?=$vendor['email']?></b></div>
+</div>
+<?php }?>
+<?php if ($vendor['gst']!='') {?>
+<div class="row col-12 mb-2" >
+  <div class="col-4"><b>GST No </b></div>
+  <div class="col-1">:</div>
+  <div class="col-7"><b><?=$vendor['gst']?></b></div>
+</div>
+<?php }?>
+
+</div>
+
+<div class="col-sm-6 col-md-6 col-lg-6 border border-dark ship_cls" style="
+                    padding-left: 25px;">
+<div class="row" style="font-size:15px"><h6><b>Shipping Details :</b></h6></div>
+<div class="row col-12 mb-2" >
+  <div class="col-4"><b>Name</b></div>
+  <div class="col-1">:</div>
+  <div class="col-7"><b><?=$purchase_order_shipping[0]['name']?></b></div>
+</div>
+<div class="row col-12 mb-2" >
+  <div class="col-4"><b>Company Name</b></div>
+  <div class="col-1">:</div>
+  <div class="col-7"><b><?=$purchase_order_shipping[0]['company_name']?></b></div>
+</div>
+<?php if ($purchase_order_shipping[0]['address']!='' || $purchase_order_shipping[0]['city']!='' || $purchase_order_shipping[0]['state']!='' || $purchase_order_shipping[0]['country']!='' || $purchase_order_shipping[0]['pincode']!='') {?>
+<div class="row col-12 mb-2" >
+  <div class="col-4"><b>Address</b></div>
+  <div class="col-1">:</div>
+  <div class="col-7"><b>
+    <?php 
+if ($purchase_order_shipping[0]['address']!='') {
+   echo $purchase_order_shipping[0]['address'];
+}
+if ($purchase_order_shipping[0]['city']!='') {
+   echo ','.$purchase_order_shipping[0]['city'];
+}
+if ($purchase_order_shipping[0]['state']!='') {
+   echo ','.$purchase_order_shipping[0]['state'];
+}
+if ($purchase_order_shipping[0]['country']!='') {
+   echo ','.$purchase_order_shipping[0]['country'];
+}
+if ($purchase_order_shipping[0]['pincode']!='') {
+   echo ','.$purchase_order_shipping[0]['pincode'];
+}
+    ?>
+  </b></div>
+</div>
+<?php }?>
+<div class="row col-12 mb-2" >
+  <div class="col-4"><b>Mobile.No</b></div>
+  <div class="col-1">:</div>
+  <div class="col-7"><b><?=$purchase_order_shipping[0]['mobile_no']?></b></div>
+</div>
+<?php if ($purchase_order_shipping[0]['email']!='') {?>
+<div class="row col-12 mb-2" >
+  <div class="col-4"><b>Email</b></div>
+  <div class="col-1">:</div>
+  <div class="col-7"><b><?=$purchase_order_shipping[0]['email']?></b></div>
+</div>
+<?php }?>
+<?php if ($purchase_order_shipping[0]['gst_no']!='') {?>
+<div class="row col-12 mb-2" >
+  <div class="col-4"><b>GST No </b></div>
+  <div class="col-1">:</div>
+  <div class="col-7"><b><?=$purchase_order_shipping[0]['gst_no']?></b></div>
+</div>
+<?php }?>
+<?php if ($purchase_order_shipping[0]['shipping_terms']!='') {?>
+<div class="row col-12 mb-2" >
+  <div class="col-4"><b>Ship Terms </b></div>
+  <div class="col-1">:</div>
+  <div class="col-7"><b><?=$purchase_order_shipping[0]['shipping_terms']?></b></div>
+</div>
+<?php }?>
+<?php if ($purchase_order_shipping[0]['method']!='') {?>
+<div class="row col-12 mb-2" >
+  <div class="col-4"><b>Shipping Method </b></div>
+  <div class="col-1">:</div>
+  <div class="col-7"><b><?=$purchase_order_shipping[0]['method']?></b></div>
+</div>
+<?php }?>
+<?php if ($purchase_order_shipping[0]['delivery_date']!='') {?>
+<div class="row col-12 mb-2" >
+  <div class="col-4"><b>Delivery Date </b></div>
+  <div class="col-1">:</div>
+  <div class="col-7"><b><?=$purchase_order_shipping[0]['delivery_date']?></b></div>
+</div>
+<?php }?>
+
 </div>
 
 
-
-</div>
-<div class="col-sm-6 col-md-6 col-lg-6">
-<div class="row col-12 text-right">
- <div class="col-6"><h5>Purchase No</h5></div>
-  <div class="col-1"><h5>:</h5></div>
-  <div class="col-5"><h5>34</h5></div>
-</div>
-<div class="row col-12 text-right">
- <div class="col-6"><h5>Purchase Date</h5></div>
-  <div class="col-1"><h5>:</h5></div>
-  <div class="col-5"><h5><?=date('d-m-Y')?></h5></div>
-</div>
-
-</div>
 </div>
 </div>
 </div>
 <div class="row">
 <div class="col-sm-12 col-md-12 col-lg-12 p-0">
 <div id="table-fixed" class="table-fixed">
-<table class="table text-center bill-table  w-100 border border-dark  large  " id="bill-table">
+<table class="table text-center bill-table  w-100 border border-dark   large " id="bill-table">
 <thead>
 <tr class="border-left border-bottom border-dark font-weight-bold">
 <th>S.No</th>
@@ -253,6 +374,9 @@ margin-bottom: 0px !important;
    <?php $sno=0; foreach ($purchase_order_item_dt as $key => $row) {
    $sno++;
    $description='';
+   $total_qty=$total_qty+$row['qty'];
+   $total_ton=$total_ton+($row['qty']/1000);
+   $total_amount=$total_amount+$row['total'];
    if ($row['sub_category']!='' && $row['sub_category']!=0) {
      $description =  $description_obj->get_description_dt($row['sub_category']);
      $description_name=$description[0]['name'];
@@ -276,21 +400,35 @@ margin-bottom: 0px !important;
 <td class="text-right"><?=$row['total']?></td>
 </tr>
 <?php }?>
+<tr class="border-right border-dark">
+<td class="border-left-0">&nbsp;</td>
+<td class="w-50 text-left"><b></b></td>
+<td ></td>
+<td >&nbsp;</td>
+<td >&nbsp;</td>
+
+<td></td>
+<td class="text-right">&nbsp;</td>
+<td class="text-right">&nbsp;</td>
+<td class="text-right">&nbsp;</td>
+<td class="text-right">&nbsp;</td> 
+<td class="text-right"></td>
+</tr>
 </tbody>
 <tfoot>
 <tr class="border border-dark font-weight-bold line_1">
 <td class="border-left-0">&nbsp;</td>
 <td class="w-50 text-left"><b>Total</b></td>
-<td >&nbsp;</td>
+<td ><?=$total_qty?></td>
 <td >&nbsp;</td>
 <td >&nbsp;</td>
 
-<td>1</td>
-<td class="text-right">10.00</td>
+<td><?=$total_ton?></td>
 <td class="text-right">&nbsp;</td>
 <td class="text-right">&nbsp;</td>
-<td class="text-right">1000</td> 
-<td class="text-right">9900.00</td>
+<td class="text-right">&nbsp;</td>
+<td class="text-right">&nbsp;</td> 
+<td class="text-right"><?=$total_amount?></td>
 </tr>
 </tfoot>
 </table>
@@ -301,15 +439,15 @@ margin-bottom: 0px !important;
 <div class="col-4"></div>
 <div class="col-3 text-right"><h6>Discount Amt</h6></div>
 <div class="col-1"><h6>:</h6></div>
-<div class="col-4 text-right"><h6>1000.00</h6></div>
+<div class="col-4 text-right"><h6><?=$purchase_order_dt[0]['discount_amt']?></h6></div>
 <div class="col-4"></div>
 <div class="col-3 text-right"><h6>Tax Amt</h6></div>
 <div class="col-1"><h6>:</h6></div>
-<div class="col-4 text-right"><h6>900.00</h6></div>
+<div class="col-4 text-right"><h6><?=$purchase_order_dt[0]['tax_amt']?></h6></div>
 <div class="col-4"></div>
 <div class="col-3 text-right"><h6>Total Amt</h6></div>
 <div class="col-1"><h6>:</h6></div>
-<div class="col-4 text-right"><h6>9900.00</h6></div>
+<div class="col-4 text-right"><h6><?=$purchase_order_dt[0]['grand_total']?></h6></div>
 <div class="col-sm-6 col-md-6 col-lg-6 p-0">
 
 </div>

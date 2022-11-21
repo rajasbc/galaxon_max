@@ -448,7 +448,7 @@ $category =  $category_obj->get_category_data();
                   <div class="input-group-prepend">
                     <span class="input-group-text" style="width: 8.3rem">Gst.No</span>
                   </div>
-                  <input type="text" id='gst' name='gst' class="form-control enterKeyclass" placeholder="Enter GST No">
+                  <input type="text" id='ship_gst' name='ship_gst' class="form-control enterKeyclass" placeholder="Enter GST No">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
@@ -1023,7 +1023,7 @@ $(".enterKeyclass").keypress(function (event) {
        shipping_data["shipping_company_name"]=$("#shipping_company_name").val();
        shipping_data["smobile_no"]=$("#mobile_no").val();
        shipping_data["semail"]=$("#email").val();
-       shipping_data["sgst"]=$("#gst").val();
+       shipping_data["sgst"]=$("#ship_gst").val();
        shipping_data["saddress"]=$("#address").val();
        shipping_data["scity"]=$("#city").val();
        shipping_data["sstate"]=$("#state").val();

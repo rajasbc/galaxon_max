@@ -96,7 +96,7 @@ $items=json_encode($items);
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-              <h1 class="m-0">Purchase Order</h1>
+              <h1 class="m-0">Receiving Order</h1>
             
           </div><!-- /.col -->
           <div class="col-sm-6">
@@ -127,7 +127,7 @@ $items=json_encode($items);
                   <label>Vendor Details</label><br>
                   <div class="row col-12">
                     <div class="col-6">
-                      <label>Name :</label><span id="vendor_name"> <?=$vendor['name']?> - <?=$vendor['vendor_code']?></span>
+                      <label>Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label><span id="vendor_name"> <?=$vendor['name']?> - <?=$vendor['vendor_code']?></span>
                     </div>
                     <div class="col-6">
                       <label>Company Name :</label><span id="vendor_company_name"> <?=$vendor['company_name']?></span>
@@ -137,12 +137,12 @@ $items=json_encode($items);
                     </div>
                     <?php if ($vendor['email']!='') { ?>
                     <div class="col-6">
-                      <label>Email :</label><span id="vendor_email"> <?=$vendor['email']?></span>
+                      <label>Email &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label><span id="vendor_email"> <?=$vendor['email']?></span>
                     </div>
                   <?php }?>
                    <?php if ($vendor['gst']!='') { ?>
                     <div class="col-6">
-                      <label>GST No :</label><span id="vendor_gst"> <?=$vendor['gst']?></span>
+                      <label>GST No &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label><span id="vendor_gst"> <?=$vendor['gst']?></span>
                     </div>
                   <?php }?>
 
@@ -224,7 +224,7 @@ $items=json_encode($items);
 </tbody>
 <tfoot>
 <tr>
-  <td colspan="13" class="td-last-1">
+  <td colspan="14" class="td-last-1">
  <div class="row">
 <div class="col-lg-4 col-sm-4 col-md-4">
   <div class="">
@@ -335,7 +335,7 @@ $items=json_encode($items);
                         &nbsp;
                       </div>
                       <div class="col-6 text-center">
-                        <button class="col-12 btn btn-primary" id="place_order">Place Order</button>
+                        <button class="col-12 btn btn-primary" id="place_order">SAVE</button>
                       </div>
                       
                     </div>

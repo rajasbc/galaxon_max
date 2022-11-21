@@ -99,7 +99,13 @@ $description =  $description_obj->get_description_data();
                 </div>
                 <div class="col-6 form-group mb-3">
                    <label>GST</label>
-              <input type="text" class="form-control enterKeyclass" id="gst" placeholder="Gst">
+              <select class="form-control enterKeyclass" id="gst">
+                <option value="0">0</option>
+                <option value="5">5</option>
+                <option value="12">12</option>
+                <option value="18">18</option>
+                <option value="28">28</option>
+              </select>
                 </div>
                 <div class="col-6 form-group mb-3"></div>
                 <div class="col-6 form-group mb-3">

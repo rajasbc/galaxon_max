@@ -17,6 +17,7 @@ foreach ($purchase_order_item_dt as $key => $value) {
       "po_id"=>$value['id'],
       "item_id"=>$value['item_id'],
       "item_name"=>$value['item_name'],
+      "item_code"=>$value['item_code'],
       "brand"=>$value['brand'],
       "category"=>$value['category'],
       "sub_category"=>$value['sub_category'],
@@ -163,6 +164,7 @@ $items=json_encode($items);
                       <th>Tons</th>
                       <th>Order Qty</th>
                       <th>Received Qty</th>
+                      <th>Vendor Price</th>
                       <th>Purchase Price</th>
                       <th>Mrp</th>
                       <th>Discount</th>
@@ -193,6 +195,8 @@ $items=json_encode($items);
             echo '<td class="text-left ch-10" id="tons'.$sno.'">0</td>';
              echo '<td class="text-left ch-10" id="order_qty'.$sno.'">'.$row['qty'].'</td>';
              echo '<td class="text-left ch-10" id="rec_qty'.$sno.'">'.$row['received_qty'].'</td>';
+             echo '<td class="text-left ch-10">'.$row['mrp'].'</td>';
+
             echo '<td class="text-left ch-4">';
 
                 echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control mrp" name="mrp[]" id="mrp'.$sno.'" value="'.$row['mrp'].'" style="width:5rem; height:1.75rem">';

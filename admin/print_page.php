@@ -1,4 +1,16 @@
+<?php 
+include '../tables/config.php';
+$obj=new PurchaseOrder();
+$purchase_order_dt=$obj->get_purchase_order(base64_decode($_GET['id']));
+$purchase_order_item_dt=$obj->get_purchase_order_item(base64_decode($_GET['id']));
+$vendor_obj= new Vendors();
+$vendor= $vendor_obj->get_vendor_dt($purchase_order_dt[0]['vendor_id']); 
+$brand_obj = new Brand();
+$brand =  $brand_obj->get_brand_data();
+$description_obj = new Description();
 
+$items=array();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -224,38 +236,53 @@ margin-bottom: 0px !important;
 <table class="table text-center bill-table  w-100 border border-dark  large  " id="bill-table">
 <thead>
 <tr class="border-left border-bottom border-dark font-weight-bold">
-<td>S.No</td>
-
-<td class="w-50">Product Name</td>
-<td > Units </td>
-<td>Tons</td>
-<td>Purchase Price</td>
-<td >Disc %</td>
-<td >GST %</td>
-<td >Quantity</td>
-<td >Amount</td>
+<th>S.No</th>
+<th class="w-50">Product Name</th>
+<th>Quantity</th>
+<th>Description</th>
+<th>Units</th>
+<th>Tons</th>
+<th>Vendor Price</th>
+<th>Mrp</th>
+<th>Discount</th>
+<th>Gst</th>
+<th>Total</th>
 </tr>
 </thead>
 <tbody class="text-center" id="tdata">
+   <?php $sno=0; foreach ($purchase_order_item_dt as $key => $row) {
+   $sno++;
+   $description='';
+   if ($row['sub_category']!='' && $row['sub_category']!=0) {
+     $description =  $description_obj->get_description_dt($row['sub_category']);
+     $description_name=$description[0]['name'];
+   }?>
 <tr class="border border-dark line_1">
-<td class="border-left-0">1</td>
-<td class="w-50 text-left"><b>
-MONITER </b></td>
-<td >Kg</td>
+<td class="border-left-0"><?=$sno?></td>
+<td class="w-50 text-left"><b><?=$row['item_name']?>
+  <?php if ($row['item_code']!='') {
+    echo ' - '.$row['item_code'];
+  } ?>
+</b></td>
+<td ><?=$row['qty']?></td>
 
-<td>1</td>
-<td class="text-right">10.00</td>
-<td class="text-right">10</td>
-<td class="text-right">10</td>
-<td class="text-right">1000</td> 
-<td class="text-right">9900.00</td>
+<td><?=$description_name?></td>
+<td class="text-right"><?=$row['units']?></td>
+<td class="text-right"><?=($row['qty']/1000)?></td>
+<td class="text-right"><?=$row['mrp']?></td>
+<td class="text-right"><?=$row['sales_price']?></td> 
+<td class="text-right"><?=$row['discount']?></td>
+<td class="text-right"><?=$row['gst']?></td>
+<td class="text-right"><?=$row['total']?></td>
 </tr>
-
+<?php }?>
 </tbody>
 <tfoot>
 <tr class="border border-dark font-weight-bold line_1">
 <td class="border-left-0">&nbsp;</td>
 <td class="w-50 text-left"><b>Total</b></td>
+<td >&nbsp;</td>
+<td >&nbsp;</td>
 <td >&nbsp;</td>
 
 <td>1</td>

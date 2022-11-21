@@ -71,7 +71,7 @@ include 'header.php';
                     <th>Balance Amount</th>
                     <th>Status</th>
                     <th>Pay Status</th>
-                    <th>Details</th>
+                    <th width="50%">Details</th>
                   </tr>
                 <?php }?>
                   </thead>
@@ -216,4 +216,9 @@ success: function(res){
       window.location='purchase_order.php?type=NEW';
     }
   })
+</script>
+<script type="text/javascript">
+  function print_page(e) {
+    window.open('print_page.php?id='+btoa(e),'_blank');
+  }
 </script>

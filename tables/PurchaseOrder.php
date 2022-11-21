@@ -388,5 +388,11 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
 		$result=$this->db->GetResultsArray($sql);
 		return $result;
 	}
+	public function get_purchase_order_shipping($id)
+	{
+	 $sql='select * from '.$this->tablename6.' where po_id='.$id.'';
+		$result=$this->db->GetResultsArray($sql);
+		return $result;
+	}
 }
 ?>

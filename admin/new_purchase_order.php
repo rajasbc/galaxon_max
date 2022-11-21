@@ -120,7 +120,7 @@ $category =  $category_obj->get_category_data();
                   <label>Vendor Details</label><br>
                   <div class="row col-12">
                     <div class="col-6">
-                      <label>Name :</label><span id="vendor_name"></span>
+                      <label>Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label><span id="vendor_name"></span>
                     </div>
                     <div class="col-6">
                       <label>Company Name :</label><span id="vendor_company_name"></span>
@@ -129,10 +129,10 @@ $category =  $category_obj->get_category_data();
                       <label>Mobile No :</label><span id="vendor_mobile"></span>
                     </div>
                     <div class="col-6" id="v_email">
-                      <label>Email :</label><span id="vendor_email"></span>
+                      <label>Email &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label><span id="vendor_email"></span>
                     </div>
                     <div class="col-6" id="v_gst">
-                      <label>GST No :</label><span id="vendor_gst"></span>
+                      <label>GST No &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label><span id="vendor_gst"></span>
                     </div>
                   </div>
                 </div>

@@ -186,60 +186,40 @@ margin-bottom: 0px !important;
 <div>
 <main>
 <div class="page">
-
-
-<div class="container-fluid">
-<div class="row ">
-<div class="col-sm-12 col-md-12 col-lg-12">
-<div class="row border border-dark" style="height: 165px">
- <div class="col-3">
-   <img src="../dist/img/logo.png" style="width: 185px;">
- </div>
- <div class="col-8 text-center">
-   <b style="font-size: 12px;">Purchase Order</b> 
-   <br>
-   <h3>GALAXON MAX PRIVATE LIMITED</h3>
-   <h6>NO 18/44(1),THAMPILAKSHMI ARCADE,CITTUR,PALAKKAD-678101</h6>
-   <h6>Phone : 8438335415 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tele-Phone : 4923 356 006</h6>
-   <h6>Mail : galaxon.co@gmail.com</h6>
-   <h6>GSTIN : 33AAOFC2618L1ZC</h6>
-   <!-- <b style="font-size: 14px;font-weight: bold">GSTIN : 33AAOFC2618L1ZC</b> -->
- </div>
-</div>
 <div class="row">
-<div class="col-sm-6 col-md-6 col-lg-6 border border-dark" style="
-                    padding-left: 25px;">
-                    <div class="col-sm-12 col-md-12 col-lg-12  ">
-<div class="row col-12 ">
- <div class="col-6"><h5>Purchase No</h5></div>
-  <div class="col-1"><h5>:</h5></div>
-  <div class="col-5"><h5><?=$purchase_order_dt[0]['purchase_no']?></h5></div>
+<div class="col-sm-12 col-md-12 col-lg-12">
 </div>
-<div class="row col-12 ">
- <div class="col-6"><h5>Purchase Date</h5></div>
-  <div class="col-1"><h5>:</h5></div>
-  <div class="col-5"><h5><?=date('d-m-Y',strtotime($purchase_order_dt[0]['created_at']))?></h5></div>
 </div>
 
+<div class="container-fluid ">
+<div class="row ">
+<div class="col-sm-12 col-md-12 col-lg-12 border border-dark">
+<div class="row border-bottom border-dark" style="height: 145px;">
+<div class="col-2 text-center" >
+  <img src="../dist/img/logo.png" style="width: 12rem;"  >
+</div>
+<div class="col-10 mb-0 text-center">
+  <div class="row d-flex justify-content-center " style="font-size: 16px !important;">
+<b>Purchase Order</b>
+</div>
+<div class="col-12 text-center" style="font-size: 26px !important;"><b>GALAXON MAX PRIVATE LIMITED</b>
 </div>
 <br>
-<div class="row" style="font-size:15px"><h6><b>Vendor Details :</b></h6></div>
-<div class="row col-12 mb-2" >
-  <div class="col-4"><b>Name</b></div>
-  <div class="col-1">:</div>
-  <div class="col-7"><b><?=$vendor['name']?> - <?=$vendor['vendor_code']?> </b></div>
+<div class="col-12 text-center">NO 18/44(1),THAMPILAKSHMI ARCADE,CITTUR,PALAKKAD-678101</div>
+
+<div class="col-12 text-center">Phone : 8438335415 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tele-Phone : 4923 356 006</div>
+<div class="col-12 text-center">Mail : galaxon.co@gmail.com</div>
+<div class="col-12 text-center">GSTIN : 33AAOFC2618L1ZC</div>
 </div>
-<div class="row col-12 mb-2" >
-  <div class="col-4"><b>Company Name</b></div>
-  <div class="col-1">:</div>
-  <div class="col-7"><b><?=$vendor['company_name']?></b></div>
 </div>
+<div class="row">
+<div class="col-sm-6 col-md-6 col-lg-6" style="
+                    padding-left: 25px;">
+<div class="row" style="font-size:15px"><label><b>Vendor</b></label></div>
+<div class="row" ><b>Name : <?=$vendor['name']?> - <?=$vendor['vendor_code']?></b></div>
+<div class="row" ><b>Company Name : <?=$vendor['company_name']?></b></div>
 <?php if ($vendor['address']!='' || $vendor['city']!='' || $vendor['state']!='' || $vendor['country']!='' || $vendor['pincode']!='') {?>
-<div class="row col-12 mb-2" >
-  <div class="col-4"><b>Address</b></div>
-  <div class="col-1">:</div>
-  <div class="col-7"><b>
-    <?php 
+<div class="row" ><b>Address :    <?php 
 if ($vendor['address']!='') {
    echo $vendor['address'];
 }
@@ -255,51 +235,66 @@ if ($vendor['country']!='') {
 if ($vendor['pincode']!='') {
    echo ','.$vendor['pincode'];
 }
-    ?>
-  </b></div>
-</div>
+    ?></b></div>
 <?php }?>
-<div class="row col-12 mb-2" >
-  <div class="col-4"><b>Mobile.No</b></div>
-  <div class="col-1">:</div>
-  <div class="col-7"><b><?=$vendor['mobile_no']?></b></div>
-</div>
+<div class="row" ><b>Mobile.No : <?=$vendor['mobile_no']?></b></div>
 <?php if ($vendor['email']!='') {?>
-<div class="row col-12 mb-2" >
-  <div class="col-4"><b>Email</b></div>
-  <div class="col-1">:</div>
-  <div class="col-7"><b><?=$vendor['email']?></b></div>
-</div>
+<div class="row" ><b>Email : <?=$vendor['email']?></b></div>
 <?php }?>
 <?php if ($vendor['gst']!='') {?>
-<div class="row col-12 mb-2" >
-  <div class="col-4"><b>GST No </b></div>
-  <div class="col-1">:</div>
-  <div class="col-7"><b><?=$vendor['gst']?></b></div>
-</div>
+<div class="row" ><b>GST No : <?=$vendor['gst']?></b></div>
 <?php }?>
 
 </div>
+<div class="col-sm-6 col-md-6 col-lg-6 shippingDetails">
+<div class="row">
+<div class="col-6 border-left border-right border-bottom border-dark" id="invoice_number">
+<span class=""><b>Purchase No : </b></span>
+<!-- $shippingDetails['invoice_number'] -->
+<span class="text-val"><b><?=$purchase_order_dt[0]['purchase_no']?></b></span>
+</div>
+<div class="col-6 border-bottom border-dark" id="invoice_dated">
+<span class=""><b>Purchase Date : </b></span>
+<span class="text-val"><b><?=date('d-m-Y',strtotime($purchase_order_dt[0]['created_at']))?></b></span>
+</div>
+</div>
+<div class="row">
+<div class="col-12 border-left  border-bottom border-dark" id="buyers_dated">
+<span class=""><b>Shipping Details</b></span>
 
-<div class="col-sm-6 col-md-6 col-lg-6 border border-dark ship_cls" style="
-                    padding-left: 25px;">
-<div class="row" style="font-size:15px"><h6><b>Shipping Details :</b></h6></div>
-<div class="row col-12 mb-2" >
-  <div class="col-4"><b>Name</b></div>
-  <div class="col-1">:</div>
-  <div class="col-7"><b><?=$purchase_order_shipping[0]['name']?></b></div>
 </div>
-<div class="row col-12 mb-2" >
-  <div class="col-4"><b>Company Name</b></div>
-  <div class="col-1">:</div>
-  <div class="col-7"><b><?=$purchase_order_shipping[0]['company_name']?></b></div>
+<!-- <div class="col-6 border-bottom border-dark" id="delivery_note_date">
+<span class="">Delivery Date : </span>
+
+<span class="text-val">21-11-2022</span>
+</div> -->
 </div>
-<?php if ($purchase_order_shipping[0]['address']!='' || $purchase_order_shipping[0]['city']!='' || $purchase_order_shipping[0]['state']!='' || $purchase_order_shipping[0]['country']!='' || $purchase_order_shipping[0]['pincode']!='') {?>
-<div class="row col-12 mb-2" >
-  <div class="col-4"><b>Address</b></div>
-  <div class="col-1">:</div>
-  <div class="col-7"><b>
-    <?php 
+<div class="row">
+<div class="col-4 border-left border-right border-bottom border-dark " id="buyers_order_no">
+<span class="">Name :</span>
+<span class="text-val"></span>
+</div>
+<div class="col-8 border-bottom border-dark" id="motor_vehicle_no">
+<span class="text-val"><?=$purchase_order_shipping[0]['name']?></span>
+</div>
+</div>
+<div class="row">
+<div class="col-4 border-left border-right border-bottom border-dark " id="buyers_order_no">
+<span class="">Company Name :</span>
+<span class="text-val"></span>
+</div>
+<div class="col-8 border-bottom border-dark" id="motor_vehicle_no">
+<span class="text-val"><?=$purchase_order_shipping[0]['company_name']?></span>
+</div>
+</div>
+<div class="row">
+<div class="col-4 border-left border-right border-bottom border-dark " id="buyers_order_no">
+<span class="">Address :</span>
+<span class="text-val"></span>
+</div>
+<div class="col-8 border-bottom border-dark" id="motor_vehicle_no">
+  <?php if ($purchase_order_shipping[0]['address']!='' || $purchase_order_shipping[0]['city']!='' || $purchase_order_shipping[0]['state']!='' || $purchase_order_shipping[0]['country']!='' || $purchase_order_shipping[0]['pincode']!='') {?>
+<span class="text-val"> <?php 
 if ($purchase_order_shipping[0]['address']!='') {
    echo $purchase_order_shipping[0]['address'];
 }
@@ -315,63 +310,50 @@ if ($purchase_order_shipping[0]['country']!='') {
 if ($purchase_order_shipping[0]['pincode']!='') {
    echo ','.$purchase_order_shipping[0]['pincode'];
 }
-    ?>
-  </b></div>
-</div>
+    ?></span>
 <?php }?>
-<div class="row col-12 mb-2" >
-  <div class="col-4"><b>Mobile.No</b></div>
-  <div class="col-1">:</div>
-  <div class="col-7"><b><?=$purchase_order_shipping[0]['mobile_no']?></b></div>
 </div>
-<?php if ($purchase_order_shipping[0]['email']!='') {?>
-<div class="row col-12 mb-2" >
-  <div class="col-4"><b>Email</b></div>
-  <div class="col-1">:</div>
-  <div class="col-7"><b><?=$purchase_order_shipping[0]['email']?></b></div>
 </div>
-<?php }?>
-<?php if ($purchase_order_shipping[0]['gst_no']!='') {?>
-<div class="row col-12 mb-2" >
-  <div class="col-4"><b>GST No </b></div>
-  <div class="col-1">:</div>
-  <div class="col-7"><b><?=$purchase_order_shipping[0]['gst_no']?></b></div>
+<div class="row">
+<div class="col-4 border-left border-right border-bottom border-dark " id="buyers_order_no">
+<span class="">Mobile.No :</span>
+<span class="text-val"></span>
 </div>
-<?php }?>
-<?php if ($purchase_order_shipping[0]['shipping_terms']!='') {?>
-<div class="row col-12 mb-2" >
-  <div class="col-4"><b>Ship Terms </b></div>
-  <div class="col-1">:</div>
-  <div class="col-7"><b><?=$purchase_order_shipping[0]['shipping_terms']?></b></div>
+<div class="col-8 border-bottom border-dark" id="motor_vehicle_no">
+<span class="text-val"><?=$purchase_order_shipping[0]['mobile_no']?></span>
 </div>
-<?php }?>
-<?php if ($purchase_order_shipping[0]['method']!='') {?>
-<div class="row col-12 mb-2" >
-  <div class="col-4"><b>Shipping Method </b></div>
-  <div class="col-1">:</div>
-  <div class="col-7"><b><?=$purchase_order_shipping[0]['method']?></b></div>
 </div>
-<?php }?>
-<?php if ($purchase_order_shipping[0]['delivery_date']!='') {?>
-<div class="row col-12 mb-2" >
-  <div class="col-4"><b>Delivery Date </b></div>
-  <div class="col-1">:</div>
-  <div class="col-7"><b><?=date('d-m-Y',strtotime($purchase_order_shipping[0]['delivery_date']))?></b></div>
+<div class="row">
+<div class="col-4 border-left border-right border-bottom border-dark " id="buyers_order_no">
+<span class="">Email :</span>
+<span class="text-val"></span>
 </div>
-<?php }?>
-
+<div class="col-8 border-bottom border-dark" id="motor_vehicle_no">
+<span class="text-val"><?=$purchase_order_shipping[0]['email']?></span>
+</div>
+</div>
+<div class="row">
+<div class="col-4 border-left border-right  border-dark " id="buyers_order_no">
+<span class="">GST No :</span>
+<span class="text-val"></span>
+</div>
+<div class="col-8  border-dark" id="motor_vehicle_no">
+<span class="text-val"><?=$purchase_order_shipping[0]['gst_no']?></span>
+</div>
 </div>
 
 
+
+</div>
 </div>
 </div>
 </div>
 <div class="row">
 <div class="col-sm-12 col-md-12 col-lg-12 p-0">
 <div id="table-fixed" class="table-fixed">
-<table class="table text-center bill-table  w-100 border border-dark   large " id="bill-table">
+<table class="table text-center bill-table border w-100 border-dark  large  " id="bill-table">
 <thead>
-<tr class="border-left border-bottom border-dark font-weight-bold">
+<tr class="border border-dark font-weight-bold">
 <th>S.No</th>
 <th class="w-50">Product Name</th>
 <th>Quantity</th>
@@ -386,7 +368,7 @@ if ($purchase_order_shipping[0]['pincode']!='') {
 </tr>
 </thead>
 <tbody class="text-center" id="tdata">
-   <?php $sno=0; foreach ($purchase_order_item_dt as $key => $row) {
+ <?php $sno=0; foreach ($purchase_order_item_dt as $key => $row) {
    $sno++;
    $description='';
    $total_qty=$total_qty+$row['qty'];
@@ -396,7 +378,7 @@ if ($purchase_order_shipping[0]['pincode']!='') {
      $description =  $description_obj->get_description_dt($row['sub_category']);
      $description_name=$description[0]['name'];
    }?>
-<tr class="border border-dark line_1">
+<tr class="border-right border-dark line_1">
 <td class="border-left-0"><?=$sno?></td>
 <td class="w-50 text-left"><b><?=$row['item_name']?>
   <?php if ($row['item_code']!='') {
@@ -431,7 +413,7 @@ if ($purchase_order_shipping[0]['pincode']!='') {
 </tr>
 </tbody>
 <tfoot>
-<tr class="border border-dark font-weight-bold line_1">
+<tr class="border-right border-top border-dark font-weight-bold line_1">
 <td class="border-left-0">&nbsp;</td>
 <td class="w-50 text-left"><b>Total</b></td>
 <td ><?=$total_qty?></td>
@@ -460,25 +442,38 @@ if ($purchase_order_shipping[0]['pincode']!='') {
   Amount chargeable (in words)<br><span class="font-weight-bold"><?php echo getIndianCurrency(round($purchase_order_dt[0]['grand_total'])); ?></span></p>
 </div>
 </div>
-<div class="row " style="height: 95px;">
-  <div class="col-6 text-center border border-dark">
-    Message Box
-  </div>
-  <div class="col-6 border border-dark">
-    <div class="row">
-      <?php if ($shop_result1[0]['shop_logo']!='') {?>
-    <div class="col-12 text-center"><img  src="../uploads/<?=$shop_result1[0]['shop_logo']?>" alt="Shop_logo" style="width: 140px;height:80px;"> </div>
-  <?php }else{?>
-    <div class="col-12 text-center" style="width: 140px;height:80px;">&nbsp;</div>
-  <?php }?>
-  </div>
+<div class="row border border-dark">
+<div class="col-sm-6 col-md-6 col-lg-6 mt-2 declaration_p">
+<p class="font-weight-bold" style="margin-bottom:0;">Declaration&nbsp;:&nbsp;</p>
+<p style="font-size: 10px;overflow-wrap: break-word;"> </p>
+</div>
 
-    <div class="row"><div class="col-12 text-center font-weight-bold">Authorised Signatory</div></div>
-    
-  </div>
-  </div>
+</div>
+<div class="row border border-dark">
+<div class="col-sm-6 col-md-6 col-lg-6">
 
 
+<div class=""><p class="font-weight-bold" style="margin-bottom:0;">Note&nbsp;:&nbsp;</p><div style="font-size: 10px;"></div></div>
+</div>
+<div class="col-sm-6 col-md-6 col-lg-6 border-left border-top border-dark">
+<div class="row">
+<span class="col p-0 " style="text-align: center !important"><b>For GALAXON MAX PRIVATE LIMITED</b></span>
+</div>
+<div class="row">&nbsp;</div>
+<div class="row">
+
+
+
+<span class="col p-0 text-center">
+  <?php if ($shop_result1[0]['shop_logo']!='') {?>
+<img src="../uploads/<?=$shop_result1[0]['shop_logo']?>" alt="Shop_logo" style="width: 140px;height:80px;" />
+<?php }?>
+<br>
+Authorised Signatory
+</span>
+</div>
+</div>
+</div>
 </div> 
 <div class="container-fluid col-sm-12 col-md-12 col-lg-12 p-0 text-center mb-1">
 </div>

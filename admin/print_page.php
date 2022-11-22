@@ -1,5 +1,8 @@
 <?php 
 include '../tables/config.php';
+$shop_obj = new Shops();
+$shop_result = $shop_obj->get_user();
+$shop_result1 = $shop_obj->get_shop_details();
 $obj=new PurchaseOrder();
 $purchase_order_dt=$obj->get_purchase_order(base64_decode($_GET['id']));
 $purchase_order_item_dt=$obj->get_purchase_order_item(base64_decode($_GET['id']));
@@ -24,6 +27,7 @@ $total_amount=0;
 <meta name="description" content="" />
 <meta name="author" content="" />
 <title id='tab_title'>GALAXON MAX</title>
+<link rel="icon" type="image/x-icon" href="../dist/img/logo.png" />
 <link rel="stylesheet" href="../dist/css/adminlte.min.css">
 </head>
 <body class="nav-fixed">
@@ -63,7 +67,7 @@ margin: 1cm auto;
 border: 1px #D3D3D3 solid;
 border-radius: 5px;
 /*background: white;*/
-background-image: url('../dist/img/invoice.jpeg');
+/*background-image: url('../dist/img/invoice2.jpeg');*/
     background-size: 100% 109%;
     background-position-y: -116px;
     background-repeat: no-repeat;
@@ -98,7 +102,7 @@ width: initial;
 min-height: 37cm;
 box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 /*background: initial;*/
-background-image: url('../dist/img/invoice.jpeg');
+/*background-image: url('../dist/img/invoice2.jpeg');*/
 background-size: 100% 109%;
     background-position-y: -116px;
     background-repeat: no-repeat;
@@ -187,9 +191,20 @@ margin-bottom: 0px !important;
 <div class="container-fluid">
 <div class="row ">
 <div class="col-sm-12 col-md-12 col-lg-12">
-<div class="row " style="width: 756px;height: 120px;">
-
-
+<div class="row border border-dark" style="height: 165px">
+ <div class="col-3">
+   <img src="../dist/img/logo.png" style="width: 185px;">
+ </div>
+ <div class="col-8 text-center">
+   <b style="font-size: 12px;">Purchase Order</b> 
+   <br>
+   <h3>GALAXON MAX PRIVATE LIMITED</h3>
+   <h6>NO 18/44(1),THAMPILAKSHMI ARCADE,CITTUR,PALAKKAD-678101</h6>
+   <h6>Phone : 8438335415 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tele-Phone : 4923 356 006</h6>
+   <h6>Mail : galaxon.co@gmail.com</h6>
+   <h6>GSTIN : 33AAOFC2618L1ZC</h6>
+   <!-- <b style="font-size: 14px;font-weight: bold">GSTIN : 33AAOFC2618L1ZC</b> -->
+ </div>
 </div>
 <div class="row">
 <div class="col-sm-6 col-md-6 col-lg-6 border border-dark" style="
@@ -341,7 +356,7 @@ if ($purchase_order_shipping[0]['pincode']!='') {
 <div class="row col-12 mb-2" >
   <div class="col-4"><b>Delivery Date </b></div>
   <div class="col-1">:</div>
-  <div class="col-7"><b><?=$purchase_order_shipping[0]['delivery_date']?></b></div>
+  <div class="col-7"><b><?=date('d-m-Y',strtotime($purchase_order_shipping[0]['delivery_date']))?></b></div>
 </div>
 <?php }?>
 
@@ -435,27 +450,33 @@ if ($purchase_order_shipping[0]['pincode']!='') {
 </div>
 </div>
 </div>
-<div class="row col-12 mt-2 mb-2">
-<div class="col-4"></div>
-<div class="col-3 text-right"><h6>Discount Amt</h6></div>
-<div class="col-1"><h6>:</h6></div>
-<div class="col-4 text-right"><h6><?=$purchase_order_dt[0]['discount_amt']?></h6></div>
-<div class="col-4"></div>
-<div class="col-3 text-right"><h6>Tax Amt</h6></div>
-<div class="col-1"><h6>:</h6></div>
-<div class="col-4 text-right"><h6><?=$purchase_order_dt[0]['tax_amt']?></h6></div>
-<div class="col-4"></div>
-<div class="col-3 text-right"><h6>Total Amt</h6></div>
-<div class="col-1"><h6>:</h6></div>
-<div class="col-4 text-right"><h6><?=$purchase_order_dt[0]['grand_total']?></h6></div>
-<div class="col-sm-6 col-md-6 col-lg-6 p-0">
+<div class="row border border-dark" style="height: 76px;">
+<div class="col-4"><p style="font-size: 12px;font-weight: bold;">Discount Amt : <?=$purchase_order_dt[0]['discount_amt']?></p></div>
+<div class="col-4 text-center"><p style="font-size: 12px;font-weight: bold;">Tax Amt : <?=$purchase_order_dt[0]['tax_amt']?></p></div>
+<div class="col-4 text-right"><p style="font-size: 12px;font-weight: bold;">Grand Total : <?=$purchase_order_dt[0]['grand_total']?></p></div>
 
+<div class="col-6">
+  <p style="font-size: 12px;font-weight: bold;">
+  Amount chargeable (in words)<br><span class="font-weight-bold"><?php echo getIndianCurrency(round($purchase_order_dt[0]['grand_total'])); ?></span></p>
 </div>
-<div class="col-6 text-right">
-  <h6>
-  Amount chargeable (in words)<br><span class="font-weight-bold">INR One Hundred And Ten Only</span></h6>
 </div>
-</div>
+<div class="row " style="height: 95px;">
+  <div class="col-6 text-center border border-dark">
+    Message Box
+  </div>
+  <div class="col-6 border border-dark">
+    <div class="row">
+      <?php if ($shop_result1[0]['shop_logo']!='') {?>
+    <div class="col-12 text-center"><img  src="../uploads/<?=$shop_result1[0]['shop_logo']?>" alt="Shop_logo" style="width: 140px;height:80px;"> </div>
+  <?php }else{?>
+    <div class="col-12 text-center" style="width: 140px;height:80px;">&nbsp;</div>
+  <?php }?>
+  </div>
+
+    <div class="row"><div class="col-12 text-center font-weight-bold">Authorised Signatory</div></div>
+    
+  </div>
+  </div>
 
 
 </div> 
@@ -470,3 +491,41 @@ if ($purchase_order_shipping[0]['pincode']!='') {
 <script type="text/javascript">
       window.print();
       </script>
+      <?php
+      function getIndianCurrency(float $number) {
+      $decimal = round($number - ($no = floor($number)), 2) * 100;
+      $hundred = null;
+      $digits_length = strlen($no);
+      $i = 0;
+      $str = array();
+      $words = array(0 => '', 1 => 'one', 2 => 'two',
+      3 => 'three', 4 => 'four', 5 => 'five', 6 => 'six',
+      7 => 'seven', 8 => 'eight', 9 => 'nine',
+      10 => 'ten', 11 => 'eleven', 12 => 'twelve',
+      13 => 'thirteen', 14 => 'fourteen', 15 => 'fifteen',
+      16 => 'sixteen', 17 => 'seventeen', 18 => 'eighteen',
+      19 => 'nineteen', 20 => 'twenty', 30 => 'thirty',
+      40 => 'forty', 50 => 'fifty', 60 => 'sixty',
+      70 => 'seventy', 80 => 'eighty', 90 => 'ninety');
+      $digits = array('', 'hundred and', 'thousand', 'lakh', 'crore');
+      while ($i < $digits_length) {
+      $divider = ($i == 2) ? 10 : 100;
+      $number = floor($no % $divider);
+      $no = floor($no / $divider);
+      $i += $divider == 10 ? 1 : 2;
+      if ($number) {
+      $plural = (($counter = count($str)) && $number > 9) ? 's' : null;
+      // $hundred = ($counter == 1 && $str[0]) ? ' and ' : null;
+      $hundred = ($counter == 1 && $str[0]) ? ' ' : null;
+      $str[] = ($number < 21) ? $words[$number] . ' ' . $digits[$counter] . $plural . ' ' . $hundred : $words[floor($number / 10) * 10] . ' ' . $words[$number % 10] . ' ' . $digits[$counter] . $plural . ' ' . $hundred;
+      } else {
+      $str[] = null;
+      }
+      }
+      $Rupees = implode('', array_reverse($str));
+      $paise = ($decimal > 0) ? ($words[$decimal / 10] . " " . $words[$decimal % 10]) . ' paise' : '';
+      // $paise = ($decimal > 0) ? " and " . ($words[$decimal / 10] . " " . $words[$decimal % 10]) . ' Paise' : '';
+      // return ($Rupees ? $Rupees . 'Rupees ' : '') . $paise;
+      return 'INR ' . ucwords($Rupees) . ($paise ? ' and ' . ucwords($paise) : '') . ' Only';
+      }
+      ?>

@@ -49,6 +49,7 @@ function update_Shops(){
 		$shop['alt_mobile_no'] = $this->db->getpost('alt_mobile_no');
 
 		$shop['landline_no'] = $this->db->getpost('Landline_no');
+		$shop['declaration'] = $this->db->getpost('declaration');
 		
 		$shop['created_at'] = date('Y-m-d h:i:s');
 		

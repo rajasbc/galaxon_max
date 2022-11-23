@@ -122,6 +122,9 @@ $result1 = $obj->get_shop_details();
             <div class="form-row">
               <div class="form-group col-lg-4 mt-2"><span>Landline Number&nbsp;<label class="text-danger">*</label></span></div><div class="form-group col-lg-8"><input type="text" name='Landline_no' id='Landline_no' value='<?=$result1[0]['landline_no']?>' class="form-control " ></div>
             </div>
+            <div class="form-row">
+              <div class="form-group col-lg-4 mt-2"><span>Declaration&nbsp;<label class="text-danger">*</label></span></div><div class="form-group col-lg-8"><textarea name='declaration' id='declaration' class="form-control " ><?=$result1[0]['declaration']?></textarea></div>
+            </div>
             
             <div class='form-row'>
               <div class="form-group col-lg-4 mt-5">Signature</div>

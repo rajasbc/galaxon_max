@@ -37,6 +37,7 @@ class PurchaseOrder extends Dbconnection {
 		$purchase['taxable_amt']=$this->db->getpost('taxable_amount');
 		$purchase['tax_amt']=$this->db->getpost('tax_amount');
 		$purchase['grand_total']=$this->db->getpost('grand_total');
+		$purchase['purchase_note']=$this->db->getpost('purchase_note');
 		$purchase['created_by']=$_SESSION['uid'];
 		$purchase['created_at']=date('Y-m-d H:i:s');
 if ($this->db->getpost('order_type')=='received') {

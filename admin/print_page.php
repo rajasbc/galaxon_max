@@ -196,7 +196,7 @@ margin-bottom: 0px !important;
 <div class="col-sm-12 col-md-12 col-lg-12 border border-dark">
 <div class="row border-bottom border-dark" style="height: 145px;">
 <div class="col-2 text-center" >
-  <img src="../dist/img/logo.png" style="width: 12rem;"  >
+  <img src="../dist/img/logo.png" style="width: 17rem;position: absolute;bottom: -6rem;left: -1rem;"  >
 </div>
 <div class="col-10 mb-0 text-center">
   <div class="row d-flex justify-content-center " style="font-size: 16px !important;">
@@ -208,8 +208,8 @@ margin-bottom: 0px !important;
 <div class="col-12 text-center">NO 18/44(1),THAMPILAKSHMI ARCADE,CITTUR,PALAKKAD-678101</div>
 
 <div class="col-12 text-center">Phone : 8438335415 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tele-Phone : 4923 356 006</div>
-<div class="col-12 text-center">Mail : galaxon.co@gmail.com</div>
-<div class="col-12 text-center">GSTIN : 33AAOFC2618L1ZC</div>
+<div class="col-12 text-center">Mail : info@galaxonmax.com</div>
+<div class="col-12 text-center">GSTIN : 32AAJCG9997N1ZL</div>
 </div>
 </div>
 <div class="row">
@@ -348,6 +348,22 @@ if ($purchase_order_shipping[0]['pincode']!='') {
 </div>
 </div>
 </div>
+<?php if ($purchase_order_shipping[0]['shipping_terms']!='' || $purchase_order_shipping[0]['method']!='' || $purchase_order_shipping[0]['delivery_date']!='') {?>
+<div class="row border-top border-left border-right border-dark">
+  <div class="col-4 border-right border-dark">
+    <label>Shipping Terms</label>
+    <p><?=$purchase_order_shipping[0]['shipping_terms']?></p>
+  </div>
+  <div class="col-4 border-right border-dark">
+    <label>Shipping Method</label>
+    <p><?=$purchase_order_shipping[0]['method']?></p>
+  </div>
+  <div class="col-4">
+    <label>Delivery Date</label>
+    <p><?=date('d-m-Y',strtotime($purchase_order_shipping[0]['delivery_date']))?></p>
+  </div>
+</div>
+<?php }?>
 <div class="row">
 <div class="col-sm-12 col-md-12 col-lg-12 p-0">
 <div id="table-fixed" class="table-fixed">
@@ -445,7 +461,7 @@ if ($purchase_order_shipping[0]['pincode']!='') {
 <div class="row border border-dark">
 <div class="col-sm-6 col-md-6 col-lg-6 mt-2 declaration_p">
 <p class="font-weight-bold" style="margin-bottom:0;">Declaration&nbsp;:&nbsp;</p>
-<p style="font-size: 10px;overflow-wrap: break-word;"> </p>
+<p style="font-size: 10px;overflow-wrap: break-word;"><?=$shop_result1[0]['declaration']?> </p>
 </div>
 
 </div>
@@ -453,7 +469,7 @@ if ($purchase_order_shipping[0]['pincode']!='') {
 <div class="col-sm-6 col-md-6 col-lg-6">
 
 
-<div class=""><p class="font-weight-bold" style="margin-bottom:0;">Note&nbsp;:&nbsp;</p><div style="font-size: 10px;"></div></div>
+<div class=""><p class="font-weight-bold" style="margin-bottom:0;">Note&nbsp;:&nbsp;</p><div style="font-size: 10px;overflow-wrap: break-word;"><?=$purchase_order_dt[0]['purchase_note']?></div></div>
 </div>
 <div class="col-sm-6 col-md-6 col-lg-6 border-left border-top border-dark">
 <div class="row">

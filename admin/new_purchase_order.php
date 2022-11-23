@@ -387,6 +387,14 @@ $category =  $category_obj->get_category_data();
                 <div class="row col-12">
                   <div class="col-4">&nbsp;</div>
                   <div class="col-8 text-right">
+                    <div class="row col-12 mt-2">
+                      <div class="col-6">
+                        <label>Notes :</label>
+                      </div>
+                       <div class="col-6">
+                        <textarea class="form-control" id="purchase_note"></textarea>
+                      </div>
+                    </div>
                     <div class="row col-12 mt-2 text-right">
                       <div class="col-6">
                         &nbsp;
@@ -486,7 +494,7 @@ $category =  $category_obj->get_category_data();
                   <div class="input-group-prepend">
                     <span class="input-group-text" style="width: 8.3rem">Shipping Terms</span>
                   </div>
-                  <input type="text" id='ship_terms' name='ship_terms' class="form-control enterKeyclass" placeholder="Enter Pincode">
+                  <input type="text" id='ship_terms' name='ship_terms' class="form-control enterKeyclass" placeholder="Enter Shipping Terms">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
@@ -909,6 +917,7 @@ $("#place_order").click(function(){
       var paid_amt = $("#paid_amt").val();
       var balance = $("#balance").val();
       var payment_mode = $("#payment_mode option:selected").val();
+      var purchase_note = $("#purchase_note").val();
       if (vendor_id==0) {
       global_alert_modal('warning','Select Vendor Name...');
       $("#vendor").css("border","1px solid red");
@@ -961,6 +970,7 @@ $("#place_order").click(function(){
       detailsarray['paid_amt']=paid_amt;
       detailsarray['balance']=balance;
       detailsarray['payment_mode']=payment_mode;
+      detailsarray['purchase_note']=purchase_note;
       detailsarray['taxable_amount']=Number($("#subid").text());
       detailsarray['discount']=Number($("#discid").text());
       detailsarray['tax_amount']=Number($("#taxid").text());

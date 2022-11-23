@@ -271,7 +271,7 @@ if ($vendor['pincode']!='') {
 </div>
 <div class="row">
 <div class="col-4 border-left border-right border-bottom border-dark " id="buyers_order_no">
-<span class="">Name :</span>
+<span class="">Name </span>
 <span class="text-val"></span>
 </div>
 <div class="col-8 border-bottom border-dark" id="motor_vehicle_no">
@@ -280,7 +280,7 @@ if ($vendor['pincode']!='') {
 </div>
 <div class="row">
 <div class="col-4 border-left border-right border-bottom border-dark " id="buyers_order_no">
-<span class="">Company Name :</span>
+<span class="">Company Name </span>
 <span class="text-val"></span>
 </div>
 <div class="col-8 border-bottom border-dark" id="motor_vehicle_no">
@@ -289,7 +289,7 @@ if ($vendor['pincode']!='') {
 </div>
 <div class="row">
 <div class="col-4 border-left border-right border-bottom border-dark " id="buyers_order_no">
-<span class="">Address :</span>
+<span class="">Address </span>
 <span class="text-val"></span>
 </div>
 <div class="col-8 border-bottom border-dark" id="motor_vehicle_no">
@@ -316,7 +316,7 @@ if ($purchase_order_shipping[0]['pincode']!='') {
 </div>
 <div class="row">
 <div class="col-4 border-left border-right border-bottom border-dark " id="buyers_order_no">
-<span class="">Mobile.No :</span>
+<span class="">Mobile.No </span>
 <span class="text-val"></span>
 </div>
 <div class="col-8 border-bottom border-dark" id="motor_vehicle_no">
@@ -325,7 +325,7 @@ if ($purchase_order_shipping[0]['pincode']!='') {
 </div>
 <div class="row">
 <div class="col-4 border-left border-right border-bottom border-dark " id="buyers_order_no">
-<span class="">Email :</span>
+<span class="">Email </span>
 <span class="text-val"></span>
 </div>
 <div class="col-8 border-bottom border-dark" id="motor_vehicle_no">
@@ -334,7 +334,7 @@ if ($purchase_order_shipping[0]['pincode']!='') {
 </div>
 <div class="row">
 <div class="col-4 border-left border-right  border-dark " id="buyers_order_no">
-<span class="">GST No :</span>
+<span class="">GST No </span>
 <span class="text-val"></span>
 </div>
 <div class="col-8  border-dark" id="motor_vehicle_no">

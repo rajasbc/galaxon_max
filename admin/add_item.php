@@ -129,8 +129,7 @@ $description =  $description_obj->get_description_data();
   <?php 
 include 'footer.php';
 ?>
-<script>
-// <script type="text/javascript">
+<script type="text/javascript">
        
        $('.enterAsTab').keydown(function (e) {
 
@@ -145,7 +144,7 @@ include 'footer.php';
 
     </script>
 
-
+<script type="text/javascript">
 
 
 

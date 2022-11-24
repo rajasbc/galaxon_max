@@ -184,7 +184,11 @@ $items=json_encode($items);
    
    echo '<tr id="trItem_'.$sno.'">';
            echo '<td class=" ch-4"><span></span></td>';
-            echo '<td class="text-left ch-10">'.$row['item_name'].'</td>';
+            echo '<td class="text-left ch-10">'.$row['item_name'];
+            if ($row['item_code']!='') {
+            echo ' - '.$row['item_code'];
+            }
+            echo '</td>';
             echo '<td class="text-left ch-4">';
 
                 echo '<input onkeyup=quantityupdate('.$sno.',this) class="form-control quantity" name="quantity[]" id="quantity'.$sno.'" value="0" style="width:5rem; height:1.75rem">';

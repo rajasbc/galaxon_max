@@ -204,12 +204,12 @@ margin-bottom: 0px !important;
 </div>
 <div class="col-12 text-center" style="font-size: 26px !important;"><b>GALAXON MAX PRIVATE LIMITED</b>
 </div>
-<br>
-<div class="col-12 text-center">NO 18/44(1),THAMPILAKSHMI ARCADE,CITTUR,PALAKKAD-678101</div>
+<!-- <br> -->
+<div class="col-12 text-center" style="font-size: larger;">NO 18/44(1),THAMPILAKSHMI ARCADE,CHITTUR,PALAKKAD-678101</div>
 
-<div class="col-12 text-center">Phone : 8438335415 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tele-Phone : 4923 356 006</div>
-<div class="col-12 text-center">Mail : info@galaxonmax.com</div>
-<div class="col-12 text-center">GSTIN : 32AAJCG9997N1ZL</div>
+<div class="col-12 text-center" style="font-size: larger;">Phone : 8438335415 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tele-Phone : 4923 356 006</div>
+<div class="col-12 text-center" style="font-size: larger;">Mail : info@galaxonmax.com</div>
+<div class="col-12 text-center" style="font-size: larger;font-weight: bold;">GSTIN : 32AAJCG9997N1ZL</div>
 </div>
 </div>
 <div class="row">
@@ -378,8 +378,8 @@ if ($purchase_order_shipping[0]['pincode']!='') {
 <th>Tons</th>
 <th>Vendor Price</th>
 <th>Mrp</th>
-<th>Discount</th>
-<th>Gst</th>
+<th>Discount %</th>
+<th>Gst %</th>
 <th>Total</th>
 </tr>
 </thead>
@@ -408,8 +408,8 @@ if ($purchase_order_shipping[0]['pincode']!='') {
 <td class="text-right"><?=($row['qty']/1000)?></td>
 <td class="text-right"><?=$row['mrp']?></td>
 <td class="text-right"><?=$row['sales_price']?></td> 
-<td class="text-right"><?=$row['discount']?></td>
-<td class="text-right"><?=$row['gst']?></td>
+<td class="text-right"><?=round($row['discount'])?></td>
+<td class="text-right"><?=round($row['gst'])?></td>
 <td class="text-right"><?=$row['total']?></td>
 </tr>
 <?php }?>
@@ -460,7 +460,7 @@ if ($purchase_order_shipping[0]['pincode']!='') {
 </div>
 <div class="row border border-dark">
 <div class="col-sm-6 col-md-6 col-lg-6 mt-2 declaration_p">
-<p class="font-weight-bold" style="margin-bottom:0;">Declaration&nbsp;:&nbsp;</p>
+<p class="font-weight-bold" style="margin-bottom:0;">Comments / Special Instruction&nbsp;:&nbsp;</p>
 <p style="font-size: 10px;overflow-wrap: break-word;"><?=$shop_result1[0]['declaration']?> </p>
 </div>
 

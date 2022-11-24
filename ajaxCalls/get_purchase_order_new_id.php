@@ -66,7 +66,9 @@ $total_amount_dt=0;
               	<tr class=" border-dark line_1">
                     <td class="border-center-0" ><?php echo $sno; ?></td>
                     
-                    <td class="text-left" style="width:150px"><?php echo strtoupper($item['item_name']); ?></td>
+                    <td class="text-left" style="width:150px"><?php echo strtoupper($item['item_name']); if ($item['item_code']!='') {
+                    	echo strtoupper(' - '.$item['item_code']);
+                    } ?></td>
                    
                  <td class="text-center">
                  	<?php echo $item['qty']; ?>

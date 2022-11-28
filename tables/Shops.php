@@ -1,16 +1,20 @@
 <?php
+
 class Shops extends Dbconnection {
 	var $name;
 	var $db;
 	var $invitee_obj;
 	var $msg = '';
 	var $tablename = "`shop_profile`";
+	var $tablename1 = "`users`";
+	
+	// var $tablename2 = "``"
 	// Create Db Connection for this class operations
 	function __construct() {
 		parent::__construct();
 		$this->db = new Dbconnection();
 	}
-function update_Shops(){
+	function update_Shops(){
 
 
 		$shop = array();
@@ -53,13 +57,13 @@ function update_Shops(){
 		
 		$shop['created_at'] = date('Y-m-d h:i:s');
 		
-$result = $this->db->mysql_update($this->tablename,$shop,"id=".$this->db->getpost('id')."");
- $sql = "select * from ".$this->tablename." where id = ".$this->db->getpost('id')." and shop_id = ".$_SESSION['shop_id']."";
-$result1 = $this->db->GetResultsArray($sql);
+		$result = $this->db->mysql_update($this->tablename,$shop,"id=".$this->db->getpost('id')."");
+		$sql = "select * from ".$this->tablename." where id = ".$this->db->getpost('id')." and shop_id = ".$_SESSION['shop_id']."";
+		$result1 = $this->db->GetResultsArray($sql);
 // print_r(count($result1));die();
 
-	    if (count($result1)>0) {
-                     return [
+		if (count($result1)>0) {
+			return [
 				"status" => "Success",
 				"id" => $result1[0]['id'],
 				"shop_name"=> $result1[0]['name'],
@@ -67,54 +71,180 @@ $result1 = $this->db->GetResultsArray($sql);
 				"dl_no"=> $result1[0]['dl_no'],
 				"shop_gst_no"=> $result1[0]['shop_gst_no'],
 				"email"=> $result1[0]['email'],
-			    "address1"=> $result1[0]['address1'],
-			    "address2"=> $result1[0]['address2'],
-			    "area"=> $result1[0]['area'],
-			    "city"=> $result1[0]['city'],
-			    "state"=> $result1[0]['state'],
-			    "state_code"=> $result1[0]['state_code'],
-			    "country"=> $result1[0]['country'],
-			    "pincode"=> $result1[0]['pincode'],
-			    "mobile_no"=> $result1[0]['mobile_no'],
-                "alt_mobile_no"=> $result1[0]['alt_mobile_no'],
-                "landline_no"=> $result1[0]['landline_no'],
-                "created_at"=> $result1[0]['created_at'],
-                 
+				"address1"=> $result1[0]['address1'],
+				"address2"=> $result1[0]['address2'],
+				"area"=> $result1[0]['area'],
+				"city"=> $result1[0]['city'],
+				"state"=> $result1[0]['state'],
+				"state_code"=> $result1[0]['state_code'],
+				"country"=> $result1[0]['country'],
+				"pincode"=> $result1[0]['pincode'],
+				"mobile_no"=> $result1[0]['mobile_no'],
+				"alt_mobile_no"=> $result1[0]['alt_mobile_no'],
+				"landline_no"=> $result1[0]['landline_no'],
+				"created_at"=> $result1[0]['created_at'],
+
 			];
 			
 		}else{
 			return ['status'=>'failed'];
 		}
-	
+
 
 
 
 	}
 
 
-public function get_user(){
+	public function get_user(){
 
 
-   $sql = "select * from users where shop_id = '".$_SESSION['shop_id']."'";
+		$sql = "select * from users where shop_id = '".$_SESSION['shop_id']."'";
 
-  $result = $this->db->GetResultsArray($sql);
-  
-   return $result;
+		$result = $this->db->GetResultsArray($sql);
 
-}
+		return $result;
 
-public function get_shop_details(){
+	}
 
-
-   $sql = "select * from ".$this->tablename." where shop_id = '".$_SESSION['shop_id']."'";
-
-  $result = $this->db->GetResultsArray($sql);
-  
-   return $result;
-
-}
+	public function get_shop_details(){
 
 
+		$sql = "select * from ".$this->tablename." where shop_id = '".$_SESSION['shop_id']."'";
+
+		$result = $this->db->GetResultsArray($sql);
+
+		return $result;
+
+	}
+	public function get_countries() {
+		$sql = "select * from ".$this->tablename1."";
+		$result = $this->db->GetResultsArray($sql);
+		return $result;
+	}
+	public function insert_details(){
+
+
+		$branch = array();
+		$branch1 = array();
+
+
+
+		$branch['name'] = $this->db->getpost('name');
+		$branch['shop_id'] = $_SESSION['shop_id'];
+		$branch['shop_registration_number'] = $this->db->getpost('registration_no');
+		$branch['shop_gst_no'] = $this->db->getpost('gst_no');
+		$branch['email'] = $this->db->getpost('email');
+		$branch['address1'] = $this->db->getpost('address');
+		$branch['country'] = $this->db->getpost('country');
+		$branch['state'] = $this->db->getpost('state');
+		$branch['pincode'] = $this->db->getpost('pincode');
+		$branch['mobile_no'] = $this->db->getpost('mobile_no');
+		$branch['alt_mobile_no'] = $this->db->getpost('alt_mobile_no');
+		$branch['landline_no'] = $this->db->getpost('Landline_no');
+		$branch['branch'] = $_SESSION['shop_id'];
+
+		$branch['created_at'] = date('Y-m-d h:i:s');
+
+
+
+
+		$branch1['type'] = $this->db->getpost('type');
+		$branch1['shop_id'] = $_SESSION['shop_id'];
+		$branch1['email'] = $this->db->getpost('email');
+		$branch1['mobile_no'] = $this->db->getpost('mobile_no');
+		$branch1['username'] = $this->db->getpost('username');
+		$pass = md5($this->db->getpost('password'));
+		$branch1['login_password'] = $pass;
+
+
+
+
+
+		$result = $this->db->mysql_insert($this->tablename,$branch);
+		$result1 = $this->db->mysql_insert($this->tablename1,$branch1);
+
+
+
+
+
+		if($result1){
+
+			return ['status'=>'success'];
+
+		}else{
+
+
+			return ['status'=>'failed'];
+
+		}
+
+	}
+	public function get_branch_data(){
+
+
+		 $sql ="select * from ".$this->tablename." where branch='".$_SESSION['shop_id']."' and status='ENABLED'";
+
+	
+		$result=$this->db->GetResultsArray($sql);
+		return $result;
+
+
+	}
+	public function get_branch_dt($id)
+	{
+
+		$sql='select * from '.$this->tablename.' where id='.$id ;
+		$result=$this->db->getAsIsArray($sql);
+
+		return $result;
+	}
+	public function edit_branch()
+	{
+  $branch = array();
+
+
+
+
+		$branch['name'] = $this->db->getpost('name');
+		$branch['shop_id'] = $_SESSION['shop_id'];
+		$branch['shop_registration_number'] = $this->db->getpost('registration_no');
+		$branch['shop_gst_no'] = $this->db->getpost('gst_no');
+		$branch['email'] = $this->db->getpost('email');
+		$branch['address1'] = $this->db->getpost('address');
+		$branch['country'] = $this->db->getpost('country');
+		$branch['state'] = $this->db->getpost('state');
+		$branch['pincode'] = $this->db->getpost('pincode');
+		$branch['mobile_no'] = $this->db->getpost('mobile_no');
+		$branch['alt_mobile_no'] = $this->db->getpost('alt_mobile_no');
+		$branch['landline_no'] = $this->db->getpost('Landline_no');
+		$branch['branch'] = $_SESSION['shop_id'];
+
+		$branch['created_at'] = date('Y-m-d h:i:s');
+
+
+		$result = $this->db->mysql_update($this->tablename,$branch,'id='.$this->db->getpost('edit_branch_id'));
+		if($result){
+      return ['status'=>'success'];
+
+		}else{
+       return ['status'=>'failed'];
+
+		}
+ 
+		
+	}
+	public function delete_branch()
+	{
+		$branch=array();
+		$branch['status']='DISABLED';
+		$id = $this->db->mysql_update($this->tablename, $branch,'id='.$this->db->getpost('branch_id'));
+		if ($id!=0) {
+			return ['status'=>'success'];
+		}else{
+			return ['status'=>'failed'];
+		}
+	}
 
 
 

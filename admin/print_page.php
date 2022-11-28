@@ -167,7 +167,7 @@ margin-bottom: 0px !important;
   }
     }
     .declaration_p{
-      height:120px !important;
+      /*height:120px !important;*/
     }
   </style>
 <style type="text/css">
@@ -183,6 +183,25 @@ margin-bottom: 0px !important;
         height: 700px;
       }
     </style>
+      <?php
+ $numItemShow=27;
+$arr_count=count($purchase_order_item_dt);
+$next_page=$arr_count-$numItemShow;
+$next_page=$next_page>0?$next_page:1;
+$page_count=1+floor($next_page/$numItemShow);
+$start_index=0;
+$end_index=$numItemShow;
+
+end($output);         
+$last_index = count($purchase_order_item_dt);
+$temp=0;
+if (count($purchase_order_item_dt)<=$numItemShow) {
+  $page_count=0;
+}
+$sno = 0;
+$temp=0;
+for ($i1 = 0; $i1 <=$page_count; $i1++) {
+?>
 <div>
 <main>
 <div class="page">
@@ -212,7 +231,12 @@ margin-bottom: 0px !important;
 <div class="col-12 text-center" style="font-size: larger;font-weight: bold;">GSTIN : 32AAJCG9997N1ZL</div>
 </div>
 </div>
-<div class="row">
+<?php if ($purchase_order_shipping[0]['shipping_terms']!='' || $purchase_order_shipping[0]['method']!='' || $purchase_order_shipping[0]['delivery_date']!='') {?>
+<div class="row" >
+  <?php }else{?>
+    <div class="row" style="height: 180px;">
+  <?php }?>
+
 <div class="col-sm-6 col-md-6 col-lg-6" style="
                     padding-left: 25px;">
 <div class="row" style="font-size:15px"><label><b>Vendor</b></label></div>
@@ -333,11 +357,11 @@ if ($purchase_order_shipping[0]['pincode']!='') {
 </div>
 </div>
 <div class="row">
-<div class="col-4 border-left border-right  border-dark " id="buyers_order_no">
+<div class="col-4 border-left border-right border-bottom border-dark " id="buyers_order_no">
 <span class="">GST No </span>
 <span class="text-val"></span>
 </div>
-<div class="col-8  border-dark" id="motor_vehicle_no">
+<div class="col-8 border-bottom   border-dark" id="motor_vehicle_no">
 <span class="text-val"><?=$purchase_order_shipping[0]['gst_no']?></span>
 </div>
 </div>
@@ -384,12 +408,13 @@ if ($purchase_order_shipping[0]['pincode']!='') {
 </tr>
 </thead>
 <tbody class="text-center" id="tdata">
- <?php $sno=0; foreach ($purchase_order_item_dt as $key => $row) {
+ <?php foreach (array_slice($purchase_order_item_dt, $start_index, $end_index) as $row) {
    $sno++;
+   $temp++;
    $description='';
    $total_qty=$total_qty+$row['qty'];
    $total_ton=$total_ton+($row['qty']/1000);
-   $total_amount=$total_amount+$row['total'];
+   $total_amount=$total_amount+($row['total']+$row['tax_amt']);
    if ($row['sub_category']!='' && $row['sub_category']!=0) {
      $description =  $description_obj->get_description_dt($row['sub_category']);
      $description_name=$description[0]['name'];
@@ -410,7 +435,7 @@ if ($purchase_order_shipping[0]['pincode']!='') {
 <td class="text-right"><?=$row['sales_price']?></td> 
 <td class="text-right"><?=round($row['discount'])?></td>
 <td class="text-right"><?=round($row['gst'])?></td>
-<td class="text-right"><?=$row['total']?></td>
+<td class="text-right"><?=($row['total']+$row['tax_amt'])?></td>
 </tr>
 <?php }?>
 <tr class="border-right border-dark">
@@ -427,7 +452,9 @@ if ($purchase_order_shipping[0]['pincode']!='') {
 <td class="text-right">&nbsp;</td> 
 <td class="text-right"></td>
 </tr>
-</tbody>
+
+ <?php if ($last_index==$temp) { ?>
+  </tbody>
 <tfoot>
 <tr class="border-right border-top border-dark font-weight-bold line_1">
 <td class="border-left-0">&nbsp;</td>
@@ -459,13 +486,13 @@ if ($purchase_order_shipping[0]['pincode']!='') {
 </div>
 </div>
 <div class="row border border-dark">
-<div class="col-sm-6 col-md-6 col-lg-6 mt-2 declaration_p">
+<div class="col-sm-12 col-md-12 col-lg-12 mt-2 declaration_p">
 <p class="font-weight-bold" style="margin-bottom:0;">Comments / Special Instruction&nbsp;:&nbsp;</p>
 <p style="font-size: 10px;overflow-wrap: break-word;"><?=$shop_result1[0]['declaration']?> </p>
 </div>
 
 </div>
-<div class="row border border-dark">
+<div class="row border border-dark" style="height: 150px">
 <div class="col-sm-6 col-md-6 col-lg-6">
 
 
@@ -475,6 +502,11 @@ if ($purchase_order_shipping[0]['pincode']!='') {
 <div class="row">
 <span class="col p-0 " style="text-align: center !important"><b>For GALAXON MAX PRIVATE LIMITED</b></span>
 </div>
+<div class="row">&nbsp;</div>
+<div class="row">&nbsp;</div>
+<div class="row">&nbsp;</div>
+<div class="row">&nbsp;</div>
+<div class="row">&nbsp;</div>
 <div class="row">&nbsp;</div>
 <div class="row">
 
@@ -498,7 +530,27 @@ Authorised Signatory
 </div>
 </main>
 </div>
+<?php }else{?>
+   </tbody>
+</table>
+</div>
+</div>
+</div>
 
+</div> 
+
+</div>
+</main>
+</div>
+  <?php }?>
+ <?php
+$start_index+=$end_index;
+if (($last_index-$end_index)<=$numItemShow) {
+ $end_index=$last_index-$end_index;
+}else{
+  $end_index=$numItemShow;
+}
+      }?>
 <script type="text/javascript">
       window.print();
       </script>

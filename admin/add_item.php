@@ -109,7 +109,7 @@ $description =  $description_obj->get_description_data();
                 </div>
                 <div class="col-6 form-group mb-3"></div>
                 <div class="col-6 form-group mb-3">
-                   <label>Quantity&nbsp;<label class="text-danger">*</label></label>
+                   <label>Quantity&nbsp;<label class="text-danger"></label></label>
               <input type="text" class="form-control enterKeyclass" id="quantity" placeholder="Quantity">
                 </div>
               </div>
@@ -239,15 +239,15 @@ include 'footer.php';
        else{
         $("#sale_price").css("border","1px solid lightgray");
        }
-        if (quantity=='' && quantity==0) {
-      global_alert_modal('warning','Enter Product Quantity...');
-      $("#quantity").css("border","1px solid red");
-                    $("#quantity").focus();
-                    return false;
-        }
-       else{
-        $("#quantity").css("border","1px solid lightgray");
-       }
+      //   if (quantity=='' && quantity==0) {
+      // global_alert_modal('warning','Enter Product Quantity...');
+      // $("#quantity").css("border","1px solid red");
+      //               $("#quantity").focus();
+      //               return false;
+      //   }
+      //  else{
+      //   $("#quantity").css("border","1px solid lightgray");
+      //  }
 $.ajax({
 type: "POST",
 dataType:"json",

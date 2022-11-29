@@ -157,18 +157,18 @@ $category =  $category_obj->get_category_data();
                 </div>
                  <div class="col-3 form-group mb-3">
                    <label>Product Varieties&nbsp;<label class="text-danger">&nbsp;</label></label>
-                   <input type="hidden" name="varieties_id" id="varieties_id" value="0">
                    
-              <input type="text" id='varieties_name' class="form-control enterKeyclass" placeholder="Product Varieties">
+              <select id='varieties_id' class="form-control enterKeyclass">
+              </select>
                 </div>
                 <div class="col-3 form-group mb-3">
                    <label>Product Code&nbsp;<label class="text-danger">&nbsp;</label></label>
                    
-              <input type="text" id='item_code' class="form-control enterKeyclass" placeholder="Product Code">
+              <input type="text" id='item_code' class="form-control enterKeyclass" placeholder="Product Code" disabled>
                 </div>
                 <div class="col-3 form-group mb-3">
                    <label>Brand&nbsp;<label class="text-danger">*</label></label>
-              <select class="form-control enterKeyclass" id='brand' style="width: 100%;">
+              <select class="form-control enterKeyclass" id='brand' style="width: 100%;" disabled>
                     <option value="">Select Brand</option>
                     <?php foreach ($brand as $key => $value) {?>
                       <option  value="<?=$value['id']?>"><?=$value['name']?></option>
@@ -178,7 +178,7 @@ $category =  $category_obj->get_category_data();
                 </div>
                 <div class="col-3 form-group mb-3">
                    <label>Category&nbsp;<label class="text-danger">*</label></label>
-              <select class="form-control enterKeyclass" id="category" style="width: 100%;">
+              <select class="form-control enterKeyclass" id="category" style="width: 100%;" disabled>
                     <option value="">Select Category</option>
                     <?php foreach ($category as $key => $value) {?>
                       <option  value="<?=$value['id']?>"><?=$value['name']?></option>
@@ -188,7 +188,7 @@ $category =  $category_obj->get_category_data();
                 </div>
                 <div class="col-3 form-group mb-3">
                    <label>Description&nbsp;<label class="text-danger">&nbsp;</label></label>
-              <select class="form-control enterKeyclass" id="sub_category" style="width: 100%;">
+              <select class="form-control enterKeyclass" id="sub_category" style="width: 100%;" disabled>
                     <option value="">Select Description</option>
                     <?php foreach ($description as $key => $value) {?>
                       <option  value="<?=$value['id']?>"><?=$value['name']?></option>
@@ -198,7 +198,7 @@ $category =  $category_obj->get_category_data();
                 </div>
                 <div class="col-3 form-group mb-3">
                    <label>Units&nbsp;<label class="text-danger">*</label></label>
-              <select class="form-control enterKeyclass" id="units">
+              <select class="form-control enterKeyclass" id="units" disabled>
                 <option value="">Select Units</option>
                     <option value="Kg">Kg</option>
                     <option value="Liter">Liter</option>  
@@ -603,17 +603,18 @@ success: function(res){
        $("#add_item").attr('disabled',false);
     }
 
-        $('#item_id').val(ui.item.label);
-        $('#item_name').val(ui.item.value);
-        $('#item_code').val(ui.item.item_code);
-        $("#brand").val(ui.item.brand);
-        $("#category").val(ui.item.category);        
-        $("#mrp").val(ui.item.mrp);
-        $("#units").val(ui.item.units);
-        $("#sale_price").val(ui.item.sale_price);
-        $("#discount").val(ui.item.discount);
-        $("#gst").val(ui.item.gst);
-        $("#sub_category").val(ui.item.sub_category);
+        // $('#item_id').val(ui.item.label);
+        get_item_dt(ui.item.label);
+        // $('#item_name').val(ui.item.value);
+        // $('#item_code').val(ui.item.item_code);
+        // $("#brand").val(ui.item.brand);
+        // $("#category").val(ui.item.category);        
+        // $("#mrp").val(ui.item.mrp);
+        // $("#units").val(ui.item.units);
+        // $("#sale_price").val(ui.item.sale_price);
+        // $("#discount").val(ui.item.discount);
+        // $("#gst").val(ui.item.gst);
+        // $("#sub_category").val(ui.item.sub_category);
           
     }
      
@@ -647,42 +648,6 @@ success: function(res){
         .append(item.value)
         .appendTo(ul);
     };
-     $('#varieties_name').autocomplete({
-      // source: "../ajaxCalls/autocomplete_item_variety_list.php",
-      // minLength: 1,
-      source: function(request, response) {
-            $.ajax({
-                url: "../ajaxCalls/autocomplete_item_variety_list.php",
-                dataType: "json",
-                data: {
-                    term : request.term,
-                    item_id : $("#item_id").val()
-                },
-                success: function(data) {
-                    response(data);
-                }
-            });
-        },
-        min_length: 1,
-      select: function(event, ui)
-      {
-        if(ui.item.value == 'NO ITEM FOUND'){
-       $('#varieties_id').val(0);
-        $('#varieties_name').val(' ');
-        return false;
-    }
-
-        $('#varieties_id').val(ui.item.label);
-        $('#varieties_name').val(ui.item.value);
-          
-    }
-     
-    }).data('ui-autocomplete')._renderItem = function(ul, item){
-      return $("<li class='ui-autocomplete-row'></li>")
-        .data("item.autocomplete", item)
-        .append(item.value)
-        .appendTo(ul);
-    };
   })
 </script>
 <script type="text/javascript">
@@ -698,9 +663,13 @@ success: function(res){
      var quantity=$("#quantity").val();
      var units=$("#units").val();
      var item_code=$("#item_code").val();
-     var varieties_id=$("#varieties_id").val();
-     var varieties_name=$("#varieties_name").val();
-
+     var varieties_id=$("#varieties_id option:selected").val();
+     var varieties_name=$("#varieties_id option:selected").text();
+if ($("#item_id").val()==0 || $("#item_id").val() =='') {
+  global_alert_modal('warning','Enter Stored Product Name...');
+                    $("#item_name").focus();
+                    return false;
+}
 
      if (item_name=='' && item_name==0) {
       global_alert_modal('warning','Enter Product Name...');
@@ -803,8 +772,8 @@ success: function(res){
       "item_id":$("#item_id").val(),
       "item_name":$("#item_name").val(),
       "item_code":$("#item_code").val(),
-      "varieties_id":$("#varieties_id").val(),
-      "varieties_name":$("#varieties_name").val(),
+      "varieties_id":$("#varieties_id option:selected").val(),
+      "varieties_name":$("#varieties_id option:selected").text(),
       "brand":brand,
       "category":category,
       "sub_category":sub_category,
@@ -1105,4 +1074,27 @@ $(".enterKeyclass").keypress(function (event) {
        $("#shipping_modal").modal('hide');
        
   })
+  function get_item_dt(e) {
+    $.ajax({
+type: "POST",
+dataType:"json",
+url: '../ajaxCalls/get_item_details.php',
+data:{'item_id':e},
+success: function(res){
+      $('#item_id').val(res.item_id);
+      $('#item_name').val(res.item_name);
+      $('#item_code').val(res.item_code);
+      $("#brand").val(res.brand);
+      $("#category").val(res.category);        
+      $("#mrp").val(res.mrp);
+      $("#units").val(res.units);
+      $("#sale_price").val(res.sales_price);
+      $("#discount").val(res.discount);
+      $("#gst").val(res.gst);
+      $("#sub_category").val(res.sub_category);
+      $("#varieties_id").html(res.varieties);
+  }
+
+});
+  }
 </script>

@@ -58,6 +58,12 @@ $item['gst']=$this->db->getpost('gst');
 		$result=$this->db->GetResultsArray($sql);
 		return $result;
 	}
+	public function get_items_dt($id)
+	{
+		$sql='select * from '.$this->tablename.' where id='.$id;
+		$result=$this->db->GetResultsArray($sql);
+		return $result;
+	}
 	public function get_Autocomplete_items()
 	{
 		$sql = "select  * from ".$this->tablename." where item_name like '%" . $this->db->getpost('term') . "%' and shop_id = " .$_SESSION['shop_id']. " and is_deleted = 'NO' ";

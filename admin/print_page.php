@@ -87,6 +87,9 @@ margin: 0;
 table{
   background-color: transparent;
 }
+table{
+  font-size: 12px;
+}
 /* body {zoom: 70%;}*/
 .logo_class{
     max-height: 150px !important;

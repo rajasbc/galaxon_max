@@ -108,6 +108,8 @@ include 'header.php';
                     <th>Discount</th>
                     <th>Gst</th>
                     <th>Quantity</th>
+                    <th>Varieties</th>
+                    <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -126,6 +128,138 @@ include 'header.php';
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+   <div class="modal fade" id="edit_item_modal" data-backdrop='static'>
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Edit Product</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <input type="hidden" name="edit_item_id" id="edit_item_id">
+              <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Name&nbsp;<span class="text-danger">*</span></span>
+                  </div>
+                  <input type="text" id='edit_item_name' class="form-control enterAsTab" placeholder="Enter Product Name">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Mrp&nbsp;<span class="text-danger">*</span></span>
+                  </div>
+                  <input type="text" id='edit_item_mrp' class="form-control enterAsTab" placeholder="Enter MRP">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Sales Price&nbsp;<span class="text-danger">*</span></span>
+                  </div>
+                  <input type="text" id='edit_item_sale_price' class="form-control enterAsTab" placeholder="Enter Sales Price">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Discount&nbsp;</span>
+                  </div>
+                  <input type="text" id='edit_item_discount' class="form-control enterAsTab" placeholder="Enter Discount">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">GST&nbsp;</span>
+                  </div>
+                  <!-- <input type="text" id='edit_item_gst' class="form-control enterAsTab" placeholder="Enter GST"> -->
+                  <select class="form-control" id="edit_item_gst">
+                    <option value="0">0</option>
+                <option value="5">5</option>
+                <option value="12">12</option>
+                <option value="18">18</option>
+                <option value="28">28</option>
+                  </select>
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Quantity&nbsp;<span class="text-danger">*</span></span>
+                  </div>
+                  <input type="text" id='edit_item_qty' class="form-control enterAsTab" placeholder="Enter Quantity">
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" id="edit_item_btn" class="btn btn-primary enterAsTab">Save</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+  <div class="modal fade" id="delete_item_modal" data-backdrop='static'>
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Delete Product</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <input type="hidden" name="delete_item_id" id="delete_item_id">
+              <h4>Are You Sure Delete This Product....</h4>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+              <button type="button" id="delete_item_btn" class="btn btn-primary">Yes</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+   <div class="modal fade" id="add_varities_modal" data-backdrop='static'>
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Varieties</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <input type="hidden" name="variety_item_id" id="variety_item_id">
+              <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Name&nbsp;<span class="text-danger">*</span></span>
+                  </div>
+                  <input type="text" id='variety_name' class="form-control enterAsTab" placeholder="Enter Variety Name">
+                </div>
+                <div class="form-group mb-3 text-right">
+                  <button type="button" id="add_variety_btn" class="btn btn-primary enterAsTab">Save</button>
+                </div>
+                <div class="row">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>S.No</th>
+                        <th>Name</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="variety_table">
+                      
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
   <?php 
 include 'footer.php';
 ?>
@@ -157,4 +291,192 @@ success: function(res){
 
 });
   }
+</script>
+<script type="text/javascript">
+  function add_varities(e){
+   $("#add_varities_modal").modal('show');
+   $("#variety_item_id").val($(e).data('id'));
+   get_varieties($(e).data('id'));
+
+
+}
+function get_varieties(e){
+   $.ajax({
+type: "POST",
+dataType:"json",
+url: '../ajaxCalls/get_item_variety.php',
+data: {'item_id':e},
+success: function(res){
+$("#variety_table").html(res);
+}
+
+});
+}
+$("#add_variety_btn").click(function(){
+  var item_id=$("#variety_item_id").val();
+  var variety_name=$("#variety_name").val();
+   if (variety_name=='' && variety_name==0) {
+      global_alert_modal('warning','Enter Variety Name...');
+      $("#variety_name").css("border","1px solid red");
+                    $("#variety_name").focus();
+                    return false;
+        }
+       else{
+        $("#variety_name").css("border","1px solid lightgray");
+       }
+   $.ajax({
+type: "POST",
+dataType:"json",
+url: '../ajaxCalls/add_variety.php',
+data: {'item_id':item_id,'variety_name':variety_name,'type':'add'},
+success: function(res){
+if (res.status=='failed') {
+  
+  global_alert_modal('fail','Variety Not Added...');
+    return false;
+
+}else if (res.status=='alert') {
+  
+  global_alert_modal('info','This VarietyName Already Stored...');
+  $("#variety_name").focus();
+  $("#variety_name").val('');
+                    return false;
+
+}
+else{
+   global_alert_modal('success','Variety Added SuccessFully...');
+   $("#variety_name").val('');
+    get_varieties(item_id);
+}
+}
+
+});
+})
+function delete_variety(e){
+    $.ajax({
+type: "POST",
+dataType:"json",
+url: '../ajaxCalls/add_variety.php',
+data: {"id": $(e).data('id'),"type":"delete"},
+success: function(res){
+if (res.status=='success') {
+  
+  global_alert_modal('success','Variety Delete SuccessFully...');
+    get_varieties($("#variety_item_id").val());
+
+}
+}
+
+});
+}
+function delete_modal(e){
+   $("#delete_item_modal").modal('show');
+   $("#delete_item_id").val($(e).data('id'));
+   
+}
+$('#delete_item_btn').on('click',function(e){
+      var item_id=$("#delete_item_id").val();
+    
+      
+  $.ajax({
+type: "POST",
+dataType:"json",
+url: '../ajaxCalls/add_items.php',
+data: {"item_id": item_id,"type":"delete"},
+success: function(res){
+if (res.status=='success') {
+  
+  global_alert_modal('success','Product Delete SuccessFully...');
+   $("#delete_item_modal").modal('hide');
+   get_fetch_data();
+
+}
+}
+
+});
+});
+function edit_modal(e){
+   $("#edit_item_modal").modal('show');
+   $("#edit_item_id").val($(e).data('id'));
+   $("#edit_item_name").val($(e).data('form'));
+   $("#edit_item_mrp").val($(e).data('form1'));
+   $("#edit_item_sale_price").val($(e).data('form2'));
+   $("#edit_item_discount").val($(e).data('form3'));
+   $("#edit_item_gst").val($(e).data('form4'));
+   $("#edit_item_qty").val($(e).data('form5'));
+
+
+}
+    $('#edit_item_btn').on('click',function(e){
+      var item_id=$("#edit_item_id").val();
+       var edit_item_name=$("#edit_item_name").val();
+        var edit_item_mrp=$("#edit_item_mrp").val();
+         var edit_item_sale_price=$("#edit_item_sale_price").val();
+          var edit_item_discount=$("#edit_item_discount").val();
+           var edit_item_gst=$("#edit_item_gst").val();
+            var edit_item_qty=$("#edit_item_qty").val();
+
+     if (edit_item_name=='' && edit_item_name==0) {
+      global_alert_modal('warning','Enter Product Name...');
+      $("#edit_item_name").css("border","1px solid red");
+                    $("#edit_item_name").focus();
+                    return false;
+        }
+       else{
+        $("#edit_item_name").css("border","1px solid lightgray");
+       }
+
+       if (edit_item_mrp=='' && edit_item_mrp==0) {
+      global_alert_modal('warning','Enter Product Mrp...');
+      $("#edit_item_mrp").css("border","1px solid red");
+                    $("#edit_item_mrp").focus();
+                    return false;
+        }
+       else{
+        $("#edit_item_mrp").css("border","1px solid lightgray");
+       }
+
+       if (edit_item_sale_price=='' && edit_item_sale_price==0) {
+      global_alert_modal('warning','Enter Product Sales Price...');
+      $("#edit_item_sale_price").css("border","1px solid red");
+                    $("#edit_item_sale_price").focus();
+                    return false;
+        }
+       else{
+        $("#edit_item_sale_price").css("border","1px solid lightgray");
+       }
+
+       if (edit_item_qty=='') {
+      $("#edit_item_qty").val(0);
+        }
+      
+  $.ajax({
+type: "POST",
+dataType:"json",
+url: '../ajaxCalls/add_items.php',
+data: {"item_id": item_id,"edit_item_name": edit_item_name,"edit_item_mrp": edit_item_mrp,"edit_item_sale_price": edit_item_sale_price,"edit_item_discount": edit_item_discount,"edit_item_gst": edit_item_gst,"edit_item_qty": edit_item_qty,"type":"edit"},
+success: function(res){
+if (res.status=='failed') {
+  
+  global_alert_modal('fail','Product Not Edited...');
+    return false;
+
+}else if (res.status=='alert') {
+  
+  global_alert_modal('info','This ProductName Already Stored...');
+  $("#edit_item_name").focus();
+  $("#edit_item_name").val('');
+                    return false;
+
+}
+else{
+   global_alert_modal('success','Product Edit SuccessFully...');
+   $("#edit_item_name").val('');
+   $("#edit_item_modal").modal('hide');
+   get_fetch_data();
+}
+}
+
+});
+});
 </script>

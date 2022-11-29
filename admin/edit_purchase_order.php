@@ -18,6 +18,8 @@ foreach ($purchase_order_item_dt as $key => $value) {
       "item_id"=>$value['item_id'],
       "item_name"=>$value['item_name'],
       "item_code"=>$value['item_code'],
+      "varieties_id"=>$value['var_id'],
+      "varieties_name"=>$value['var_name'],
       "brand"=>$value['brand'],
       "category"=>$value['category'],
       "sub_category"=>$value['sub_category'],
@@ -158,6 +160,7 @@ $items=json_encode($items);
                     <tr>
                       <th>S.No</th>
                       <th>Product</th>
+                      <th>Variety</th>
                       <th>Quantity</th>
                       <th>Description</th>
                       <th>Units</th>
@@ -189,6 +192,7 @@ $items=json_encode($items);
             echo ' - '.$row['item_code'];
             }
             echo '</td>';
+             echo '<td class=" ch-4">'.$row['var_name'].'</td>';
             echo '<td class="text-left ch-4">';
 
                 echo '<input onkeyup=quantityupdate('.$sno.',this) class="form-control quantity" name="quantity[]" id="quantity'.$sno.'" value="0" style="width:5rem; height:1.75rem">';
@@ -228,7 +232,7 @@ $items=json_encode($items);
 </tbody>
 <tfoot>
 <tr>
-  <td colspan="14" class="td-last-1">
+  <td colspan="15" class="td-last-1">
  <div class="row">
 <div class="col-lg-4 col-sm-4 col-md-4">
   <div class="">

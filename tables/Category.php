@@ -41,7 +41,7 @@ class Category extends Dbconnection {
 	}
 	public function edit_category()
 	{
-		$check_sql='select * from '.$this->tablename.' where name="'.$this->db->getpost('category_name').'" and status="ENABLED"';
+		$check_sql='select * from '.$this->tablename.' where name="'.$this->db->getpost('category_name').'" and id!='.$this->db->getpost('category_id').' and status="ENABLED"';
 		$check_res=$this->db->GetResultsArray($check_sql);
 		if (count($check_res)>0) {
 			return ['status'=>'alert'];

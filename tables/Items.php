@@ -66,5 +66,37 @@ $item['gst']=$this->db->getpost('gst');
 	$result = $this->db->GetResultsArray($sql);
 	return $result;
 	}
+	public function edit_items()
+	{
+		$check_sql='select * from '.$this->tablename.' where item_name="'.$this->db->getpost('edit_item_name').'" and id!='.$this->db->getpost('item_id').' and is_deleted="NO"';
+		$check_res=$this->db->GetResultsArray($check_sql);
+		if (count($check_res)>0) {
+			return ['status'=>'alert'];
+		}
+		$item=array();
+		$item['item_name']=$this->db->getpost('edit_item_name');
+		$item['mrp']=$this->db->getpost('edit_item_mrp');
+		$item['sales_price']=$this->db->getpost('edit_item_sale_price');
+		$item['discount']=$this->db->getpost('edit_item_discount');
+		$item['gst']=$this->db->getpost('edit_item_gst');
+		$item['qty']=$this->db->getpost('edit_item_qty');
+		$id = $this->db->mysql_update($this->tablename, $item,'id='.$this->db->getpost('item_id'));
+		if ($id!=0) {
+			return ['status'=>'success'];
+		}else{
+			return ['status'=>'failed'];
+		}
+	}
+	public function delete_items()
+	{
+		$varieties=array();
+		$varieties['is_deleted']='YES';
+		$id = $this->db->mysql_update($this->tablename, $varieties,'id='.$this->db->getpost('item_id'));
+		if ($id!=0) {
+			return ['status'=>'success'];
+		}else{
+			return ['status'=>'failed'];
+		}
+	}
 }
 ?>

@@ -232,9 +232,9 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 </div>
 </div>
 <?php if ($purchase_order_shipping[0]['shipping_terms']!='' || $purchase_order_shipping[0]['method']!='' || $purchase_order_shipping[0]['delivery_date']!='') {?>
-<div class="row" >
+<div class="row font_inc" >
   <?php }else{?>
-    <div class="row" style="height: 180px;">
+    <div class="row font_inc" style="height: 180px;">
   <?php }?>
 
 <div class="col-sm-6 col-md-6 col-lg-6" style="
@@ -316,7 +316,7 @@ if ($vendor['pincode']!='') {
 <span class="">Address </span>
 <span class="text-val"></span>
 </div>
-<div class="col-8 border-bottom border-dark" id="motor_vehicle_no">
+<div class="col-8 border-bottom border-dark" style="overflow-wrap: break-word;" id="motor_vehicle_no">
   <?php if ($purchase_order_shipping[0]['address']!='' || $purchase_order_shipping[0]['city']!='' || $purchase_order_shipping[0]['state']!='' || $purchase_order_shipping[0]['country']!='' || $purchase_order_shipping[0]['pincode']!='') {?>
 <span class="text-val"> <?php 
 if ($purchase_order_shipping[0]['address']!='') {
@@ -396,15 +396,17 @@ if ($purchase_order_shipping[0]['pincode']!='') {
 <tr class="border border-dark font-weight-bold">
 <th>S.No</th>
 <th class="w-50">Product Name</th>
+<th>Product Code</th>
+<th>Variety</th>
 <th>Quantity</th>
 <th>Description</th>
 <th>Units</th>
 <th>Tons</th>
-<th>Vendor Price</th>
+<!-- <th>Vendor Price</th>
 <th>Mrp</th>
 <th>Discount %</th>
 <th>Gst %</th>
-<th>Total</th>
+<th>Total</th> -->
 </tr>
 </thead>
 <tbody class="text-center" id="tdata">
@@ -421,41 +423,34 @@ if ($purchase_order_shipping[0]['pincode']!='') {
    }?>
 <tr class="border-right border-dark line_1">
 <td class="border-left-0"><?=$sno?></td>
-<td class="w-50 text-left"><b><?=$row['item_name']?>
-  <?php if ($row['item_code']!='') {
-    echo ' - '.$row['item_code'];
-  } ?>
-</b></td>
+<td class="w-50 text-left"><b><?=$row['item_name']?></b></td>
+<td><?=$row['item_code']?></td>
+<td><?=$row['var_name']?></td>
 <td ><?=$row['qty']?></td>
-
 <td><?=$description_name?></td>
 <td class="text-right"><?=$row['units']?></td>
 <td class="text-right"><?=($row['qty']/1000)?></td>
-<td class="text-right"><?=$row['mrp']?></td>
+<!-- <td class="text-right"><?=$row['mrp']?></td>
 <td class="text-right"><?=$row['sales_price']?></td> 
 <td class="text-right"><?=round($row['discount'])?></td>
 <td class="text-right"><?=round($row['gst'])?></td>
-<td class="text-right"><?=($row['total']+$row['tax_amt'])?></td>
+<td class="text-right"><?=($row['total']+$row['tax_amt'])?></td> -->
 </tr>
 <?php }?>
 <tr class="border-right border-dark">
 <td class="border-left-0">&nbsp;</td>
 <td class="w-50 text-left"><b></b></td>
-<td ></td>
 <td >&nbsp;</td>
 <td >&nbsp;</td>
-
-<td></td>
 <td class="text-right">&nbsp;</td>
 <td class="text-right">&nbsp;</td>
 <td class="text-right">&nbsp;</td>
 <td class="text-right">&nbsp;</td> 
-<td class="text-right"></td>
 </tr>
 
  <?php if ($last_index==$temp) { ?>
   </tbody>
-<tfoot>
+<!-- <tfoot>
 <tr class="border-right border-top border-dark font-weight-bold line_1">
 <td class="border-left-0">&nbsp;</td>
 <td class="w-50 text-left"><b>Total</b></td>
@@ -470,12 +465,12 @@ if ($purchase_order_shipping[0]['pincode']!='') {
 <td class="text-right">&nbsp;</td> 
 <td class="text-right"><?=$total_amount?></td>
 </tr>
-</tfoot>
+</tfoot> -->
 </table>
 </div>
 </div>
 </div>
-<div class="row border border-dark" style="height: 76px;">
+<!-- <div class="row border border-dark" style="height: 76px;">
 <div class="col-4"><p style="font-size: 12px;font-weight: bold;">Discount Amt : <?=$purchase_order_dt[0]['discount_amt']?></p></div>
 <div class="col-4 text-center"><p style="font-size: 12px;font-weight: bold;">Tax Amt : <?=$purchase_order_dt[0]['tax_amt']?></p></div>
 <div class="col-4 text-right"><p style="font-size: 12px;font-weight: bold;">Grand Total : <?=$purchase_order_dt[0]['grand_total']?></p></div>
@@ -484,15 +479,15 @@ if ($purchase_order_shipping[0]['pincode']!='') {
   <p style="font-size: 12px;font-weight: bold;">
   Amount chargeable (in words)<br><span class="font-weight-bold"><?php echo getIndianCurrency(round($purchase_order_dt[0]['grand_total'])); ?></span></p>
 </div>
-</div>
-<div class="row border border-dark">
+</div> -->
+<div class="row border border-dark font_inc">
 <div class="col-sm-12 col-md-12 col-lg-12 mt-2 declaration_p">
 <p class="font-weight-bold" style="margin-bottom:0;">Comments / Special Instruction&nbsp;:&nbsp;</p>
 <p style="font-size: 10px;overflow-wrap: break-word;"><?=$shop_result1[0]['declaration']?> </p>
 </div>
 
 </div>
-<div class="row border border-dark" style="height: 150px">
+<div class="row border border-dark font_inc" style="height: 150px">
 <div class="col-sm-6 col-md-6 col-lg-6">
 
 

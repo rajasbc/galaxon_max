@@ -10,7 +10,14 @@ $category_obj = new Category();
 $category =  $category_obj->get_category_data();
 ?>
 <style type="text/css">
-
+.ui-autocomplete {
+  max-height: 200px;
+  overflow-y: auto;
+  /* prevent horizontal scrollbar */
+  overflow-x: hidden;
+  /* add padding to account for vertical scrollbar */
+  padding-right: 20px;
+} 
   .css-serial {
       counter-reset: serial-number;  /* Set the serial number counter to 0 */
     }
@@ -148,8 +155,14 @@ $category =  $category_obj->get_category_data();
                    
               <input type="text" id='item_name' class="form-control enterKeyclass" placeholder="Product Name">
                 </div>
+                 <div class="col-3 form-group mb-3">
+                   <label>Product Varieties&nbsp;<label class="text-danger">&nbsp;</label></label>
+                   <input type="hidden" name="varieties_id" id="varieties_id" value="0">
+                   
+              <input type="text" id='varieties_name' class="form-control enterKeyclass" placeholder="Product Varieties">
+                </div>
                 <div class="col-3 form-group mb-3">
-                   <label>Product Code&nbsp;<label class="text-danger">*</label></label>
+                   <label>Product Code&nbsp;<label class="text-danger">&nbsp;</label></label>
                    
               <input type="text" id='item_code' class="form-control enterKeyclass" placeholder="Product Code">
                 </div>
@@ -174,7 +187,7 @@ $category =  $category_obj->get_category_data();
                   </select>
                 </div>
                 <div class="col-3 form-group mb-3">
-                   <label>Description</label>
+                   <label>Description&nbsp;<label class="text-danger">&nbsp;</label></label>
               <select class="form-control enterKeyclass" id="sub_category" style="width: 100%;">
                     <option value="">Select Description</option>
                     <?php foreach ($description as $key => $value) {?>
@@ -196,15 +209,15 @@ $category =  $category_obj->get_category_data();
               <input type="text" id='mrp' class="form-control enterKeyclass" placeholder="Vendor Price">
                 </div>
                 <div class="col-3 form-group mb-3">
-                   <label>Mrp&nbsp;</label>
+                   <label>Mrp&nbsp;<label class="text-danger">&nbsp;</label></label>
               <input type="text" id='sale_price' class="form-control enterKeyclass" placeholder="Mrp">
                 </div>
-                <div class="col-3 form-group mb-3">
-                   <label>Discount</label>
+                <div class="col-2 form-group mb-3">
+                   <label>Discount&nbsp;<label class="text-danger">&nbsp;</label></label>
               <input type="text" id='discount' class="form-control enterKeyclass" placeholder="Discount">
                 </div>
-                <div class="col-3 form-group mb-3">
-                   <label>GST</label>
+                <div class="col-2 form-group mb-3">
+                   <label>GST&nbsp;<label class="text-danger">&nbsp;</label></label>
               
               <select class="form-control enterKeyclass" id="gst">
                 <option value="0">0</option>
@@ -214,7 +227,7 @@ $category =  $category_obj->get_category_data();
                 <option value="28">28</option>
               </select>
                 </div>
-                <div class="col-3 form-group mb-3">
+                <div class="col-2 form-group mb-3">
                    <label>Quantity&nbsp;<label class="text-danger">*</label></label>
               <input type="text" id='quantity' class="form-control enterKeyclass" placeholder="Quantity">
                 </div>
@@ -229,6 +242,7 @@ $category =  $category_obj->get_category_data();
                     <tr>
                       <th>S.No</th>
                       <th>Product</th>
+                      <th>Variety</th>
                       <th>Quantity</th>
                       <th>Description</th>
                       <th>Units</th>
@@ -244,6 +258,7 @@ $category =  $category_obj->get_category_data();
                   <tbody class="text-left css-serial" id="tdata">
    <?php for ($i = 1; $i < 8; $i++) {?>
     <tr class="emptyTr">
+     <td>&nbsp;</td>
      <td>&nbsp;</td>
      <td>&nbsp;</td>
      <td>&nbsp;</td>
@@ -632,6 +647,42 @@ success: function(res){
         .append(item.value)
         .appendTo(ul);
     };
+     $('#varieties_name').autocomplete({
+      // source: "../ajaxCalls/autocomplete_item_variety_list.php",
+      // minLength: 1,
+      source: function(request, response) {
+            $.ajax({
+                url: "../ajaxCalls/autocomplete_item_variety_list.php",
+                dataType: "json",
+                data: {
+                    term : request.term,
+                    item_id : $("#item_id").val()
+                },
+                success: function(data) {
+                    response(data);
+                }
+            });
+        },
+        min_length: 1,
+      select: function(event, ui)
+      {
+        if(ui.item.value == 'NO ITEM FOUND'){
+       $('#varieties_id').val(0);
+        $('#varieties_name').val(' ');
+        return false;
+    }
+
+        $('#varieties_id').val(ui.item.label);
+        $('#varieties_name').val(ui.item.value);
+          
+    }
+     
+    }).data('ui-autocomplete')._renderItem = function(ul, item){
+      return $("<li class='ui-autocomplete-row'></li>")
+        .data("item.autocomplete", item)
+        .append(item.value)
+        .appendTo(ul);
+    };
   })
 </script>
 <script type="text/javascript">
@@ -647,6 +698,8 @@ success: function(res){
      var quantity=$("#quantity").val();
      var units=$("#units").val();
      var item_code=$("#item_code").val();
+     var varieties_id=$("#varieties_id").val();
+     var varieties_name=$("#varieties_name").val();
 
 
      if (item_name=='' && item_name==0) {
@@ -724,6 +777,8 @@ success: function(res){
        sno=Number($("#sno").val())+1;
        data["item_id"]=$("#item_id").val();
        data["item_name"]=item_name;
+       data["varieties_id"]=varieties_id;
+       data["varieties_name"]=varieties_name;
        data["item_code"]=item_code;
        data["brand"]=brand;
        data["category"]=category;
@@ -748,6 +803,8 @@ success: function(res){
       "item_id":$("#item_id").val(),
       "item_name":$("#item_name").val(),
       "item_code":$("#item_code").val(),
+      "varieties_id":$("#varieties_id").val(),
+      "varieties_name":$("#varieties_name").val(),
       "brand":brand,
       "category":category,
       "sub_category":sub_category,
@@ -769,6 +826,7 @@ success: function(res){
             '<tr id="trItem_{{sno}}">',
             '<td class=" ch-4"><span></span></td>',
             '<td class="text-left ch-10">{{itemname}}</td>',
+            '<td class="text-left ch-10">{{variety}}</td>',
             '<td class="text-left ch-4">',
                 '<input onkeyup=fieldupdate({{sno}},this) class="form-control quantity" name="quantity[]" id="quantity{{sno}}" value="{{quantity}}" style="width:5rem; height:1.75rem">',
                 '</td>',
@@ -807,6 +865,7 @@ success: function(res){
                 tr = trItemTemplate;
                 tr = tr.replace(getRegEx('sno'), sno);
                 tr = tr.replace(getRegEx('itemname'), data['item_name']);
+                tr = tr.replace(getRegEx('variety'), data['varieties_name']);
                 tr = tr.replace(getRegEx('units'), data['units']);
               tr = tr.replace(getRegEx('mrp'), data['mrp']);
               tr = tr.replace(getRegEx('description'), $("#sub_category option:selected").text());
@@ -827,6 +886,7 @@ success: function(res){
              $('#add_product').trigger("reset");
             $("#sno").val(sno);
             $("#item_id").val(0);
+            $("#varieties_id").val(0);
             $('#item_name').focus();
 
   })

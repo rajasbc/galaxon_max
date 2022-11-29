@@ -86,6 +86,16 @@ if ($this->db->getpost('order_type')=='received') {
 						}else{
 						$item_id=$itemvar['item_id'];
 						}
+						$var_sql='select * from varieties where item_id='.$item_id.' and lower(name)="'.strtolower($itemvar['varieties_name']).'" and is_deleted="NO"';
+						$var_res=$this->db->GetResultsArray($var_sql);
+						if (count($var_res)>0) {
+							$varieties_id=$var_res[0]['id'];
+						}else{
+							$varieties_array=array();
+							$varieties_array['item_id']=$item_id;
+							$varieties_array['name']=$itemvar['varieties_name'];
+							$varieties_id = $this->db->mysql_insert('varieties', $varieties_array);
+						}
                        $purchase_items=array();
                        $purchase_items['shop_id']=$_SESSION['shop_id'];
                        $purchase_items['purchase_id']=$purchase_id;
@@ -101,6 +111,8 @@ if ($this->db->getpost('order_type')=='received') {
                        
                        $purchase_items['item_name']=$itemvar["item_name"];
                        $purchase_items['item_code']=$itemvar["item_code"];
+                       $purchase_items['var_id']=$varieties_id;
+                       $purchase_items['var_name']=$itemvar["varieties_name"];
                        $purchase_items['mrp']=$itemvar["mrp"];
                        $purchase_items['sales_price']=$itemvar["sale_price"];
                        $purchase_items['discount']=$itemvar["discount"];
@@ -251,6 +263,8 @@ if (!empty($shipping_array)) {
                        $purchase__history_items['item_id']=$item_id;
                        $purchase__history_items['brand']=$itemvar["brand"];
                        $purchase__history_items['units']=$itemvar["units"];
+                       $purchase__history_items['var_id']=$itemvar["varieties_id"];
+                       $purchase__history_items['var_name']=$itemvar["varieties_name"];
                        $purchase__history_items['category']=$itemvar["category"];
                        if ($itemvar['sub_category']!='') {
                        	$purchase__history_items['sub_category']=$itemvar["sub_category"];

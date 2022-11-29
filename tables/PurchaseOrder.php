@@ -86,16 +86,6 @@ if ($this->db->getpost('order_type')=='received') {
 						}else{
 						$item_id=$itemvar['item_id'];
 						}
-						$var_sql='select * from varieties where item_id='.$item_id.' and lower(name)="'.strtolower($itemvar['varieties_name']).'" and is_deleted="NO"';
-						$var_res=$this->db->GetResultsArray($var_sql);
-						if (count($var_res)>0) {
-							$varieties_id=$var_res[0]['id'];
-						}else{
-							$varieties_array=array();
-							$varieties_array['item_id']=$item_id;
-							$varieties_array['name']=$itemvar['varieties_name'];
-							$varieties_id = $this->db->mysql_insert('varieties', $varieties_array);
-						}
                        $purchase_items=array();
                        $purchase_items['shop_id']=$_SESSION['shop_id'];
                        $purchase_items['purchase_id']=$purchase_id;
@@ -111,7 +101,7 @@ if ($this->db->getpost('order_type')=='received') {
                        
                        $purchase_items['item_name']=$itemvar["item_name"];
                        $purchase_items['item_code']=$itemvar["item_code"];
-                       $purchase_items['var_id']=$varieties_id;
+                       $purchase_items['var_id']=$itemvar["varieties_id"];
                        $purchase_items['var_name']=$itemvar["varieties_name"];
                        $purchase_items['mrp']=$itemvar["mrp"];
                        $purchase_items['sales_price']=$itemvar["sale_price"];
@@ -134,6 +124,22 @@ if ($this->db->getpost('order_type')=='received') {
                        	$update_item=array();
                        	$update_item['qty']=$item_res[0]['qty']+$itemvar['quantity'];
                        	$this->db->mysql_update('items', $update_item,'id='.$item_id);
+                       	 if ($itemvar['varieties_id']!=0 && $itemvar['varieties_id']!='') {
+                        $var_sql='select * from variety_items where item_id='.$item_id.' and variety_id='.$itemvar['varieties_id'].' and shop_id='.$_SESSION['shop_id'];
+                       	$var_res=$this->db->GetResultsArray($var_sql);
+                       	if (count($var_res)>0) {
+                        $update_var=array();
+                       	$update_var['qty']=$var_res[0]['qty']+$itemvar['enter_qty'];
+                       	$this->db->mysql_update('variety_items', $update_var,'id='.$var_res[0]['id']);
+                       	}else{
+                       	$update_var=array();
+                       	$update_var['shop_id']=$_SESSION['shop_id'];
+                       	$update_var['item_id']=$item_id;
+                       	$update_var['variety_id']=$itemvar['varieties_id'];
+                       	$update_var['qty']=$itemvar['enter_qty'];
+                       	$this->db->mysql_insert('variety_items', $update_var);
+                         }
+                       	}
                        }
 
 					}
@@ -295,6 +301,23 @@ if (!empty($shipping_array)) {
                        	$update_item=array();
                        	$update_item['qty']=$item_res[0]['qty']+$itemvar['enter_qty'];
                        	$this->db->mysql_update('items', $update_item,'id='.$item_id);
+                         if ($itemvar['varieties_id']!=0 && $itemvar['varieties_id']!='') {
+                        $var_sql='select * from variety_items where item_id='.$item_id.' and variety_id='.$itemvar['varieties_id'].' and shop_id='.$_SESSION['shop_id'];
+                       	$var_res=$this->db->GetResultsArray($var_sql);
+                       	if (count($var_res)>0) {
+                        $update_var=array();
+                       	$update_var['qty']=$var_res[0]['qty']+$itemvar['enter_qty'];
+                       	$this->db->mysql_update('variety_items', $update_var,'id='.$var_res[0]['id']);
+                       	}else{
+                       	$update_var=array();
+                       	$update_var['shop_id']=$_SESSION['shop_id'];
+                       	$update_var['item_id']=$item_id;
+                       	$update_var['variety_id']=$itemvar['varieties_id'];
+                       	$update_var['qty']=$itemvar['enter_qty'];
+                       	$this->db->mysql_insert('variety_items', $update_var);
+                         }
+                       	}
+
                        }
 
 					}

@@ -35,10 +35,11 @@ include 'header.php';
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>S.No</th>
-                    <th>Name</th>
-                    <th>Mobile No</th>
-                    <th>Email</th>
+                    <th style="width: 20px">S.No</th>
+                    <th >Name</th>
+                     <th style="width: 100px">Branch Code</th>
+                    <th style="width: 80px">Mobile No</th>
+                    <th style="width: 100px">Email</th>
                     <th>Action</th>
                   </tr>
                   </thead>
@@ -95,83 +96,83 @@ include 'header.php';
               <input type="hidden" name="edit_branch_id" id="edit_branch_id" value="0">
               <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text" style="width: 8.3rem">Name&nbsp;</span>
+                    <span class="input-group-text" style="width: 12rem">Name&nbsp;</span>
                   </div>
                   <input type="text" id='name' name='name' class="form-control enterKeyclass" placeholder="Enter Name">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Registration Number&nbsp;</span>
+                    <span class="input-group-text" style="width: 12rem">Registration Number&nbsp;</span>
                   </div>
                   <input type="text" id='registration_no' name='registration_no' class="form-control enterKeyclass" placeholder="Enter Registration Number">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text" style="width: 8.3rem">Gst.No</span>
+                    <span class="input-group-text" style="width: 12rem">Gst.No</span>
                   </div>
                   <input type="text" id='gst_no' name='gst_no' class="form-control enterKeyclass" placeholder="Enter GST No">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text" style="width: 8.3rem">Email</span>
+                    <span class="input-group-text" style="width: 12rem">Email</span>
                   </div>
                   <input type="text" id='email' name='email' class="form-control enterKeyclass" placeholder="Enter Email">
                   </div>
                   <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text" style="width: 8.3rem">Address</span>
+                    <span class="input-group-text"style="width: 12rem">Address</span>
                   </div>
-                  <input type="text" id='address' name='address' class="form-control enterKeyclass" placeholder="Enter Address">
+                  <textarea type="text" id='address' name='address' class="form-control enterKeyclass" placeholder="Enter Address"></textarea>
                 </div>
                  <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text" style="width: 8.3rem">Country</span>
+                    <span class="input-group-text"style="width: 12rem">Country</span>
                   </div>
                   <input type="text" id='country' name='country' class="form-control enterKeyclass" placeholder="Enter Country">
                 </div>
                  <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text" style="width: 8.3rem">State</span>
+                    <span class="input-group-text" style="width: 12rem">State</span>
                   </div>
                   <input type="text" id='state' name='state' class="form-control enterKeyclass" placeholder="Enter State">
                 </div>
                  <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text" style="width: 8.3rem">Pincode</span>
+                    <span class="input-group-text"style="width: 12rem">Pincode</span>
                   </div>
                   <input type="text" id='pincode' name='pincode' class="form-control enterKeyclass" placeholder="Enter Pincode">
                 </div>
 
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text" style="width: 8.3rem">Mobile.No&nbsp;</span>
+                    <span class="input-group-text" style="width: 12rem">Mobile.No&nbsp;</span>
                   </div>
                   <input type="number" id='mobile_no' name='mobile_no' class="form-control enterKeyclass" placeholder="Enter Mobile Number">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text" style="width: 8.3rem">Alternative Mobile Number&nbsp;
+                    <span class="input-group-text"style="width: 12rem">Alternative Mobile Number&nbsp;
                   </div>
                   <input type="number" id='alt_mobile_no' name='alt_mobile_no' class="form-control enterKeyclass" placeholder="Enter Alternative Mobile Number">
                 </div>
 
                  <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text" style="width: 8.3rem">Telephone Number&nbsp;
+                    <span class="input-group-text" style="width: 12rem">Telephone Number&nbsp;
                   </div>
                   <input type="number" id='Landline_no' name='Landline_no' class="form-control enterKeyclass" placeholder="Enter Telephone Number">
                 </div>
                  <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text" style="width: 8.3rem">User Name&nbsp;</span>
+                    <span class="input-group-text" style="width: 12rem">User Name&nbsp;</span>
                   </div>
                   <input type="text" id='username' name='username' class="form-control enterKeyclass" placeholder="Enter User Name">
                 </div>
                 <div class="input-group mb-3" id="passcheck">
                   <div class="input-group-prepend">
-                    <span class="input-group-text" style="width: 8.3rem">Password&nbsp;</span>
+                    <span class="input-group-text" style="width: 12rem">Password&nbsp;</span>
                   </div>
-                  <input type="password" id='password' name='password' class="form-control enterKeyclass " style="width: 8.3rem" placeholder="Enter Password">
+                  <input type="password" id='password' name='password' class="form-control enterKeyclass " style="width: 12rem" placeholder="Enter Password">
                
                  <div class="input-group-append">
               <span class="input-group-text" id="basic-addon2">
@@ -201,9 +202,74 @@ include 'header.php';
         <!-- /.modal-dialog -->
       </div>
       <!-- /.modal -->
+
+
+
+
   <?php 
 include 'footer.php';
 ?>
+<!-- reset_model -->
+
+
+  <div class="modal fade" id="reset_branch_modal" data-backdrop='static'>
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Reset Username and Password</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form method="POST" id="resetForm" enctype="multipart/form-data" >
+            <div class="modal-body">
+              
+              <input type="hidden" name="reset_branch" id="reset_branch" value="0">
+              <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 12rem">User Name&nbsp;</span>
+                  </div>
+                  <input type="text" id='reset_username' name='reset_username' class="form-control enterKeyclass" placeholder="Enter User Name">
+                </div>
+                
+                
+                <div class="input-group mb-3" id="rpasscheck">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 12rem">Password&nbsp;</span>
+                  </div>
+                  <input type="password" id='rpassword' name='rpassword' class="form-control enterKeyclass " style="width: 12rem" placeholder="Enter Password">
+               
+                 <div class="input-group-append">
+              <span class="input-group-text" id="basic-addon2">
+                <div class="input-group-addon">
+                 <a href="#" id='rsh'><i class="fa fa-eye" ></i></a>
+
+               </div>
+             </span>
+           </div>
+            </div>
+                
+                
+               
+               
+               
+              
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+             
+              <button type="button"  id="reset_branch_btn" class="btn btn-primary">Update</button>
+            </div>
+            </form>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+     
+
+
+
+
 <script>
     $("#psh").on('click', function(event) {
 
@@ -218,6 +284,25 @@ include 'footer.php';
             $('#passcheck input').attr('type', 'text');
            //$('#confirmPassword i').removeClass( "fa-eye-slash" );
             $('#psh').html('<i class="fa fa-eye-slash" aria-hidden="true"></i>');
+        }
+    });
+</script>
+
+<script>
+    $("#rsh").on('click', function(event) {
+
+
+            event.preventDefault();
+        if($('#rpasscheck input').attr("type") == "text"){
+            $('#rpasscheck input').attr('type', 'password');
+            //$('#confirmPassword a svg').removeClass( '' );
+           $('#rsh').html( '<i class="fa fa-eye" aria-hidden="true"></i>' );
+
+        }else if($('#rpasscheck input').attr("type") == "password"){
+
+            $('#rpasscheck input').attr('type', 'text');
+           //$('#confirmPassword i').removeClass( "fa-eye-slash" );
+            $('#rsh').html('<i class="fa fa-eye-slash" aria-hidden="true"></i>');
         }
     });
 </script>
@@ -287,8 +372,17 @@ data: formData,
             processData:false,
 success: function(res){
 
-            if(res.status=='success')
-                global_alert_modal('success','Save Successfully...');
+            if(res=='Failed'){
+
+                global_alert_modal('fail','Branch Not Added...');
+                return false;
+            }else if(res.status=='alert'){
+                     global_alert_modal('info','This Branch Name Already Stored...');
+                 $("#name").focus();
+                $("#name").val('');
+                    return false;
+            }else{
+                global_alert_modal('Success','Save Successfully...');
              
               $("#name").val('');
               $("#registration_no").val('');
@@ -306,6 +400,7 @@ success: function(res){
               $("#add_branch_modal").modal('hide');
               $("#branchForm")[0].reset();
                get_data();
+        }       
 
 }
 
@@ -346,19 +441,19 @@ data: formData,
 success: function(res){
 if (res.status=='failed') {
   
-  global_alert_modal('fail','Vendor Not Edited...');
+  global_alert_modal('fail','Branch Not Edited...');
     return false;
 
 }else if (res.status=='alert') {
   
-  global_alert_modal('info','This Vendor Name Already Stored...');
-  $("#vendor_name").focus();
-  $("#vendor_name").val('');
-                    return false;
+  global_alert_modal('info','This Branch Name Already Stored...');
+  $("#branch_name").focus();
+  $("#branch_name").val('');
+  return false;
 
 }
 else{
-    global_alert_modal('success','Vendor Edited SuccessFully...');
+    global_alert_modal('success','Branch Edited SuccessFully...');
     $("#name").val('');
     $("#mobile_no").val('');
     $("#email").val('');
@@ -375,6 +470,8 @@ else{
 });
 });
 </script>
+
+
 <script type="text/javascript">
       $('#delete_branch_btn').on('click',function(e){
 
@@ -389,9 +486,11 @@ url: '../ajaxCalls/add_branch.php',
 data: {"branch_id": branch_id,"type":"delete"},
 success: function(res){
 if (res.status=='success') {
-  
+  $('.btn-disable').css('display','none');
   global_alert_modal('success','Branch Disable SuccessFully...');
    $("#delete_branch_modal").modal('hide');
+   
+   $(".btn-action").attr("disabled");
    get_data();
 
 }
@@ -449,7 +548,7 @@ success: function(res){
 function delete_modal(e){
    $("#delete_branch_modal").modal('show');
    $("#delete_branch_id").val($(e).data('id'));
-   
+
 }
 $(".enterKeyclass").keypress(function (event) {
           item_add='on';
@@ -473,4 +572,64 @@ $(".enterKeyclass").keypress(function (event) {
             }
     }
 });
+</script>
+<script type="text/javascript">
+  function reset_model(e){
+
+     var id = $(e).data('id');
+
+
+
+
+   $.ajax({
+type: "POST",
+dataType:"json",
+url: '../ajaxCalls/reset_branch_data.php',
+data: {'id':id},
+success: function(res){
+  if(res.status=='success')
+    $("#reset_username").val(res.username);
+
+     $("#reset_branch").val($(e).data('id'));
+    $("#reset_branch_modal").modal('show');
+}
+
+});
+
+  }
+
+</script>
+<script type="text/javascript">
+  $("#reset_branch_btn").on('click',function(){
+  var id = $("#reset_branch").val();
+  var username = $("#reset_username").val();
+  var password = $("#rpassword").val();
+
+
+ $.ajax({
+type: "POST",
+dataType:"json",
+url: '../ajaxCalls/update_reset_data.php',
+data: {'id':id,'username':username,'password':password},
+success: function(res){
+  if(res.status=='success')
+
+   global_alert_modal('success','Username and Password Update SuccessFully...');
+    $("#reset_branch_modal").modal('hide');
+    $("#rpassword").val('');
+}
+
+});
+
+
+
+
+
+  })
+
+
+
+
+
+
 </script>

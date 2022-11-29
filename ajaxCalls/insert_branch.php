@@ -1,8 +1,8 @@
 <?php 
 include '../tables/config.php';
 
-$obj = new Shops();
-$result = $obj->insert_details();
+$obj = new Mail();
+$result = $obj->sendEmail();
 
 
 echo json_encode($result);

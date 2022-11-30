@@ -123,7 +123,7 @@ class Vendors extends Dbconnection {
 	}
 	public function get_vendor_data()
 	{
-		$sql='select * from '.$this->tablename.' where status="ENABLED"';
+		$sql='select * from '.$this->tablename.'';
 		$result=$this->db->GetResultsArray($sql);
 		return $result;
 	}

@@ -125,13 +125,32 @@ class Shops extends Dbconnection {
 	public function insert_details(){
 
 
+		$check_sql = "select * from ".$this->tablename." where name = '".$this->db->getpost('name')."' and status='ENABLED' and branch='1'";
+        $check_res = $this->db->GetResultsArray($check_sql);
+
+       
+        if(count( $check_res)>0){
+
+             return ['status'=>'alert'];
+
+        }
+
+        $sql = "select max(branch_code) as branch_code from ".$this->tablename." where branch = '1'";
+        $result = $this->db->GetResultsArray($sql);
+      if($result[0]['branch_code']!=''){
+          $branch_code = $result[0]['branch_code'];
+          $branch_code++;
+
+      }else{
+      $branch_code = 'GLXB0001';
+  }
+
 		$branch = array();
 		$branch1 = array();
 
-
-
 		$branch['name'] = $this->db->getpost('name');
 		$branch['shop_id'] = $_SESSION['shop_id'];
+		$branch['branch_code'] = $branch_code;
 		$branch['shop_registration_number'] = $this->db->getpost('registration_no');
 		$branch['shop_gst_no'] = $this->db->getpost('gst_no');
 		$branch['email'] = $this->db->getpost('email');
@@ -143,6 +162,9 @@ class Shops extends Dbconnection {
 		$branch['alt_mobile_no'] = $this->db->getpost('alt_mobile_no');
 		$branch['landline_no'] = $this->db->getpost('Landline_no');
 		$branch['branch'] = $_SESSION['shop_id'];
+		$branch['username'] = $this->db->getpost('username');
+		$pass1 = md5($this->db->getpost('password'));
+		$branch['password'] = $pass1;
 
 		$branch['created_at'] = date('Y-m-d h:i:s');
 
@@ -183,7 +205,7 @@ class Shops extends Dbconnection {
 	public function get_branch_data(){
 
 
-		 $sql ="select * from ".$this->tablename." where branch='".$_SESSION['shop_id']."' and status='ENABLED'";
+		 $sql ="select * from ".$this->tablename." where branch='".$_SESSION['shop_id']."'";
 
 	
 		$result=$this->db->GetResultsArray($sql);
@@ -245,7 +267,43 @@ class Shops extends Dbconnection {
 			return ['status'=>'failed'];
 		}
 	}
+public function get_username($id){
 
+
+$sql='select * from '.$this->tablename.' where id='.$id.' and status="ENABLED"';
+$res=$this->db->GetResultsArray($sql);
+
+
+if(count($res)>0){
+   return ['status'=>'success','username'=>$res[0]['username']];
+
+}else{
+   return ['status'=>'failed'];
+}
+
+
+	}
+
+
+
+public function update_username($id){
+
+   $update = array();
+   $update['username'] = $this->db->getpost('username');
+   $pass = md5($this->db->getpost('password'));
+   $update['password'] =  $pass;
+
+$result = $this->db->mysql_update($this->tablename,$update,'id='.$id);
+if($result){
+   return ['status'=>'success'];
+}else{
+   return ['status'=>'failed'];
+}
+
+}
+
+
+	
 
 
 

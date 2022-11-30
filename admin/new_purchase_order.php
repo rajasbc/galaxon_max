@@ -109,12 +109,13 @@ $category =  $category_obj->get_category_data();
             
               <div class="card-body row col-12">
                 <div class="row col-12">
+                  <?php if($_SESSION['type']=='ADMIN'){?>
                   <div class="col-3 form-group mb-2">
                    <label>Vendor Name&nbsp;<label class="text-danger">*</label></label>
                    <input type="hidden" name="sno" id="sno" value="0">
                    <input type="hidden" name="vendor_id" id="vendor_id" value="0">
                   <input type="text" name="vendor" id="vendor" class="form-control" placeholder="Enter Vendor" autofocus>
-                </div>
+                </div><?php } ?>
                 <?php if ($_GET['type']=='new') {?>
                  <div class="col-9 form-group mb-2 text-right">
                    <i class="nav-icon fas fa-solid fa-truck" style="font-size: xx-large;cursor: pointer;" data-toggle='modal' data-target="#shipping_modal" id="shipping_modal_btn"></i>

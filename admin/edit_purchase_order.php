@@ -445,7 +445,7 @@ if (val!=0 && val!='') {
       
      prototal=Number(mrp*quantity)-(Number(mrp*quantity)*(discount/100));
      gstamount=prototal*(gst/100);
-     $("#totalid"+idval).html((prototal).toFixed(2));
+     $("#totalid"+idval).html((prototal+gstamount).toFixed(2));
      var tons=Number($("#quantity"+idval).val())/1000;
      $("#tons"+idval).html(tons);
     items[ref].sale_price=sale_price;
@@ -472,7 +472,7 @@ if (val!=0 && val!='') {
       }
      prototal=Number(mrp*quantity)-(Number(mrp*quantity)*(discount/100));
      gstamount=prototal*(gst/100);
-     $("#totalid"+idval).html((prototal).toFixed(2));
+     $("#totalid"+idval).html((prototal+gstamount).toFixed(2));
      var tons=Number($("#quantity"+idval).val())/1000;
      $("#tons"+idval).html(tons);
     items[ref].sale_price=sale_price;

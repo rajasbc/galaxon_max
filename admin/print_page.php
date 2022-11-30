@@ -88,7 +88,7 @@ table{
   background-color: transparent;
 }
 table,thead,tbody,tr,td,th{
-  font-size: 14px;
+  font-size: 16px;
 }
 /* body {zoom: 70%;}*/
 .logo_class{
@@ -585,7 +585,7 @@ if ($purchase_order_shipping[0]['pincode']!='') {
 </div>
 
 </div>
-<div class="row border border-dark shippingDetails" style="height: 160px">
+<div class="row border border-dark shippingDetails" style="height: 180px">
 <div class="col-sm-6 col-md-6 col-lg-6">
 
 
@@ -599,7 +599,7 @@ if ($purchase_order_shipping[0]['pincode']!='') {
 <div class="row">&nbsp;</div>
 <div class="row">&nbsp;</div>
 <div class="row">&nbsp;</div>
-<!-- <div class="row">&nbsp;</div> -->
+<div class="row">&nbsp;</div>
 <!-- <div class="row">&nbsp;</div> -->
 <div class="row">
 

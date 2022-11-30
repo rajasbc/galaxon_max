@@ -764,11 +764,12 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
        total1=Number(data["mrp"])*Number(data["quantity"]);
        total2=Number(total1)-Number(total1)*Number(data["discount"])/100;
        total=Number(total2);
-       total=total.toFixed(2);
-       data["total"]=total;
+       // total=total.toFixed(2);
+       
     prototal=Number(($("#mrp").val()*$("#quantity").val())-(($("#mrp").val()*$("#quantity").val())*($("#discount").val()/100)));
 
      gstamount=prototal*(Number($("#gst").val())/100);
+     data["total"]=(total+gstamount).toFixed(2);
       items["sid"+sno] = {
       "item_id":$("#item_id").val(),
       "item_name":$("#item_name").val(),
@@ -874,7 +875,7 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
       var tons=Number($("#quantity"+idval).val())/1000;
      prototal=Number(mrp*quantity)-(Number(mrp*quantity)*(discount/100));
      gstamount=prototal*(gst/100);
-     $("#totalid"+idval).html((prototal).toFixed(2));
+     $("#totalid"+idval).html((prototal+gstamount).toFixed(2));
      $("#tons"+idval).html(tons);
     items[ref].sale_price=sale_price;
     items[ref].mrp=mrp;

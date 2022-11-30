@@ -162,12 +162,14 @@ include 'header.php';
                   </div>
                   <input type="number" id='Landline_no' name='Landline_no' class="form-control enterKeyclass" placeholder="Enter Telephone Number">
                 </div>
-                 <div class="input-group mb-3">
+
+                 <div class="input-group mb-3" id="edit_user">
                   <div class="input-group-prepend">
                     <span class="input-group-text" style="width: 12rem">User Name&nbsp;</span>
                   </div>
                   <input type="text" id='username' name='username' class="form-control enterKeyclass" placeholder="Enter User Name">
                 </div>
+
                 <div class="input-group mb-3" id="passcheck">
                   <div class="input-group-prepend">
                     <span class="input-group-text" style="width: 12rem">Password&nbsp;</span>
@@ -517,7 +519,7 @@ success: function(res){
 </script>
 <script type="text/javascript">
 function edit_modal(e){
- 
+   
     $.ajax({
 type: "POST",
 dataType:"json",
@@ -535,7 +537,9 @@ success: function(res){
     $("#state").val(res.state);
     $("#country").val(res.country);
     $("#pincode").val(res.pincode);
-      $("#add_branch_modal").modal('show');
+    $("#edit_user").css('display','none');
+    $("#passcheck").css('display','none');
+    $("#add_branch_modal").modal('show');
    $("#edit_branch_id").val($(e).data('id'));
    $("#add_branch_btn").css('display','none');
    $("#edit_branch_btn").css('display','');
@@ -577,9 +581,7 @@ $(".enterKeyclass").keypress(function (event) {
   function reset_model(e){
 
      var id = $(e).data('id');
-
-
-
+   
 
    $.ajax({
 type: "POST",
@@ -602,6 +604,7 @@ success: function(res){
 <script type="text/javascript">
   $("#reset_branch_btn").on('click',function(){
   var id = $("#reset_branch").val();
+
   var username = $("#reset_username").val();
   var password = $("#rpassword").val();
 

@@ -18,13 +18,13 @@ if (count($result)>0) {
 		$i++;
 		if($value['status']=='ENABLED'){
 $output [$j] =[$i,$value['name'],$value['branch_code'],$value['mobile_no'],$value['email'],'<button style="margin-right:25px";
-type="button"  class="btn btn-primary" data-id="'.$value['id'].'" data-form="'.$value['name'].'" onclick="edit_modal(this);">Edit</button><button  style="margin-right: 20px"; type="button"  class="btn btn-danger" data-id="'.$value['id'].'" onclick="delete_modal(this);">Disable</button><button style="margin-right:20px" type="button" for="'.$value['branch_code'].'"  class="btn btn-primary" data-id="'.$value['id'].'" onclick="reset_model(this);">Reset</button>'];
+type="button"  class="btn btn-primary" data-id="'.$value['id'].'" data-form="'.$value['name'].'" onclick="edit_modal(this);">Edit</button><button  style="margin-right: 20px"; type="button"  class="btn btn-danger" data-id="'.$value['id'].'" onclick="delete_modal(this);">Disable</button><button style="margin-right:20px" type="button" for="'.$value['branch_code'].'"  class="btn btn-primary" data-id="'.$value['branch_id'].'" onclick="reset_model(this);">Reset</button>'];
               }else{
 
                $output [$j] =[$i,$value['name'],$value['branch_code'],$value['mobile_no'],$value['email'],
                '<button style="margin-right: 20px"; type="button"  class="btn btn-primary" disabled data-id="'.$value['id'].'" data-form="'.$value['name'].'" onclick="edit_modal(this);">Edit</button> 
                <button style="margin-right: 20px"; type="button"  disabled class="btn btn-danger" data-id="'.$value['id'].'" onclick="delete_modal(this);">Disable</button>
-               <button style="margin-right: 20px"; type="button"  class="btn btn-primary" for="'.$value['branch_code'].'"disabled data-id="'.$value['id'].'" onclick="reset_model(this);">Reset</button>'];
+               <button style="margin-right: 20px"; type="button"  class="btn btn-primary" for="'.$value['branch_code'].'"disabled data-id="'.$value['branch_id'].'" onclick="reset_model(this);">Reset</button>'];
 
 
               }

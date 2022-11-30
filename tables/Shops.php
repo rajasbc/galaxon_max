@@ -137,6 +137,8 @@ class Shops extends Dbconnection {
 
         $sql = "select max(branch_code) as branch_code from ".$this->tablename." where branch = '1'";
         $result = $this->db->GetResultsArray($sql);
+
+
       if($result[0]['branch_code']!=''){
           $branch_code = $result[0]['branch_code'];
           $branch_code++;
@@ -145,11 +147,23 @@ class Shops extends Dbconnection {
       $branch_code = 'GLXB0001';
   }
 
+      $sel = "select max(branch_id) as branch_id from ".$this->tablename." where shop_id = '".$_SESSION['shop_id']."'";
+
+        $res = $this->db->getAsIsArray($sel);
+
+          $branch_id = $res['branch_id']+1;
+
+          
+
+
+
+
 		$branch = array();
 		$branch1 = array();
 
 		$branch['name'] = $this->db->getpost('name');
 		$branch['shop_id'] = $_SESSION['shop_id'];
+		$branch['branch_id'] = $branch_id;
 		$branch['branch_code'] = $branch_code;
 		$branch['shop_registration_number'] = $this->db->getpost('registration_no');
 		$branch['shop_gst_no'] = $this->db->getpost('gst_no');
@@ -170,7 +184,7 @@ class Shops extends Dbconnection {
 
 
 
-
+        $branch1['branch_id'] = $branch_id;
 		$branch1['type'] = $this->db->getpost('type');
 		$branch1['shop_id'] = $_SESSION['shop_id'];
 		$branch1['email'] = $this->db->getpost('email');
@@ -186,8 +200,8 @@ class Shops extends Dbconnection {
 		$result = $this->db->mysql_insert($this->tablename,$branch);
 		$result1 = $this->db->mysql_insert($this->tablename1,$branch1);
 
-
-
+        $obj = new Mail();
+        $mail = $obj->sendEmail();
 
 
 		if($result1){
@@ -270,7 +284,7 @@ class Shops extends Dbconnection {
 public function get_username($id){
 
 
-$sql='select * from '.$this->tablename.' where id='.$id.' and status="ENABLED"';
+$sql='select * from '.$this->tablename.' where branch_id='.$id.' and status="ENABLED"';
 $res=$this->db->GetResultsArray($sql);
 
 
@@ -289,12 +303,23 @@ if(count($res)>0){
 public function update_username($id){
 
    $update = array();
+   $update1 = array();
+
    $update['username'] = $this->db->getpost('username');
    $pass = md5($this->db->getpost('password'));
    $update['password'] =  $pass;
 
-$result = $this->db->mysql_update($this->tablename,$update,'id='.$id);
-if($result){
+   $update1['username'] = $this->db->getpost('username');
+   $pass1 = md5($this->db->getpost('password'));
+   $update1['login_password'] =  $pass1;
+
+
+
+
+
+$result = $this->db->mysql_update($this->tablename,$update,'branch_id='.$id);
+$result1 = $this->db->mysql_update($this->tablename1,$update1,'branch_id='.$id);
+if($result1){
    return ['status'=>'success'];
 }else{
    return ['status'=>'failed'];

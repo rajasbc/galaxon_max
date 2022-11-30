@@ -247,6 +247,7 @@ if (empty($_SESSION)==true) {
               </li> -->
             </ul>
           </li>
+
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-solid fa-suitcase"></i>
@@ -507,6 +508,8 @@ if (empty($_SESSION)==true) {
                   <p>Orders</p>
                 </a>
               </li>
+            </li>
+
               <!-- <li class="nav-item">
                 <a href="" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -514,6 +517,29 @@ if (empty($_SESSION)==true) {
                 </a>
               </li> -->
             </ul>
+             <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-solid fa-user"></i>
+              <p>
+                customer
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="customer.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>customer List</p>
+                </a>
+              </li>
+             <!--  <li class="nav-item">
+                <a href="" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Payment Details</p>
+                </a>
+              </li> -->
+            </ul>
+          </li>
           
          
         </ul>

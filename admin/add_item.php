@@ -56,7 +56,7 @@ $description =  $description_obj->get_description_data();
                   </select>
                 </div>
                  <div class="col-6 form-group mb-3">
-                   <label>Mrp&nbsp;<label class="text-danger">*</label></label>
+                   <label>Mrp&nbsp;<label class="text-danger">&nbsp;</label></label>
               <input type="text" class="form-control enterKeyclass" id="mrp" placeholder="Mrp">
                 </div>
                 <div class="col-6 form-group mb-3">
@@ -71,7 +71,7 @@ $description =  $description_obj->get_description_data();
                 </div>
                 
                 <div class="col-6 form-group mb-3">
-                   <label>Sale Price&nbsp;<label class="text-danger">*</label></label>
+                   <label>Sale Price&nbsp;<label class="text-danger">&nbsp;</label></label>
               <input type="text" class="form-control enterKeyclass" id="sale_price" placeholder="Sale Price">
                 </div>
                 <div class="col-6 form-group mb-3">
@@ -221,24 +221,24 @@ include 'footer.php';
        else{
         $("#units").css("border","1px solid lightgray");
        }
-        if (mrp=='' && mrp==0) {
-      global_alert_modal('warning','Enter MRP Rate...');
-      $("#mrp").css("border","1px solid red");
-                    $("#mrp").focus();
-                    return false;
-        }
-       else{
-        $("#mrp").css("border","1px solid lightgray");
-       }
-        if (sale_price=='' && sale_price==0) {
-      global_alert_modal('warning','Enter Sale Price Name...');
-      $("#sale_price").css("border","1px solid red");
-                    $("#sale_price").focus();
-                    return false;
-        }
-       else{
-        $("#sale_price").css("border","1px solid lightgray");
-       }
+      //   if (mrp=='' && mrp==0) {
+      // global_alert_modal('warning','Enter MRP Rate...');
+      // $("#mrp").css("border","1px solid red");
+      //               $("#mrp").focus();
+      //               return false;
+      //   }
+      //  else{
+      //   $("#mrp").css("border","1px solid lightgray");
+      //  }
+      //   if (sale_price=='' && sale_price==0) {
+      // global_alert_modal('warning','Enter Sale Price Name...');
+      // $("#sale_price").css("border","1px solid red");
+      //               $("#sale_price").focus();
+      //               return false;
+      //   }
+      //  else{
+      //   $("#sale_price").css("border","1px solid lightgray");
+      //  }
       //   if (quantity=='' && quantity==0) {
       // global_alert_modal('warning','Enter Product Quantity...');
       // $("#quantity").css("border","1px solid red");

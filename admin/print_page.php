@@ -87,6 +87,9 @@ margin: 0;
 table{
   background-color: transparent;
 }
+table,thead,tbody,tr,td,th{
+  font-size: 14px;
+}
 /* body {zoom: 70%;}*/
 .logo_class{
     max-height: 150px !important;
@@ -135,7 +138,7 @@ margin: 0;
 /*height: 1180px;*/
 }
 .bill-table.large{
-height: 700px;
+height: 600px;
 }
 .bill-table.medium{
 height: 440px;
@@ -145,7 +148,7 @@ height: 30px;
 line-height: 30px;
 }
 .shippingDetails {
-font-size: 10px;
+font-size: 14px;
 }
 div.declaration_p p{
 margin-bottom: 0px !important;
@@ -180,11 +183,11 @@ margin-bottom: 0px !important;
 </style>
 <style>
       .bill-table.large{
-        height: 700px;
+        height: 650px;
       }
     </style>
       <?php
- $numItemShow=27;
+ $numItemShow=23;
 $arr_count=count($purchase_order_item_dt);
 $next_page=$arr_count-$numItemShow;
 $next_page=$next_page>0?$next_page:1;
@@ -224,20 +227,20 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <div class="col-12 text-center" style="font-size: 26px !important;"><b>GALAXON MAX PRIVATE LIMITED</b>
 </div>
 <!-- <br> -->
-<div class="col-12 text-center" style="font-size: larger;">NO 18/44(1),THAMPILAKSHMI ARCADE,CHITTUR,PALAKKAD-678101</div>
+<div class="col-12 text-center" style="font-size: 14px;">NO 18/44(1),THAMPILAKSHMI ARCADE,CHITTUR,PALAKKAD-678101</div>
 
-<div class="col-12 text-center" style="font-size: larger;">Phone : 8438335415 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tele-Phone : 4923 356 006</div>
-<div class="col-12 text-center" style="font-size: larger;">Mail : info@galaxonmax.com</div>
-<div class="col-12 text-center" style="font-size: larger;font-weight: bold;">GSTIN : 32AAJCG9997N1ZL</div>
+<div class="col-12 text-center" style="font-size: 14px;">Phone : 8438335415 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tele-Phone : 4923 356 006</div>
+<div class="col-12 text-center" style="font-size: 14px;">Mail : info@galaxonmax.com</div>
+<div class="col-12 text-center" style="font-size: 14px;font-weight: bold;">GSTIN : 32AAJCG9997N1ZL</div>
 </div>
 </div>
 <?php if ($purchase_order_shipping[0]['shipping_terms']!='' || $purchase_order_shipping[0]['method']!='' || $purchase_order_shipping[0]['delivery_date']!='') {?>
-<div class="row font_inc" >
+<div class="row" >
   <?php }else{?>
-    <div class="row font_inc" style="height: 180px;">
-  <?php }?>
+    <div class="row" >
+   <?php }?>
 
-<div class="col-sm-6 col-md-6 col-lg-6" style="
+<!-- <div class="col-sm-6 col-md-6 col-lg-6" style="
                     padding-left: 25px;">
 <div class="row" style="font-size:15px"><label><b>Vendor</b></label></div>
 <div class="row" ><b>Name : <?=$vendor['name']?> - <?=$vendor['vendor_code']?></b></div>
@@ -269,15 +272,110 @@ if ($vendor['pincode']!='') {
 <div class="row" ><b>GST No : <?=$vendor['gst']?></b></div>
 <?php }?>
 
-</div>
+</div> -->
 <div class="col-sm-6 col-md-6 col-lg-6 shippingDetails">
 <div class="row">
-<div class="col-6 border-left border-right border-bottom border-dark" id="invoice_number">
+<div class="col-12 border-left text-center  border-bottom border-dark" id="invoice_number">
 <span class=""><b>Purchase No : </b></span>
 <!-- $shippingDetails['invoice_number'] -->
 <span class="text-val"><b><?=$purchase_order_dt[0]['purchase_no']?></b></span>
 </div>
-<div class="col-6 border-bottom border-dark" id="invoice_dated">
+<!-- <div class="col-6 border-bottom border-dark" id="invoice_dated">
+<span class=""><b>Purchase Date : </b></span>
+<span class="text-val"><b><?=date('d-m-Y',strtotime($purchase_order_dt[0]['created_at']))?></b></span>
+</div> -->
+</div>
+<div class="row">
+<div class="col-12 border-left  border-bottom border-dark" id="buyers_dated">
+<span class=""><b>Vendor Details</b></span>
+
+</div>
+<!-- <div class="col-6 border-bottom border-dark" id="delivery_note_date">
+<span class="">Delivery Date : </span>
+
+<span class="text-val">21-11-2022</span>
+</div> -->
+</div>
+<div class="row">
+<div class="col-4 border-left border-right border-bottom border-dark " id="buyers_order_no">
+<span class="">Name </span>
+<span class="text-val"></span>
+</div>
+<div class="col-8 border-bottom border-dark" id="motor_vehicle_no">
+<span class="text-val"><?=$vendor['name']?> - <?=$vendor['vendor_code']?></span>
+</div>
+</div>
+<div class="row">
+<div class="col-4 border-left border-right border-bottom border-dark " id="buyers_order_no">
+<span class="">Company Name </span>
+<span class="text-val"></span>
+</div>
+<div class="col-8 border-bottom border-dark" id="motor_vehicle_no">
+<span class="text-val"><?=$vendor['company_name']?></span>
+</div>
+</div>
+<div class="row" style="height: 3rem;">
+<div class="col-4 border-left border-right border-bottom border-dark " id="buyers_order_no">
+<span class="">Address </span>
+<span class="text-val"></span>
+</div>
+<div class="col-8 border-bottom border-dark" style="overflow-wrap: break-word;" id="motor_vehicle_no">
+  <?php if ($vendor['address']!='' || $vendor['city']!='' || $vendor['state']!='' || $vendor['country']!='' || $vendor['pincode']!=''){?>
+<span class="text-val"> <?php 
+if ($vendor['address']!='') {
+   echo $vendor['address'];
+}
+if ($vendor['city']!='') {
+   echo ','.$vendor['city'];
+}
+if ($vendor['state']!='') {
+   echo ','.$vendor['state'];
+}
+if ($vendor['country']!='') {
+   echo ','.$vendor['country'];
+}
+if ($vendor['pincode']!='') {
+   echo ','.$vendor['pincode'];
+}
+    ?></span>
+<?php }?>
+</div>
+</div>
+<div class="row">
+<div class="col-4 border-left border-right border-bottom border-dark " id="buyers_order_no">
+<span class="">Mobile.No </span>
+<span class="text-val"></span>
+</div>
+<div class="col-8 border-bottom border-dark" id="motor_vehicle_no">
+<span class="text-val"><?=$vendor['mobile_no']?></span>
+</div>
+</div>
+<div class="row">
+<div class="col-4 border-left border-right border-bottom border-dark " id="buyers_order_no">
+<span class="">Email </span>
+<span class="text-val"></span>
+</div>
+<div class="col-8 border-bottom border-dark" id="motor_vehicle_no">
+<span class="text-val"><?=$vendor['email']?></span>
+</div>
+</div>
+<div class="row">
+<div class="col-4 border-left border-right border-dark " id="buyers_order_no">
+<span class="">GST No </span>
+<span class="text-val"></span>
+</div>
+<div class="col-8    border-dark" id="motor_vehicle_no">
+<span class="text-val"><?=$vendor['gst']?></span>
+</div>
+</div>
+
+
+
+</div>
+<div class="col-sm-6 col-md-6 col-lg-6 shippingDetails">
+<div class="row">
+
+<div class="col-12 text-center border-left border-bottom border-dark" id="invoice_dated">
 <span class=""><b>Purchase Date : </b></span>
 <span class="text-val"><b><?=date('d-m-Y',strtotime($purchase_order_dt[0]['created_at']))?></b></span>
 </div>
@@ -311,7 +409,7 @@ if ($vendor['pincode']!='') {
 <span class="text-val"><?=$purchase_order_shipping[0]['company_name']?></span>
 </div>
 </div>
-<div class="row">
+<div class="row" style="height: 3rem;">
 <div class="col-4 border-left border-right border-bottom border-dark " id="buyers_order_no">
 <span class="">Address </span>
 <span class="text-val"></span>
@@ -357,11 +455,11 @@ if ($purchase_order_shipping[0]['pincode']!='') {
 </div>
 </div>
 <div class="row">
-<div class="col-4 border-left border-right border-bottom border-dark " id="buyers_order_no">
+<div class="col-4 border-left border-right border-dark " id="buyers_order_no">
 <span class="">GST No </span>
 <span class="text-val"></span>
 </div>
-<div class="col-8 border-bottom   border-dark" id="motor_vehicle_no">
+<div class="col-8    border-dark" id="motor_vehicle_no">
 <span class="text-val"><?=$purchase_order_shipping[0]['gst_no']?></span>
 </div>
 </div>
@@ -373,7 +471,7 @@ if ($purchase_order_shipping[0]['pincode']!='') {
 </div>
 </div>
 <?php if ($purchase_order_shipping[0]['shipping_terms']!='' || $purchase_order_shipping[0]['method']!='' || $purchase_order_shipping[0]['delivery_date']!='') {?>
-<div class="row border-top border-left border-right border-dark">
+<div class="row border-top border-left border-right border-dark shippingDetails">
   <div class="col-4 border-right border-dark">
     <label>Shipping Terms</label>
     <p><?=$purchase_order_shipping[0]['shipping_terms']?></p>
@@ -394,14 +492,14 @@ if ($purchase_order_shipping[0]['pincode']!='') {
 <table class="table text-center bill-table border w-100 border-dark  large  " id="bill-table">
 <thead>
 <tr class="border border-dark font-weight-bold">
-<th>S.No</th>
-<th class="w-50">Product Name</th>
-<th>Product Code</th>
-<th>Variety</th>
-<th>Quantity</th>
-<th>Description</th>
-<th>Units</th>
-<th>Tons</th>
+<th class="border border-dark">S.No</th>
+<th class="w-50 border border-dark">Product Name</th>
+<th class="border border-dark">Product Code</th>
+<th class="border border-dark">Variety</th>
+<th class="border border-dark">Quantity</th>
+<th class="border border-dark">Description</th>
+<th class="border border-dark">Units</th>
+<th class="border border-dark">Tons</th>
 <!-- <th>Vendor Price</th>
 <th>Mrp</th>
 <th>Discount %</th>
@@ -480,14 +578,14 @@ if ($purchase_order_shipping[0]['pincode']!='') {
   Amount chargeable (in words)<br><span class="font-weight-bold"><?php echo getIndianCurrency(round($purchase_order_dt[0]['grand_total'])); ?></span></p>
 </div>
 </div> -->
-<div class="row border border-dark font_inc">
+<div class="row border border-dark shippingDetails">
 <div class="col-sm-12 col-md-12 col-lg-12 mt-2 declaration_p">
 <p class="font-weight-bold" style="margin-bottom:0;">Comments / Special Instruction&nbsp;:&nbsp;</p>
 <p style="font-size: 10px;overflow-wrap: break-word;"><?=$shop_result1[0]['declaration']?> </p>
 </div>
 
 </div>
-<div class="row border border-dark font_inc" style="height: 150px">
+<div class="row border border-dark shippingDetails" style="height: 160px">
 <div class="col-sm-6 col-md-6 col-lg-6">
 
 
@@ -501,8 +599,8 @@ if ($purchase_order_shipping[0]['pincode']!='') {
 <div class="row">&nbsp;</div>
 <div class="row">&nbsp;</div>
 <div class="row">&nbsp;</div>
-<div class="row">&nbsp;</div>
-<div class="row">&nbsp;</div>
+<!-- <div class="row">&nbsp;</div> -->
+<!-- <div class="row">&nbsp;</div> -->
 <div class="row">
 
 

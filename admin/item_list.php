@@ -153,7 +153,7 @@ $description =  $description_obj->get_description_data();
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Brand&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-danger">*</span></span>
+                    <span class="input-group-text">Brand&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-danger">&nbsp;</span></span>
                   </div>
                  <select class="form-control select2 enterKeyclass" id='edit_brand'>
                     <option value="">Select Brand</option>
@@ -165,7 +165,7 @@ $description =  $description_obj->get_description_data();
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Category&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-danger">*</span></span>
+                    <span class="input-group-text">Category&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-danger">&nbsp;</span></span>
                   </div>
                   <select class="form-control select2 enterKeyclass" id="edit_category">
                     <option value="">Select Category</option>
@@ -177,7 +177,7 @@ $description =  $description_obj->get_description_data();
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Description&nbsp;<span class="text-danger">*</span></span>
+                    <span class="input-group-text">Description&nbsp;<span class="text-danger">&nbsp;</span></span>
                   </div>
                   <select class="form-control select2 enterKeyclass" id="edit_sub_category">
                     <option value="">Select Description</option>
@@ -188,7 +188,7 @@ $description =  $description_obj->get_description_data();
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Units&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-danger">*</span></span>
+                    <span class="input-group-text">Units&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-danger">&nbsp;</span></span>
                   </div>
                   <select class="form-control select2 enterKeyclass" id="edit_units">
                    <option value="">Select Units</option>
@@ -199,13 +199,13 @@ $description =  $description_obj->get_description_data();
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Mrp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-danger">*</span></span>
+                    <span class="input-group-text">Mrp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-danger">&nbsp;</span></span>
                   </div>
                   <input type="text" id='edit_item_mrp' class="form-control enterAsTab" placeholder="Enter MRP">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Sales Price&nbsp;&nbsp;&nbsp;<span class="text-danger">*</span></span>
+                    <span class="input-group-text">Sales Price&nbsp;&nbsp;&nbsp;<span class="text-danger">&nbsp;</span></span>
                   </div>
                   <input type="text" id='edit_item_sale_price' class="form-control enterAsTab" placeholder="Enter Sales Price">
                 </div>

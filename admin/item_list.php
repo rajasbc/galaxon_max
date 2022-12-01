@@ -205,7 +205,7 @@ $description =  $description_obj->get_description_data();
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Sales Price&nbsp;&nbsp;&nbsp;<span class="text-danger">&nbsp;</span></span>
+                    <span class="input-group-text">Sales Price&nbsp;&nbsp;&nbsp;<span class="text-danger"></span></span>
                   </div>
                   <input type="text" id='edit_item_sale_price' class="form-control enterAsTab" placeholder="Enter Sales Price">
                 </div>

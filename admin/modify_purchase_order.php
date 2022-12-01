@@ -199,7 +199,7 @@ $items=json_encode($items);
                 </div>
                 <div class="col-3 form-group mb-3">
                    <label>Description&nbsp;<label class="text-danger">&nbsp;</label></label>
-              <select class="form-control enterKeyclass" id="sub_category" style="width: 100%;" disabled>
+              <select class="form-control enterKeyclass" id="sub_category" style="width: 100%;" >
                     <option value="">Select Description</option>
                     <?php foreach ($description as $key => $value) {?>
                       <option  value="<?=$value['id']?>"><?=$value['name']?></option>
@@ -209,10 +209,11 @@ $items=json_encode($items);
                 </div>
                 <div class="col-3 form-group mb-3">
                    <label>Units&nbsp;<label class="text-danger">*</label></label>
-              <select class="form-control enterKeyclass" id="units" disabled>
+              <select class="form-control enterKeyclass" id="units" >
                 <option value="">Select Units</option>
                     <option value="Kg">Kg</option>
-                    <option value="Liter">Liter</option>  
+                    <option value="Liter">Liter</option> 
+                    <option value="Pcs">Pcs</option>  
               </select>
                 </div>
                 <div class="col-3 form-group mb-3">

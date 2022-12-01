@@ -88,7 +88,7 @@ table{
   background-color: transparent;
 }
 table,thead,tbody,tr,td,th{
-  font-size: 16px;
+  font-size: 18px;
 }
 /* body {zoom: 70%;}*/
 .logo_class{
@@ -101,7 +101,7 @@ table,thead,tbody,tr,td,th{
 margin: 0;
 border: 1px #D3D3D3 solid;
 border-radius: 5px;
-width: initial;
+width: 25.5cm;
 min-height: 37cm;
 box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 /*background: initial;*/
@@ -187,7 +187,7 @@ margin-bottom: 0px !important;
       }
     </style>
       <?php
- $numItemShow=23;
+ $numItemShow=21;
 $arr_count=count($purchase_order_item_dt);
 $next_page=$arr_count-$numItemShow;
 $next_page=$next_page>0?$next_page:1;
@@ -314,7 +314,7 @@ if ($vendor['pincode']!='') {
 <span class="text-val"><?=$vendor['company_name']?></span>
 </div>
 </div>
-<div class="row" style="height: 3rem;">
+<div class="row" style="height: 5rem;">
 <div class="col-4 border-left border-right border-bottom border-dark " id="buyers_order_no">
 <span class="">Address </span>
 <span class="text-val"></span>
@@ -409,7 +409,7 @@ if ($vendor['pincode']!='') {
 <span class="text-val"><?=$purchase_order_shipping[0]['company_name']?></span>
 </div>
 </div>
-<div class="row" style="height: 3rem;">
+<div class="row" style="height: 5rem;">
 <div class="col-4 border-left border-right border-bottom border-dark " id="buyers_order_no">
 <span class="">Address </span>
 <span class="text-val"></span>

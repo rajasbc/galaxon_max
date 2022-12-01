@@ -81,6 +81,9 @@ $item['gst']=$this->db->getpost('gst');
 		}
 		$item=array();
 		$item['item_name']=$this->db->getpost('edit_item_name');
+		$item['brand']=$this->db->getpost('edit_item_brand');
+		$item['category']=$this->db->getpost('edit_item_category');
+		$item['sub_category']=$this->db->getpost('edit_item_sub_category');
 		$item['mrp']=$this->db->getpost('edit_item_mrp');
 		$item['sales_price']=$this->db->getpost('edit_item_sale_price');
 		$item['discount']=$this->db->getpost('edit_item_discount');

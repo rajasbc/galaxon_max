@@ -1,5 +1,11 @@
 <?php 
 include 'header.php';
+$brand_obj = new Brand();
+$brand =  $brand_obj->get_brand_data();
+$category_obj = new Category();
+$category =  $category_obj->get_category_data();
+$description_obj = new Description();
+$description =  $description_obj->get_description_data();
 ?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -144,6 +150,41 @@ include 'header.php';
                     <span class="input-group-text">Name&nbsp;<span class="text-danger">*</span></span>
                   </div>
                   <input type="text" id='edit_item_name' class="form-control enterAsTab" placeholder="Enter Product Name">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Brand&nbsp;<span class="text-danger">*</span></span>
+                  </div>
+                 <select class="form-control select2 enterKeyclass" id='edit_brand'>
+                    <option value="">Select Brand</option>
+                    <?php foreach ($brand as $key => $value) {?>
+                      <option  value="<?=$value['id']?>"><?=$value['name']?></option>
+                    <?php }?>
+                    
+                  </select>
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Category&nbsp;<span class="text-danger">*</span></span>
+                  </div>
+                  <select class="form-control select2 enterKeyclass" id="edit_category">
+                    <option value="">Select Category</option>
+                    <?php foreach ($category as $key => $value) {?>
+                      <option  value="<?=$value['id']?>"><?=$value['name']?></option>
+                    <?php }?>
+                    
+                  </select>
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Description&nbsp;<span class="text-danger">*</span></span>
+                  </div>
+                  <select class="form-control select2 enterKeyclass" id="edit_sub_category">
+                    <option value="">Select Description</option>
+                    <?php foreach ($description as $key => $value) {?>
+                      <option  value="<?=$value['id']?>"><?=$value['name']?></option>
+                    <?php }?>
+                  </select>
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
@@ -404,6 +445,9 @@ function edit_modal(e){
    $("#edit_item_discount").val($(e).data('form3'));
    $("#edit_item_gst").val($(e).data('form4'));
    $("#edit_item_qty").val($(e).data('form5'));
+   $("#edit_brand").val($(e).data('form6'));
+   $("#edit_category").val($(e).data('form7'));
+   $("#edit_sub_category").val($(e).data('form8'));
 
 
 }
@@ -415,6 +459,9 @@ function edit_modal(e){
           var edit_item_discount=$("#edit_item_discount").val();
            var edit_item_gst=$("#edit_item_gst").val();
             var edit_item_qty=$("#edit_item_qty").val();
+            var edit_item_brand=$("#edit_brand").val();
+            var edit_item_category=$("#edit_category").val();
+            var edit_item_sub_category=$("#edit_sub_category").val();
 
      if (edit_item_name=='' && edit_item_name==0) {
       global_alert_modal('warning','Enter Product Name...');
@@ -424,6 +471,33 @@ function edit_modal(e){
         }
        else{
         $("#edit_item_name").css("border","1px solid lightgray");
+       }
+       if (edit_item_brand=='' && edit_item_brand==0) {
+      global_alert_modal('warning','Enter Product Brand...');
+      $("#edit_brand").css("border","1px solid red");
+                    $("#edit_brand").focus();
+                    return false;
+        }
+       else{
+        $("#edit_brand").css("border","1px solid lightgray");
+       }
+       if (edit_item_category=='' && edit_item_category==0) {
+      global_alert_modal('warning','Enter Product Category...');
+      $("#edit_category").css("border","1px solid red");
+                    $("#edit_category").focus();
+                    return false;
+        }
+       else{
+        $("#edit_category").css("border","1px solid lightgray");
+       }
+       if (edit_item_sub_category=='' && edit_item_sub_category==0) {
+      global_alert_modal('warning','Enter Product Sub Category...');
+      $("#edit_sub_category").css("border","1px solid red");
+                    $("#edit_sub_category").focus();
+                    return false;
+        }
+       else{
+        $("#edit_sub_category").css("border","1px solid lightgray");
        }
 
        if (edit_item_mrp=='' && edit_item_mrp==0) {
@@ -454,7 +528,7 @@ function edit_modal(e){
 type: "POST",
 dataType:"json",
 url: '../ajaxCalls/add_items.php',
-data: {"item_id": item_id,"edit_item_name": edit_item_name,"edit_item_mrp": edit_item_mrp,"edit_item_sale_price": edit_item_sale_price,"edit_item_discount": edit_item_discount,"edit_item_gst": edit_item_gst,"edit_item_qty": edit_item_qty,"type":"edit"},
+data: {"item_id": item_id,"edit_item_name": edit_item_name,"edit_item_mrp": edit_item_mrp,"edit_item_sale_price": edit_item_sale_price,"edit_item_discount": edit_item_discount,"edit_item_gst": edit_item_gst,"edit_item_qty": edit_item_qty,"edit_item_brand": edit_item_brand,"edit_item_category": edit_item_category,"edit_item_sub_category": edit_item_sub_category,"type":"edit"},
 success: function(res){
 if (res.status=='failed') {
   

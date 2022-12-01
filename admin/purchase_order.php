@@ -143,6 +143,13 @@ $("#order_modal").modal('show');
 window.location='edit_purchase_order.php?id='+btoa(e);
     
   }
+
+  function edit_detail_page(e){
+
+window.location='modify_purchase_order.php?id='+btoa(e);
+    
+  }
+
   function new_detail_modal(e){
 $.ajax({
 type: "GET",

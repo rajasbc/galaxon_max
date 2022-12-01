@@ -365,6 +365,120 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
      return ['status'=>'success'];
 		
 	}
+
+
+public function edit_purchase_order()
+{
+
+
+		$item = array();
+		$item = $_POST;
+		$purchase=array();
+		$purchase_log=array();
+		
+
+		// $purchase['purchase_no']=$this->db->getpost('po_id');
+		$purchase['discount_amt']=$this->db->getpost('discount');
+		$purchase['taxable_amt']=$this->db->getpost('taxable_amount');
+		$purchase['tax_amt']=$this->db->getpost('tax_amount');
+		$purchase['grand_total']=$this->db->getpost('grand_total');
+		$purchase['purchase_note']=$this->db->getpost('note');
+		
+		$purchase_id = $this->db->mysql_update($this->tablename, $purchase, 'purchase_no='.$this->db->getpost('po_id'));
+
+		foreach ($item as $itemvar) {
+
+					if ((isset($itemvar["item_name"]) && $itemvar["item_name"] !== '') && $itemvar["mrp"] != 0) {
+						if ($itemvar['item_id']==0 && $this->db->getpost('order_type')=='received') {
+					   $items=array();
+                       $items['shop_id']=$_SESSION['shop_id'];
+                       $items['brand']=$itemvar["brand"];
+                       $items['category']=$itemvar["category"];
+                       if ($items['sub_category']!='') {
+                       	$items['sub_category']=$itemvar["sub_category"];
+                       }else{
+                       	$items['sub_category']=0;
+                       }
+                       
+                       $items['item_name']=$itemvar["item_name"];
+                       $items['item_code']=$itemvar["item_code"];
+                       $items['mrp']=$itemvar["mrp"];
+                       $items['sales_price']=$itemvar["sale_price"];
+                       $items['discount']=$itemvar["discount"];
+                       $items['gst']=$itemvar["gst"];
+                       $items['units']=$itemvar["units"];
+                       $items['qty']=0;
+                       $items['created_by']=$_SESSION['uid'];
+                       $items['created_at']=date('Y-m-d H:i:s');
+                       $item_insert_id = $this->db->mysql_insert('items', $items);
+                       $item_id=$item_insert_id;
+						}else{
+						$item_id=$itemvar['item_id'];
+						}
+                       $purchase_items=array();
+                       $purchase_items['shop_id']=$_SESSION['shop_id'];
+                       $purchase_items['purchase_id']=$this->db->getpost('po_id');
+                       $purchase_items['item_id']=$item_id;
+                       $purchase_items['brand']=$itemvar["brand"];
+                       $purchase_items['units']=$itemvar["units"];
+                       $purchase_items['category']=$itemvar["category"];
+                       if ($itemvar['sub_category']!='') {
+                       	$purchase_items['sub_category']=$itemvar["sub_category"];
+                       }else{
+                       	$purchase_items['sub_category']=0;
+                       }
+                       
+                       $purchase_items['item_name']=$itemvar["item_name"];
+                       $purchase_items['item_code']=$itemvar["item_code"];
+                       $purchase_items['var_id']=$itemvar["varieties_id"];
+                       $purchase_items['var_name']=$itemvar["varieties_name"];
+                       $purchase_items['mrp']=$itemvar["mrp"];
+                       $purchase_items['sales_price']=$itemvar["sale_price"];
+                       $purchase_items['discount']=$itemvar["discount"];
+                       $purchase_items['gst']=$itemvar["gst"];
+                       $purchase_items['qty']=$itemvar["enter_qty"];
+                       if ($this->db->getpost('order_type')=='received') {
+                       	$purchase_items['received_qty']=$itemvar["enter_qty"];
+                       }
+                       $purchase_items['taxable_amt']=$itemvar['total']-$itemvar["gstamount"];
+                       $purchase_items['tax_amt']=$itemvar["gstamount"];
+                       $purchase_items['total']=$itemvar["total"];
+                       $purchase_items['created_by']=$_SESSION['uid'];
+                       $purchase_items['created_at']=date('Y-m-d H:i:s');
+
+                       if($itemvar['flag']=='new' && $itemvar['deleted']=='no')
+    									 {
+
+                       $details_id=$this->db->mysql_insert($this->tablename2, $purchase_items);
+
+                     	 }
+                     	 else if($itemvar['flag']=='old' && $itemvar['deleted']=='no')
+										   {
+											
+										    $sql=$this->db->mysql_update($this->tablename2,$purchase_items,'id='.$itemvar['main_id']);
+
+											 }
+											 else if($itemvar['deleted']=='yes')
+										   {
+											
+										    $del = "delete from ".$this->tablename2." where id='".$itemvar['main_id']."'";
+										    $this->db->ExecuteQuery($del);
+
+											 }
+
+
+					}
+
+				}
+
+
+     return ['status'=>'success'];
+		
+	
+
+}
+
+
 	public function pay_purchase_order()
 	{
 		// print_r($_POST);die();

@@ -16,6 +16,7 @@ $items=array();
 $i=0;
 foreach ($purchase_order_item_dt as $key => $value) {
   $i++;
+  $ttl=$value['total']+$value['tax_amt'];
   $items['sid'.$i]=[
       "item_id"=>$value['item_id'],
       "item_name"=>$value['item_name'],
@@ -285,6 +286,8 @@ $items=json_encode($items);
    }
 
    $tns = $row['qty']/1000;
+
+   $ttl=$row['total']+$row['tax_amt'];
    
    echo '<tr id="trItem_'.$sno.'">';
            echo '<td class=" ch-4"><span></span></td>';
@@ -323,7 +326,7 @@ $items=json_encode($items);
                 echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control gst" name="gst[]" id="gst'.$sno.'" value="'.$row['gst'].'" style="width:4rem; height:1.75rem; font-size:0.9rem;">';
 
                 echo '</td>';
-                echo '<td class="text-left ch-6" id="totalid'.$sno.'">'.$row['total'].'</td>';
+                echo '<td class="text-left ch-6" id="totalid'.$sno.'">'.number_format($ttl,2,'.','').'</td>';
 
                 echo'<td><button type="button" class="btn btn-default btn-sm" id="remove_tr'.$sno.'" data-id="old" onclick="removeItem('.$sno.')"><span class="glyphicon glyphicon-trash">
 <i class="fas fa-trash"></i>

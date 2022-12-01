@@ -82,6 +82,29 @@ include 'header.php';
         <!-- /.modal-dialog -->
       </div>
       <!-- /.modal -->
+        <div class="modal fade" id="enable_vendor_modal" data-backdrop='static'>
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Enable Vendor</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <input type="hidden" name="enable_vendor_id" id="enable_vendor_id">
+              <h4>Are You Sure Enable This Vendor....</h4>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+              <button type="button" id="enable_vendor_btn" class="btn btn-primary">Yes</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
   <div class="modal fade" id="add_vendor_modal" data-backdrop='static'>
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
@@ -384,6 +407,27 @@ if (res.status=='success') {
 
 });
 });
+      $('#enable_vendor_btn').on('click',function(e){
+      var vendor_id=$("#enable_vendor_id").val();
+    
+      
+  $.ajax({
+type: "POST",
+dataType:"json",
+url: '../ajaxCalls/add_vendor.php',
+data: {"vendor_id": vendor_id,"type":"enable"},
+success: function(res){
+if (res.status=='success') {
+  
+  global_alert_modal('success','Vendor Enable SuccessFully...');
+   $("#enable_vendor_modal").modal('hide');
+   get_data();
+
+}
+}
+
+});
+});
 </script>
 <script type="text/javascript">
   function get_data(){
@@ -433,6 +477,11 @@ success: function(res){
 function delete_modal(e){
    $("#delete_vendor_modal").modal('show');
    $("#delete_vendor_id").val($(e).data('id'));
+   
+}
+function enable_modal(e){
+   $("#enable_vendor_modal").modal('show');
+   $("#enable_vendor_id").val($(e).data('id'));
    
 }
 $(".enterKeyclass").keypress(function (event) {

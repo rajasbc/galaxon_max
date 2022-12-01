@@ -87,6 +87,7 @@ $item['gst']=$this->db->getpost('gst');
 		$item['mrp']=$this->db->getpost('edit_item_mrp');
 		$item['sales_price']=$this->db->getpost('edit_item_sale_price');
 		$item['discount']=$this->db->getpost('edit_item_discount');
+		$item['units']=$this->db->getpost('edit_item_units');
 		$item['gst']=$this->db->getpost('edit_item_gst');
 		$item['qty']=$this->db->getpost('edit_item_qty');
 		$id = $this->db->mysql_update($this->tablename, $item,'id='.$this->db->getpost('item_id'));

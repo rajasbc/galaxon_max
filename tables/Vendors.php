@@ -113,7 +113,12 @@ class Vendors extends Dbconnection {
 	}public function delete_vendor()
 	{
 		$vendor=array();
-		$vendor['status']='DISABLED';
+		if ($this->db->getpost('type')=='enable') {
+			$vendor['status']='ENABLED';
+		}else{
+			$vendor['status']='DISABLED';
+		}
+		
 		$id = $this->db->mysql_update($this->tablename, $vendor,'id='.$this->db->getpost('vendor_id'));
 		if ($id!=0) {
 			return ['status'=>'success'];

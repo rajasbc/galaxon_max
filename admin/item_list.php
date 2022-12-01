@@ -147,13 +147,13 @@ $description =  $description_obj->get_description_data();
               <input type="hidden" name="edit_item_id" id="edit_item_id">
               <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Name&nbsp;<span class="text-danger">*</span></span>
+                    <span class="input-group-text">Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-danger">*</span></span>
                   </div>
                   <input type="text" id='edit_item_name' class="form-control enterAsTab" placeholder="Enter Product Name">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Brand&nbsp;<span class="text-danger">*</span></span>
+                    <span class="input-group-text">Brand&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-danger">*</span></span>
                   </div>
                  <select class="form-control select2 enterKeyclass" id='edit_brand'>
                     <option value="">Select Brand</option>
@@ -165,7 +165,7 @@ $description =  $description_obj->get_description_data();
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Category&nbsp;<span class="text-danger">*</span></span>
+                    <span class="input-group-text">Category&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-danger">*</span></span>
                   </div>
                   <select class="form-control select2 enterKeyclass" id="edit_category">
                     <option value="">Select Category</option>
@@ -188,25 +188,36 @@ $description =  $description_obj->get_description_data();
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Mrp&nbsp;<span class="text-danger">*</span></span>
+                    <span class="input-group-text">Units&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-danger">*</span></span>
+                  </div>
+                  <select class="form-control select2 enterKeyclass" id="edit_units">
+                   <option value="">Select Units</option>
+                    <option value="Kg">Kg</option>
+                    <option value="Liter">Liter</option>
+                    <option value="Pcs">Pcs</option>
+                  </select>
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Mrp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-danger">*</span></span>
                   </div>
                   <input type="text" id='edit_item_mrp' class="form-control enterAsTab" placeholder="Enter MRP">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Sales Price&nbsp;<span class="text-danger">*</span></span>
+                    <span class="input-group-text">Sales Price&nbsp;&nbsp;&nbsp;<span class="text-danger">*</span></span>
                   </div>
                   <input type="text" id='edit_item_sale_price' class="form-control enterAsTab" placeholder="Enter Sales Price">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Discount&nbsp;</span>
+                    <span class="input-group-text">Discount&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                   </div>
                   <input type="text" id='edit_item_discount' class="form-control enterAsTab" placeholder="Enter Discount">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">GST&nbsp;</span>
+                    <span class="input-group-text">GST&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                   </div>
                   <!-- <input type="text" id='edit_item_gst' class="form-control enterAsTab" placeholder="Enter GST"> -->
                   <select class="form-control" id="edit_item_gst">
@@ -219,7 +230,7 @@ $description =  $description_obj->get_description_data();
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Quantity&nbsp;<span class="text-danger">*</span></span>
+                    <span class="input-group-text">Quantity&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-danger">*</span></span>
                   </div>
                   <input type="text" id='edit_item_qty' class="form-control enterAsTab" placeholder="Enter Quantity">
                 </div>
@@ -448,6 +459,7 @@ function edit_modal(e){
    $("#edit_brand").val($(e).data('form6'));
    $("#edit_category").val($(e).data('form7'));
    $("#edit_sub_category").val($(e).data('form8'));
+   $("#edit_units").val($(e).data('form9'));
 
 
 }
@@ -462,6 +474,7 @@ function edit_modal(e){
             var edit_item_brand=$("#edit_brand").val();
             var edit_item_category=$("#edit_category").val();
             var edit_item_sub_category=$("#edit_sub_category").val();
+            var edit_item_units=$("#edit_units").val();
 
      if (edit_item_name=='' && edit_item_name==0) {
       global_alert_modal('warning','Enter Product Name...');
@@ -528,7 +541,7 @@ function edit_modal(e){
 type: "POST",
 dataType:"json",
 url: '../ajaxCalls/add_items.php',
-data: {"item_id": item_id,"edit_item_name": edit_item_name,"edit_item_mrp": edit_item_mrp,"edit_item_sale_price": edit_item_sale_price,"edit_item_discount": edit_item_discount,"edit_item_gst": edit_item_gst,"edit_item_qty": edit_item_qty,"edit_item_brand": edit_item_brand,"edit_item_category": edit_item_category,"edit_item_sub_category": edit_item_sub_category,"type":"edit"},
+data: {"item_id": item_id,"edit_item_name": edit_item_name,"edit_item_mrp": edit_item_mrp,"edit_item_sale_price": edit_item_sale_price,"edit_item_discount": edit_item_discount,"edit_item_gst": edit_item_gst,"edit_item_qty": edit_item_qty,"edit_item_brand": edit_item_brand,"edit_item_category": edit_item_category,"edit_item_sub_category": edit_item_sub_category,"edit_item_units": edit_item_units,"edit_item_sub_category": edit_item_sub_category,"type":"edit"},
 success: function(res){
 if (res.status=='failed') {
   

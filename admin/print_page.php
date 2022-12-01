@@ -192,8 +192,8 @@ $arr_count=count($purchase_order_item_dt);
 $next_page=$arr_count-$numItemShow;
 $next_page=$next_page>0?$next_page:1;
 $page_count=1+floor($next_page/$numItemShow);
-$start_index=0;
-$end_index=$numItemShow;
+// $start_index=0;
+// $end_index=$numItemShow;
 
 end($output);         
 $last_index = count($purchase_order_item_dt);
@@ -203,7 +203,22 @@ if (count($purchase_order_item_dt)<=$numItemShow) {
 }
 $sno = 0;
 $temp=0;
+$start_index=0;
+$end_index=$numItemShow;
+$check=0;
 for ($i1 = 0; $i1 <=$page_count; $i1++) {
+  if ($page_count==$i1 && $check==0) {
+    if (($last_index-$start_index)==16) {
+    $end_index=16;
+    $check=1;
+  }
+  if (($last_index-$start_index) > 16 || ($last_index-$start_index)<=23) {
+    $end_index=16;
+    $page_count++;
+    $check=1;
+  }
+  
+}
 ?>
 <div>
 <main>

@@ -94,7 +94,8 @@ $description =  $description_obj->get_description_data();
                   <select class="form-control enterKeyclass" id="units" style="width: 100%;">
                     <option value="">Select Units</option>
                     <option value="Kg">Kg</option>
-                    <option value="Liter">Liter</option>                  
+                    <option value="Liter">Liter</option>
+                    <option value="Pcs">Pcs</option>                  
                   </select>
                 </div>
                 <div class="col-6 form-group mb-3">

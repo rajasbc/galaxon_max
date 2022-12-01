@@ -17,7 +17,7 @@ if (count($result)>0) {
 		$output [$j] =[$i,$value['vendor_code'],$value['name'],$value['company_name'],$value['mobile_no'],$value['email'],'<button type="button"  class="btn btn-primary" data-id="'.$value['id'].'" data-form="'.$value['name'].'" onclick="edit_modal(this);">Edit</button> <button type="button"  class="btn btn-danger" data-id="'.$value['id'].'" onclick="delete_modal(this);">Disable</button>'];
 		$j++;
 	}else{
-         $output [$j] =[$i,$value['vendor_code'],$value['name'],$value['company_name'],$value['mobile_no'],$value['email'],'<button type="button"  class="btn btn-primary" disabled data-id="'.$value['id'].'" data-form="'.$value['name'].'" onclick="edit_modal(this);">Edit</button> <button type="button" disabled class="btn btn-danger" data-id="'.$value['id'].'" onclick="delete_modal(this);">Disable</button>'];
+         $output [$j] =[$i,$value['vendor_code'],$value['name'],$value['company_name'],$value['mobile_no'],$value['email'],'<button type="button"  class="btn btn-primary" disabled data-id="'.$value['id'].'" data-form="'.$value['name'].'" onclick="edit_modal(this);">Edit</button> <button type="button"  class="btn btn-danger" data-id="'.$value['id'].'" onclick="enable_modal(this);">Enable</button>'];
 		$j++;
 	}
 	}

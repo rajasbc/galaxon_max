@@ -208,11 +208,11 @@ $end_index=$numItemShow;
 $check=0;
 for ($i1 = 0; $i1 <=$page_count; $i1++) {
   if ($page_count==$i1 && $check==0) {
-    if (($last_index-$start_index)<=16) {
-    $end_index=16;
-    $check=1;
-  }
-  if (($last_index-$start_index) > 16 || ($last_index-$start_index)<=23) {
+  //   if (($last_index-$start_index)<=16) {
+  //   $end_index=16;
+  //   $check=1;
+  // }
+  if (($last_index-$start_index) > 16 && ($last_index-$start_index)<=23) {
     $end_index=16;
     $page_count++;
     $check=1;

@@ -1,5 +1,12 @@
 <?php 
 include 'header.php';
+
+$obj = new PurchaseOrder();
+$vendor =new Vendors();
+
+ $result =  $obj->get_purchase_list();
+
+
 ?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -8,13 +15,13 @@ include 'header.php';
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Purchase Order List</h1>
+            <h1 class="m-0">Pending List</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-               <li class="breadcrumb-item"><a href="pending_list.php"><i class="fa fa-bell" aria-hidden="true"></i></a></li>
+               <li class="breadcrumb-item active"><i class="fa fa-bell" aria-hidden="true"></i></li>
               <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
-              <li class="breadcrumb-item active">Orders List</li>
+              <li class="breadcrumb-item active"><a style="color: #007bff;text-decoration: none;background-color: transparent;cursor: pointer;" href="purchase_order.php">Orders List</a></li>
               <li class="breadcrumb-item"><a style="color: #007bff;text-decoration: none;background-color: transparent;cursor: pointer;" href="new_purchase_order.php?type=received">Received Order</a></li>
               <li class="breadcrumb-item"><a style="color: #007bff;text-decoration: none;background-color: transparent;cursor: pointer;" href="new_purchase_order.php?type=new">New Order</a></li>
             </ol>
@@ -27,7 +34,7 @@ include 'header.php';
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid"> 
-      <div class="row col-12 mb-2">
+     <!--  <div class="row col-12 mb-2">
         <div class="col-8">&nbsp;</div>
         <div class="col-4">
           <label>Select Order Type :</label>
@@ -36,31 +43,16 @@ include 'header.php';
             <option value="RECEIVED" <?php echo $_GET['type']=='RECEIVED'?'selected="seleted"':''?>>RECEIVED</option>
           </select>
         </div>
-      </div>       
+      </div>        -->
         <!-- Main row -->
         <div class="row">
           <div class="col-12">
           <div class="card">
             
               <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
+                <table  class="table table-bordered table-striped">
                   <thead>
-                    <?php if ($_GET['type']=='RECEIVED') {?>
-                  <tr>
-                    <th>S.No</th>
-                    <th>Purchase No</th>
-                    <th>Bill No</th>
-                    <th>Vendor Name</th>
-                    <th>Received Date</th>
-                    <th>Discount</th>
-                    <th>Tax Amount</th>
-                    <th>Total Amount</th>
-                    <th>Paid Amount</th>
-                    <th>Balance Amount</th>
-                    <th>Pay Status</th>
-                    <th>Details</th>
-                  </tr>
-                <?php }else{?>
+                   
                   <tr>
                     <th>S.No</th>
                     <th>Purchase No</th>
@@ -72,11 +64,37 @@ include 'header.php';
                     <th>Balance Amount</th>
                     <th>Status</th>
                     <th>Pay Status</th>
-                    <th width="50%">Details</th>
+                   
                   </tr>
-                <?php }?>
+               
                   </thead>
                   <tbody>
+                    <?php 
+            
+                        $i =0;  
+                     
+                  foreach ($result as $data) {
+                   $vendor_name = $vendor->get_vendor($data['vendor_id']);
+                    
+            
+              $i++;
+              echo "<tr>
+              <td class='text-center'>$i</td>
+              <td class='text-center'>".$data["purchase_no"]."</td>
+              <td class='text-center'>".$vendor_name[0]['name']."</td>
+              <td class='text-center'>".$data['discount_amt']."</td>
+              <td class='text-center'>".$data['tax_amt']."</td>
+              <td class='text-center'>".$data['grand_total']."</td>
+              <td class='text-center'>".$data['paid_amt']."</td>
+              <td class='text-center'>".$data['balance_amt']."</td>
+              <td class='text-center'>".$data['order_orgin']."</td>
+               <td class='text-center'>".$data['status']."</td>
+              
+              </tr>";
+             } ?>
+                
+         
+
                   
                   </tbody>
                 </table>
@@ -106,7 +124,7 @@ include 'header.php';
   <?php 
 include 'footer.php';
 ?>
-<script>
+<!-- <script>
   $(function () {
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
@@ -229,4 +247,4 @@ success: function(res){
   function print_page(e) {
     window.open('print_page.php?id='+btoa(e),'_blank');
   }
-</script>
+</script> -->

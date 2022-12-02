@@ -133,6 +133,33 @@ class Customers extends Dbconnection {
 		$result=$this->db->getAsIsArray($sql);
 		return $result;
 	}
+public function customer_enable($id){
+
+        $customer=array();
+        $customer['status']='ENABLED';	
+
+$result = $this->db->mysql_update($this->tablename,$customer,'id='.$id);
+ if($result){
+   return ['status'=>'success'];
+  }else{
+
+   return ['status'=>'failed'];
+
+  } 
+
+
+
+
+	}
+
+
+
+
+
+
+
+
+
 	// public function get_Autocomplete_customer()
 	// {
 	// 	$sql = "select  * from ".$this->tablename." where (name like '%" . $this->db->getpost('term') . "%' or vendor_code like '%" . $this->db->getpost('term') . "%') and shop_id = " .$_SESSION['shop_id']. " and status = 'ENABLED' ";

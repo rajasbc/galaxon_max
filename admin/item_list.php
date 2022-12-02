@@ -195,6 +195,8 @@ $description =  $description_obj->get_description_data();
                     <option value="Kg">Kg</option>
                     <option value="Liter">Liter</option>
                     <option value="Pcs">Pcs</option>
+                    <option value="Nos">Nos</option>  
+                    <option value="Box">Box</option>
                   </select>
                 </div>
                 <div class="input-group mb-3">

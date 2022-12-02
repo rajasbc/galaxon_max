@@ -214,6 +214,8 @@ $items=json_encode($items);
                     <option value="Kg">Kg</option>
                     <option value="Liter">Liter</option> 
                     <option value="Pcs">Pcs</option>  
+                    <option value="Nos">Nos</option>  
+                    <option value="Box">Box</option>
               </select>
                 </div>
                 <div class="col-3 form-group mb-3">

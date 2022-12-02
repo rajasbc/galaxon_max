@@ -208,7 +208,7 @@ $end_index=$numItemShow;
 $check=0;
 for ($i1 = 0; $i1 <=$page_count; $i1++) {
   if ($page_count==$i1 && $check==0) {
-    if (($last_index-$start_index)==16) {
+    if (($last_index-$start_index)<=16) {
     $end_index=16;
     $check=1;
   }

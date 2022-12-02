@@ -546,5 +546,23 @@ public function edit_purchase_order()
 		$result=$this->db->GetResultsArray($sql);
 		return $result;
 	}
+
+
+
+public function get_purchase_list(){
+
+
+  $sql='select * from '.$this->tablename.' where is_deleted="NO" and order_type!="NEW" and status="PENDING"';
+  $result=$this->db->GetResultsArray($sql);
+    return $result;
+
+}
+
+
+
+
+
+
+
 }
 ?>

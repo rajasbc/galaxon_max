@@ -266,7 +266,33 @@ include 'footer.php';
           </div>
           <!-- /.modal-content -->
         </div>
+      </div>
         <!-- /.modal-dialog -->
+
+
+
+        <div class="modal fade" id="enable_branch_modal" data-backdrop='static'>
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Enable Branch</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <input type="hidden" name="enable_branch_id" id="enable_branch_id">
+              <h4>Are You Sure Enable This Branch....</h4>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+              <button type="button" id="enable_branch_btn" class="btn btn-primary">Yes</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
      
 
 
@@ -629,10 +655,41 @@ success: function(res){
 
 
   })
+</script>
+<script>
+  function enable_btn(e){
+
+  $('#enable_branch_modal').modal('show');
+
+   var id=$(e).data('id');
+    var value = $('#enable_branch_btn').val(id);
+
+  }
+
+  $('#enable_branch_btn').on('click',function(){
+
+     var id = $(this).val();
+
+    $.ajax({
+     type:'post',
+     url: '../ajaxCalls/update_enable.php ',
+     dataType:'json',
+     data:{'id':id},
+     success:function(res){
+        if(res.status=='success'){
+              global_alert_modal('success','Enabled SuccessFully...');
+               $('#enable_branch_modal').modal('hide');
+
+        }
+      
 
 
 
+     }
 
 
+  });
 
+   });
+  
 </script>

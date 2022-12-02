@@ -327,8 +327,21 @@ if($result1){
 
 }
 
+public function branch_enable($id){
 
-	
+$branch=array();
+$branch['status']='ENABLED';	
+
+$result = $this->db->mysql_update($this->tablename,$branch,'id='.$id);
+ if($result){
+   return ['status'=>'success'];
+  }else{
+
+   return ['status'=>'failed'];
+
+  } 
+
+}
 
 
 

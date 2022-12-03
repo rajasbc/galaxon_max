@@ -558,11 +558,43 @@ public function get_purchase_list(){
 
 }
 
+public function get_shipping_details(){
+
+   $sql = 'select * from '.$this->tablename6.' where is_delete="NO"';
+   
+   $result = $this->db->GetResultsArray($sql);
+
+    return $result;
+}
+
+public function get_Autocomplete_shipping(){
+
+  $sql = "select * from ".$this->tablename6."where (name like'%".$this->db->getpost('term')."%' or po_id like'%".$this->db->getpost('term')."%') and shop_id = ".$_SESSION['shop_id']."";
+
+$result = $this->db->GetResultsArray($sql);
+return $result;
+
+}
+public function shipping_deleted($id){
+
+  $delete = array();
+  $delete['is_delete'] = 'YES';
+
+    $result = $this->db->mysql_update($this->tablename6,$delete,'id='.$id);
+if($result){
+
+    return ['status'=>'success'];
+
+}else{
+
+    return ['status'=>'failed'];
+
+}
 
 
 
 
-
+}
 
 }
 ?>

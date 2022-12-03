@@ -1,6 +1,7 @@
 <?php
 include '../tables/config.php';
 
+// print_r($_POST);die();
 $obj = new Items();
 $result =  $obj->get_items_dt($_POST['item_id']);
 $Vobj = new Varieties();

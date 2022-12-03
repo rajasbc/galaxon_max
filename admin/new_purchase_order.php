@@ -66,6 +66,26 @@ $category =  $category_obj->get_category_data();
    .table-scroll tfoot td {
      background-color: #fff !important;
    }
+   #shipping_name
+   {
+    z-index: 9999;
+   }
+   #ui-id-1
+    { 
+      z-index: 9999999!important;
+    }
+    #ui-id-3
+    { 
+      z-index: 9999999!important;
+    }
+    #ui-id-4
+    { 
+      z-index: 9999999!important;
+    }
+    #ui-id-5
+    { 
+      z-index: 9999999!important;
+    }
 </style>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper ">
@@ -451,7 +471,9 @@ $category =  $category_obj->get_category_data();
                   <div class="input-group-prepend">
                     <span class="input-group-text" style="width: 8.3rem">Name&nbsp;<span class="text-danger">*</span></span>
                   </div>
+                   <input type="hidden" name="shipping_id" id="shipping_id" value="0">
                   <input type="text" id='shipping_name' name='shipping_name' class="form-control enterKeyclass" placeholder="Enter Name">
+
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
@@ -598,6 +620,7 @@ success: function(res){
       minLength: 1,
       select: function(event, ui)
       {
+
         if(ui.item.value == 'NO ITEM FOUND'){
        $.growl.warning({title:"Item Not Available",message:"Kindly Add Item From VendorProduct"});
        $("#add_item").attr('disabled','disabled');
@@ -628,16 +651,19 @@ success: function(res){
         .append(item.value)
         .appendTo(ul);
     };
+
      $('#vendor').autocomplete({
       source: "../ajaxCalls/autocomplete_vendor_list.php",
       minLength: 1,
-      select: function(event, ui)
+      select: function(event,ui)
       {
+
         if(ui.item.value == ' '){
       $("#vendor_id").val(0);
     }
     else
     {
+
        get_vendor_dt(ui.item.label);
        $("#vendor_id").val(ui.item.label);
     }
@@ -654,6 +680,40 @@ success: function(res){
     };
   })
 </script>
+<script type="text/javascript">
+  $('#shipping_name').autocomplete({
+
+
+      source: "../ajaxCalls/autocomplete_shipping_list.php",
+      minLength: 1,
+      select: function(event,ui){
+
+          $("#shipping_company_name").val(ui.item.company_name);
+           $("#mobile_no").val(ui.item.mobile_no);
+           $("#email").val(ui.item.email);
+           $("#ship_gst").val(ui.item.gst_no);
+           $("#city").val(ui.item.city);
+          $("#address").val(ui.item.address);
+          $("#state").val(ui.item.state);
+          $("#country").val(ui.item.country);
+          $("#pincode").val(ui.item.pincode);
+          $("#ship_terms").val(ui.item.shipping_terms);
+           $("#shipping_d_date").val(ui.item.delivery);
+        
+    
+    }
+     
+    }).data('ui-autocomplete')._renderItem = function(ul,item){
+      return $("<li class='ui-autocomplete-row'></li>")
+        .data("item.autocomplete", item)
+        .append(item.value)
+        .appendTo(ul);
+    };
+
+  
+</script>
+
+
 <script type="text/javascript">
   $("#add_item").click(function(){
     var item_name=$("#item_name").val();
@@ -1064,6 +1124,7 @@ $(".enterKeyclass").keypress(function (event) {
 <script type="text/javascript">
   $("#shipping_dt_add").click(function(){
        shipping_data["shipping_name"]=$("#shipping_name").val();
+
        shipping_data["shipping_company_name"]=$("#shipping_company_name").val();
        shipping_data["smobile_no"]=$("#mobile_no").val();
        shipping_data["semail"]=$("#email").val();
@@ -1103,3 +1164,7 @@ success: function(res){
 });
   }
 </script>
+
+
+
+

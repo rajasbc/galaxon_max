@@ -36,14 +36,14 @@ include 'header.php';
                   <thead>
                   <tr>
                     <th>S.No</th>
-                    <th>Purchase Order Id</th>
+               
                     <th>Name</th>
                     <th>Company Name</th>
                     <th>GST NO</th>
                     <th>Mobile No</th>
                     <th>Email</th>
-                    <th>Delivery Date</th>
-                    <th>Action</th>
+             
+                    <th style="width: 150px;">Action</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -200,6 +200,18 @@ include 'header.php';
         <!-- /.modal-dialog -->
       </div>
       <!-- /.modal -->
+
+       <div class="modal fade" id="shipping_modal" data-backdrop='static'>
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-body">
+             
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
   <?php 
 include 'footer.php';
 ?>
@@ -476,6 +488,30 @@ success:function(res){
 });
 
   }
+
+</script>
+<script type="text/javascript">
+  function view_shipping(e){
+    var id = $(e).data('id');
+ 
+$.ajax({
+type: "GET",
+dataType:"html",
+url: '../ajaxCalls/view_shipping_details.php',
+data: {'id':id},
+success: function(res){
+  $("#shipping_modal .modal-body").html(res);
+$("#shipping_modal").modal('show');
+}
+
+});
+    
+  }
+
+
+
+
+
 
 </script>
 <!-- <script type="text/javascript">

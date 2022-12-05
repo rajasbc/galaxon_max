@@ -14,7 +14,7 @@ if (count($result)>0) {
 	foreach ($result as $key => $value) {
 		$i++;
 	
-		$output [$j] =[$i,$value['po_id'],$value['name'],$value['company_name'],$value['gst_no'],$value['mobile_no'],$value['email'],$value['delivery_date'],'<button type="button" class="btn btn-danger" onclick="delete_shipping(this);" data-id ='.$value['id'].'>Delete</button>'];
+		$output [$j] =[$i,$value['name'],$value['company_name'],$value['gst_no'],$value['mobile_no'],$value['email'],'<button type="button" class="btn btn-info" onclick="view_shipping(this);" data-id ='.$value['id'].'>View</button> <button type="button" class="btn btn-danger" onclick="delete_shipping(this);" data-id ='.$value['id'].'>Delete</button>'];
 		$j++;
 	
 	}

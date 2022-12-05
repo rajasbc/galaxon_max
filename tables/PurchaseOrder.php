@@ -595,6 +595,13 @@ if($result){
 
 
 }
+public function get_shipping($id){
+
+$sql = 'select * from '.$this->tablename6.' where id= '.$id;
+$result = $this->db->GetResultsArray($sql);
+return $result;
+
+}
 
 }
 ?>

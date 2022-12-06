@@ -1,8 +1,10 @@
 <?php 
 include 'header.php';
+
 $obj=new PurchaseOrder();
 $purchase_order_dt=$obj->get_purchase_order(base64_decode($_GET['id']));
 $purchase_order_item_dt=$obj->get_purchase_order_item(base64_decode($_GET['id']));
+
 $vendor_obj= new Vendors();
 $vendor= $vendor_obj->get_vendor_dt($purchase_order_dt[0]['vendor_id']); 
 $brand_obj = new Brand();
@@ -125,6 +127,7 @@ $items=json_encode($items);
             
               <div class="card-body row col-12">
                 <div class="row col-12">
+                  <?php if($_SESSION['type']=='ADMIN'){?>
                 <div class="col-12" id="vendor_dt">
                   <label>Vendor Details</label><br>
                   <div class="row col-12">
@@ -149,7 +152,19 @@ $items=json_encode($items);
                   <?php }?>
 
                   </div>
-                </div>
+                </div><?php }else{?>
+
+                 <div class="col-12" id="vendor_dt">
+                   <label><img src="../dist/img/g.png" height="75px" width="75px">ALAXON MAX&nbsp;</label><br>
+                  <div class="row col-12">
+                    
+                   
+
+                  </div>
+                </div><?php }?>
+
+
+
                 </div>
                 
                 <br>

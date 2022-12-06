@@ -131,6 +131,7 @@ $items=json_encode($items);
             
               <div class="card-body row col-12">
                 <div class="row col-12">
+                  <?php if($_SESSION['type']=='ADMIN'){ ?>
                 <div class="col-12" id="vendor_dt">
                   <label>Vendor Details</label><br>
                   <div class="row col-12">
@@ -155,7 +156,16 @@ $items=json_encode($items);
                   <?php }?>
 
                   </div>
-                </div>
+                </div><?php }else{?>
+
+                    <div class="col-3 form-group mb-2">
+                   <label><img src="../dist/img/g.png" height="75px" width="75px">ALAXON MAX&nbsp;</label>
+                   <input type="hidden" name="sno" id="sno" value="0">
+                   <input type="hidden" name="nvendor_id" id="nvendor_id" value="0">
+                  <!-- <input type="hidden" name="vendor" id="vendor" class="form-control" placeholder="Enter Vendor" autofocus> -->
+                </div><?php } ?>
+
+
                 </div>
 
                 <form id="add_product" class="row col-12" onsubmit="return(false);">

@@ -26,7 +26,9 @@ $total_amount_dt=0;
 	<hr>
 	<!-- End Of Purchase Details -->
 	<div class="form-row">
+		
    <div class="form-group col-lg-12">
+   	<?php if($_SESSION['type']=='ADMIN'){?>
 		<h4>Vendor Details</h4></div></div>
 		<div class="form-row">
 		<div class="form-group col-lg-3">Name</div><div class="form-group col-lg-3">: 
@@ -41,6 +43,11 @@ $total_amount_dt=0;
 		<div class="form-group col-lg-3">Email</div><div class="form-group col-lg-3">: <span class="font-weight-bold"><?=$vendor_dt['email']?></span></div>
 	<?php }?>
 	</div>
+<?php }?>
+
+
+
+
 	<hr>
 		<!-- End Of Vendor Details -->
 		<div class="form-row">

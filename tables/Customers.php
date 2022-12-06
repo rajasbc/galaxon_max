@@ -12,7 +12,7 @@ class Customers extends Dbconnection {
 	}
 	public function add_customer()
 	{
-		$check_sql='select * from '.$this->tablename.' where name="'.$this->db->getpost('customer_name').'" and status="ENABLED"';
+		$check_sql='select * from '.$this->tablename.' where name="'.$this->db->getpost('customer_name').'" and status="ENABLED" and branch_id='.$_SESSION['branch_id'].'';
 		$check_res=$this->db->GetResultsArray($check_sql);
 		if (count($check_res)>0) {
 			return ['status'=>'alert'];
@@ -47,6 +47,7 @@ class Customers extends Dbconnection {
 		}
 		}
 		$customer['name']=$this->db->getpost('customer_name');
+		$customer['branch_id']=$_SESSION['branch_id'];
 		$customer['company_name']=$this->db->getpost('customer_company_name');
 		$customer['mobile_no']=$this->db->getpost('mobile_no');
 		// $customer['vendor_code']=$vendor_code;
@@ -123,13 +124,13 @@ class Customers extends Dbconnection {
 	}
 	public function get_customer_data()
 	{
-		$sql='select * from '.$this->tablename.'';
+		$sql='select * from '.$this->tablename.' where branch_id='.$_SESSION['branch_id'].'';
 		$result=$this->db->GetResultsArray($sql);
 		return $result;
 	}
 	public function get_customer_dt($id)
 	{
-		$sql='select * from '.$this->tablename.' where id='.$id.' and status="ENABLED"';
+		$sql='select * from '.$this->tablename.' where id='.$id.' and status="ENABLED" and branch_id='.$_SESSION['branch_id'].'';
 		$result=$this->db->getAsIsArray($sql);
 		return $result;
 	}

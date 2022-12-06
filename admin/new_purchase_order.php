@@ -135,8 +135,19 @@ $category =  $category_obj->get_category_data();
                    <input type="hidden" name="sno" id="sno" value="0">
                    <input type="hidden" name="vendor_id" id="vendor_id" value="0">
                   <input type="text" name="vendor" id="vendor" class="form-control" placeholder="Enter Vendor" autofocus>
-                </div><?php } ?>
-                <?php if ($_GET['type']=='new') {?>
+                </div><?php } else{ ?>
+
+                     <div class="col-3 form-group mb-2">
+                   <label><img src="../dist/img/g.png" height="75px" width="75px">ALAXON MAX&nbsp;</label>
+                   <input type="hidden" name="sno" id="sno" value="0">
+                   <input type="hidden" name="nvendor_id" id="nvendor_id" value="0">
+                  <!-- <input type="hidden" name="vendor" id="vendor" class="form-control" placeholder="Enter Vendor" autofocus> -->
+                </div>
+
+
+
+                <?php } ?>
+                <?php if ($_GET['type']=='new' && $_SESSION['type']=='ADMIN') {?>
                  <div class="col-9 form-group mb-2 text-right">
                    <i class="nav-icon fas fa-solid fa-truck" style="font-size: xx-large;cursor: pointer;" data-toggle='modal' data-target="#shipping_modal" id="shipping_modal_btn"></i>
                 </div>
@@ -1006,6 +1017,9 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
 }
 $("#place_order").click(function(){
       var vendor_id = $("#vendor_id").val();
+     
+      var nvendor_id = $("#nvendor_id").val();
+         
       var bill_no = $("#bill_no").val();
       var received_date = $("#received_date").val();
       var paid_amt = $("#paid_amt").val();
@@ -1059,6 +1073,8 @@ $("#place_order").click(function(){
       
       detailsarray = [];
       detailsarray['vendor_id']=vendor_id;
+      detailsarray['nvendor_id']=nvendor_id;
+      
       detailsarray['bill_no']=bill_no;
       detailsarray['received_date']=received_date;
       detailsarray['paid_amt']=paid_amt;

@@ -1,5 +1,7 @@
 <?php 
 include 'header.php';
+// print_r($_SESSION);die();
+
 ?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -12,10 +14,16 @@ include 'header.php';
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
+             <?php if($_SESSION['type']=='ADMIN'){?>
                <li class="breadcrumb-item"><a href="pending_list.php"><i class="fa fa-bell" aria-hidden="true"></i></a></li>
+               <?php }?>
+          
               <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
               <li class="breadcrumb-item active">Orders List</li>
+             <?php if($_SESSION['type']=='ADMIN'){?>
               <li class="breadcrumb-item"><a style="color: #007bff;text-decoration: none;background-color: transparent;cursor: pointer;" href="new_purchase_order.php?type=received">Received Order</a></li>
+                <?php }?>
+          
               <li class="breadcrumb-item"><a style="color: #007bff;text-decoration: none;background-color: transparent;cursor: pointer;" href="new_purchase_order.php?type=new">New Order</a></li>
             </ol>
           </div><!-- /.col -->
@@ -31,10 +39,21 @@ include 'header.php';
         <div class="col-8">&nbsp;</div>
         <div class="col-4">
           <label>Select Order Type :</label>
+       <?php if($_SESSION['type']=='ADMIN') {?>   
           <select class="form-control" id="select_type">
             <option value="NEW" <?php echo $_GET['type']!='RECEIVED'?'selected="seleted"':''?>>NEW</option>
             <option value="RECEIVED" <?php echo $_GET['type']=='RECEIVED'?'selected="seleted"':''?>>RECEIVED</option>
           </select>
+          <?php }else{ ?>
+              <select class="form-control" id="select_type">
+              <option value="NEW" <?php echo $_GET['type']!='RECEIVED'?'selected="selected"':''?>>NEW</option>
+                 </select>
+
+          <?php } ?>
+      
+
+               
+
         </div>
       </div>       
         <!-- Main row -->
@@ -64,7 +83,9 @@ include 'header.php';
                   <tr>
                     <th>S.No</th>
                     <th>Purchase No</th>
+                    <?php if($_SESSION['type']=='ADMIN'){ ?>
                     <th>Vendor Name</th>
+                    <?php }?>
                     <th>Discount</th>
                     <th>Tax Amount</th>
                     <th>Total Amount</th>
@@ -130,6 +151,8 @@ $("#order_modal").modal('show');
     
   }
     function new_detail_page(e){
+
+
 // $.ajax({
 // type: "GET",
 // dataType:"html",
@@ -152,6 +175,7 @@ window.location='modify_purchase_order.php?id='+btoa(e);
   }
 
   function new_detail_modal(e){
+
 $.ajax({
 type: "GET",
 dataType:"html",

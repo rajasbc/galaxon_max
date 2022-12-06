@@ -1,6 +1,7 @@
 <?php
 include '../tables/config.php';
 
+
  $obj = new Vendors();
 if ($_POST['vendor_id']==0 && $_POST['vendor_id']=='') {
  $result =  $obj->get_vendor_data();

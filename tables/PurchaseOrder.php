@@ -624,6 +624,46 @@ $result = $this->db->GetResultsArray($sql);
 return $result;
 
 }
+public function get_stock($id){
+
+$sql ='select id,purchase_id,item_id,item_name,sum(received_qty) as qty from '.$this->tablename2.'where item_id='.$id.' and branch_id='.$_SESSION['branch_id'].' group by item_id';
+
+$result = $this->db->GetResultsArray($sql);
+
+// print_r($result);die();
+return $result;
+
+}
+public function get_vendor_name($pid){
+
+$sql = 'select * from '.$this->tablename.' where id ='.$pid.' and branch_id='.$_SESSION['branch_id'].' ';
+$result = $this->db->GetResultsArray($sql);
+// print_r($result);die();
+
+return $result;
+
+}
+public function vendor_variety_details($id){
+
+$sql = 'select a.bill_no,a.vendor_id,a.id,b.item_name,b.purchase_id,b.var_id,b.var_name,b.item_code,b.mrp,b.sales_price,b.received_qty,c.name,d.name from purchase_order a  join purchase_order_details b on a.id=b.purchase_id join varieties c on b.var_id=c.id join vendors d on a.vendor_id=d.id  where b.item_id ='.$id.' and a.branch_id='.$_SESSION['branch_id'].'';
+$result = $this->db->GetResultsArray($sql);
+
+
+return $result;
+
+
+}
+// public function get_vendor_variety($id){
+// $sql = 'select * from '.$this->tablename2.' where purchase_id ='.$id.' and branch_id='.$_SESSION['branch_id'].' ';
+// $result = $this->db->GetResultsArray($sql);
+
+
+// return $result;
+
+
+
+
+// }
 
 }
 ?>

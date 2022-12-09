@@ -222,8 +222,34 @@ if (empty($_SESSION)==true) {
                   <p>Products</p>
                 </a>
               </li>
+              
             </ul>
           </li>
+            <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-solid fa-store"></i>
+              <p>
+                Stock
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+             
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="stock.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Stock List</p>
+                </a>
+              </li>
+             <!--  <li class="nav-item">
+                <a href="" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Payment Details</p>
+                </a>
+              </li> -->
+            </ul>
+          </li>
+
            <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-solid fa-user"></i>
@@ -232,6 +258,7 @@ if (empty($_SESSION)==true) {
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
+             
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="vendor.php" class="nav-link">

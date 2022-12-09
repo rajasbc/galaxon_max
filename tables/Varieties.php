@@ -5,6 +5,7 @@ class Varieties extends Dbconnection {
 	var $invitee_obj;
 	var $msg = '';
 	var $tablename = "`varieties`";
+	var $tablename1 = "`variety_items`";
 	// Create Db Connection for this class operations
 	function __construct() {
 		parent::__construct();
@@ -56,6 +57,28 @@ class Varieties extends Dbconnection {
 
 	$result = $this->db->GetResultsArray($sql);
 	return $result;
+	}
+
+	public function varieties_details($id){
+
+
+      $sql = 'select * from '.$this->tablename.' where item_id='.$id.' and is_deleted="NO"';
+
+      $result = $this->db->GetResultsArray($sql);
+      
+      return $result;
+
+	}
+
+	public function get_variety($id){
+
+   $sql = 'select item_id,item_name,var_id,var_name,sum(mrp) as mrp,sum(sales_price) as sales_price,sum(received_qty) as received_qty from purchase_order_details where var_id='.$id.' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO" group by var_name';
+
+      $result = $this->db->GetResultsArray($sql);
+      
+      return $result;
+
+
 	}
 }
 ?>

@@ -95,16 +95,16 @@ $category =  $category_obj->get_category_data();
         <input type="hidden" name="sno" id="sno" value="<?=$i?>">
         <!-- Main row -->
         <div class="row">
-          <div class="col-12">
+          <div class="col-sm-12 col-md-12 col-lg-12">
           <div class="card watermark_img">
             
-              <div class="card-body row col-12">
+              <div class="card-body row col-sm-12 col-md-12 col-lg-12">
                 <div class="row col-12">
                   <?php if($_SESSION['type']=='ADMIN'){ ?>
-                <div class="col-12" id="vendor_dt">
+                <div class="col-sm-12 col-md-12 col-lg-12" id="vendor_dt">
                   <label>Vendor Details</label><br>
                   <div class="row col-12">
-                    <div class="col-6">
+                    <div class="col-sm-6 col-md-6 col-lg-6">
                       <label>Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label><span id="vendor_name"> <?=$vendor['name']?> - <?=$vendor['vendor_code']?></span>
                     </div>
                     <div class="col-6">
@@ -137,7 +137,7 @@ $category =  $category_obj->get_category_data();
 
                 </div>
 
-                <div class=" card-body">
+                <div class=" card-body col-sm-12 col-md-12 col-lg-12">
                 <table id="example1" class="table table-bordered table-striped ">
                   <thead>
                     <tr>
@@ -155,7 +155,7 @@ $category =  $category_obj->get_category_data();
                       <th>Total</th>
                     </tr>
                   </thead>
-                  <tbody class="text-left css-serial" id="tdata">
+                  <tbody class="text-left" id="tdata">
  <?php $sno=0;
  $totalqty = 0;
  $totalton = 0;
@@ -176,7 +176,7 @@ $category =  $category_obj->get_category_data();
    $ttl=$row['total']+$row['tax_amt'];
    
    echo '<tr id="trItem_'.$sno.'">';
-           echo '<td class=" ch-4"><span></span></td>';
+           echo '<td class=" ch-4"></td>';
             echo '<td class="text-left ch-10">'.$row['item_name'];
             if ($row['item_code']!='') {
             echo ' - '.$row['item_code'];

@@ -152,6 +152,15 @@ class Vendors extends Dbconnection {
 		$result=$this->db->GetResultsArray($sql);
 		return $result;
 	}
+public function get_name($id){
+
+  $sql='select * from '.$this->tablename.' where id='.$id.' and status="ENABLED"';
+		$result=$this->db->GetResultsArray($sql);
+		return $result;
+
+
+
+}
 
 }
 ?>

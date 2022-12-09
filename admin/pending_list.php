@@ -4,7 +4,7 @@ include 'header.php';
 $obj = new PurchaseOrder();
 $vendor =new Vendors();
 
- $result =  $obj->get_purchase_list();
+$result =  $obj->get_purchase_list();
 
 
 ?>
@@ -62,7 +62,7 @@ $vendor =new Vendors();
                     <th>Total Amount</th>
                     <th>Paid Amount</th>
                     <th>Balance Amount</th>
-                    <th>Status</th>
+                
                     <th>Pay Status</th>
                    
                   </tr>
@@ -87,7 +87,7 @@ $vendor =new Vendors();
               <td class='text-center'>".$data['grand_total']."</td>
               <td class='text-center'>".$data['paid_amt']."</td>
               <td class='text-center'>".$data['balance_amt']."</td>
-              <td class='text-center'>".$data['order_orgin']."</td>
+              
                <td class='text-center'>".$data['status']."</td>
               
               </tr>";

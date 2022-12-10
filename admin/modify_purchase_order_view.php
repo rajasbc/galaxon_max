@@ -176,7 +176,7 @@ $category =  $category_obj->get_category_data();
    $ttl=$row['total']+$row['tax_amt'];
    
    echo '<tr id="trItem_'.$sno.'">';
-           echo '<td class=" ch-4"></td>';
+           echo '<td class=" ch-4">'.$sno.'</td>';
             echo '<td class="text-left ch-10">'.$row['item_name'];
             if ($row['item_code']!='') {
             echo ' - '.$row['item_code'];

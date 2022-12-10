@@ -23,7 +23,7 @@ $result=$obj->varieties_details($_GET['id']);
 
 
 
-						<li class="breadcrumb-item"><a href="stock.php">Stock LIST</a></li>
+						<li class="breadcrumb-item"><a href="stock.php">Stock List</a></li>
 						<li class="breadcrumb-item active">Varieties List</li>
 
 
@@ -63,8 +63,8 @@ $result=$obj->varieties_details($_GET['id']);
 									<?php 
 									$i=0;
 									$total_qty=0;
-$total_mrp=0;
-$total_sale=0;
+									$total_mrp=0;
+									$total_sale=0;
 									foreach ($result as $key => $value) {
 										$result2 = $obj->get_variety($value['id']);
 
@@ -87,17 +87,22 @@ $total_sale=0;
 
 										<td>".$result2[0]['sales_price']."</td>
 										</tr>";
-$total_qty+=$result2[0]['received_qty'];
-$total_mrp+=$result2[0]['mrp'];
-$total_sale+=$result2[0]['sales_price'];
+										$total_qty+=$result2[0]['received_qty'];
+										$total_mrp+=$result2[0]['mrp'];
+										$total_sale+=$result2[0]['sales_price'];
 
 									}
 
-echo "<tr><td colspan='1'></td><td><b>Total</b></td><td>".$total_qty."</td><td>".$total_mrp."</td><td>".$total_sale."</td></tr>";
+									
 
 
 
 									?>
+									<tfoot>  
+          <?php echo "<tr><td colspan='1'></td><td><b>Total</b></td><td>".$total_qty."</td><td>".$total_mrp."</td><td>".$total_sale."</td></tr>";
+          ?> 
+         </tfoot>
+
 
 
 
@@ -128,8 +133,16 @@ echo "<tr><td colspan='1'></td><td><b>Total</b></td><td>".$total_qty."</td><td>"
  
        </div> -->
 
+
        <?php 
        include 'footer.php';
        ?>
-       <!-- End Of Purchase Details -->
-
+       <script type="text/javascript">
+       	$(function () {
+       		$("#example1").DataTable({
+       			"responsive": true, "lengthChange": false, "autoWidth": false,
+       			"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+       		}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+       	});
+       </script>
+       

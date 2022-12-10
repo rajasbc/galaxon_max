@@ -940,8 +940,10 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
    function fieldupdate(idval,ele){
 
       var ref = "sid"+idval;
+
       
       var mrp = $("#mrp"+idval).val();
+
       var sale_price = $("#sale_price"+idval).val();
       var discount = $("#discount"+idval).val();
       var gst = $("#gst"+idval).val();

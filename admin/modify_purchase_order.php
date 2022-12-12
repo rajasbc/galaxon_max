@@ -1,8 +1,10 @@
 <?php 
 include 'header.php';
+
 $obj=new PurchaseOrder();
 $purchase_order_dt=$obj->get_purchase_order(base64_decode($_GET['id']));
 $purchase_order_item_dt=$obj->get_purchase_order_item(base64_decode($_GET['id']));
+$shipping_details = $obj->get_shipping_edit(base64_decode($_GET['id']));
 $vendor_obj= new Vendors();
 $vendor= $vendor_obj->get_vendor_dt($purchase_order_dt[0]['vendor_id']); 
 $brand_obj = new Brand();
@@ -130,7 +132,7 @@ $items=json_encode($items);
           <div class="card watermark_img">
             
               <div class="card-body row col-12">
-                <div class="row col-12">
+                <div class="row col-10">
                   <?php if($_SESSION['type']=='ADMIN'){ ?>
                 <div class="col-12" id="vendor_dt">
                   <label>Vendor Details</label><br>
@@ -141,6 +143,7 @@ $items=json_encode($items);
                     <div class="col-6">
                       <label>Company Name :</label><span id="vendor_company_name"> <?=$vendor['company_name']?></span>
                     </div>
+                    
                     <div class="col-6">
                       <label>Mobile No :</label><span id="vendor_mobile"> <?=$vendor['mobile_no']?></span>
                     </div>
@@ -164,8 +167,11 @@ $items=json_encode($items);
                    <input type="hidden" name="nvendor_id" id="nvendor_id" value="0">
                   <!-- <input type="hidden" name="vendor" id="vendor" class="form-control" placeholder="Enter Vendor" autofocus> -->
                 </div><?php } ?>
+             
 
-
+                </div>
+                <div class="col-2 form-group mb-2 text-right">
+                   <i class="nav-icon fas fa-solid fa-truck" style="font-size: xx-large;cursor: pointer;" data-toggle='modal' data-target="#shipping_modal" id="shipping_modal_btn"></i>
                 </div>
 
                 <form id="add_product" class="row col-12" onsubmit="return(false);">
@@ -465,6 +471,131 @@ $items=json_encode($items);
         <!-- /.modal-dialog -->
       </div>
       <!-- /.modal -->
+      <div class="modal fade" id="shipping_modal" data-backdrop='static'>
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Add Shipping Details</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">Name&nbsp;<span class="text-danger">*</span></span>
+                  </div>
+                   <input type="hidden" name="shipping_id" id="shipping_id" value="<?=$shipping_details[0]['id']?>">
+
+                    <input type="hidden" name="po_id" id="po_id" value="<?=$_GET['id']?>">
+
+                  <input type="text" id='shipping_name' name='shipping_name' value="<?=$shipping_details[0]['name']?>" class="form-control enterKeyclass" placeholder="Enter Name">
+
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Company Name&nbsp;<span class="text-danger">*</span></span>
+                  </div>
+                  <input type="text" id='shipping_company_name' name='shipping_company_name' value="<?=$shipping_details[0]['company_name']?>" class="form-control enterKeyclass" placeholder="Enter Company Name">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">Mobile.No&nbsp;<span class="text-danger">*</span></span>
+                  </div>
+                  <input type="number" id='mobile_no' name='mobile_no' class="form-control enterKeyclass" value="<?=$shipping_details[0]['mobile_no']?>" placeholder="Enter Mobile Number">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">Email</span>
+                  </div>
+                  <input type="text" id='email' name='email' value="<?=$shipping_details[0]['email']?>" class="form-control enterKeyclass" placeholder="Enter Email">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">Gst.No</span>
+                  </div>
+                  <input type="text" id='ship_gst' name='ship_gst' value="<?=$shipping_details[0]['email']?>" class="form-control enterKeyclass" placeholder="Enter GST No">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">Address</span>
+                  </div>
+                  <input type="text" id='address' name='address' value="<?=$shipping_details[0]['address']?>" class="form-control enterKeyclass" placeholder="Enter Address">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">City</span>
+                  </div>
+                  <input type="text" id='city' name='city' value="<?=$shipping_details[0]['city']?>" class="form-control enterKeyclass" placeholder="Enter City">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">State</span>
+                  </div>
+                  <input type="text" id='state' name='state' value="<?=$shipping_details[0]['state']?>" class="form-control enterKeyclass" placeholder="Enter State">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">Country</span>
+                  </div>
+                  <input type="text" id='country' value="<?=$shipping_details[0]['country']?>" name='country' class="form-control enterKeyclass" placeholder="Enter Country">
+                </div>
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">Pincode</span>
+                  </div>
+                  <input type="text" id='pincode' value="<?=$shipping_details[0]['pincode']?>" name='pincode' class="form-control enterKeyclass" placeholder="Enter Pincode">
+                </div>
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">Shipping Terms</span>
+                  </div>
+                  <input type="text" id='ship_terms' value="<?=$shipping_details[0]['shipping_terms']?>" name='ship_terms' class="form-control enterKeyclass" placeholder="Enter Shipping Terms">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Shipping Medthod</span>
+                  </div>
+
+                  <select class="form-control" id="shipping_method">
+                   
+                    <option value="FEDEX" <?php if($shipping_details[0]['method']=="FEDEX"){ echo "selected='selected'"; }?>>FEDEX</option>
+                 
+                    <option value="UPS" <?php if($shipping_details[0]['method']=="UPS"){ echo "selected='selected'"; } ?>>UPS</option>
+                 
+                    <option value="USPS"  <?php if($shipping_details[0]['method']=="USPS"){ echo "selected='selected'"; } ?>>USPS</option>
+         
+                  </select>
+
+
+
+
+
+
+                </div>
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">Delivery Date</span>
+                  </div>
+                  <?php if($shipping_details[0]['id']==''){ ?>
+                  <input type="date" id='shipping_d_date' name='shipping_d_date' class="form-control enterKeyclass" value="<?=date('Y-m-d')?>">
+                <?php }else{ ?>
+                     <input type="date" id='shipping_d_date' name='shipping_d_date' class="form-control enterKeyclass" value="<?=$shipping_details[0]['delivery_date']?>">
+                <?php } ?>
+                </div>
+            </div>
+          <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="shipping_dt_add">Add</button>
+            </div>
+            </div>
+            
+          </div>
+          <!-- /.modal-content -->
+        </div>
   <?php 
 include 'footer.php';
 ?>
@@ -996,4 +1127,44 @@ success: function(res){
 
 });
   }
+</script>
+<script type="text/javascript">
+  $("#shipping_dt_add").on('click',function(){
+ var id = $("#shipping_id").val();
+ var po_id = "<?=base64_decode($_GET['id'])?>";
+ var shipping_name = $("#shipping_name").val();
+ var shipping_company_name = $("#shipping_company_name").val();
+ var mobile_no = $("#mobile_no").val();
+ var email = $("#email").val();
+ var ship_gst = $("#ship_gst").val();
+ var address = $("#address").val();
+ var city = $("#city").val();
+ var state = $("#state").val();
+ var country = $('#country').val();
+ var pincode = $("#pincode").val();
+ var ship_terms = $("#ship_terms").val();
+ var shipping_method = $("#shipping_method").val();
+ var shipping_d_date = $("#shipping_d_date").val();
+$.ajax({
+
+  type:'post',
+  dataType:'json',
+  url:'../ajaxCalls/update_shipping.php',
+  data:{"id":id,"po_id":po_id,"shipping_name":shipping_name,"shipping_company_name":shipping_company_name,"mobile_no":mobile_no,"email":email,"ship_gst":ship_gst,"address":address,"city":city,"state":state,"country":country,"pincode":pincode,"ship_terms":ship_terms,"shipping_method":shipping_method,"shipping_d_date":shipping_d_date},
+    success:function(res){
+
+            if(res.status=='success'){
+                global_alert_modal('success','Edited SuccessFully...');
+                 $("#shipping_modal").modal('hide');
+            
+
+            }
+ 
+    }
+
+
+});
+
+  });
+
 </script>

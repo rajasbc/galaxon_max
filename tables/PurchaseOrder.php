@@ -1,4 +1,5 @@
 <?php
+
 class PurchaseOrder extends Dbconnection {
 	var $name;
 	var $db;
@@ -653,17 +654,55 @@ return $result;
 
 
 }
-// public function get_bill_no($id){
-// $sql = 'select * from '.$this->tablename.' where vendor_id ='.$id.' and branch_id='.$_SESSION['branch_id'].'';
-// $result = $this->db->GetResultsArray($sql);
+public function get_shipping_edit($id){
 
+$sql = 'select * from '.$this->tablename6.' where po_id= '.$id;
+$result = $this->db->GetResultsArray($sql);
+return $result;
 
-// return $result;
+}
+public function add_shipping(){
 
+  $shipping = array();
+     $shipping['po_id'] = $this->db->getpost('po_id');
+     $shipping['name'] = $this->db->getpost('shipping_name');
+     $shipping['email']= $this->db->getpost('email');
+     $shipping['company_name'] = $this->db->getpost('shipping_company_name');
+     $shipping['mobile_no'] = $this->db->getpost('mobile_no');
+     $shipping['gst_no'] = $this->db->getpost('ship_gst');
+     $shipping['address'] = $this->db->getpost('address');
+     $shipping['city'] = $this->db->getpost('city');
+     $shipping['state'] = $this->db->getpost('state');
+     $shipping['country'] = $this->db->getpost('country');
+     $shipping['pincode'] = $this->db->getpost('pincode');
+     $shipping['shipping_terms'] = $this->db->getpost('ship_terms');  
+     $shipping['method'] = $this->db->getpost('shipping_method');
+     $shipping['delivery_date'] = $this->db->getpost('shipping_d_date');
+     $shipping['shop_id'] = $_SESSION['shop_id'];
+   if($this->db->getpost('id')== ""){
 
+     
 
+   $result = $this->db->mysql_insert($this->tablename6,$shipping);
 
-// }
+  }else{
+   
+   $result = $this->db->mysql_update($this->tablename6,$shipping,'id='.$this->db->getpost('id'));
+
+  }
+
+   if($result){
+
+    return ['status'=>'success'];
+
+   }else{
+
+    return ['status'=>'failed'];
+   }
+  
+
+}
+
 
 }
 ?>

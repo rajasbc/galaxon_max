@@ -15,7 +15,7 @@ $result =  $obj->get_purchase_list();
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Pending List</h1>
+            <h1 class="m-0">Pending payment List</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -50,7 +50,7 @@ $result =  $obj->get_purchase_list();
           <div class="card">
             
               <div class="card-body">
-                <table  class="table table-bordered table-striped">
+                <table id="example1" class="table table-bordered table-striped">
                   <thead>
                    
                   <tr>
@@ -63,7 +63,7 @@ $result =  $obj->get_purchase_list();
                     <th>Paid Amount</th>
                     <th>Balance Amount</th>
                 
-                    <th>Pay Status</th>
+                   
                    
                   </tr>
                
@@ -88,7 +88,7 @@ $result =  $obj->get_purchase_list();
               <td class='text-center'>".$data['paid_amt']."</td>
               <td class='text-center'>".$data['balance_amt']."</td>
               
-               <td class='text-center'>".$data['status']."</td>
+              
               
               </tr>";
              } ?>
@@ -124,7 +124,7 @@ $result =  $obj->get_purchase_list();
   <?php 
 include 'footer.php';
 ?>
-<!-- <script>
+<script>
   $(function () {
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
@@ -132,119 +132,7 @@ include 'footer.php';
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
   });
 </script>
-<script type="text/javascript">
-  function detail_modal(e){
-$.ajax({
-type: "GET",
-dataType:"html",
-url: '../ajaxCalls/get_purchase_order_id.php',
-data: {'id':e},
-success: function(res){
-  $("#order_modal .modal-body").html(res);
-$("#order_modal").modal('show');
-}
 
-});
-    
-  }
-    function new_detail_page(e){
-// $.ajax({
-// type: "GET",
-// dataType:"html",
-// url: '../ajaxCalls/get_purchase_order_new_id.php',
-// data: {'id':e},
-// success: function(res){
-//   $("#order_modal .modal-body").html(res);
-// $("#order_modal").modal('show');
-// }
 
-// });
-window.location='edit_purchase_order.php?id='+btoa(e);
-    
-  }
 
-  function edit_detail_page(e){
 
-window.location='modify_purchase_order.php?id='+btoa(e);
-    
-  }
-
-  function new_detail_modal(e){
-$.ajax({
-type: "GET",
-dataType:"html",
-url: '../ajaxCalls/get_purchase_order_new_id.php',
-data: {'id':e},
-success: function(res){
-  $("#order_modal .modal-body").html(res);
-$("#order_modal").modal('show');
-}
-
-});
-    
-  }
-</script>
-<script type="text/javascript">
-  $(document).ready(function(){
-    get_data();
-  })
-</script>
-<script type="text/javascript">
-  function get_data(){
-      $.ajax({
-type: "POST",
-dataType:"json",
-url: '../ajaxCalls/get_purchase_order.php',
-data: {'type':"<?=$_GET['type']?>"},
-success: function(res){
- var table = $('#example1').DataTable();
-    table.clear();
-    table.rows.add(res).draw();
-}
-
-});
-  }
-  function postValue(){
-    var paid_amt=$("#balance_received").val();
-    var balance = $("#balance_amt").val();
-    var payment_mode=$("#payment_mode").val();
-    var po_id=$("#po_id").val();
-    if (paid_amt=='' && paid_amt==0) {
-      global_alert_modal('warning','Enter Paid Amount...');
-      $("#balance_received").css("border","1px solid red");
-      $("#balance_received").focus();
-      return false;
-    }else{
-        $("#balance_received").css("border","1px solid gray");
-    }
-     $.ajax({
-type: "POST",
-dataType:"json",
-url: '../ajaxCalls/paid_purchase_order.php',
-data: {'paid_amt':paid_amt,'balance':balance,'payment_mode':payment_mode,'po_id':po_id},
-success: function(res){
- if (res.status=='success') {
-  
-   global_alert_modal('success','Paid Added Successfully...');
-   get_data();
-   $("#order_modal").modal('hide');
- }
-}
-
-});
-  }
-</script>
-<script type="text/javascript">
-  $("#select_type").on('change',function(){
-    if ($(this).val()=='RECEIVED') {
-      window.location='purchase_order.php?type=RECEIVED';
-    }else{
-      window.location='purchase_order.php?type=NEW';
-    }
-  })
-</script>
-<script type="text/javascript">
-  function print_page(e) {
-    window.open('print_page.php?id='+btoa(e),'_blank');
-  }
-</script> -->

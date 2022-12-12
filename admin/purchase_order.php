@@ -15,7 +15,7 @@ include 'header.php';
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
              <?php if($_SESSION['type']=='ADMIN'){?>
-               <li class="breadcrumb-item"><a href="pending_list.php"><i class="fa fa-bell" aria-hidden="true"></i></a></li>
+               <li class="breadcrumb-item"><a href="pending_list.php" data-toggle="tooltip" title="Pending Payment List"><i class="fa fa-bell" aria-hidden="true"></i></a></li>
                <?php }?>
           
               <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
@@ -76,7 +76,7 @@ include 'header.php';
                     <th>Total Amount</th>
                     <th>Paid Amount</th>
                     <th>Balance Amount</th>
-                    <th>Pay Status</th>
+                  
                     <th>Details</th>
                   </tr>
                 <?php }else{?>
@@ -92,7 +92,7 @@ include 'header.php';
                     <th>Paid Amount</th>
                     <th>Balance Amount</th>
                     <th>Status</th>
-                    <th>Pay Status</th>
+                    
                     <th width="50%">Details</th>
                   </tr>
                 <?php }?>

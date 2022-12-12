@@ -98,6 +98,22 @@ $items=json_encode($items);
    .table-scroll tfoot td {
      background-color: #fff !important;
    }
+   #ui-id-1
+    { 
+      z-index: 9999999!important;
+    }
+   /* #ui-id-3
+    { 
+      z-index: 9999999!important;
+    }
+    #ui-id-4
+    { 
+      z-index: 9999999!important;
+    }
+    #ui-id-5
+    { 
+      z-index: 9999999!important;
+    }*/
 </style>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -1166,5 +1182,41 @@ $.ajax({
 });
 
   });
+
+</script>
+<script type="text/javascript">
+  $("#shipping_name").autocomplete({
+
+     source: "../ajaxCalls/autocomplete_shipping_list.php",
+     minLength: 1,
+     select:function(event,ui){
+        
+          $("#shipping_company_name").val(ui.item.company_name);
+           $("#mobile_no").val(ui.item.mobile_no);
+           $("#email").val(ui.item.email);
+           $("#ship_gst").val(ui.item.gst_no);
+           $("#city").val(ui.item.city);
+          $("#address").val(ui.item.address);
+          $("#state").val(ui.item.state);
+          $("#country").val(ui.item.country);
+          $("#pincode").val(ui.item.pincode);
+          $("#ship_terms").val(ui.item.shipping_terms);
+           // $("#shipping_d_date").val(ui.item.delivery);
+
+     }
+
+
+
+  }).data('ui-autocomplete')._renderItem = function(ul,item){
+      return $("<li class='ui-autocomplete-row'></li>")
+        .data("item.autocomplete", item)
+        .append(item.value)
+        .appendTo(ul);
+    };
+
+
+
+
+
 
 </script>

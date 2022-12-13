@@ -1,5 +1,5 @@
 <?php
-
+// error_reporting(E_ALL);
 class PurchaseOrder extends Dbconnection {
 	var $name;
 	var $db;
@@ -57,6 +57,23 @@ if ($this->db->getpost('order_type')=='received') {
 	$purchase['order_type']='NEW';
 	$purchase['order_orgin']='NEW';
 }
+if ($this->db->getpost('ship_terms')!='') {
+  $purchase['shipping_terms']=$this->db->getpost('ship_terms');
+}
+if ($this->db->getpost('shipping_id')!='') {
+  $purchase['ship_id']=$this->db->getpost('shipping_id');
+}
+if ($this->db->getpost('shipping_method')!='') {
+ $purchase['method']=$this->db->getpost('shipping_method');
+}
+if ($this->db->getpost('shipping_d_date')!='') {
+  $purchase['delivery_date']=$this->db->getpost('shipping_d_date');
+}
+
+  $purchase['po_id']=$purchase_id;
+  $purchase['shop_id']=$_SESSION['shop_id'];
+ 
+
 
 		
 		$purchase_id = $this->db->mysql_insert($this->tablename, $purchase);
@@ -164,50 +181,50 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
 		$this->db->mysql_insert($this->tablename3, $purchase_log);
 }
 				
-		if ($this->db->getpost('shipping_name')!='') {
-	$shipping_array['name']=$this->db->getpost('shipping_name');
-}
-if ($this->db->getpost('shipping_company_name')!='') {
-	$shipping_array['company_name']=$this->db->getpost('shipping_company_name');
-}
-if ($this->db->getpost('smobile_no')!='') {
-	$shipping_array['mobile_no']=$this->db->getpost('smobile_no');
-}
-if ($this->db->getpost('semail')!='') {
-	$shipping_array['email']=$this->db->getpost('semail');
-}
-if ($this->db->getpost('sgst')!='') {
-	$shipping_array['gst_no']=$this->db->getpost('sgst');
-}
-if ($this->db->getpost('saddress')!='') {
-	$shipping_array['address']=$this->db->getpost('saddress');
-}
-if ($this->db->getpost('scity')!='') {
-	$shipping_array['city']=$this->db->getpost('scity');
-}
-if ($this->db->getpost('sstate')!='') {
-	$shipping_array['state']=$this->db->getpost('sstate');
-}
-if ($this->db->getpost('scountry')!='') {
-	$shipping_array['country']=$this->db->getpost('scountry');
-}
-if ($this->db->getpost('spincode')!='') {
-	$shipping_array['pincode']=$this->db->getpost('spincode');
-}
-if ($this->db->getpost('ship_terms')!='') {
-	$shipping_array['shipping_terms']=$this->db->getpost('ship_terms');
-}
-if ($this->db->getpost('shipping_method')!='') {
-	$shipping_array['method']=$this->db->getpost('shipping_method');
-}
-if ($this->db->getpost('shipping_d_date')!='') {
-	$shipping_array['delivery_date']=$this->db->getpost('shipping_d_date');
-}
-if (!empty($shipping_array)) {
-	$shipping_array['po_id']=$purchase_id;
-	$shipping_array['shop_id']=$_SESSION['shop_id'];
-	$this->db->mysql_insert($this->tablename6, $shipping_array);
-}
+// 		if ($this->db->getpost('shipping_name')!='') {
+// 	$shipping_array['name']=$this->db->getpost('shipping_name');
+// }
+// if ($this->db->getpost('shipping_company_name')!='') {
+// 	$shipping_array['company_name']=$this->db->getpost('shipping_company_name');
+// }
+// if ($this->db->getpost('smobile_no')!='') {
+// 	$shipping_array['mobile_no']=$this->db->getpost('smobile_no');
+// }
+// if ($this->db->getpost('semail')!='') {
+// 	$shipping_array['email']=$this->db->getpost('semail');
+// }
+// if ($this->db->getpost('sgst')!='') {
+// 	$shipping_array['gst_no']=$this->db->getpost('sgst');
+// }
+// if ($this->db->getpost('saddress')!='') {
+// 	$shipping_array['address']=$this->db->getpost('saddress');
+// }
+// if ($this->db->getpost('scity')!='') {
+// 	$shipping_array['city']=$this->db->getpost('scity');
+// }
+// if ($this->db->getpost('sstate')!='') {
+// 	$shipping_array['state']=$this->db->getpost('sstate');
+// }
+// if ($this->db->getpost('scountry')!='') {
+// 	$shipping_array['country']=$this->db->getpost('scountry');
+// }
+// if ($this->db->getpost('spincode')!='') {
+// 	$shipping_array['pincode']=$this->db->getpost('spincode');
+// }
+// if ($this->db->getpost('ship_terms')!='') {
+// 	$shipping_array['shipping_terms']=$this->db->getpost('ship_terms');
+// }
+// if ($this->db->getpost('shipping_method')!='') {
+// 	$shipping_array['method']=$this->db->getpost('shipping_method');
+// }
+// if ($this->db->getpost('shipping_d_date')!='') {
+// 	$shipping_array['delivery_date']=$this->db->getpost('shipping_d_date');
+// }
+// if (!empty($shipping_array)) {
+// 	$shipping_array['po_id']=$purchase_id;
+// 	$shipping_array['shop_id']=$_SESSION['shop_id'];
+// 	$this->db->mysql_insert($this->tablename6, $shipping_array);
+// }
 
 
      return ['status'=>'success'];
@@ -394,7 +411,10 @@ public function edit_purchase_order()
 		$purchase['tax_amt']=$this->db->getpost('tax_amount');
 		$purchase['grand_total']=$this->db->getpost('grand_total');
 		$purchase['purchase_note']=$this->db->getpost('note');
-		
+    $purchase['ship_id']=$this->db->getpost('shipping_id');
+    $purchase['shipping_terms']=$this->db->getpost('ship_terms');
+		$purchase['method']=$this->db->getpost('shipping_method');
+    $purchase['delivery_date']=$this->db->getpost('shipping_d_date');
 		$purchase_id = $this->db->mysql_update($this->tablename, $purchase, 'purchase_no='.$this->db->getpost('po_id'));
 
 		foreach ($item as $itemvar) {
@@ -565,7 +585,7 @@ public function edit_purchase_order()
 	}
 	public function get_purchase_order_shipping($id)
 	{
-	 $sql='select * from '.$this->tablename6.' where po_id='.$id.'';
+	 $sql='select * from '.$this->tablename6.' where id='.$id.'';
 		$result=$this->db->GetResultsArray($sql);
 		return $result;
 	}
@@ -592,7 +612,7 @@ public function get_shipping_details(){
 
 public function get_Autocomplete_shipping(){
 
-  $sql = "select * from ".$this->tablename6."where (name like'%".$this->db->getpost('term')."%' or po_id like'%".$this->db->getpost('term')."%') and shop_id = ".$_SESSION['shop_id']."";
+  $sql = "select * from ".$this->tablename6."where (name like'%".$this->db->getpost('term')."%') and shop_id = ".$_SESSION['shop_id']."";
 
 $result = $this->db->GetResultsArray($sql);
 return $result;
@@ -656,7 +676,7 @@ return $result;
 }
 public function get_shipping_edit($id){
 
-$sql = 'select * from '.$this->tablename6.' where po_id= '.$id;
+$sql = 'select * from '.$this->tablename6.' where id= '.$id;
 $result = $this->db->GetResultsArray($sql);
 return $result;
 
@@ -700,6 +720,39 @@ public function add_shipping(){
     return ['status'=>'failed'];
    }
   
+
+}
+
+public function insert_shipping(){
+
+     $shipping['name'] = $this->db->getpost('shipping_name');
+     $shipping['email']= $this->db->getpost('email');
+     $shipping['company_name'] = $this->db->getpost('shipping_company_name');
+     $shipping['mobile_no'] = $this->db->getpost('mobile_no');
+     $shipping['gst_no'] = $this->db->getpost('ship_gst');
+     $shipping['address'] = $this->db->getpost('address');
+     $shipping['city'] = $this->db->getpost('city');
+     $shipping['state'] = $this->db->getpost('state');
+     $shipping['country'] = $this->db->getpost('country');
+     $shipping['pincode'] = $this->db->getpost('pincode');
+     $shipping['shipping_terms'] = $this->db->getpost('ship_terms');  
+     $shipping['method'] = $this->db->getpost('shipping_method');
+     
+     $shipping['shop_id'] = $_SESSION['shop_id'];
+ 
+
+   $result = $this->db->mysql_insert($this->tablename6,$shipping);
+
+  if($result){
+
+    return ['status'=>'success'];
+
+   }else{
+
+    return ['status'=>'failed'];
+   }
+
+
 
 }
 

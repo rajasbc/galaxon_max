@@ -14,7 +14,7 @@ include 'header.php';
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
               <li class="breadcrumb-item active">Shipping List</li>
-              <!-- <li class="breadcrumb-item"><a style="color: #007bff;text-decoration: none;background-color: transparent;cursor: pointer;" id="add_vendor">Add Vendor</a></li> -->
+              <li class="breadcrumb-item" data-toggle='modal' data-target="#shipping_modal" id="shipping_modal_btn"><a style="color: #007bff;text-decoration: none;background-color: transparent;cursor: pointer;" id="add_vendor">Add Shipping</a></li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -61,76 +61,34 @@ include 'header.php';
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  <div class="modal fade" id="delete_vendor_modal" data-backdrop='static'>
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Disable Vendor</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <input type="hidden" name="delete_vendor_id" id="delete_vendor_id">
-              <h4>Are You Sure Disable This Vendor....</h4>
-            </div>
-            <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-              <button type="button" id="delete_vendor_btn" class="btn btn-primary">Yes</button>
-            </div>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
+  
       <!-- /.modal -->
-        <div class="modal fade" id="enable_vendor_modal" data-backdrop='static'>
+
+
+
+       <div class="modal fade" id="shipping_modal" data-backdrop='static'>
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Enable Vendor</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <h4 class="modal-title"></h4>
+             <!--  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
-              </button>
+              </button> -->
             </div>
             <div class="modal-body">
-              <input type="hidden" name="enable_vendor_id" id="enable_vendor_id">
-              <h4>Are You Sure Enable This Vendor....</h4>
-            </div>
-            <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-              <button type="button" id="enable_vendor_btn" class="btn btn-primary">Yes</button>
-            </div>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-      <!-- /.modal -->
-  <div class="modal fade" id="add_vendor_modal" data-backdrop='static'>
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Vendor Details</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <form method="POST" id="vendorForm" enctype="multipart/form-data" >
-            <div class="modal-body">
-              
-              <input type="hidden" name="edit_vendor_id" id="edit_vendor_id" value="0">
               <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text" style="width: 8.3rem">Name&nbsp;<span class="text-danger">*</span></span>
                   </div>
-                  <input type="text" id='vendor_name' name='vendor_name' class="form-control enterKeyclass" placeholder="Enter Vendor Name">
+                   <input type="hidden" name="shipping_id" id="shipping_id" value="0">
+                  <input type="text" id='shipping_name' name='shipping_name' class="form-control enterKeyclass" placeholder="Enter Name">
+
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text">Company Name&nbsp;<span class="text-danger">*</span></span>
                   </div>
-                  <input type="text" id='vendor_company_name' name='vendor_company_name' class="form-control enterKeyclass" placeholder="Enter Company Name">
+                  <input type="text" id='shipping_company_name' name='shipping_company_name' class="form-control enterKeyclass" placeholder="Enter Company Name">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
@@ -148,7 +106,7 @@ include 'header.php';
                   <div class="input-group-prepend">
                     <span class="input-group-text" style="width: 8.3rem">Gst.No</span>
                   </div>
-                  <input type="text" id='gst' name='gst' class="form-control enterKeyclass" placeholder="Enter GST No">
+                  <input type="text" id='ship_gst' name='ship_gst' class="form-control enterKeyclass" placeholder="Enter GST No">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
@@ -174,44 +132,48 @@ include 'header.php';
                   </div>
                   <input type="text" id='country' name='country' class="form-control enterKeyclass" placeholder="Enter Country">
                 </div>
+
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text" style="width: 8.3rem">Pincode</span>
                   </div>
                   <input type="text" id='pincode' name='pincode' class="form-control enterKeyclass" placeholder="Enter Pincode">
                 </div>
-                 <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text" style="width: 8.3rem">Image</span>
-                  </div>
-                  <input type="file" id='image' name='image' class="form-control " placeholder="Enter Pincode">
-                </div>
-              
-            </div>
-            <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="submit" id="add_vendor_btn" class="btn btn-primary">Save</button>
-              <button type="button" style="display: none" id="edit_vendor_btn" class="btn btn-primary">Update</button>
-            </div>
-            </form>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-      <!-- /.modal -->
 
-       <div class="modal fade" id="shipping_modal" data-backdrop='static'>
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-body">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">Shipping Terms</span>
+                  </div>
+                  <input type="text" id='ship_terms' name='ship_terms' class="form-control enterKeyclass" placeholder="Enter Shipping Terms">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Shipping Medthod</span>
+                  </div>
+                  <select class="form-control" id="shipping_method">
+                    <option value="FEDEX">FEDEX</option>
+                    <option value="UPS">UPS</option>
+                    <option value="USPS">USPS</option>
+                  </select>
+                </div>
+               <!--  <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">Delivery Date</span>
+                  </div>
+                  <input type="date" id='shipping_d_date' name='shipping_d_date' class="form-control enterKeyclass" value="<?=date('Y-m-d')?>">
+                </div> -->
+            </div>
+          <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
              
             </div>
+            </div>
+            
           </div>
           <!-- /.modal-content -->
         </div>
-        <!-- /.modal-dialog -->
-      </div>
+       
+ 
   <?php 
 include 'footer.php';
 ?>
@@ -226,223 +188,7 @@ include 'footer.php';
   //   }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
   // });
 </script>
-<!-- <script type="text/javascript">
-  $("#add_vendor").click(function(){
-     $("#add_vendor_modal").modal('show');
-        $("#add_vendor_btn").css('display','');
-   $("#edit_vendor_btn").css('display','none');
-   $("#vendorForm")[0].reset();
 
-  });
-    $("#vendorForm").on('submit', function(e){
-        e.preventDefault();
-      var vendor_name=$("#vendor_name").val();
-      var vendor_company_name=$("#vendor_company_name").val();
-      var mobile_no=$("#mobile_no").val();
-      var email=$("#email").val();
-      var address=$("#address").val();
-      var city=$("#city").val();
-      var state=$("#state").val();
-      var country=$("#country").val();
-      var pincode=$("#pincode").val();
-     if (vendor_name=='' && vendor_name==0) {
-      global_alert_modal('warning','Enter Vendor Name...');
-      $("#vendor_name").css("border","1px solid red");
-                    $("#vendor_name").focus();
-                    return false;
-        }
-       else{
-        $("#vendor_name").css("border","1px solid lightgray");
-       }
-       if (vendor_company_name=='' && vendor_company_name==0) {
-      global_alert_modal('warning','Enter Vendor Company Name...');
-      $("#vendor_company_name").css("border","1px solid red");
-                    $("#vendor_company_name").focus();
-                    return false;
-        }
-       else{
-        $("#vendor_company_name").css("border","1px solid lightgray");
-       }
-       if (mobile_no=='' && mobile_no==0) {
-      global_alert_modal('warning','Enter Vendor Mobile No...');
-      $("#mobile_no").css("border","1px solid red");
-                    $("#mobile_no").focus();
-                    return false;
-        }
-       else{
-        $("#mobile_no").css("border","1px solid lightgray");
-       }
-      var formData = new FormData(this); 
-            formData.append('type','add');
-  $.ajax({
-type: "POST",
-dataType:"json",
-url: '../ajaxCalls/add_vendor.php',
-data: formData,
-            dataType: 'json',
-            contentType: false,
-            cache: false,
-            processData:false,
-success: function(res){
-if (res.status=='failed') {
-  
-  global_alert_modal('fail','Vendor Not Added...');
-    return false;
-
-}else if (res.status=='alert') {
-  
-  global_alert_modal('info','This Vendor Name Already Stored...');
-  $("#vendor_name").focus();
-  $("#vendor_name").val('');
-                    return false;
-
-}
-else{
-    global_alert_modal('success','Vendor Added SuccessFully...');
-    $("#vendor_name").val('');
-    $("#vendor_company_name").val('');
-    $("#mobile_no").val('');
-    $("#email").val('');
-    $("#address").val('');
-    $("#city").val('');
-    $("#state").val('');
-    $("#country").val('');
-    $("#pincode").val('');
-    $("#add_vendor_modal").modal('hide');
-    $("#vendorForm")[0].reset();
-    get_data();
-}
-}
-
-});
-});
-     $('#edit_vendor_btn').on('click',function(e){
-      var vendor_name=$("#vendor_name").val();
-      var vendor_company_name=$("#vendor_company_name").val();
-      var mobile_no=$("#mobile_no").val();
-      var email=$("#email").val();
-      var address=$("#address").val();
-      var city=$("#city").val();
-      var state=$("#state").val();
-      var country=$("#country").val();
-      var pincode=$("#pincode").val();
-      var vendor_id=$("#edit_vendor_id").val();
-     if (vendor_name=='' && vendor_name==0) {
-      global_alert_modal('warning','Enter Vendor Name...');
-      $("#vendor_name").css("border","1px solid red");
-                    $("#vendor_name").focus();
-                    return false;
-        }
-       else{
-        $("#vendor_name").css("border","1px solid lightgray");
-       }
-       if (vendor_company_name=='' && vendor_company_name==0) {
-      global_alert_modal('warning','Enter Vendor Company Name...');
-      $("#vendor_company_name").css("border","1px solid red");
-                    $("#vendor_company_name").focus();
-                    return false;
-        }
-       else{
-        $("#vendor_company_name").css("border","1px solid lightgray");
-       }
-       if (mobile_no=='' && mobile_no==0) {
-      global_alert_modal('warning','Enter Vendor Mobile No...');
-      $("#mobile_no").css("border","1px solid red");
-                    $("#mobile_no").focus();
-                    return false;
-        }
-       else{
-        $("#mobile_no").css("border","1px solid lightgray");
-       }
-      var formData = new FormData($("#vendorForm")[0]);
-      formData.append('type','edit');
-  $.ajax({
-type: "POST",
-dataType:"json",
-url: '../ajaxCalls/add_vendor.php',
-data: formData,
-            dataType: 'json',
-            contentType: false,
-            cache: false,
-            processData:false,
-success: function(res){
-if (res.status=='failed') {
-  
-  global_alert_modal('fail','Vendor Not Edited...');
-    return false;
-
-}else if (res.status=='alert') {
-  
-  global_alert_modal('info','This Vendor Name Already Stored...');
-  $("#vendor_name").focus();
-  $("#vendor_name").val('');
-                    return false;
-
-}
-else{
-    global_alert_modal('success','Vendor Edited SuccessFully...');
-    $("#vendor_name").val('');
-    $("#vendor_company_name").val('');
-    $("#mobile_no").val('');
-    $("#email").val('');
-    $("#address").val('');
-    $("#city").val('');
-    $("#state").val('');
-    $("#country").val('');
-    $("#pincode").val('');
-    $("#add_vendor_modal").modal('hide');
-    $("#vendorForm")[0].reset();
-    get_data();
-}
-}
-
-});
-});
-</script> -->
-<!-- <script type="text/javascript">
-      $('#delete_vendor_btn').on('click',function(e){
-      var vendor_id=$("#delete_vendor_id").val();
-    
-      
-  $.ajax({
-type: "POST",
-dataType:"json",
-url: '../ajaxCalls/add_vendor.php',
-data: {"vendor_id": vendor_id,"type":"delete"},
-success: function(res){
-if (res.status=='success') {
-  
-  global_alert_modal('success','Vendor Delete SuccessFully...');
-   $("#delete_vendor_modal").modal('hide');
-   get_data();
-
-}
-}
-
-});
-});
-      $('#enable_vendor_btn').on('click',function(e){
-      var vendor_id=$("#enable_vendor_id").val();
-    
-      
-  $.ajax({
-type: "POST",
-dataType:"json",
-url: '../ajaxCalls/add_vendor.php',
-data: {"vendor_id": vendor_id,"type":"enable"},
-success: function(res){
-if (res.status=='success') {
-  
-  global_alert_modal('success','Vendor Enable SuccessFully...');
-   $("#enable_vendor_modal").modal('hide');
-   get_data();
-
-}
-}
-
-});
-});
-</script> -->
 <script type="text/javascript">
   function get_data(){
       $.ajax({
@@ -514,65 +260,45 @@ $("#shipping_modal").modal('show');
 
 
 </script>
-<!-- <script type="text/javascript">
-function edit_modal(e){
+<script type="text/javascript">
+   $("#shipping_dt_add").click(function(){
+
+ var shipping_name = $("#shipping_name").val();
+ var shipping_company_name = $("#shipping_company_name").val();
+ var mobile_no = $("#mobile_no").val();
+ var email = $("#email").val();
+ var ship_gst = $("#ship_gst").val();
+ var address = $("#address").val();
+ var city = $("#city").val();
+ var state = $("#state").val();
+ var country = $('#country').val();
+ var pincode = $("#pincode").val();
+ var ship_terms = $("#ship_terms").val();
+ var shipping_method = $("#shipping_method").val();
  
-    $.ajax({
-type: "POST",
-dataType:"json",
-url: '../ajaxCalls/get_vendor_data.php',
-data: {'vendor_id':$(e).data('id')},
-success: function(res){
-    $("#vendor_name").val(res.name);
-    $("#vendor_company_name").val(res.company_name);
-    $("#mobile_no").val(res.mobile_no);
-    $("#email").val(res.email);
-    $("#address").val(res.address);
-    $("#city").val(res.city);
-    $("#gst").val(res.gst);
-    $("#state").val(res.state);
-    $("#country").val(res.country);
-    $("#pincode").val(res.pincode);
-      $("#add_vendor_modal").modal('show');
-   $("#edit_vendor_id").val($(e).data('id'));
-   $("#add_vendor_btn").css('display','none');
-   $("#edit_vendor_btn").css('display','');
-}
+   $.ajax({
 
-});
+  type:'post',
+  dataType:'json',
+  url:'../ajaxCalls/add_shipping.php',
+  data:{"shipping_name":shipping_name,"shipping_company_name":shipping_company_name,"mobile_no":mobile_no,"email":email,"ship_gst":ship_gst,"address":address,"city":city,"state":state,"country":country,"pincode":pincode,"ship_terms":ship_terms,"shipping_method":shipping_method},
+    success:function(res){
 
+            if(res.status=='success'){
+                global_alert_modal('success','Shipping Details Added SuccessFully...');
+                 $("#shipping_modal").modal('hide');
+            
 
-}
-function delete_modal(e){
-   $("#delete_vendor_modal").modal('show');
-   $("#delete_vendor_id").val($(e).data('id'));
-   
-}
-function enable_modal(e){
-   $("#enable_vendor_modal").modal('show');
-   $("#enable_vendor_id").val($(e).data('id'));
-   
-}
-$(".enterKeyclass").keypress(function (event) {
-          item_add='on';
-    if (event.keyCode == 13) {
-        textboxes = $("input.enterKeyclass");        
-        currentBoxNumber = textboxes.index(this);
-        if (textboxes[currentBoxNumber + 1] != null) {
-            nextBox = textboxes[currentBoxNumber + 1];
-            nextBox.focus();
-            nextBox.select();
-            event.preventDefault();
-            return false; 
-            }else{
-              if($("#add_vendor_btn").css('display')!='none'){
-                $("#add_vendor_btn").click();
-              }
-              if($("#edit_vendor_btn").css('display')!='none'){
-                $("#edit_vendor_btn").click();
-              }
-              
             }
+ 
     }
+
+
 });
-</script> -->
+
+
+
+
+});
+
+</script>

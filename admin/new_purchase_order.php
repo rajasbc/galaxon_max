@@ -482,7 +482,7 @@ $category =  $category_obj->get_category_data();
                   <div class="input-group-prepend">
                     <span class="input-group-text" style="width: 8.3rem">Name&nbsp;<span class="text-danger">*</span></span>
                   </div>
-                   <input type="hidden" name="shipping_id" id="shipping_id" value="0">
+                   <input type="hidden" name="shipping_id" id="shipping_id" value="">
                   <input type="text" id='shipping_name' name='shipping_name' class="form-control enterKeyclass" placeholder="Enter Name">
 
                 </div>
@@ -698,16 +698,17 @@ success: function(res){
       source: "../ajaxCalls/autocomplete_shipping_list.php",
       minLength: 1,
       select: function(event,ui){
-
-          $("#shipping_company_name").val(ui.item.company_name);
-           $("#mobile_no").val(ui.item.mobile_no);
-           $("#email").val(ui.item.email);
-           $("#ship_gst").val(ui.item.gst_no);
-           $("#city").val(ui.item.city);
-          $("#address").val(ui.item.address);
-          $("#state").val(ui.item.state);
-          $("#country").val(ui.item.country);
-          $("#pincode").val(ui.item.pincode);
+        $("#shipping_name").val(ui.item.shipping_name);
+          $("#shipping_id").val(ui.item.id);
+          $("#shipping_company_name").val(ui.item.company_name).attr("disabled","disabled");
+           $("#mobile_no").val(ui.item.mobile_no).attr("disabled","disabled");
+           $("#email").val(ui.item.email).attr("disabled","disabled");
+           $("#ship_gst").val(ui.item.gst_no).attr("disabled","disabled");
+           $("#city").val(ui.item.city).attr("disabled","disabled");
+          $("#address").val(ui.item.address).attr("disabled","disabled");
+          $("#state").val(ui.item.state).attr("disabled","disabled");
+          $("#country").val(ui.item.country).attr("disabled","disabled");
+          $("#pincode").val(ui.item.pincode).attr("disabled","disabled");
           $("#ship_terms").val(ui.item.shipping_terms);
            $("#shipping_d_date").val(ui.item.delivery);
         
@@ -1141,17 +1142,7 @@ $(".enterKeyclass").keypress(function (event) {
 </script>
 <script type="text/javascript">
   $("#shipping_dt_add").click(function(){
-       shipping_data["shipping_name"]=$("#shipping_name").val();
-
-       shipping_data["shipping_company_name"]=$("#shipping_company_name").val();
-       shipping_data["smobile_no"]=$("#mobile_no").val();
-       shipping_data["semail"]=$("#email").val();
-       shipping_data["sgst"]=$("#ship_gst").val();
-       shipping_data["saddress"]=$("#address").val();
-       shipping_data["scity"]=$("#city").val();
-       shipping_data["sstate"]=$("#state").val();
-       shipping_data["scountry"]=$("#country").val();
-       shipping_data["spincode"]=$("#pincode").val();
+       shipping_data["shipping_id"]=$("#shipping_id").val();
        shipping_data["ship_terms"]=$("#ship_terms").val();
        shipping_data["shipping_method"]=$("#shipping_method").val();
        shipping_data["shipping_d_date"]=$("#shipping_d_date").val();

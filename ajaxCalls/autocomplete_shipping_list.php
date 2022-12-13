@@ -12,6 +12,8 @@ $output=array();
     $temp_array=array();
     $temp_array['value']=strtoupper($row['name']);
     $temp_array['label']=$row['id'];
+    $temp_array['id']=$row['id'];
+
     $temp_array['name']=$row['name'];
     $temp_array['company_name']=$row['company_name'];
     $temp_array['mobile_no']=$row['mobile_no'];

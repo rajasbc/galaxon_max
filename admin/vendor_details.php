@@ -47,8 +47,8 @@ $result=$obj->vendor_variety_details($_GET['id']);
 
            <th>Vendor Name</th>
            <th>Quantity</th>
-           <th>Mrp</th>
-           <th>Sale Price</th>
+           <!-- <th>Mrp</th>
+           <th>Sale Price</th> -->
           </tr>
          </thead>
          <tbody class="text-left css-serial" id="tdata">
@@ -75,15 +75,15 @@ $result=$obj->vendor_variety_details($_GET['id']);
 
 
 
-          <td>".number_format(($value['received_qty'])*($value['mrp']),2,'.','')."</td>
-           <td>".number_format(($value['sales_price'])*($value['received_qty']),2,'.','')."</td>
+          
+          
            </tr>";
 
 
 
            $total_qty+=$value['received_qty'];
-           $total_mrp+=($value['received_qty'])*($value['mrp']);
-           $total_sale+=($value['sales_price'])*($value['received_qty']);
+           // $total_mrp+=($value['received_qty'])*($value['mrp']);
+           // $total_sale+=($value['sales_price'])*($value['received_qty']);
 
           }
           
@@ -91,7 +91,7 @@ $result=$obj->vendor_variety_details($_GET['id']);
          </tbody>
 
          <tfoot>  
-          <?php echo "<tr><td><td></td><td></td></td><td><b>Total</b></td><td>".$total_qty."</td><td>".number_format($total_mrp,2,'.','')."</td><td>".number_format($total_sale,2,'.','')."</td></tr>";  
+          <?php echo "<tr><td><td></td><td></td></td><td><b>Total</b></td><td>".$total_qty."</td></tr>";  
           ?> 
          </tfoot>
 

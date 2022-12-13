@@ -51,9 +51,9 @@ $result=$obj->varieties_details($_GET['id']);
 										<th>S.No</th>
 										<th>Name</th>
 										<th>Quantity</th>
-										<th>Mrp</th>
+										<!-- <th>Mrp</th>
 										<th>Sale Price</th>
-
+ -->
 
 									</tr>
 
@@ -83,13 +83,13 @@ $result=$obj->varieties_details($_GET['id']);
 
 											echo "<td>".$result2[0]['received_qty']."</td>";
 										}
-										echo " <td>".$result2[0]['mrp']."</td>
+										// echo " <td>".$result2[0]['mrp']."</td>
 
-										<td>".$result2[0]['sales_price']."</td>
-										</tr>";
+										// <td>".$result2[0]['sales_price']."</td>
+										// </tr>";
 										$total_qty+=$result2[0]['received_qty'];
-										$total_mrp+=$result2[0]['mrp'];
-										$total_sale+=$result2[0]['sales_price'];
+										// $total_mrp+=$result2[0]['mrp'];
+										// $total_sale+=$result2[0]['sales_price'];
 
 									}
 
@@ -99,7 +99,9 @@ $result=$obj->varieties_details($_GET['id']);
 
 									?>
 									<tfoot>  
-          <?php echo "<tr><td colspan='1'></td><td><b>Total</b></td><td>".$total_qty."</td><td>".$total_mrp."</td><td>".$total_sale."</td></tr>";
+          <?php echo "<tr><td colspan='1'></td><td><b>Total</b></td><td>".$total_qty."</td>
+         
+          </tr>";
           ?> 
          </tfoot>
 

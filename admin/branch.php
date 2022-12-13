@@ -96,7 +96,7 @@ include 'header.php';
               <input type="hidden" name="edit_branch_id" id="edit_branch_id" value="0">
               <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text" style="width: 12rem">Name&nbsp;</span>
+                    <span class="input-group-text" style="width: 12rem">Name&nbsp;<span class="text-danger">*</span></span>
                   </div>
                   <input type="text" id='name' name='name' class="form-control enterKeyclass" placeholder="Enter Name">
                 </div>
@@ -114,7 +114,7 @@ include 'header.php';
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text" style="width: 12rem">Email</span>
+                    <span class="input-group-text" style="width: 12rem">Email <span class="text-danger">*</span></span>
                   </div>
                   <input type="text" id='email' name='email' class="form-control enterKeyclass" placeholder="Enter Email">
                   </div>
@@ -359,16 +359,30 @@ include 'footer.php';
     $("#branchForm").on('submit', function(e){
 
         e.preventDefault();
+
+        var email = $("#email").val();
+        var name = $("#name").val();
+       
+
+       if (name=='' && name==0) {
+      global_alert_modal('warning','Enter Name...');
+      $("#name").css("border","1px solid red");
+                    $("#name").focus();
+                    return false;
+        }
+       else{
+        $("#name").css("border","1px solid lightgray");
+       }
       
-     // if (vendor_name=='' && vendor_name==0) {
-     //  global_alert_modal('warning','Enter Vendor Name...');
-     //  $("#vendor_name").css("border","1px solid red");
-     //                $("#vendor_name").focus();
-     //                return false;
-     //    }
-     //   else{
-     //    $("#vendor_name").css("border","1px solid lightgray");
-     //   }
+     if (email=='' && email==0) {
+      global_alert_modal('warning','Enter Email Id...');
+      $("#email").css("border","1px solid red");
+                    $("#email").focus();
+                    return false;
+        }
+       else{
+        $("#email").css("border","1px solid lightgray");
+       }
      //   if (vendor_company_name=='' && vendor_company_name==0) {
      //  global_alert_modal('warning','Enter Vendor Company Name...');
      //  $("#vendor_company_name").css("border","1px solid red");
@@ -437,13 +451,37 @@ success: function(res){
 });
      $('#edit_branch_btn').on('click',function(e){
           
-
+          
       var name=$("#name").val();
+       if (name=='' && name==0) {
+      global_alert_modal('warning','Enter Name...');
+      $("#name").css("border","1px solid red");
+                    $("#name").focus();
+                    return false;
+        }
+       else{
+        $("#name").css("border","1px solid lightgray");
+       }
+
+
      
      
         var registration_no = $("#registration_no").val();
          var gst_no = $("#gst_no").val();
               var email = $("#email").val();
+
+
+       
+      
+     if (email=='' && email==0) {
+      global_alert_modal('warning','Enter Email Id...');
+      $("#email").css("border","1px solid red");
+                    $("#email").focus();
+                    return false;
+        }
+       else{
+        $("#email").css("border","1px solid lightgray");
+       }
               var address = $("#address").val();
               var country = $("#country").val();
               var state = $("#state").val();

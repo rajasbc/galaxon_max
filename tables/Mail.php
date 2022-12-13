@@ -1,7 +1,7 @@
 <?php
 
-include_once '../../vendor/autoload.php';
-include_once '../config.php';
+include_once '../vendor/autoload.php';
+include_once '../tables/config.php';
 
 use \PHPMailer\PHPMailer\PHPMailer;
 use \PHPMailer\PHPMailer\Exception;
@@ -34,8 +34,8 @@ class Mail extends Dbconnection {
 
         $mail->isHTML(true);
 
-        $mail->Subject = "Registered as PO Tracking System - 2crsi";
-        $mail->Body = "Hi, You are registered as 2crsi PO Tracking System, Your login details below., <br /><br /><table><tr><td>User Name : ".$this->db->getpost('username')."</td></tr><tr><td>Password : ".$this->db->getpost('password')."</td></tr></table><br />Thank You,";
+        $mail->Subject = "Branch Username and Password - Galaxon_Max";
+        $mail->Body = "Hi, You are registered as Galaxon Branch, Your login details below., <br /><br /><table><tr><td>User Name : ".$this->db->getpost('username')."</td></tr><tr><td>Password : ".$this->db->getpost('password')."</td></tr></table><br />Thank You,";
 
         // echo $mail;
 

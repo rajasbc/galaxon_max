@@ -170,6 +170,8 @@ window.location='edit_purchase_order.php?id='+btoa(e);
 
   function edit_detail_page(e){
 
+
+
 window.location='modify_purchase_order.php?id='+btoa(e);
     
   }
@@ -251,6 +253,7 @@ success: function(res){
 </script>
 <script type="text/javascript">
   function print_page(e) {
+
     window.open('print_page.php?id='+btoa(e),'_blank');
   }
 </script>

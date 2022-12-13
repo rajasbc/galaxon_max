@@ -13,11 +13,11 @@ $result =  $obj->get_shipping($_GET['id']);
 			<input type="hidden" name="id" id="id" value="<?=$result[0]['id']?>">
 		<h4>Shipping Details<button type='button' class='close text-danger font-weight-bold' data-dismiss='modal'>&times;</button></h4></div></div>
 		<div class="form-row">
-		<div class="form-group col-lg-3">Purchase Order Id</div><div class="form-group col-lg-3">: 
+		<!-- <div class="form-group col-lg-3">Purchase Order Id</div><div class="form-group col-lg-3">: 
 			<span class="font-weight-bold"><?=$result[0]['po_id']?></span>
-		</div>
+		</div> -->
 		<!-- <div class="form-group col-lg-1">&nbsp;</div> -->
-		<div class="form-group col-lg-3">Delivery Date</div><div class="form-group col-lg-3">: <span class="font-weight-bold"><?=date('d-m-Y',strtotime($result[0]['delivery_date']))?></span></div>
+		<!-- <div class="form-group col-lg-3">Delivery Date</div><div class="form-group col-lg-3">: <span class="font-weight-bold"><?=date('d-m-Y',strtotime($result[0]['delivery_date']))?></span></div> -->
 	</div>
 	<hr>
 	<!-- End Of Purchase Details -->

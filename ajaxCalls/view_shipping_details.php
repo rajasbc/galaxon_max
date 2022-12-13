@@ -11,7 +11,11 @@ $result =  $obj->get_shipping($_GET['id']);
 	<div class="form-row">
 		<div class="form-group col-lg-12">
 			<input type="hidden" name="id" id="id" value="<?=$result[0]['id']?>">
-		<h4>Shipping Details<button type='button' class='close text-danger font-weight-bold' data-dismiss='modal'>&times;</button></h4></div></div>
+		<h4>Shipping Details<button type='button' class='close text-danger font-weight-bold closer' data-dismiss='modal'>&times;</button></h4>
+	</div>
+
+
+	</div>
 		<div class="form-row">
 		<!-- <div class="form-group col-lg-3">Purchase Order Id</div><div class="form-group col-lg-3">: 
 			<span class="font-weight-bold"><?=$result[0]['po_id']?></span>
@@ -19,7 +23,7 @@ $result =  $obj->get_shipping($_GET['id']);
 		<!-- <div class="form-group col-lg-1">&nbsp;</div> -->
 		<!-- <div class="form-group col-lg-3">Delivery Date</div><div class="form-group col-lg-3">: <span class="font-weight-bold"><?=date('d-m-Y',strtotime($result[0]['delivery_date']))?></span></div> -->
 	</div>
-	<hr>
+
 	<!-- End Of Purchase Details -->
 	<div class="form-row">
    <div class="form-group col-lg-12">
@@ -43,10 +47,15 @@ $result =  $obj->get_shipping($_GET['id']);
 		<div class="form-group col-lg-6">Shipping Terms</div><div class="form-group col-lg-6">: <span class="font-weight-bold"><?=strtoupper($result[0]['shipping_terms'])?></span></div>
 		<div class="form-group col-lg-6">Shipping Method</div><div class="form-group col-lg-6">: <span class="font-weight-bold"><?=strtoupper($result[0]['method'])?></span></div>
 
+		
 		<!-- <?php if ($vendor_dt['email']!='') { ?>
 		<div class="form-group col-lg-3">Email</div><div class="form-group col-lg-3">: <span class="font-weight-bold"><?=$vendor_dt['email']?></span></div>
 	<?php }?> -->
 	</div>
-	<hr>
+	<script>
+		$(".closer").on("click",function(){
+			location.reload();
+		})
+	</script>
 		<!-- End Of Vendor Details -->
 		

@@ -71,9 +71,9 @@ include 'header.php';
           <div class="modal-content">
             <div class="modal-header">
               <h4 class="modal-title"></h4>
-             <!--  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <button type="button" style="display: true" id="add_close" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
-              </button> -->
+              </button>
             </div>
             <div class="modal-body">
               <div class="input-group mb-3">
@@ -164,8 +164,10 @@ include 'header.php';
                 </div> -->
             </div>
           <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-             
+           
+              <button type="button" id="view_close" class="btn btn-default" style="display: true" data-dismiss="modal">Close</button>
+              <button type="submit" id="shipping_dt_add" style="display: true" class="btn btn-primary">Save</button>
+
             </div>
             </div>
             
@@ -248,6 +250,12 @@ data: {'id':id},
 success: function(res){
   $("#shipping_modal .modal-body").html(res);
 $("#shipping_modal").modal('show');
+$("#shipping_dt_add").css('display','none');
+$("#view_close").css('display','none');
+$("#add_close").css('display','none');
+
+
+
 }
 
 });
@@ -262,6 +270,7 @@ $("#shipping_modal").modal('show');
 </script>
 <script type="text/javascript">
    $("#shipping_dt_add").click(function(){
+
 
  var shipping_name = $("#shipping_name").val();
  var shipping_company_name = $("#shipping_company_name").val();
@@ -287,6 +296,7 @@ $("#shipping_modal").modal('show');
             if(res.status=='success'){
                 global_alert_modal('success','Shipping Details Added SuccessFully...');
                  $("#shipping_modal").modal('hide');
+                 location.reload();
             
 
             }

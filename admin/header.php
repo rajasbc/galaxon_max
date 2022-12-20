@@ -304,6 +304,32 @@ if (empty($_SESSION)==true) {
               </li> -->
             </ul>
           </li>
+
+                <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-shopping-cart"></i>
+              <p>
+                Received Order
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="branch_received_order.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Branch Received Order</p>
+                </a>
+              </li>
+             
+              <!-- <li class="nav-item">
+                <a href="" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Payment Details</p>
+                </a>
+              </li> -->
+            </ul>
+          
+
            <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-globe"></i>

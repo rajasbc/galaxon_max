@@ -3,6 +3,8 @@ include 'header.php';
 
 $obj=new PurchaseOrder();
 $purchase_order_dt=$obj->get_purchase_order(base64_decode($_GET['id']));
+
+// print_r($purchase_order_dt);die();
 $purchase_order_item_dt=$obj->get_purchase_order_item($purchase_order_dt[0]['id']);
 $shipping_details = $obj->get_shipping_edit($purchase_order_dt[0]['ship_id']);
 
@@ -1100,7 +1102,7 @@ $items=json_encode($items);
       detailsarray['discount']=Number($("#discid").text());
       detailsarray['tax_amount']=Number($("#taxid").text());
       detailsarray['grand_total']=Number($("#grandid").text());
-      detailsarray['po_id']="<?=$purchase_order_dt[0]['id']?>";
+      detailsarray['po_id']="<?=base64_decode($_GET['id'])?>";
 
       detailsarray['note']=$("#note").val();
       $("#place_order").attr('disabled','disabled');
@@ -1177,7 +1179,7 @@ $items=json_encode($items);
       });
      }
     </script>
-<!-- <script type="text/javascript">
+<script type="text/javascript">
   $("#shipping_dt_add").on('click',function(){
  var id = $("#shipping_id").val();
  var po_id = "<?=base64_decode($_GET['id'])?>";
@@ -1216,7 +1218,7 @@ $.ajax({
 
   });
 
- </script> -->
+ </script>
  <script type="text/javascript">
   $("#shipping_name").autocomplete({
 

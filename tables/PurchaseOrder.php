@@ -148,7 +148,7 @@ if ($this->db->getpost('shipping_d_date')!='') {
                        	$update_item['qty']=$item_res[0]['qty']+$itemvar['quantity'];
                        	$this->db->mysql_update('items', $update_item,'id='.$item_id);
                        	 if ($itemvar['varieties_id']!=0 && $itemvar['varieties_id']!='') {
-                        $var_sql='select * from variety_items where item_id='.$item_id.' and variety_id='.$itemvar['varieties_id'].' and branch_id='.$_SESSION['branch_id'].' shop_id='.$_SESSION['shop_id'];
+                        $var_sql='select * from variety_items where item_id='.$item_id.' and variety_id='.$itemvar['varieties_id'].' and branch_id='.$_SESSION['branch_id'].' and shop_id='.$_SESSION['shop_id'];
                        	$var_res=$this->db->GetResultsArray($var_sql);
                        	if (count($var_res)>0) {
                         $update_var=array();
@@ -398,7 +398,7 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
 public function edit_purchase_order()
 {
 
-
+// print_r($_POST);die();
 		$item = array();
 		$item = $_POST;
 		$purchase=array();
@@ -415,7 +415,9 @@ public function edit_purchase_order()
     $purchase['shipping_terms']=$this->db->getpost('ship_terms');
 		$purchase['method']=$this->db->getpost('shipping_method');
     $purchase['delivery_date']=$this->db->getpost('shipping_d_date');
-		$purchase_id = $this->db->mysql_update($this->tablename, $purchase, 'purchase_no='.$this->db->getpost('po_id'));
+
+
+		$purchase_id = $this->db->mysql_update($this->tablename, $purchase, 'id='.$this->db->getpost('po_id'));
 
 		foreach ($item as $itemvar) {
 
@@ -476,6 +478,7 @@ public function edit_purchase_order()
                        $purchase_items['total']=$itemvar["total"];
                        $purchase_items['created_by']=$_SESSION['uid'];
                        $purchase_items['created_at']=date('Y-m-d H:i:s');
+                       $purchase_items['branch_id']=$_SESSION['branch_id'];
 
                        if($itemvar['flag']=='new' && $itemvar['deleted']=='no')
     									 {
@@ -561,7 +564,7 @@ public function edit_purchase_order()
 }
 	public function get_purchase_order($id)
 	{
-	 $sql='select * from '.$this->tablename.' where id='.$id.' and is_deleted="NO"';
+	 $sql='select * from '.$this->tablename.' where id='.$id.' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
 		$result=$this->db->GetResultsArray($sql);
 		return $result;
 	}
@@ -754,6 +757,68 @@ public function insert_shipping(){
 
 
 
+}
+
+public function get_order(){
+
+$sql = 'select * from '.$this->tablename.' where branch_id!="0" and vendor_id=0 and order_type="NEW" and is_deleted="NO"';
+
+$result = $this->db->GetResultsArray($sql);
+
+
+return $result;
+
+}
+
+public function branch_name($id){
+
+$sql = 'select sum(a.qty) as qty ,b.branch_code,b.name from purchase_order_details a join shop_profile b on a.branch_id=b.branch_id where a.purchase_id='.$id.' and a.is_deleted="NO"';
+$result = $this->db->GetResultsArray($sql);
+
+return $result;
+}
+
+public function order_details($id){
+
+$sql = 'select * from '.$this->tablename2.' where purchase_id="'.$id.'" and is_deleted="NO" ';
+
+$result = $this->db->GetResultsArray($sql);
+// print_r($result);die();
+
+return $result;
+
+
+}
+
+public function branch_code($id){
+
+$sql = 'select * from shop_profile where branch_id="'.$id.'" and status="ENABLED" ';
+
+$result = $this->db->GetResultsArray($sql);
+
+return $result;
+}
+
+public function get_discount($id){
+
+$sql = 'select * from '.$this->tablename.' where id="'.$id.'" and is_deleted="NO" and order_type="NEW" ';
+
+$result = $this->db->GetResultsArray($sql);
+
+return $result;
+
+}
+public function get_purchase_no($id){
+
+$sql = 'select * from '.$this->tablename.' where id="'.$id.'" and is_deleted="NO" and order_type="NEW" ';
+
+$result = $this->db->GetResultsArray($sql);
+
+return $result;
+
+
+
+  
 }
 
 

@@ -77,7 +77,7 @@ $result=$obj->varieties_details($_GET['id']);
 
 
 										if ($result2[0]['received_qty']==" " || $result2[0]['received_qty']==0) {
-											$null="Null";
+											$null="0";
 											echo "<td>".$null."</td>";
 										}else{
 

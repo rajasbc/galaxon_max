@@ -3,9 +3,9 @@ include '../tables/config.php';
 
  $obj = new Brand();
 
- $result =  $obj->get_brand_data();
-$output=array();
+ $result =  $obj->get_brand_data();$output=array();
 $main=array();
+
 
 if (count($result)>0) {
 	$i=0;

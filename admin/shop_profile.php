@@ -138,6 +138,22 @@ $result1 = $obj->get_shop_details();
               </div>
             <?php }?>
             </div>
+
+
+
+
+             <div class='form-row'>
+              <div class="form-group col-lg-4 mt-5">Image</div>
+              <div class='form-group col-lg-4 mt-5'>
+              <input type="file" name='shop_image' id='shop_image' value='' accept="image/*" onchange="readURL(this);">
+              </div>
+              <?php if ($result1[0]['shop_image']!='') { ?>
+            <div class='form-group col-lg-4' id="shop_image_preview1">
+              <img id="shop_image_preview" src="../uploads/<?=$result1[0]['shop_image']?>" alt="Shop_image" style="max-width: 201px;max-height: 175px;
+">
+              </div>
+            <?php }?>
+            </div>
             <!-- <div class='form-row'>
               <div class="form-group col-lg-4">Shop Description</div><div class='form-group col-lg-8 mt-2'>
                 <textarea name='shop_des' id='shop_des'></textarea>

@@ -191,7 +191,10 @@ $items=json_encode($items);
 
                 </div>
                 <div class="col-2 form-group mb-2 text-right">
+               <?php if($_SESSION['type']=="ADMIN"){ ?>
                  <i class="nav-icon fas fa-solid fa-truck" style="font-size: xx-large;cursor: pointer;" data-toggle='modal' data-target="#shipping_modal" id="shipping_modal_btn"></i>
+               <?php } ?>
+
                 </div>
 
                 <form id="add_product" class="row col-12" onsubmit="return(false);">

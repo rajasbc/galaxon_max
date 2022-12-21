@@ -3,6 +3,10 @@ include '../tables/config.php';
 $shop_obj = new Shops();
 $shop_result = $shop_obj->get_user();
 $shop_result1 = $shop_obj->get_shop_details();
+
+$branch_result = $shop_obj->get_branch_details();
+
+// print_r($branch_result);die();
 $obj=new PurchaseOrder();
 $purchase_order_dt=$obj->get_purchase_order(base64_decode($_GET['id']));
 $purchase_order_item_dt=$obj->get_purchase_order_item(base64_decode($_GET['id']));
@@ -28,6 +32,7 @@ $total_amount=0;
 <meta name="author" content="" />
 <title id='tab_title'>GALAXON MAX</title>
 <link rel="icon" type="image/x-icon" href="../dist/img/logo.png" />
+<link rel="icon" type="image/x-icon" href="../uploads/<?=$shop_result1[0]['shop_image']?>" />
 <link rel="stylesheet" href="../dist/css/adminlte.min.css">
 </head>
 <body class="nav-fixed">
@@ -231,14 +236,30 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <div class="container-fluid ">
 <div class="row ">
 <div class="col-sm-12 col-md-12 col-lg-12 border border-dark">
+
 <div class="row border-bottom border-dark" style="height: 145px;">
 <div class="col-2 text-center" >
+
+ <?php if($_SESSION['type']=="ADMIN"){ ?>
   <img src="../dist/img/logo.png" style="width: 17rem;position: absolute;bottom: -6rem;left: -1rem;"  >
+ <?php }else { ?> 
+
+  <img src="../uploads/<?=$shop_result1[0]['shop_image']?>" style="width: 12rem; height: 7rem; position: absolute;bottom: 1rem;left: 0.5rem;"  >
+<?php } ?> 
+
+
 </div>
+
+
+
+<?php if($_SESSION['type']=="ADMIN"){ ?>
+
+
 <div class="col-10 mb-0 text-center">
   <div class="row d-flex justify-content-center " style="font-size: 16px !important;">
 <b>Purchase Order</b>
 </div>
+
 <div class="col-12 text-center" style="font-size: 26px !important;"><b>GALAXON MAX PRIVATE LIMITED</b>
 </div>
 <!-- <br> -->
@@ -248,6 +269,25 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <div class="col-12 text-center" style="font-size: 14px;">Mail : info@galaxonmax.com</div>
 <div class="col-12 text-center" style="font-size: 14px;font-weight: bold;">GSTIN : 32AAJCG9997N1ZL</div>
 </div>
+<?php } else { ?>
+
+<div class="col-10 mb-0 text-center">
+  <div class="row d-flex justify-content-center " style="font-size: 16px !important;">
+<b>Purchase Order</b>
+</div>
+
+<div class="col-12 text-center" style="font-size: 26px !important;"><b><?=$branch_result[0]['name']?></b>
+</div>
+<!-- <br> -->
+<div class="col-12 text-center" style="font-size: 14px;"><?=$branch_result[0]['address1']?><span>-</span><span><?=$branch_result[0]['pincode']?></span></div>
+
+<div class="col-12 text-center" style="font-size: 14px;">Phone : <?=$branch_result[0]['mobile_no']?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tele-Phone : <?=$branch_result[0]['landline_no']?></div>
+<div class="col-12 text-center" style="font-size: 14px;">Mail : <?=$branch_result[0]['email']?></div>
+<div class="col-12 text-center" style="font-size: 14px;font-weight: bold;">GSTIN : <?=$branch_result[0]['shop_gst_no']?></div>
+</div>
+<?php } ?>
+
+
 </div>
 <?php if ($purchase_order_shipping[0]['shipping_terms']!='' || $purchase_order_shipping[0]['method']!='' || $purchase_order_shipping[0]['delivery_date']!='') {?>
 <div class="row" >
@@ -290,21 +330,46 @@ if ($vendor['pincode']!='') {
 </div> -->
 <div class="col-sm-6 col-md-6 col-lg-6 shippingDetails">
 <div class="row">
+  <?php if($_SESSION['type']=="ADMIN"){ ?>
 <div class="col-12 border-left text-center  border-bottom border-dark" id="invoice_number">
 <span class=""><b>Purchase No : </b></span>
 <!-- $shippingDetails['invoice_number'] -->
 <span class="text-val"><b><?=$purchase_order_dt[0]['purchase_no']?></b></span>
 </div>
+<?php }else{ ?>
+<div class="col-12 border-right border-left text-center  border-bottom border-dark" id="invoice_number">
+<span class=""><b>Purchase No : </b></span>
+<!-- $shippingDetails['invoice_number'] -->
+<span class="text-val"><b><?=$purchase_order_dt[0]['purchase_no']?></b></span>
+</div>
+
+ <?php } ?> 
 <!-- <div class="col-6 border-bottom border-dark" id="invoice_dated">
 <span class=""><b>Purchase Date : </b></span>
 <span class="text-val"><b><?=date('d-m-Y',strtotime($purchase_order_dt[0]['created_at']))?></b></span>
 </div> -->
 </div>
+
+
+
+
 <div class="row">
+<?php if($_SESSION['type']=="ADMIN"){ ?>
 <div class="col-12 border-left  border-bottom border-dark" id="buyers_dated">
+
 <span class=""><b>Vendor Details</b></span>
 
 </div>
+<?php }else{ ?>
+
+<div class="col-12 border-left border-right  border-bottom border-dark" id="buyers_dated">
+
+<span class=""><b>Vendor Details</b></span>
+
+</div>
+
+<?php } ?>
+
 <!-- <div class="col-6 border-bottom border-dark" id="delivery_note_date">
 <span class="">Delivery Date : </span>
 
@@ -316,17 +381,31 @@ if ($vendor['pincode']!='') {
 <span class="">Name </span>
 <span class="text-val"></span>
 </div>
-<div class="col-8 border-bottom border-dark" id="motor_vehicle_no">
+<div class="col-8 border-left border-right border-bottom border-dark" id="motor_vehicle_no">
+  <?php if($_SESSION['type']=="ADMIN"){ ?>
 <span class="text-val"><?=$vendor['name']?> - <?=$vendor['vendor_code']?></span>
+
+   <?php }else{?>
+
+<span class="text-val">GALAXON</span>
+
+   <?php } ?> 
+
 </div>
 </div>
 <div class="row">
 <div class="col-4 border-left border-right border-bottom border-dark " id="buyers_order_no">
+
 <span class="">Company Name </span>
+
 <span class="text-val"></span>
 </div>
-<div class="col-8 border-bottom border-dark" id="motor_vehicle_no">
+<div class="col-8 border-left border-right border-bottom border-dark" id="motor_vehicle_no">
+  <?php if($_SESSION['type']=="ADMIN"){ ?>
 <span class="text-val"><?=$vendor['company_name']?></span>
+<?php }else{ ?>
+<span class="text-val">GALAXON MAX PRIVATE LIMITED</span>
+<?php } ?>  
 </div>
 </div>
 <div class="row" style="height: 5rem;">
@@ -334,8 +413,12 @@ if ($vendor['pincode']!='') {
 <span class="">Address </span>
 <span class="text-val"></span>
 </div>
-<div class="col-8 border-bottom border-dark" style="overflow-wrap: break-word;" id="motor_vehicle_no">
-  <?php if ($vendor['address']!='' || $vendor['city']!='' || $vendor['state']!='' || $vendor['country']!='' || $vendor['pincode']!=''){?>
+<div class="col-8 border-left border-right border-bottom border-dark" style="overflow-wrap: break-word;" id="motor_vehicle_no">
+  <?php 
+
+if($_SESSION['type']=="ADMIN"){
+  if ($vendor['address']!='' || $vendor['city']!='' || $vendor['state']!='' || $vendor['country']!='' || $vendor['pincode']!=''){?>
+
 <span class="text-val"> <?php 
 if ($vendor['address']!='') {
    echo $vendor['address'];
@@ -353,7 +436,14 @@ if ($vendor['pincode']!='') {
    echo ','.$vendor['pincode'];
 }
     ?></span>
-<?php }?>
+<?php } 
+
+    }else{  ?>
+      
+<span class="text-val">NO 18/44(1),THAMPILAKSHMI ARCADE,CHITTUR,PALAKKAD-678101</span>
+
+
+ <?php  } ?>     
 </div>
 </div>
 <div class="row">
@@ -361,8 +451,15 @@ if ($vendor['pincode']!='') {
 <span class="">Mobile.No </span>
 <span class="text-val"></span>
 </div>
-<div class="col-8 border-bottom border-dark" id="motor_vehicle_no">
+<div class="col-8 border-left border-right border-bottom border-dark" id="motor_vehicle_no">
+<?php if($_SESSION['type'=="ADMIN"]){ ?>
 <span class="text-val"><?=$vendor['mobile_no']?></span>
+<?php } else{ ?>
+
+<span class="text-val">8438335415</span>
+
+ <?php }?> 
+
 </div>
 </div>
 <div class="row">
@@ -370,17 +467,33 @@ if ($vendor['pincode']!='') {
 <span class="">Email </span>
 <span class="text-val"></span>
 </div>
-<div class="col-8 border-bottom border-dark" id="motor_vehicle_no">
+<div class="col-8 border-left border-right border-bottom border-dark" id="motor_vehicle_no">
+
+<?php if($_SESSION['type']=="ADMIN"){ ?>
 <span class="text-val"><?=$vendor['email']?></span>
+<?php }else{?>
+
+<span class="text-val">info@galaxonmax.com</span>
+<?php } ?>  
+
 </div>
 </div>
+
+
 <div class="row">
 <div class="col-4 border-left border-right border-dark " id="buyers_order_no">
 <span class="">GST No </span>
 <span class="text-val"></span>
 </div>
-<div class="col-8    border-dark" id="motor_vehicle_no">
+<div class="col-8  border-left border-right  border-dark" id="motor_vehicle_no">
+
+<?php if($_SESSION['type']=="ADMIN"){ ?>
 <span class="text-val"><?=$vendor['gst']?></span>
+<?php }else{ ?>
+<span class="text-val">32AAJCG9997N1ZL</span>
+
+<?php } ?>
+
 </div>
 </div>
 
@@ -390,11 +503,15 @@ if ($vendor['pincode']!='') {
 <div class="col-sm-6 col-md-6 col-lg-6 shippingDetails">
 <div class="row">
 
-<div class="col-12 text-center border-left border-bottom border-dark" id="invoice_dated">
+<div class="col-12 text-center border-left border-right border-bottom border-dark" id="invoice_dated">
 <span class=""><b>Purchase Date : </b></span>
 <span class="text-val"><b><?=date('d-m-Y',strtotime($purchase_order_dt[0]['created_at']))?></b></span>
 </div>
 </div>
+
+
+
+<?php if($_SESSION['type']=="ADMIN") { ?>
 <div class="row">
 <div class="col-12 border-left  border-bottom border-dark" id="buyers_dated">
 <span class=""><b>Shipping Details</b></span>
@@ -478,6 +595,13 @@ if ($purchase_order_shipping[0]['pincode']!='') {
 <span class="text-val"><?=$purchase_order_shipping[0]['gst_no']?></span>
 </div>
 </div>
+
+<?php }?>
+
+
+
+
+
 
 
 

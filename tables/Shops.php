@@ -19,7 +19,26 @@ class Shops extends Dbconnection {
 
 		$shop = array();
 		$uploadedFile = '';
+		$uploadedFile1 = '';
 		$filename = basename($_FILES["shop_logo"]["name"]);
+		$filename1 = basename($_FILES["shop_image"]["name"]);
+		$tmp_name1 = "NIG_".$_SESSION['shop_id']."-".$filename1;
+        $path1 = '../uploads/';
+        $targetpath1 = $path1.$tmp_name1;
+         if(move_uploaded_file($_FILES["shop_image"]["tmp_name"],$targetpath1)){
+
+           $uploadedFile1 = $tmp_name1;
+            
+         }
+
+         if($uploadedFile1!=''){
+
+
+          $shop['shop_image'] = $uploadedFile1;
+
+         }
+
+
 		$tmp_name = "NIG_" . $_SESSION['shop_id'] . "_" . $filename;
 		$path = '../uploads/'; // upload directory
 
@@ -340,6 +359,17 @@ $result = $this->db->mysql_update($this->tablename,$branch,'id='.$id);
    return ['status'=>'failed'];
 
   } 
+
+}
+
+public function get_branch_details(){
+
+$sql = 'select * from '.$this->tablename.'where branch_id='.$_SESSION['branch_id'].' and status="ENABLED"';
+
+$result = $this->db->GetResultsArray($sql);
+
+return $result;
+
 
 }
 

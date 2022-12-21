@@ -562,7 +562,7 @@ $category =  $category_obj->get_category_data();
                   <div class="input-group-prepend">
                     <span class="input-group-text" style="width: 8.3rem">Delivery Date</span>
                   </div>
-                  <input type="date" id='shipping_d_date' name='shipping_d_date' class="form-control enterKeyclass" value="<?=date('Y-m-d')?>">
+                  <input type="date" id='shipping_d_date' name='shipping_d_date' class="form-control enterKeyclass" value='<?php echo date('Y-m-d'); ?>'>
                 </div>
             </div>
           <div class="modal-footer justify-content-between">

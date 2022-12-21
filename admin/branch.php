@@ -212,7 +212,14 @@ include 'header.php';
 include 'footer.php';
 ?>
 <!-- reset_model -->
-
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+  });
+</script>
 
   <div class="modal fade" id="reset_branch_modal" data-backdrop='static'>
         <div class="modal-dialog modal-lg">
@@ -557,9 +564,10 @@ if (res.status=='success') {
    $("#delete_branch_modal").modal('hide');
    
    $(".btn-action").attr("disabled");
-   get_data();
+get_data();
 
 }
+   
 }
 
 });
@@ -721,7 +729,7 @@ success: function(res){
         }
       
 
-
+get_data();
 
      }
 

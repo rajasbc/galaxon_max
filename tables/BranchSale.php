@@ -21,7 +21,7 @@ $item = array();
 $item = $_POST; 
 $branch_sale = array();
 
-$sql = 'select max(bill_no) as bill_no from '.$this->tablename;
+$sql = 'select max(bill_no) as bill_no from '.$this->tablename.' where branch_id ='.$this->db->getpost('branch_id');
 $result = $this->db->GetResultsArray($sql);
 
 if($result[0]['bill_no']==''){

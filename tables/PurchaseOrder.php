@@ -391,6 +391,16 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
 			$purchase_update['grand_total']=$history_res[0]['total'];
 			$purchase_update['paid_amt']=$log_res[0]['credit'];
 			$purchase_update['balance_amt']=$history_res[0]['total']-$log_res[0]['credit'];
+      // print_r($purchase_update['balance_amt']);die();
+      if($purchase_update['balance_amt']==0){
+
+         $purchase_update['status']="PAID";
+
+      }else{
+
+         $purchase_update['status']="PENDING";
+
+      }
 
 		$this->db->mysql_update($this->tablename, $purchase_update,'id='.$purchase_id);
     if($_SESSION['type']!='ADMIN'){
@@ -398,6 +408,17 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
 
     // print_r($branch_sale['paid_amt']);die();
     $branch_sale['balance_amt'] =$history_res[0]['total']-$log_res[0]['credit'];
+      
+      if($branch_sale['balance_amt']==0){
+
+         $branch_sale['status']="PAID";
+
+      }else{
+
+         $branch_sale['status']="PENDING";
+
+      }
+
 
   
     $branch_sale_id= $this->db->mysql_update('branch_sale',$branch_sale,'po_id='.$purchase_id);
@@ -533,8 +554,9 @@ public function edit_purchase_order()
 		// print_r($_POST);die();
 		$sql='select * from '.$this->tablename.' where shop_id='.$_SESSION['shop_id'].' and id='.$this->db->getpost('po_id');
 		$result=$this->db->GetResultsArray($sql);
+
+    // print_r($result);die($result);
 		$purchase=array();
-    $branch_status=array();
 		$purchase['paid_amt']=$result[0]['paid_amt']+$this->db->getpost('paid_amt');
 		$purchase['balance_amt']=$this->db->getpost('balance');
 		$purchase['created_by']=$_SESSION['uid'];
@@ -544,11 +566,19 @@ public function edit_purchase_order()
 		}
 
 		 $this->db->mysql_update($this->tablename, $purchase,'id='.$this->db->getpost('po_id'));
+
+
   // if($_SESSION['type']!='ADMIN'){
-  //      $branch_status['status']='PAID';
+  //      $branch_status = array();
+  //      if ($this->db->getpost('balance')==0) {
+  //   $branch_status['status']='PAID';
   //     $this->db->mysql_update('branch_sale',$branch_status,'po_id='.$this->db->getpost('po_id'));
+  //   }
       
   //   }
+
+
+
 		    $purchase_log=array();
 			$purchase_log['shop_id']=$_SESSION['shop_id'];
 			$purchase_log['purchase_id']=$this->db->getpost('po_id');

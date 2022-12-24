@@ -7,6 +7,8 @@ $obj = new PurchaseOrder();
 $obj2 = new BranchSale();
 $result = $obj->get_order();
 
+// print_r($result);die();
+
 
 $output=array();
 

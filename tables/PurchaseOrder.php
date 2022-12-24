@@ -18,6 +18,8 @@ class PurchaseOrder extends Dbconnection {
 	}
 	public function add_purchase()
 	{
+    // print_r($_POST);die();
+
 		$item = array();
 		$item = $_POST;
 		$purchase=array();
@@ -234,6 +236,7 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
 	{
 		$item = array();
 		$item = $_POST;
+    $branch_sale = array();
 		$purchase=array();
 		$purchase_log=array();
 		$purchase_id=$this->db->getpost('po_id');
@@ -253,6 +256,8 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
 		$purchase['received_date']=$this->db->getpost('received_date');
 		$purchase['paid_amt']=$this->db->getpost('paid_amt');
 		$purchase['balance_amt']=$this->db->getpost('balance');
+    
+    
 		
 		
 	 $main_purchase_id= $this->db->mysql_insert($this->tablename4, $purchase);
@@ -388,6 +393,16 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
 			$purchase_update['balance_amt']=$history_res[0]['total']-$log_res[0]['credit'];
 
 		$this->db->mysql_update($this->tablename, $purchase_update,'id='.$purchase_id);
+    if($_SESSION['type']!='ADMIN'){
+    $branch_sale['paid_amt'] = $log_res[0]['credit'];
+
+    // print_r($branch_sale['paid_amt']);die();
+    $branch_sale['balance_amt'] =$history_res[0]['total']-$log_res[0]['credit'];
+
+  
+    $branch_sale_id= $this->db->mysql_update('branch_sale',$branch_sale,'po_id='.$purchase_id);
+
+  }
 		}
 
      return ['status'=>'success'];
@@ -519,6 +534,7 @@ public function edit_purchase_order()
 		$sql='select * from '.$this->tablename.' where shop_id='.$_SESSION['shop_id'].' and id='.$this->db->getpost('po_id');
 		$result=$this->db->GetResultsArray($sql);
 		$purchase=array();
+    $branch_status=array();
 		$purchase['paid_amt']=$result[0]['paid_amt']+$this->db->getpost('paid_amt');
 		$purchase['balance_amt']=$this->db->getpost('balance');
 		$purchase['created_by']=$_SESSION['uid'];
@@ -526,7 +542,13 @@ public function edit_purchase_order()
 		if ($this->db->getpost('balance')==0) {
 		$purchase['status']='PAID';
 		}
+
 		 $this->db->mysql_update($this->tablename, $purchase,'id='.$this->db->getpost('po_id'));
+  // if($_SESSION['type']!='ADMIN'){
+  //      $branch_status['status']='PAID';
+  //     $this->db->mysql_update('branch_sale',$branch_status,'po_id='.$this->db->getpost('po_id'));
+      
+  //   }
 		    $purchase_log=array();
 			$purchase_log['shop_id']=$_SESSION['shop_id'];
 			$purchase_log['purchase_id']=$this->db->getpost('po_id');
@@ -816,10 +838,28 @@ $result = $this->db->GetResultsArray($sql);
 
 return $result;
 
-
-
-  
 }
+
+public function get_details($id){
+
+$sql = 'select * from '.$this->tablename.' where id="'.$id.'" and is_deleted="NO" and order_type="NEW" ';
+
+$result = $this->db->GetResultsArray($sql);
+
+return $result;
+
+}
+
+public function get_branch_order($id){
+
+$sql = 'select * from '.$this->tablename2.' where purchase_id="'.$id.'" and is_deleted="NO"';
+
+$result = $this->db->GetResultsArray($sql);
+return $result;
+
+}
+
+
 
 
 }

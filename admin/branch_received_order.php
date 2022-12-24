@@ -36,18 +36,18 @@ include 'header.php';
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                   <th>S.No</th>
-                    <th>Purchase No</th>
-                    <th>Branch Name</th>
-                    <th>Branch code</th>
+                   <th style="width: 33px padding-right: 25px;">S.No</th>
+                    <th style="width: 50px padding-right: 20px; padding-left: 10px ;">Purchase No</th>
+                    <th style="width: 50px;">Branch Name</th>
+                  <!--   <th >Branch code</th> -->
                     <th>Received Date</th>
-                    <th>Discount</th>
+                    <th style="width: 30px; padding-right: 25px; padding-left: 10px">Discount</th>
                     <th>Tax Amount</th>
                     <th>Total Amount</th>
                     <th>Paid Amount</th>
-                    <th>Balance Amount</th>
-                    <th>Status</th>
-                    <th>Details</th>
+                    <th style="width: 30px; padding-right: 25px;">Balance Amount</th>
+                    <th style="width: 30px;  padding-right: 25px;">Status</th>
+                    <th style="width: 100px;">Details</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -74,6 +74,7 @@ include 'header.php';
         </div>
         <!-- /.modal-dialog -->
       </div>
+    </div>
  
 
 
@@ -118,6 +119,18 @@ $("#order_modal").modal('show');
 
 });
  
+}
+function sale_detail(e){
+
+var po_id = $(e).data('id');
+
+// var po_no = $(e).val();
+
+window.location='sale_page.php?id='+btoa(po_id);
+
+
+
+
 }
 
 </script>

@@ -1,8 +1,10 @@
 <?php 
 include 'header.php';
 
+// print_r($_GET['id']);die();
 $obj=new PurchaseOrder();
 $purchase_order_dt=$obj->get_purchase_order(base64_decode($_GET['id']));
+// print_r($purchase_order_dt);die();
 $purchase_order_item_dt=$obj->get_purchase_order_item(base64_decode($_GET['id']));
 
 $vendor_obj= new Vendors();

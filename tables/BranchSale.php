@@ -44,7 +44,9 @@ $branch_sale['taxable_amt'] = $this->db->getpost('taxable_amount');
 $branch_sale['tax_amt'] = $this->db->getpost('tax_amount');
 $branch_sale['total_qty'] = $this->db->getpost('quantity');
 $branch_sale['grand_total'] = $this->db->getpost('grand_total');
-$branch_sale['created_by']= $_SESSION['branch_id'];
+$branch_sale['created_by']= $_SESSION['uid'];
+$branch_sale['balance_amt'] = $this->db->getpost('grand_total');
+
 
 $sql = $this->db->mysql_insert($this->tablename,$branch_sale);
 
@@ -106,6 +108,32 @@ $result = $this->db->GetResultsArray($sql);
 return $result;
 
 }
+
+public function get_collection(){
+
+$sql = 'select * from '.$this->tablename.' where created_by ='.$_SESSION['uid'];
+$result = $this->db->GetResultsArray($sql);
+
+return $result;
+
+}
+
+public function get_payment_details($id,$b_id){
+
+$sql = 'select * from '.$this->tablename.' where po_id = '.$id.' and branch_id = '.$b_id.'';
+$result = $this->db->GetResultsArray($sql);
+return $result;
+
+}
+
+public function get_items($id,$b_id){
+
+$sql = 'select * from '.$this->tablename2.' where po_id = '.$id.' and branch_id = '.$b_id.'';
+$result = $this->db->GetResultsArray($sql);
+return $result;
+
+}
+
 
 }
 ?>

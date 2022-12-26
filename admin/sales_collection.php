@@ -1,21 +1,20 @@
-<?php
+<?php 
 include 'header.php';
 ?>
-
-
-  <div class="content-wrapper">
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper watermark_img">
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Branch OrderList</h1>
+            <h1 class="m-0">Collection List</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
-              <li class="breadcrumb-item active">Received List</li>
-             
+              <li class="breadcrumb-item active">Collection List</li>
+              <!-- <li class="breadcrumb-item"><a style="color: #007bff;text-decoration: none;background-color: transparent;cursor: pointer;" id="add_vendor">Add Vendor</a></li> -->
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -24,7 +23,7 @@ include 'header.php';
     <!-- /.content-header -->
 
     <!-- Main content -->
-    <section class="content">
+    <section class="content ">
       <div class="container-fluid">
         
         <!-- Main row -->
@@ -36,23 +35,27 @@ include 'header.php';
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                   <th style="width: 33px padding-right: 25px;">S.No</th>
-                    <th style="width: 50px padding-right: 20px; padding-left: 10px ;">Purchase No</th>
-                    <th style="width: 50px;">Branch Name</th>
-                  <!--   <th >Branch code</th> -->
-                    <th>Received Date</th>
-                    <th style="width: 30px; padding-right: 25px; padding-left: 10px">Discount</th>
-                    <th>Tax Amount</th>
+                    <th>S.No</th>
+               
+                 
+                    <th>Branch Name</th>
+                    <th>Branch Code</th>
+                    <th>Total Qty</th>
                     <th>Total Amount</th>
-                    <th>Paid Amount</th>
-                    <th style="width: 30px; padding-right: 25px;">Balance Amount</th>
-                    <th style="width: 30px;  padding-right: 25px;">Status</th>
-                    <th style="width: 100px;">Details</th>
+                    <th>Total Paid</th>
+                    <th>Balance</th>
+                    <th>Status</th>
+
+             
+                    <th style="width: 150px;">Action</th>
                   </tr>
                   </thead>
                   <tbody>
                   
                   </tbody>
+                  <tfoot colspan="2">
+
+                  </tfoot>
                 </table>
               </div>
               <!-- /.card-body -->
@@ -63,8 +66,9 @@ include 'header.php';
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
-     <div class="modal fade" id="order_modal" data-backdrop='static'>
-        <div class="modal-dialog modal-xl">
+  </div>
+  <div class="modal fade" id="order_modal" data-backdrop='static'>
+        <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-body">
              
@@ -74,16 +78,15 @@ include 'header.php';
         </div>
         <!-- /.modal-dialog -->
       </div>
-    </div>
- 
-
-
-<?php 
+  
+      
+  <?php 
 include 'footer.php';
 ?>
-
-
 <script>
+  $(document).ready(function(){
+    get_data();
+  })
   $(function () {
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
@@ -93,25 +96,36 @@ include 'footer.php';
 </script>
 
 <script type="text/javascript">
-$(document).ready(function(){
+  function get_data(){
+      $.ajax({
+type: "POST",
+dataType:"json",
+url: '../ajaxCalls/get_collection_list.php',
+data: {},
+success: function(res){
+ var table = $('#example1').DataTable();
+    table.clear();
+    table.rows.add(res).draw();
+}
 
-get_order();
+});
+  }
+</script>
+<script type="text/javascript">
 
-});	
+ function view_sales_status(e){
 
-function order_detail(e){
-
-
-var po_id = $(e).data('id');
-var branch_id = $(e).val();
+  var po_id = $(e).data("id");
+  var branch_id = $(e).val();
 
 
 
+ 
 
 $.ajax({
 type: "GET",
 dataType:"html",
-url: '../ajaxCalls/get_order_details.php',
+url: '../ajaxCalls/get_collection_data.php',
 data: {'id':po_id,'branch_id':branch_id},
 success: function(res){
   $("#order_modal .modal-body").html(res);
@@ -119,46 +133,10 @@ $("#order_modal").modal('show');
 }
 
 });
- 
-}
-function sale_detail(e){
-
-var po_id = $(e).data('id');
-var branch_id = $(e).val();
-// alert(branch_id);
-
-// var po_no = $(e).val();
-
-window.location='sale_page.php?id='+po_id+'&branch_id='+branch_id;
-
-
-
-
-}
-
-</script>
-
-
-
-<script type="text/javascript">
-function get_order(){
-
-$.ajax({
-
-  type:'POST',
-  dataType:'json',
-  url:'../ajaxCalls/get_branch_order.php',
-  data:{},
-  success:function(res){
-   
-   var table = $('#example1').DataTable();
-     table.clear();
-     table.rows.add(res).draw();
-
+    
   }
 
-});
-
-}	
-
 </script>
+
+
+

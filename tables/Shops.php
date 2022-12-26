@@ -381,6 +381,14 @@ $result = $this->db->GetResultsArray($sql);
 return $result;
 
 }
+public function get_branch_code($id){
+
+$sql = 'select * from '.$this->tablename.' where branch_id='.$id.' and status="ENABLED"';
+
+$result = $this->db->GetResultsArray($sql);
+return $result;
+
+}
 
 
 

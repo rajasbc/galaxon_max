@@ -116,5 +116,14 @@ $item['gst']=$this->db->getpost('gst');
    return $result;
 
 	}
+
+	public function get_branch_item_id(){
+
+   $sql = 'select * from '.$this->tablename.' where branch_id="'.$_SESSION['branch_id'].'"';
+   $result = $this->db->GetResultsArray($sql);
+  
+   return $result;
+
+	}
 }
 ?>

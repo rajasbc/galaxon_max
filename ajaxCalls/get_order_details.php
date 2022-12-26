@@ -4,12 +4,12 @@ include '../tables/config.php';
 
 
 $obj = new PurchaseOrder();
-$result = $obj->order_details($_GET['id']);
+$result = $obj->order_details($_GET['id'],$_GET['branch_id']);
 // print_r($result);die();
 
 $result1 = $obj->branch_code($result[0]['branch_id']);
 
-$result2= $obj->get_purchase_no($_GET['id']);
+$result2= $obj->get_purchase_no($_GET['id'],$_GET['branch_id']);
 
 // print_r($result2);die();
 

@@ -328,7 +328,49 @@ if (empty($_SESSION)==true) {
                 </a>
               </li> -->
             </ul>
+          </li>
           
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-briefcase"></i>
+              <p>
+                Sales
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="sales_collection.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Collection</p>
+                </a>
+              </li>
+             
+              <!-- <li class="nav-item">
+                <a href="" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Payment Details</p>
+                </a>
+              </li> -->
+            </ul>
+          </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
            <li class="nav-item">
             <a href="#" class="nav-link">
@@ -569,6 +611,8 @@ if (empty($_SESSION)==true) {
               </li>
             </li>
 
+
+
               <!-- <li class="nav-item">
                 <a href="" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -576,6 +620,31 @@ if (empty($_SESSION)==true) {
                 </a>
               </li> -->
             </ul>
+
+             <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-solid fa-store"></i>
+              <p>
+                Stock
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+             
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="branch_item_list.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Item List</p>
+                </a>
+              </li>
+             <!--  <li class="nav-item">
+                <a href="" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Payment Details</p>
+                </a>
+              </li> -->
+            </ul>
+          </li>
              <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-solid fa-user"></i>

@@ -1,24 +1,25 @@
 <?php
 include '../tables/config.php';
-$obj = new PurchaseOrder();
-$result =  $obj->get_purchase_order($_GET['id']);
-$item_result =  $obj->get_purchase_order_item($_GET['id']);
-$payment_result =  $obj->get_purchase_order_log($_GET['id']);
-$purchase_history_result =  $obj->get_purchase_order_history($_GET['id']);
-$vendor_obj=new Vendors();
-$output=array();
-$main=array();
-$vendor_dt=$vendor_obj->get_vendor_dt($result[0]['vendor_id']);
-$total_amount_dt=0;
+$obj = new BranchSale();
+$obj1 = new Shops();
+$obj2 = new PurchaseOrder();
+$result = $obj->get_payment_details($_GET['id'],$_GET['branch_id']);
+$result1 = $obj1->get_branch_code($result[0]['branch_id']);
+$result2 = $obj->get_items($_GET['id'],$_GET['branch_id']);
+
+$payment_result = $obj2->get_payment_log($_GET['id'],$result[0]['branch_id']); 
+
+
+// print_r($result2);die();
 ?>
 <div class="container-fluid">
 	<div class="form-row">
 		<div class="form-group col-lg-12">
 			<input type="hidden" name="po_id" id="po_id" value="<?=$result[0]['id']?>">
-		<h4>Purchase Order Details<button type='button' class='close text-danger font-weight-bold' data-dismiss='modal'>&times;</button></h4></div></div>
+		<h4>Sales Details<button type='button' class='close text-danger font-weight-bold' data-dismiss='modal'>&times;</button></h4></div></div>
 		<div class="form-row">
-		<div class="form-group col-lg-3">Purchase No</div><div class="form-group col-lg-3">: 
-			<span class="font-weight-bold"><?=$result[0]['purchase_no']?></span>
+		<div class="form-group col-lg-3">Bill No</div><div class="form-group col-lg-3">: 
+			<span class="font-weight-bold"><?=$result[0]['bill_no']?></span>
 		</div>
 		<!-- <div class="form-group col-lg-1">&nbsp;</div> -->
 		<div class="form-group col-lg-3">Created Date</div><div class="form-group col-lg-3">: <span class="font-weight-bold"><?=date('d-m-Y',strtotime($result[0]['created_at']))?></span></div>
@@ -29,16 +30,16 @@ $total_amount_dt=0;
 		
    <div class="form-group col-lg-12">
    	<?php if($_SESSION['type']=='ADMIN'){?>
-		<h4>Vendor Details</h4></div></div>
+		<h4>Branch Details</h4></div></div>
 		<div class="form-row">
 		<div class="form-group col-lg-3">Name</div><div class="form-group col-lg-3">: 
-			<span class="font-weight-bold"><?=strtoupper($vendor_dt['name'].' - '.$vendor_dt['vendor_code'])?></span>
+			<span class="font-weight-bold"><?=strtoupper($result1[0]['name'].' - '.$result1[0]['branch_code'])?></span>
 		</div>
 		<!-- <div class="form-group col-lg-1">&nbsp;</div> -->
 		<div class="form-group col-lg-3">Mobile No</div><div class="form-group col-lg-3">: 
-			<span class="font-weight-bold"><?=$vendor_dt['mobile_no']?></span>
+			<span class="font-weight-bold"><?=$result1[0]['mobile_no']?></span>
 		</div>
-		<div class="form-group col-lg-3">Company Name</div><div class="form-group col-lg-3">: <span class="font-weight-bold"><?=strtoupper($vendor_dt['company_name'])?></span></div>
+		<!-- <div class="form-group col-lg-3">Company Name</div><div class="form-group col-lg-3">: <span class="font-weight-bold"><?=strtoupper($result1[0]['name'])?></span></div> -->
 		<?php if ($vendor_dt['email']!='') { ?>
 		<div class="form-group col-lg-3">Email</div><div class="form-group col-lg-3">: <span class="font-weight-bold"><?=$vendor_dt['email']?></span></div>
 	<?php }?>
@@ -52,7 +53,7 @@ $total_amount_dt=0;
 		<!-- End Of Vendor Details -->
 		<div class="form-row">
    <div class="form-group col-lg-12">
-		<h4>Purchase Product Details</h4></div></div>
+		<h4>Sales Product Details</h4></div></div>
 		<div class="form-row">
 		<div class="form-group col-lg-12">
 			<?php $sno =1;
@@ -62,29 +63,34 @@ $total_amount_dt=0;
               <thead class="tablehead">
                 <tr class="font-weight-bold" style="font-size:<?=$fontsize?>px">
                   <td>S.No</td>
-                  <td class="text-left">Products</td>
-                  <td class="text-rigth">Order Quantity</td>
-                  <td class="text-rigth">Received Quantity</td>
+                  <td>Products</td>
+                  <td>Variety</td>
+                  <td>Sale Quantity</td>
+                 
                 </tr>
               </thead>
               <tbody class="text-center" id="tdata">
-              	<?php foreach($item_result as $item){
+              	<?php foreach($result2 as $item)
+              	 {
+              	
+
 ?>
               	<tr class=" border-dark line_1">
                     <td class="border-center-0" ><?php echo $sno; ?></td>
                     
-                    <td class="text-left" style="width:150px"><?php echo strtoupper($item['item_name']); if ($item['item_code']!='') {
+                    <td><?php echo strtoupper($item['item_name']); if ($item['item_code']!='') {
                     	echo strtoupper(' - '.$item['item_code']);
                     } ?></td>
-                   
+                    <td><?php echo strtoupper($item['var_name']);
+                   ?></td>
                  <td class="text-center">
                  	<?php echo $item['qty']; ?>
                  		
                  	</td>
-                 	<td style="text-align: center" >
+                 	<!-- <td style="text-align: center" >
                     	<?php echo ($item['received_qty'] ); ?>
                     
-                    </td>
+                    </td> -->
                   </tr>
                   <?php $sno++;
               }
@@ -95,7 +101,7 @@ $total_amount_dt=0;
 				<thead>
 					<tr>
 						<th>Bill No</th>
-						<th>Received Date</th>
+						<th>Sale Date</th>
 						<th>Taxable</th>
 						<th>Tax</th>
 						<th>Discount</th>
@@ -104,12 +110,12 @@ $total_amount_dt=0;
 				</thead>
 				<tbody>
 				
-						<?php foreach ($purchase_history_result as $key => $val) {
+						<?php foreach ($result as $key => $val) {
 							$total_amount_dt=$total_amount_dt+$val['grand_total']
 							?>
 							<tr>
 							<td><?=$val['bill_no']?></td>
-						<td><?=date('d-m-Y',strtotime($val['received_date']))?></td>
+						<td><?=date('d-m-Y',strtotime($val['created_at']))?></td>
 						<td><?=$val['taxable_amt']?></td>
 						<td><?=$val['tax_amt']?></td>
 						<td><?=$val['discount_amt']?></td>
@@ -126,7 +132,7 @@ $total_amount_dt=0;
 		<!-- End Of Product Details -->
 		<div class="form-row">
    <div class="form-group col-lg-12">
-		<h4>Purchase Log Details</h4></div></div>
+		<h4>Sales Log Details</h4></div></div>
 		<div class="form-row">
 		<div class="form-group col-lg-12">
 		<table class="table">
@@ -137,11 +143,11 @@ $total_amount_dt=0;
 				</thead>
 				<tbody>
 					<?php
-					$i=1;
+					$i=0;
 					$balance=0;
 					$paid=0;
 					
-					echo"<tr><td>".$i."</td><td>".date('d-M-Y h:i:s',strtotime($result[0]['created_at']))."</td><td>Total Purchase Amount</td><td class='text-right'></td><td class='text-right'></td><td class='text-right'></td></tr>";
+					// echo"<tr><td>".$i."</td><td>".date('d-M-Y h:i:s',strtotime($result[0]['created_at']))."</td><td>Total Purchase Amount</td><td class='text-right'></td><td class='text-right'></td><td class='text-right'>".$total_amount_dt."</td></tr>";
 					// print_r($payment_details);
 					$balance=$balance+$total_amount_dt;
 					foreach($payment_result as $payment){
@@ -168,7 +174,7 @@ $total_amount_dt=0;
 	</div>
 	<hr>
 		<!-- End Of Purchase Log Details -->
-			<div class="form-row">
+			<!-- <div class="form-row">
    <div class="form-group col-lg-12">
               <table class="table">
 				<tbody>
@@ -185,12 +191,7 @@ $total_amount_dt=0;
                         </div>
                         <input type="number" name="balance_amt" id="balance_amt" class="form-control" value='' placeholder="0" readonly>
                       </div></th>
-						<!-- <th> <div class="input-group input-group-sm" >
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">Change</span>
-                        </div>
-                        <input class="form-control" type="number" id="change" readonly style="padding-left: 5px;">
-                      </div></th> -->
+						
                       <th>
                       	<div class="input-group input-group-sm">
                         <div class="input-group-prepend">
@@ -237,8 +238,8 @@ $total_amount_dt=0;
                     </div> 
                     <div class="col-2"></div>
 		</div>
-	</div>
-	<hr>
+	</div> -->
+	<!-- <hr> -->
 		<!-- End Of Paid Details -->
 	
 </div>

@@ -1,7 +1,7 @@
 <?php 
 include 'header.php';
 
-// print_r($_GET['id']);die();
+// print_r(base64_decode($_GET['id']));die();
 $obj=new PurchaseOrder();
 $purchase_order_dt=$obj->get_purchase_order(base64_decode($_GET['id']));
 // print_r($purchase_order_dt);die();

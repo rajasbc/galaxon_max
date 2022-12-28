@@ -88,10 +88,50 @@ foreach ($item as $key => $itemvar) {
     $sale_id=$this->db->mysql_insert($this->tablename2, $sale_item);
 
 
+if($sale_id!=""){
+
+ $sql = 'select * from '.$this->tablename2.' where po_id ='.$this->db->getpost('po_id').' and branch_id='.$this->db->getpost('branch_id').'';
+
+$res = $this->db->GetResultsArray($sql);
+
+
+
+$sql1 = 'select * from variety_items where variety_id = '.$itemvar['varieties_id'].' and branch_id = 0 ';
+
+$admin_var_qty = $this->db->GetResultsArray($sql1);
+
+
+$update_qty = array();
+
+$update_qty['qty'] = $admin_var_qty[0]['qty']-$itemvar["enter_qty"];
+
+
+
+$update_admin_var = $this->db->mysql_update('variety_items',$update_qty,'id='.$admin_var_qty[0]['id']);
+
+
+
+$item = 'select * from items where item_code = '.$itemvar['item_code'].' and branch_id = 0';
+$update_item_qty = $this->db->GetResultsArray($item);
+
+
+
+$update_item = array();
+
+
+$update_item['qty'] = $update_item_qty[0]['qty']-$itemvar["enter_qty"];
+
+
+$update_id = $this->db->mysql_update('items',$update_item,'id='.$update_item_qty[0]['id']);
+
+}
+
+
+
 }
 
 }
-if($sale_id){
+if($update_id){
 
   return ['status'=>'success'];
 }

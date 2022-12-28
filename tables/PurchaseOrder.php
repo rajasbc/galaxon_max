@@ -154,8 +154,14 @@ if ($this->db->getpost('shipping_d_date')!='') {
 
 
                        	 if ($itemvar['varieties_id']!=0 && $itemvar['varieties_id']!='') {
-                        $var_sql='select * from variety_items where item_id='.$item_id.' and variety_id='.$itemvar['varieties_id'].' and branch_id='.$_SESSION['branch_id'].' and shop_id='.$_SESSION['shop_id'];
+
+
+                         $var_sql='select * from variety_items where item_id='.$item_id.' and variety_id='.$itemvar['varieties_id'].' and branch_id='.$_SESSION['branch_id'].' and shop_id='.$_SESSION['shop_id'];
+
                        	$var_res=$this->db->GetResultsArray($var_sql);
+
+                // print_r($var_res);die();
+                          
                        	if (count($var_res)>0) {
                         $update_var=array();
                        	$update_var['qty']=$var_res[0]['qty']+$itemvar['enter_qty'];
@@ -244,8 +250,11 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
 		$purchase=array();
 		$purchase_log=array();
 		$purchase_id=$this->db->getpost('po_id');
-		$purchase_sql='select * from '.$this->tablename.' where id='.$purchase_id;
+		$purchase_sql='select * from '.$this->tablename.' where id='.$purchase_id.' and branch_id='.$_SESSION['branch_id'].'';
+
 		$purchase_res=$this->db->GetResultsArray($purchase_sql);
+
+    // print_r($purchase_res);die();
 
 		$purchase['shop_id']=$_SESSION['shop_id'];
     $purchase['branch_id']=$_SESSION['branch_id'];
@@ -298,7 +307,7 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
 						$item_id=$itemvar['item_id'];
 						}      
 
-      if($_SESSION['type']!="ADMIN"){
+             if($_SESSION['type']!="ADMIN"){
 
             $sql ='select * from items where branch_id='.$_SESSION['branch_id'].' and item_code="'.$itemvar['item_code'].'"';
             $res  = $this->db->GetResultsArray($sql);
@@ -337,19 +346,55 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
                        $items['created_at']=date('Y-m-d H:i:s');
 
 
-                           if($res[0]['item_code']==""){
+                  if($res[0]['item_code']==""){
+
+
                        $id = $this->db->mysql_insert('items', $items);
+                       
+                       $sql = 'select * from items where id='.$id.'  and branch_id = '.$_SESSION['branch_id'].'';  
+                    $qty_branch = $this->db->GetResultsArray($sql);
+                       
+                       // print_r($qty_branch);die();
+
+                       $sql2 = 'select * from items where item_code="'.$qty_branch[0]['item_code'].'"  and branch_id = 0';  
+                      $qty_admin = $this->db->GetResultsArray($sql2);
+
+                       // print_r($qty_admin);die();
+                         
+                      $qty_update = array();
+
+                     $qty_update['qty'] =  $qty_admin[0]['qty']-$itemvar['enter_qty'];
+
+                     // print_r($qty_update['qty']);die();
+                 
+                          $this->db->mysql_update('items',$qty_update,'id='.$qty_admin[0]['id']);
+
+
+
                       }
 
                       else{
 
-
-
                              $this->db->mysql_update('items',$items,'id='.$res[0]['id']);
 
+                              $sql1 = 'select * from items where item_code="'.$res[0]['item_code'].'"  and branch_id = '.$_SESSION['branch_id'].'';  
+                    $qty_branch = $this->db->GetResultsArray($sql1);
+                   
+
+                   $sql2 = 'select * from items where item_code="'.$res[0]['item_code'].'"  and branch_id = 0';  
+                      $qty_admin = $this->db->GetResultsArray($sql2);
+                       
+                       $qty_update = array();
+
+                       $qty_update['qty'] =  $qty_admin[0]['qty']-$itemvar['enter_qty'];
+                 
+                          $this->db->mysql_update('items',$qty_update,'id='.$qty_admin[0]['id']);
+
+                 
                  }
 
-      }
+
+}
 
 
 
@@ -403,23 +448,70 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
                        	$this->db->mysql_update('items', $update_item,'id='.$item_id);
 
                           }
-
+                     
                          if ($itemvar['varieties_id']!=0 && $itemvar['varieties_id']!='') {
-                        $var_sql='select * from variety_items where item_id='.$item_id.' and variety_id='.$itemvar['varieties_id'].' and shop_id='.$_SESSION['shop_id'];
+                        $var_sql='select * from variety_items where item_id='.$item_id.' and variety_id='.$itemvar['varieties_id'].' and branch_id='.$_SESSION['branch_id'];
                        	$var_res=$this->db->GetResultsArray($var_sql);
+
+                        // print_r($var_res);die();
                        	if (count($var_res)>0) {
                         $update_var=array();
                        	$update_var['qty']=$var_res[0]['qty']+$itemvar['enter_qty'];
-                       	$this->db->mysql_update('variety_items', $update_var,'id='.$var_res[0]['id']);
+                      $this->db->mysql_update('variety_items', $update_var,'id='.$var_res[0]['id']);
+                      // print_r($var_res[0]['id']);die();
+
+                          if($_SESSION['type']!="ADMIN"){
+                              
+                              $sql = 'select * from variety_items where id = '.$var_res[0]['id'].' and branch_id='.$_SESSION['branch_id'].'';
+                              $result = $this->db->GetResultsArray($sql);
+
+                              $sql1 ='select * from variety_items where variety_id = '.$result[0]['variety_id'].' and branch_id = 0';
+                          
+                              $var_qty  = $this->db->GetResultsArray($sql1);
+
+                                 // print_r($var_qty);die();
+                              $update_var_id = array();
+                              $update_var_id['qty']  = $var_qty[0]['qty']-$itemvar['enter_qty'];
+
+
+                        $this->db->mysql_update('variety_items',$update_var_id,'id='.$var_qty[0]['id']);
+
+
+                          }
+                        
+
                        	}else{
                        	$update_var=array();
+                        $update_var['branch_id']= $_SESSION['branch_id'];
                        	$update_var['shop_id']=$_SESSION['shop_id'];
                        	$update_var['item_id']=$item_id;
                        	$update_var['variety_id']=$itemvar['varieties_id'];
                        	$update_var['qty']=$itemvar['enter_qty'];
-                       	$this->db->mysql_insert('variety_items', $update_var);
+                       	$id = $this->db->mysql_insert('variety_items', $update_var);
+                        if($_SESSION['type']!="ADMIN"){
+                                 
+                            $sql = 'select * from variety_items where id = '.$id;
+                            $var_id = $this->db->GetResultsArray($sql);
+
+                            $sql1 = 'select * from variety_items where variety_id='.$var_id[0]['variety_id'].' and branch_id =0';
+                            $update_qty_id = $this->db->GetResultsArray($sql1);
+
+                            // print_r($update_qty_id);die();
+                            // print_r($itemvar['enter_qty']);die();
+
+                            $update_admin_qty = array();
+
+                      $update_admin_qty['qty'] = ($update_qty_id[0]['qty']) - ($itemvar['enter_qty']);
+
+            
+                            
+                              $this->db->mysql_update('variety_items',$update_admin_qty,'id='.$update_qty_id[0]['id']);
+                         
+
                          }
+                        }
                        	}
+
 
                        }
 
@@ -435,7 +527,7 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
 		$purchase_log['created_at']=date('Y-m-d H:i:s');
 		$this->db->mysql_insert($this->tablename3, $purchase_log);
 }
-		$item_check_sql	= "select * from ".$this->tablename2." where purchase_id=".$purchase_id." and qty=received_qty";
+		$item_check_sql	= "select * from ".$this->tablename2." where purchase_id=".$purchase_id." and qty=received_qty and branch_id=".$_SESSION['branch_id']."";
 		$item_check_res=$this->db->GetResultsArray($item_check_sql);
 		if (count($item_check_res) > 0) {
 			$purchase_update=array();
@@ -447,7 +539,7 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
 		$this->db->mysql_update($this->tablename, $purchase_update,'id='.$purchase_id);
 		}
 
-		$history_sql='select bill_no,received_date,sum(taxable_amt) as taxable,sum(tax_amt) as tax,sum(discount_amt) as discount,sum(grand_total) as total from '.$this->tablename4.' where po_id='.$purchase_id.' group by po_id order by id asc';
+		$history_sql='select bill_no,received_date,sum(taxable_amt) as taxable,sum(tax_amt) as tax,sum(discount_amt) as discount,sum(grand_total) as total from '.$this->tablename4.' where po_id='.$purchase_id.' and branch_id='.$_SESSION['branch_id'].' group by po_id order by id asc';
 		$history_res=$this->db->GetResultsArray($history_sql);
 		$log_sql='select sum(credit) as credit from '.$this->tablename3.' where purchase_id='.$purchase_id.' group by purchase_id order by id asc';
 		$log_res=$this->db->GetResultsArray($log_sql);
@@ -474,13 +566,18 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
 
 		$this->db->mysql_update($this->tablename, $purchase_update,'id='.$purchase_id);
 
+
+
     if($_SESSION['type']!='ADMIN'){
 
+      // $sale_amount = array();
+      // $sale_amount['paid_amt']= $log_res[0]['credit'];
 
+      // $this->db->mysql_update('branch_sale',$sale_amount,)
 
       $branch_sale = array();
 
-    $sql = 'select * from branch_sale where po_id = '.$this->db->getpost('po_id');
+    $sql = 'select * from branch_sale where po_id = '.$this->db->getpost('po_id').' and branch_id='.$_SESSION['branch_id'].'';
     
     $result = $this->db->GetResultsArray($sql);
 
@@ -492,13 +589,13 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
 
      if($branch_sale['balance_amt']==0){
 
-  $branch_sale['status']='PAID';
+  $branch_sale['status']="PAID";
 
      
 
    }else{
 
-  $branch_sale['status']='PENDING';
+  $branch_sale['status']="PENDING";
 
    }
 

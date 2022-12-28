@@ -66,7 +66,7 @@ $item['gst']=$this->db->getpost('gst');
 	}
 	public function get_Autocomplete_items()
 	{
-		$sql = "select  * from ".$this->tablename." where item_name like '%" . $this->db->getpost('term') . "%' and shop_id = " .$_SESSION['shop_id']. " and is_deleted = 'NO' ";
+		$sql = "select  * from ".$this->tablename." where item_name like '%" . $this->db->getpost('term') . "%' and branch_id = 0 and is_deleted = 'NO' ";
 
 
 	$result = $this->db->GetResultsArray($sql);
@@ -117,7 +117,7 @@ $item['gst']=$this->db->getpost('gst');
 
 	}
 
-	public function get_branch_item_id(){
+	public function get_branch_item_code(){
 
    $sql = 'select * from '.$this->tablename.' where branch_id="'.$_SESSION['branch_id'].'"';
    $result = $this->db->GetResultsArray($sql);
@@ -125,5 +125,16 @@ $item['gst']=$this->db->getpost('gst');
    return $result;
 
 	}
+
+   public function get_variety_id($id){
+
+   $sql = 'select * from purchase_order_details where item_code = "'.$id.'" and branch_id = '.$_SESSION['branch_id'].'';
+
+  $result = $this->db->GetResultsArray($sql);
+
+  return $result;
+
+   }
+
 }
 ?>

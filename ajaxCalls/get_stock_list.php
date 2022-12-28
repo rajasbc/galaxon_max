@@ -6,6 +6,8 @@ $obj1 = new PurchaseOrder();
 
 $result= $obj->get_item_id();
 
+// print_r($result);die();
+
 
 $output =array();
 
@@ -14,7 +16,7 @@ if(count($result>0)){
 	$j=0;
 
 foreach ($result as $key => $value) {
-	$result1 = $obj1->get_stock($value['id']);
+	$result1 = $obj->get_variety_id($value['item_code']);
 	// $result1 = $
 	// $result2 = $obj1->get_vendor_name($result1[0]['purchase_id']);
 

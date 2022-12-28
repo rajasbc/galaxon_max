@@ -1,15 +1,16 @@
 <?php 
 include 'header.php';
+// print_r($_GET);die();
 
 $obj = new PurchaseOrder();
 $obj1 = new Shops();
 
-$sale_details = $obj->get_details(base64_decode($_GET['id']));
+$sale_details = $obj->get_details($_GET['id'],$_GET['branch_id']);
 
 $branch_name = $obj1->get_branch_name($sale_details[0]['branch_id']);
 
 
-$purchase_order_dt=$obj->get_branch_order(base64_decode($_GET['id']));
+$purchase_order_dt=$obj->get_branch_order($_GET['id'],$_GET['branch_id']);
 
 
 // $purchase_order_item_dt=$obj->get_purchase_order_item($purchase_order_dt[0]['id']);
@@ -51,7 +52,8 @@ foreach ($purchase_order_dt as $key => $value) {
   "total"=>$value['total'],
   "deleted"=>'no',
   "flag"=>'old',
-  "main_id"=>$value['id']
+  "main_id"=>$value['id'],
+  "po_id"=>$_GET['id']
  ];
 }
 $items=json_encode($items);
@@ -176,7 +178,7 @@ $items=json_encode($items);
                 <div class="col-6">
                  <label>Mobile No :</label><span id="branch_mobile"> <?=$branch_name[0]['mobile_no']?></span>
                 </div>
-                <?php if ($vendor['email']!='') { ?>
+               <!--  <?php if ($vendor['email']!='') { ?>
                  <div class="col-6">
                   <label>Email &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label><span id="vendor_email"> <?=$vendor['email']?></span>
                  </div>
@@ -185,7 +187,7 @@ $items=json_encode($items);
                  <div class="col-6">
                   <label>GST No &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label><span id="vendor_gst"> <?=$vendor['gst']?></span>
                  </div>
-                <?php }?>
+                <?php }?> -->
 
                </div>
                </div>
@@ -1087,7 +1089,8 @@ $items=json_encode($items);
       detailsarray['discount']=Number($("#discid").text());
       detailsarray['tax_amount']=Number($("#taxid").text());
       detailsarray['grand_total']=Number($("#grandid").text());
-      detailsarray['po_id']="<?=base64_decode($_GET['id'])?>";
+      detailsarray['po_id']="<?=$_GET['id']?>";
+
 
       detailsarray['note']=$("#note").val();
       $("#place_order").attr('disabled','disabled');

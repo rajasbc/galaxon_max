@@ -81,7 +81,7 @@ class Varieties extends Dbconnection {
 
 	}
 
-	public function get_branch_varieties($id){
+public function get_branch_varieties($id){
 
  $sql = 'select a.*,b.* from variety_items a join varieties b on a.variety_id=b.id where a.item_id='.$id.' and a.branch_id = '.$_SESSION['branch_id'].'';
 
@@ -89,9 +89,19 @@ class Varieties extends Dbconnection {
 
   return $result;
 
-  // print_r($result);die();
-
-
 	}
+
+public function get_qty($id){
+
+ $sql = 'select * from '.$this->tablename1.' where variety_id ='.$id.' and branch_id =0';
+
+$result = $this->db->GetResultsArray($sql);
+
+// print_r($result);die();
+
+return $result;
+}
+
+
 }
 ?>

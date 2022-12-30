@@ -54,7 +54,7 @@ $item['gst']=$this->db->getpost('gst');
 	}
 	public function get_items_data()
 	{
-		$sql='select * from '.$this->tablename.' where is_deleted="NO"';
+		$sql='select * from '.$this->tablename.' where is_deleted="NO" and branch_id='.$_SESSION['branch_id'].'';
 		$result=$this->db->GetResultsArray($sql);
 		return $result;
 	}

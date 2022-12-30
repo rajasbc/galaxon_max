@@ -1,11 +1,13 @@
 <?php 
 include 'header.php';
-
+// error_reporting(E_All);
 // print_r(base64_decode($_GET['id']));die();
 $obj=new PurchaseOrder();
 $purchase_order_dt=$obj->get_purchase_order(base64_decode($_GET['id']));
 // print_r($purchase_order_dt);die();
 $purchase_order_item_dt=$obj->get_purchase_order_item(base64_decode($_GET['id']));
+
+// print_r($purchase_order_item_dt);die();
 
 $vendor_obj= new Vendors();
 $vendor= $vendor_obj->get_vendor_dt($purchase_order_dt[0]['vendor_id']); 

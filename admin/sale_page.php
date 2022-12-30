@@ -4,6 +4,7 @@ include 'header.php';
 
 $obj = new PurchaseOrder();
 $obj1 = new Shops();
+$obj2 = new Varieties();
 
 $sale_details = $obj->get_details($_GET['id'],$_GET['branch_id']);
 
@@ -11,6 +12,9 @@ $branch_name = $obj1->get_branch_name($sale_details[0]['branch_id']);
 
 
 $purchase_order_dt=$obj->get_branch_order($_GET['id'],$_GET['branch_id']);
+
+
+
 
 
 // $purchase_order_item_dt=$obj->get_purchase_order_item($purchase_order_dt[0]['id']);
@@ -28,6 +32,9 @@ $category =  $category_obj->get_category_data();
 $items=array();
 $i=0;
 foreach ($purchase_order_dt as $key => $value) {
+
+  
+
  $i++;
  $ttl=$value['total']+$value['tax_amt'];
  $items['sid'.$i]=[
@@ -53,7 +60,7 @@ foreach ($purchase_order_dt as $key => $value) {
   "deleted"=>'no',
   "flag"=>'old',
   "main_id"=>$value['id'],
-  "po_id"=>$_GET['id']
+  "po_id"=>$_GET['id'],
  ];
 }
 $items=json_encode($items);
@@ -320,6 +327,8 @@ $items=json_encode($items);
                    $taxtot = 0;
                    $grandtot = 0;
                    foreach ($purchase_order_dt as $key => $row) {
+
+                     $admin_var_qty = $obj2->get_qty($row['var_id']); 
                     $sno++;
                     $description='';
                     if ($row['sub_category']!='' && $row['sub_category']!=0) {
@@ -331,6 +340,7 @@ $items=json_encode($items);
 
                     $ttl=$row['total']+$row['tax_amt'];
 
+
                     echo '<tr id="trItem_'.$sno.'">';
                     echo '<td class=" ch-4"><span></span></td>';
                     echo '<td class="text-left ch-10">'.$row['item_name'];
@@ -341,7 +351,7 @@ $items=json_encode($items);
                     echo '<td class=" ch-4">'.$row['var_name'].'</td>';
                     echo '<td class="text-left ch-4">';
 
-                    echo '<input onkeyup=quantityupdate('.$sno.',this) class="form-control quantity" name="quantity[]" id="quantity'.$sno.'" value="'.$row['qty'].'" style="width:4rem; height:1.75rem; font-size:0.9rem;">';
+                    echo '<input type="hidden" id="admin_qty'.$sno.'" value= "'.$admin_var_qty[0]['qty'].'"><input onkeyup=quantityupdate('.$sno.',this) class="form-control quantity" name="quantity[]" id="quantity'.$sno.'" value="'.$row['qty'].'" style="width:4rem; height:1.75rem; font-size:0.9rem;">';
 
                     echo '</td>';
                     echo '<td class="text-left ch-10">'.$description_name.'</td>';
@@ -966,7 +976,24 @@ $items=json_encode($items);
        var sale_price = $("#sale_price"+idval).val();
        var discount = $("#discount"+idval).val();
        var gst = $("#gst"+idval).val();
-       var quantity = $("#quantity"+idval).val();
+
+       var quantity = $(ele).val()*1;
+
+       var admin_qty = $("#admin_qty"+idval).val()*1;
+
+    
+
+
+       if(quantity>admin_qty)
+     {
+         
+        global_alert_modal('warning','Available Variety are less than '+admin_qty);
+
+     }else{
+       quantity;
+
+     }
+
       // if ((Number($("#order_qty"+idval).text())-Number($("#rec_qty"+idval).text())) < quantity) {
       //   $("#quantity"+idval).val((Number($("#order_qty"+idval).text())-Number($("#rec_qty"+idval).text())));
       // }
@@ -977,7 +1004,9 @@ $items=json_encode($items);
       $("#tons"+idval).html(tons);
       items[ref].sale_price=sale_price;
       items[ref].mrp=mrp;
+     
       items[ref].enter_qty=$("#quantity"+idval).val();
+      
       items[ref].discount=discount;
       items[ref].gst=gst;
       items[ref].gstpercentage=gst/100;
@@ -1040,6 +1069,7 @@ $items=json_encode($items);
        if (tempItem['deleted']=='no') {
 
 
+
         val=Number(tempItem["enter_qty"]);
 
         total_qty=total_qty+Number(tempItem["enter_qty"]);
@@ -1080,7 +1110,9 @@ $items=json_encode($items);
        return false;
       }
 
-      
+
+ 
+
       detailsarray = [];
       detailsarray['branch_id']=Number($("#branch_id").val());
       detailsarray['purchase_no']=Number($("#purchase_no").val());     

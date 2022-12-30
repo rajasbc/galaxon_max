@@ -16,7 +16,6 @@ class BranchSale extends Dbconnection {
 	
 public function add_branch_sale(){
   
-
 $item = array();
 $item = $_POST; 
 $branch_sale = array();
@@ -106,12 +105,12 @@ $update_qty = array();
 $update_qty['qty'] = $admin_var_qty[0]['qty']-$itemvar["enter_qty"];
 
 
-
+if($itemvar['varieties_id']!=0){
 $update_admin_var = $this->db->mysql_update('variety_items',$update_qty,'id='.$admin_var_qty[0]['id']);
 
+}
 
-
-$item = 'select * from items where item_code = '.$itemvar['item_code'].' and branch_id = 0';
+$item = 'select * from items where item_code = "'.$itemvar['item_code'].'" and branch_id = 0';
 $update_item_qty = $this->db->GetResultsArray($item);
 
 

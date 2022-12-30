@@ -25,6 +25,7 @@ $output=array();
     $temp_array['country']=$row['country'];
     $temp_array['pincode']=$row['pincode'];
     $temp_array['shipping_terms']=$row['shipping_terms'];
+    $temp_array['method'] = $row['method'];
     $temp_array['delivery']=$row['delivery_date'];
 
 

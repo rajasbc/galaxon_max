@@ -588,7 +588,7 @@ $items=json_encode($items);
 
              <select class="form-control" id="shipping_method">
 
-              <option value="FEDEX" <?php if($$purchase_order_dt[0]['method']=="FEDEX"){ echo "selected='selected'"; }?>>FEDEX</option>
+              <option value="FEDEX" <?php if($purchase_order_dt[0]['method']=="FEDEX"){ echo "selected='selected'"; }?>>FEDEX</option>
 
               <option value="UPS" <?php if($purchase_order_dt[0]['method']=="UPS"){ echo "selected='selected'"; } ?>>UPS</option>
 

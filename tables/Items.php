@@ -60,7 +60,7 @@ $item['gst']=$this->db->getpost('gst');
 	}
 	public function get_items_dt($id)
 	{
-		$sql='select * from '.$this->tablename.' where id='.$id;
+		$sql='select * from '.$this->tablename.' where id='.$id.' and branch_id=0';
 		$result=$this->db->GetResultsArray($sql);
 		return $result;
 	}
@@ -135,6 +135,22 @@ $item['gst']=$this->db->getpost('gst');
   return $result;
 
    }
+
+public function get_Autocomplete_product(){
+$sql = "select  * from ".$this->tablename." where item_name like '%" . $this->db->getpost('term') . "%' and branch_id = ".$_SESSION['branch_id']." and is_deleted = 'NO' ";
+
+	$result = $this->db->GetResultsArray($sql);
+	return $result;
+
+  }
+
+public function get_sale_items($id){
+   $sql='select * from '.$this->tablename.' where id='.$id.' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
+		$result=$this->db->GetResultsArray($sql);
+		// print_r($result);die();
+		return $result;
+
+}
 
 }
 ?>

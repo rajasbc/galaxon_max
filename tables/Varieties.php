@@ -46,7 +46,7 @@ class Varieties extends Dbconnection {
 	}
 	public function get_varieties_data($item_id)
 	{
-		$sql='select * from '.$this->tablename.' where item_id='.$item_id.' and is_deleted="NO"';
+		$sql='select * from '.$this->tablename.' where item_id='.$item_id.' and is_deleted="NO" and branch_id=0';
 		$result=$this->db->GetResultsArray($sql);
 		return $result;
 	}
@@ -101,7 +101,13 @@ $result = $this->db->GetResultsArray($sql);
 
 return $result;
 }
+public function get_sale_varieties($item_id){
 
+$sql='select * from '.$this->tablename.' where item_id='.$item_id.' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
+$result=$this->db->GetResultsArray($sql);
+return $result;
+
+}
 
 }
 ?>

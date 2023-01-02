@@ -153,11 +153,14 @@ $result = $this->db->mysql_update($this->tablename,$customer,'id='.$id);
 
 	}
 
+public function get_Autocomplete_Customer(){
 
+$sql = "select * from ".$this->tablename." where (name like '%" .$this->db->getpost('term')."%') and ".$_SESSION['branch_id']." and status = 'ENABLED'";
 
+$result = $this->db->GetResultsArray($sql);
+return $result;
 
-
-
+}
 
 
 

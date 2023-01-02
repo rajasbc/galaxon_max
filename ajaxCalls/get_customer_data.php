@@ -29,7 +29,9 @@ if (count($result)>0) {
 $main = $output;
 echo json_encode($main);
 }else{
+
 	$result=$obj->get_customer_dt($_POST['customer_id']);
+
 	echo json_encode($result);
 }
 ?>

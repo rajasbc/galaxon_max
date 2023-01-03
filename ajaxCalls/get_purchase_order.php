@@ -37,7 +37,7 @@ if (count($result)>0) {
 			if(count($get_sale)>0 && $_SESSION['type']!="ADMIN"){
 
                 $new_details = '<button type="button" id="'.$value['id'].'" class="btn btn-default btn-sm" onclick="new_detail_page('.$value['id'].')"><span class="glyphicon glyphicon-eye"><i class="fas fa-upload"></i></span></button>';
-                $editbtn = '';	
+                $editbtn1 = '';	
 
 			}else{
 

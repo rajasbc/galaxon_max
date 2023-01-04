@@ -1,5 +1,5 @@
 <?php
-// error_reporting(E_ALL);
+
 class CustomerSale extends Dbconnection {
 	var $name;
 	var $db;
@@ -7,7 +7,7 @@ class CustomerSale extends Dbconnection {
 	var $msg = '';
 	var $tablename = "`customer_sale`";
   var $tablename2 = "`customer_sale_details`";
-  VAR $tablename3 = "`sale_payment_log`";
+  Var $tablename3 = "`sale_payment_log`";
    
 	
 	// Create Db Connection for this class operations
@@ -17,6 +17,7 @@ class CustomerSale extends Dbconnection {
 	}
 
 public function add_sales(){
+
 $item = array();
 $item = $_POST;
 $sales = array();
@@ -35,6 +36,7 @@ $sql='select max(sale_id) as sale_id from '.$this->tablename.' where branch_id='
    $sales['sale_id']=$sale_id;
    $sales['discount_amt']=$this->db->getpost('discount');
    $sales['taxable_amt']=$this->db->getpost('taxable_amount');
+   $sales['received_date'] =date('Y-m-d H:i:s');
    $sales['tax_amt']=$this->db->getpost('tax_amount');
    $sales['grand_total']=$this->db->getpost('grand_total');
    $sales['created_by']=$_SESSION['uid'];
@@ -50,7 +52,7 @@ $sql='select max(sale_id) as sale_id from '.$this->tablename.' where branch_id='
     }
    
    $sales_id = $this->db->mysql_insert($this->tablename,$sales);
-
+// print_r($item);die();
    foreach ($item as $key => $itemvar) {
     if ((isset($itemvar["item_name"]) && $itemvar["item_name"] !== '') && $itemvar["mrp"] != 0) {
             
@@ -86,8 +88,36 @@ $sql='select max(sale_id) as sale_id from '.$this->tablename.' where branch_id='
                        $sale_items['created_by']=$_SESSION['uid'];
                        $sale_items['created_at']=date('Y-m-d H:i:s');
                       $this->db->mysql_insert($this->tablename2,$sale_items);
+                      if($itemvar["item_id"]!=''){
+
+          $sql ='select * from items where branch_id ='.$_SESSION['branch_id'].' and item_id='.$itemvar["item_id"].'';
+          $branch_item_qty = $this->db->GetResultsArray($sql);
+           $update_item_qty = array();
+
+            $update_item_qty['qty'] = $branch_item_qty[0]['qty']-$itemvar["quantity"];
+            
+
+        $update=$this->db->mysql_update('items',$update_item_qty,'id='.$branch_item_qty[0]['id']);
+
+          }
+          if($itemvar["varieties_id"]!=''){
+
+          $sql = 'select * from variety_items where branch_id='.$_SESSION['branch_id'].' and variety_id='.$itemvar["varieties_id"].'';
+          $branch_var_qty= $this->db->GetResultsArray($sql);
+          $update_var_qty = array();
+          $update_var_qty['qty'] = $branch_var_qty[0]['qty']-$itemvar["quantity"];
+
+
+        $this->db->mysql_update('variety_items',$update_var_qty,'id='.$branch_var_qty[0]['id']);
+
+          }
           
         }
+        
+           
+
+
+
       }
       if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
 
@@ -101,6 +131,10 @@ $sql='select max(sale_id) as sale_id from '.$this->tablename.' where branch_id='
     $sales_log['created_at']=date('Y-m-d H:i:s');
     $this->db->mysql_insert($this->tablename3, $sales_log);
                    }
+
+      
+
+
     return ['status'=>'success'];
       }
 
@@ -116,8 +150,73 @@ $sql='select max(sale_id) as sale_id from '.$this->tablename.' where branch_id='
    return $result;
 
   }
+  public function customer_sale_details($id){
+  $sql = 'select * from '.$this->tablename2.'where branch_id='.$_SESSION['branch_id'].' and id='.$id.' and is_deleted="NO"';
+   $result = $this->db->GetResultsArray($sql);
+   return $result;
+
+  }
+  public function sale_payment($id){
+
+  $sql = 'select * from '.$this->tablename3.' where branch_id='.$_SESSION['branch_id'].' and sale_id='.$id.'';
+   $result = $this->db->GetResultsArray($sql);
+   return $result;
+  }
+  public function get_item_details($id){
+     $sql = 'select * from '.$this->tablename.' where branch_id='.$_SESSION['branch_id'].' and id='.$id.' and is_deleted="NO"';
+   $result = $this->db->GetResultsArray($sql);
+   return $result;
 
 
+  }
+
+ public function customer_pay(){
+  $sql='select * from '.$this->tablename.' where branch_id='.$_SESSION['branch_id'].' and id='.$this->db->getpost('pay_id');
+    $result=$this->db->GetResultsArray($sql);
+
+    
+    $pay_log=array();
+ $pay_log['paid_amt']=$result[0]['paid_amt']+$this->db->getpost('paid_amt');
+    $pay_log['balance_amt']=$this->db->getpost('balance');
+   $pay_log['created_by']=$_SESSION['uid'];
+   $pay_log['created_at']=date('Y-m-d H:i:s');
+    if ($this->db->getpost('balance')==0) {
+    $pay_log['status']='PAID';
+    }
+
+     $this->db->mysql_update($this->tablename, $pay_log,'id='.$this->db->getpost('pay_id'));
+
+        $sale_log=array();
+     
+     $sale_log['branch_id']=$_SESSION['branch_id'];
+     $sale_log['sale_id']=$this->db->getpost('sale_id');
+     $sale_log['customer_id']=$this->db->getpost('cus_id');
+     $sale_log['credit']=$this->db->getpost('paid_amt');
+     $sale_log['payment_mode']=$this->db->getpost('payment_mode');
+     $sale_log['description']='Balance Collection';
+     $sale_log['created_by']=$_SESSION['uid'];
+     $sale_log['created_at']=date('Y-m-d H:i:s');
+      $this->db->mysql_insert($this->tablename3,$sale_log);
+
+     return ['status'=>'success'];
+
+ }
+
+ public function get_sale_dt($id){
+ $sql ='select * from '.$this->tablename.'where id='.$id.' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
+
+$result=$this->db->GetResultsArray($sql);
+
+return $result;
+
+ }
+ public function get_sale_item_dt($id){
+$sql ='select * from '.$this->tablename2.'where sale_id='.$id.' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
+$result = $this->db->GetResultsArray($sql);
+
+return $result;
+
+ }
 
   }
 

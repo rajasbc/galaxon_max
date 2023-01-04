@@ -161,6 +161,23 @@ $result = $this->db->GetResultsArray($sql);
 return $result;
 
 }
+public function get_customer_details($id){
+
+$sql = 'select * from '.$this->tablename.'where branch_id ='.$_SESSION['branch_id'].' and id='.$id.' and status="ENABLED"';
+
+$result = $this->db->GetResultsArray($sql);
+return $result;
+
+
+}
+public function get_customer($id){
+
+$sql = 'select * from '.$this->tablename.'where branch_id='.$_SESSION['branch_id'].' and id='.$id.'';
+
+$result = $this->db->GetResultsArray($sql);
+return $result;
+
+}
 
 
 

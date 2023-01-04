@@ -13,12 +13,12 @@ if (count($Vresult)>0) {
 	$i=0;
 	foreach ($Vresult as $key => $value) {
 		$i++;
-		$var_select .='<option value="'.$value['id'].'">'.strtoupper($value['name']).'</option>';
+		$var_select .='<option value="'.$value['variety_id'].'">'.strtoupper($value['name']).'</option>';
 	}
 	
 }
 $output=array();
-$output['item_id']=$result[0]['id'];
+$output['item_id']=$result[0]['item_id'];
 $output['brand']=$result[0]['brand'];
 $output['category']=$result[0]['category'];
 $output['sub_category']=$result[0]['sub_category'];

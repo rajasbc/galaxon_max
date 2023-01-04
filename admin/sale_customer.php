@@ -1,5 +1,6 @@
 <?php 
 include 'header.php';
+// error_reporting(E_ALL);
 $vendor_obj= new Vendors();
 $vendor= $vendor_obj->get_vendor_data(); 
 $brand_obj = new Brand();

@@ -53,6 +53,9 @@ include 'header.php';
                     <th width="10%">Total Amount</th>
                     <th width="10%">Paid Amount</th>
                     <th width="10%">Balance Amount</th>
+                     <th width="10%">Details</th>
+                    
+             
              
                     
                    
@@ -178,7 +181,11 @@ success: function(res){
     var paid_amt=$("#balance_received").val();
     var balance = $("#balance_amt").val();
     var payment_mode=$("#payment_mode").val();
-    var po_id=$("#po_id").val();
+    var pay_id=$("#pay_id").val();
+    var cus_id = $("#cus_id").val();
+    var sale_id = $("#sale_id").val();
+   
+
     if (paid_amt=='' && paid_amt==0) {
       global_alert_modal('warning','Enter Paid Amount...');
       $("#balance_received").css("border","1px solid red");
@@ -190,8 +197,8 @@ success: function(res){
      $.ajax({
 type: "POST",
 dataType:"json",
-url: '../ajaxCalls/paid_purchase_order.php',
-data: {'paid_amt':paid_amt,'balance':balance,'payment_mode':payment_mode,'po_id':po_id},
+url: '../ajaxCalls/paid_customer_sale.php',
+data: {'paid_amt':paid_amt,'balance':balance,'payment_mode':payment_mode,'pay_id':pay_id,'cus_id':cus_id,'sale_id':sale_id},
 success: function(res){
  if (res.status=='success') {
   
@@ -216,6 +223,6 @@ success: function(res){
 <script type="text/javascript">
   function print_page(e) {
 
-    window.open('print_page.php?id='+btoa(e),'_blank');
+    window.open('customer_print_page.php?id='+btoa(e),'_blank');
   }
 </script>

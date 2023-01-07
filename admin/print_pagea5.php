@@ -85,7 +85,7 @@ height: 256mm;
 outline: 2cm #FFEAEA solid;
 }
 @page {
-size: A4;
+size: A5;
 margin: 0;
 }
 @media print {
@@ -93,7 +93,7 @@ table{
   background-color: transparent;
 }
 table,thead,tbody,tr,td,th{
-  font-size: 18px;
+  font-size: 15px;
 }
 /* body {zoom: 70%;}*/
 .logo_class{
@@ -103,11 +103,11 @@ table,thead,tbody,tr,td,th{
     max-width: 160px !important;
 }
 .page {
-margin: 0;
+margin: 30px;
 border: 1px #D3D3D3 solid;
 border-radius: 5px;
-width: 25.5cm;
-min-height: 37cm;
+width: 21cm;
+min-height: 30cm;
 box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 /*background: initial;*/
 /*background-image: url('../dist/img/invoice2.jpeg');*/
@@ -117,7 +117,7 @@ background-size: 100% 109%;
 page-break-after: always;
 }
 @page {
-size: A4;
+size: A5;
 margin: 0;
 }
 
@@ -137,7 +137,7 @@ text-align: inherit;
 border: inherit;
 }
 .container-fluid {
-font-size: 10px;
+font-size: 14px;
 width: 98%;
 margin: 0;
 /*height: 1180px;*/
@@ -150,10 +150,10 @@ height: 440px;
 }
 .bill-table tr.line_1 {
 height: 30px;
-line-height: 30px;
+line-height: 10px;
 }
 .shippingDetails {
-font-size: 14px;
+font-size: 12px;
 }
 div.declaration_p p{
 margin-bottom: 0px !important;
@@ -188,11 +188,20 @@ margin-bottom: 0px !important;
 </style>
 <style>
       .bill-table.large{
-        height: 650px;
+        height: 550px;
       }
     </style>
+<style type="text/css">
+ <?php if($shop_result1[0]['shop_logo']==''){ ?>
+ .shop_logo{
+   margin-top:100px;
+
+}
+ <?php } ?>
+
+</style>
       <?php
- $numItemShow=21;
+ $numItemShow=15;
 $arr_count=count($purchase_order_item_dt);
 $next_page=$arr_count-$numItemShow;
 $next_page=$next_page>0?$next_page:1;
@@ -217,8 +226,8 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
   //   $end_index=16;
   //   $check=1;
   // }
-  if (($last_index-$start_index) > 16 && ($last_index-$start_index)<=23) {
-    $end_index=16;
+  if (($last_index-$start_index) > 10 && ($last_index-$start_index)<=17) {
+    $end_index=10;
     $page_count++;
     $check=1;
   }
@@ -328,27 +337,28 @@ if ($vendor['pincode']!='') {
 <?php }?>
 
 </div> -->
-<div class="col-sm-6 col-md-6 col-lg-6 shippingDetails">
+<div class="col-12 shippingDetails">
 <div class="row">
   <?php if($_SESSION['type']=="ADMIN"){ ?>
-<div class="col-12 border-left text-center  border-bottom border-dark" id="invoice_number">
+<div class="col-6 border-left text-center  border-bottom border-dark" id="invoice_number">
 <span class=""><b>Purchase No : </b></span>
 <!-- $shippingDetails['invoice_number'] -->
 <span class="text-val"><b><?=$purchase_order_dt[0]['purchase_no']?></b></span>
 </div>
 <?php }else{ ?>
-<div class="col-12 border-right border-left text-center  border-bottom border-dark" id="invoice_number">
+<div class="col-6 border-right border-left text-left  border-bottom border-dark" id="invoice_number">
 <span class=""><b>Purchase No : </b></span>
 <!-- $shippingDetails['invoice_number'] -->
 <span class="text-val"><b><?=$purchase_order_dt[0]['purchase_no']?></b></span>
 </div>
-
- <?php } ?> 
-<!-- <div class="col-6 border-bottom border-dark" id="invoice_dated">
+<div class="col-6  border-right border-bottom border-dark text-right" id="invoice_dated">
 <span class=""><b>Purchase Date : </b></span>
 <span class="text-val"><b><?=date('d-m-Y',strtotime($purchase_order_dt[0]['created_at']))?></b></span>
-</div> -->
 </div>
+</div>
+
+ <?php } ?> 
+
 
 
 
@@ -500,14 +510,14 @@ if ($vendor['pincode']!='') {
 
 
 </div>
-<div class="col-sm-6 col-md-6 col-lg-6 shippingDetails">
-<div class="row">
+<div class="col-sm-6 col-md-6 col-lg-6 ">
+<!-- <div class="row">
 
 <div class="col-12 text-center border-left border-right border-bottom border-dark" id="invoice_dated">
 <span class=""><b>Purchase Date : </b></span>
 <span class="text-val"><b><?=date('d-m-Y',strtotime($purchase_order_dt[0]['created_at']))?></b></span>
 </div>
-</div>
+</div> -->
 
 
 
@@ -717,43 +727,30 @@ if ($purchase_order_shipping[0]['pincode']!='') {
   Amount chargeable (in words)<br><span class="font-weight-bold"><?php echo getIndianCurrency(round($purchase_order_dt[0]['grand_total'])); ?></span></p>
 </div>
 </div> -->
-<div class="row border border-dark shippingDetails">
-<div class="col-sm-12 col-md-12 col-lg-12 mt-2 declaration_p">
-<p class="font-weight-bold" style="margin-bottom:0;">Comments / Special Instruction&nbsp;:&nbsp;</p>
-<p style="font-size: 10px;overflow-wrap: break-word;"><?=$shop_result1[0]['declaration']?> </p>
-</div>
+
+<div class="row border  border border-dark">
+ <div class="col-sm-12 col-md-12 col-lg-12 mt-2 declaration_p">
+  <p class="font-weight-bold" style="margin-bottom:0;">Comments / Special Instruction&nbsp;:&nbsp;</p>
+  <p style="font-size: 10px;overflow-wrap: break-word;"><?=$shop_result1[0]['declaration']?> </p>
+ </div>
 
 </div>
-<div class="row border border-dark shippingDetails" style="height: 180px">
-<div class="col-sm-6 col-md-6 col-lg-6">
-
-
-<div class=""><p class="font-weight-bold" style="margin-bottom:0;">Note&nbsp;:&nbsp;</p><div style="font-size: 10px;overflow-wrap: break-word;"><?=$purchase_order_dt[0]['purchase_note']?></div></div>
-</div>
-<div class="col-sm-6 col-md-6 col-lg-6 border-left border-top border-dark">
-<div class="row">
-<span class="col p-0 " style="text-align: center !important"><b>For GALAXON MAX PRIVATE LIMITED</b></span>
-</div>
-<div class="row">&nbsp;</div>
-<div class="row">&nbsp;</div>
-<div class="row">&nbsp;</div>
-<div class="row">&nbsp;</div>
-<div class="row">&nbsp;</div>
-<!-- <div class="row">&nbsp;</div> -->
-<div class="row">
-
-
-
-<span class="col p-0 text-center">
-  <?php if ($shop_result1[0]['shop_logo']!='') {?>
-<img src="../uploads/<?=$shop_result1[0]['shop_logo']?>" alt="Shop_logo" style="width: 140px;height:80px;" />
+<div class="row border  border border-dark" style="height: 150px;">
+ <div class="col-6 border-right border-dark" style="height: 149px;">
+ <div><b>Note:</b></div>
+ </div>
+ <div class="col-6 " >
+ <div class="text-center"><b>For GALAXON MAX PRIVATE LIMITED</b></div>
+ <div>
+  <?php if ($shop_result[0]['shop_image']!='') {?>
+<center><img src="../uploads/<?=$shop_result1[0]['shop_logo']?>" alt="Shop_logo" style="width: 140px;height:80px;" /></center>
 <?php }?>
-<br>
-Authorised Signatory
-</span>
 </div>
+ <p class="text-center shop_logo">Authorized Signature</p>
+ </div>
+
 </div>
-</div>
+
 </div> 
 <div class="container-fluid col-sm-12 col-md-12 col-lg-12 p-0 text-center mb-1">
 </div>

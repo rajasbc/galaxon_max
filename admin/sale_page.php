@@ -1138,6 +1138,10 @@ $items=json_encode($items);
         if (res.status=='success') {
          global_alert_modal('success','Sale Order SuccessFully...');
          window.location='branch_received_order.php';
+        }else{
+
+           global_alert_modal('warning','Enter Available Quantity ...');
+
         }
        }
 

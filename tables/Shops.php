@@ -390,7 +390,7 @@ return $result;
 
 }
 public function shop_details(){
-$sql = 'select * from '.$this->tablename.' where branch_id='.$_SESSION['branch_id'].' and status="ENABLED"';
+$sql = 'select * from '.$this->tablename.' where branch_id= '.$_SESSION['branch_id'].' and status="ENABLED"';
 
 $result = $this->db->GetResultsArray($sql);
 

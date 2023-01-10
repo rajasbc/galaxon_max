@@ -374,7 +374,7 @@ if ($vendor['pincode']!='') {
 
 <div class="col-12 border-left border-right  border-bottom border-dark" id="buyers_dated">
 
-<span class=""><b>Vendor Details</b></span>
+<span class=""><b>Details</b></span>
 
 </div>
 
@@ -740,9 +740,13 @@ if ($purchase_order_shipping[0]['pincode']!='') {
  <div><b>Note:</b></div>
  </div>
  <div class="col-6 " >
+  <?php if($_SESSION['type']=='ADMIN'){ ?>
  <div class="text-center"><b>For GALAXON MAX PRIVATE LIMITED</b></div>
+<?php }else{?>
+ <div class="text-center"><b><?=$branch_result[0]['name']?></b></div>
+ <?php }?>
  <div>
-  <?php if ($shop_result[0]['shop_image']!='') {?>
+  <?php if ($shop_result1[0]['shop_image']!='') {?>
 <center><img src="../uploads/<?=$shop_result1[0]['shop_logo']?>" alt="Shop_logo" style="width: 140px;height:80px;" /></center>
 <?php }?>
 </div>

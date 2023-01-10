@@ -56,6 +56,7 @@ class Shops extends Dbconnection {
 
 		$shop['name'] = $this->db->getpost('shop_name');
 		$shop['shop_id'] = $_SESSION['shop_id'];
+		$shio['branch_id'] = $_SESSION['branch_id'];
 		$shop['shop_registration_number'] = $this->db->getpost('registration_no');
 		$shop['dl_no'] = $this->db->getpost('dl_no');
 		$shop['shop_gst_no'] = $this->db->getpost('shop_gst_no');
@@ -118,7 +119,7 @@ class Shops extends Dbconnection {
 	public function get_user(){
 
 
-		$sql = "select * from users where shop_id = '".$_SESSION['shop_id']."'";
+		$sql = "select * from users where branch_id = '".$_SESSION['branch_id']."' and is_active='1'";
 
 		$result = $this->db->GetResultsArray($sql);
 
@@ -129,7 +130,7 @@ class Shops extends Dbconnection {
 	public function get_shop_details(){
 
 
-		$sql = "select * from ".$this->tablename." where shop_id = '".$_SESSION['shop_id']."'";
+		$sql = "select * from ".$this->tablename." where branch_id = '".$_SESSION['branch_id']."' and status='ENABLED' ";
 
 		$result = $this->db->GetResultsArray($sql);
 
@@ -397,8 +398,26 @@ $result = $this->db->GetResultsArray($sql);
 return $result;
 
 }
+public function show_branch(){
+$sql = 'select * from '.$this->tablename.' where branch_id!='.$_SESSION['branch_id'].' and status="ENABLED"';
+
+$result = $this->db->GetResultsArray($sql);
 
 
+return $result;
+
+}
+
+public function get_shop_name($b_id){
+
+$sql = 'select * from '.$this->tablename.' where branch_id='.$b_id.' and status="ENABLED"';
+
+$result = $this->db->GetResultsArray($sql);
+
+
+return $result;
+
+}
 
 }
 ?>

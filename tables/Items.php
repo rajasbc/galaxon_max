@@ -152,5 +152,18 @@ public function get_sale_items($id){
 
 }
 
+public function get_branch_items(){
+
+$sql = 'select sum(qty) as qty,branch_id from '.$this->tablename.' where branch_id!="'.$_SESSION['branch_id'].'" and is_deleted="NO" group by branch_id';
+$result=$this->db->GetResultsArray($sql);
+// print_r($result);die();
+
+return $result;
+
+
+
+
+}
+
 }
 ?>

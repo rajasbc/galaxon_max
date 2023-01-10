@@ -1,5 +1,5 @@
 <?php
-// error_reporting(E_ALL);
+
 class BranchSale extends Dbconnection {
 	var $name;
 	var $db;
@@ -172,6 +172,15 @@ public function get_items($id,$b_id){
 $sql = 'select * from '.$this->tablename2.' where po_id = '.$id.' and branch_id = '.$b_id.'';
 $result = $this->db->GetResultsArray($sql);
 return $result;
+
+}
+public function get_transaction($fdate,$tdate,$branch_id){
+
+ $sql = "select * from ".$this->tablename." where date(created_at)>='".$fdate."' and date(created_at)<='".$tdate."' and branch_id='".$branch_id."'";
+$result = $this->db->GetResultsArray($sql);
+
+return $result;
+
 
 }
 

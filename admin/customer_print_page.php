@@ -5,6 +5,7 @@ $obj=new Shops();
 $sales_obj = new CustomerSale();
 $customer_result = $customer_obj->get_customer(base64_decode($_GET['id']));
 $shop_result=$obj->shop_details();
+
 $sales_item = $sales_obj->get_sale_dt(base64_decode($_GET['id']));
 $sales_item_variety=$sales_obj->get_sale_item_dt($sales_item[0]['sale_id']);
 
@@ -242,7 +243,7 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 
  
 
-  <img src="../uploads/<?=$customer_result[0]['vendor_logo']?>" style="width: 12rem; height: 7rem; position: absolute;bottom: 1rem;left: 0.5rem;"  >
+  <img src="../uploads/<?=$shop_result[0]['shop_logo']?>" style="width: 12rem; height: 7rem; position: absolute;bottom: 1rem;left: 0.5rem;"  >
 
 
 
@@ -253,18 +254,15 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 
 
 <div class="col-8 mb-0 text-center">
-  <div class="col-12 text-left" style="font-size: 16px !important;">
-<b>Sales Details</b>
-</div>
-
-<div class="col-12 text-left" style="font-size: 26px !important;"><b><?=$customer_result[0]['name']?></b>
+  
+<div class="col-12 text-left" style="font-size: 26px !important;"><b><?=$shop_result[0]['name']?></b>
 </div>
 <!-- <br> -->
-<div class="col-12 text-left" style="font-size: 14px;"><?=$customer_result[0]['address']?><span>-</span><span><?=$customer_result[0]['pincode']?></span></div>
+<div class="col-12 text-left" style="font-size: 14px;"><?=$shop_result[0]['address1']?><span>-</span><span><?=$shop_result[0]['pincode']?></span></div>
 
-<div class="col-12 text-left" style="font-size: 14px;">Phone : <?=$customer_result[0]['mobile_no']?></div>
-<div class="col-12 text-left" style="font-size: 14px;">Mail : <?=$customer_result[0]['email']?></div>
-<div class="col-12 text-left" style="font-size: 14px;font-weight: bold;">GSTIN : <?=$customer_result[0]['gst']?></div>
+<div class="col-12 text-left" style="font-size: 14px;">Phone : <?=$shop_result[0]['mobile_no']?></div>
+<div class="col-12 text-left" style="font-size: 14px;">Mail : <?=$shop_result[0]['email']?></div>
+<div class="col-12 text-left" style="font-size: 14px;font-weight: bold;">GSTIN : <?=$shop_result[0]['shop_gst_no']?></div>
 </div>
 
 
@@ -341,7 +339,7 @@ if ($vendor['pincode']!='') {
 
 <div class="col-12 border-left border-right  border-bottom border-dark" id="buyers_dated">
 
-<span class=""><b>Branch Details</b></span>
+<span class=""><b>Customer Details</b></span>
 
 </div>
 
@@ -364,7 +362,7 @@ if ($vendor['pincode']!='') {
 
    <?php }else{?>
 
-<span class="text-val"><?=$shop_result[0]['name']?></span>
+<span class="text-val"><?=$customer_result [0]['name']?></span>
 
    <?php } ?> 
 
@@ -394,23 +392,23 @@ if ($vendor['pincode']!='') {
   <?php 
 
 
-  if ($shop_result[0]['address1']!='' || $shop_result[0]['city']!='' || $shop_result[0]['state']!='' || $shop_result[0]['country']!='' || $shop_result[0]['pincode']!=''){?>
+  if ($customer_result[0]['address']!='' || $customer_result[0]['city']!='' || $customer_result[0]['state']!='' || $customer_result[0]['country']!='' || $customer_result[0]['pincode']!=''){?>
 
 <span class="text-val"> <?php 
-if ($shop_result[0]['address1']!='') {
-   echo $shop_result[0]['address1'];
+if ($customer_result[0]['address']!='') {
+   echo $customer_result[0]['address'];
 }
-if ($shop_result[0]['city']!='') {
-   echo ','.$shop_result[0]['city'];
+if ($customer_result[0]['city']!='') {
+   echo ','.$customer_result[0]['city'];
 }
-if ($shop_result[0]['state']!='') {
-   echo ','.$shop_result[0]['state'];
+if ($customer_result[0]['state']!='') {
+   echo ','.$customer_result[0]['state'];
 }
-if ($shop_result[0]['country']!='') {
-   echo ','.$shop_result[0]['country'];
+if ($customer_result[0]['country']!='') {
+   echo ','.$customer_result[0]['country'];
 }
-if ($shop_result[0]['pincode']!='') {
-   echo ','.$shop_result[0]['pincode'];
+if ($customer_result[0]['pincode']!='') {
+   echo ','.$customer_result[0]['pincode'];
 }
     ?></span>
 <?php }  ?>
@@ -427,7 +425,7 @@ if ($shop_result[0]['pincode']!='') {
 
 
 
-<span class="text-val"><?=$shop_result[0]['mobile_no']?></span>
+<span class="text-val"><?=$customer_result [0]['mobile_no']?></span>
 
 
 
@@ -440,7 +438,7 @@ if ($shop_result[0]['pincode']!='') {
 </div>
 <div class="col-8 border-left border-right border-bottom border-dark" id="motor_vehicle_no">
 
-<span class="text-val"><?=$shop_result[0]['email']?></span>
+<span class="text-val"><?=$customer_result[0]['email']?></span>
 
 </div>
 </div>
@@ -453,7 +451,7 @@ if ($shop_result[0]['pincode']!='') {
 </div>
 <div class="col-8  border-left border-right  border-dark" id="motor_vehicle_no">
 
-<span class="text-val"><?=$shop_result[0]['shop_gst_no']?></span>
+<span class="text-val"><?=$customer_result[0]['gst']?></span>
 
 </div>
 </div>
@@ -573,21 +571,19 @@ if ($shop_result[0]['pincode']!='') {
 </div>
 <div class="col-sm-6 col-md-6 col-lg-6 border-left border-top border-dark">
 <div class="row">
-<span class="col p-0 " style="text-align: center !important"><b>For GALAXON MAX PRIVATE LIMITED</b></span>
+<span class="col p-0 " style="text-align: center !important"><b><?=$shop_result[0]['name']?></b></span>
 </div>
 <div class="row">&nbsp;</div>
 <div class="row">&nbsp;</div>
-<div class="row">&nbsp;</div>
-<div class="row">&nbsp;</div>
-<div class="row">&nbsp;</div>
+
 <!-- <div class="row">&nbsp;</div> -->
 <div class="row">
 
 
 
 <span class="col p-0 text-center">
-  <?php if ($shop_result1[0]['shop_logo']!='') {?>
-<img src="../uploads/<?=$shop_result1[0]['shop_logo']?>" alt="Shop_logo" style="width: 140px;height:80px;" />
+  <?php if ($shop_result[0]['shop_image']!='') {?>
+<img src="../uploads/<?=$shop_result[0]['shop_image']?>" alt="Shop_logo" style="width: 140px;height:80px;" />
 <?php }?>
 <br>
 Authorised Signatory

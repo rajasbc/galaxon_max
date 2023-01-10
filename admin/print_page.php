@@ -364,7 +364,7 @@ if ($vendor['pincode']!='') {
 
 <div class="col-12 border-left border-right  border-bottom border-dark" id="buyers_dated">
 
-<span class=""><b>Vendor Details</b></span>
+<span class=""><b> Details</b></span>
 
 </div>
 
@@ -731,14 +731,17 @@ if ($purchase_order_shipping[0]['pincode']!='') {
 <div class=""><p class="font-weight-bold" style="margin-bottom:0;">Note&nbsp;:&nbsp;</p><div style="font-size: 10px;overflow-wrap: break-word;"><?=$purchase_order_dt[0]['purchase_note']?></div></div>
 </div>
 <div class="col-sm-6 col-md-6 col-lg-6 border-left border-top border-dark">
+
 <div class="row">
+<?php if($_SESSION['type']=="ADMIN"){ ?>
 <span class="col p-0 " style="text-align: center !important"><b>For GALAXON MAX PRIVATE LIMITED</b></span>
+<?php }else{?>
+<span class="col p-0 " style="text-align: center !important"><b><?=$branch_result[0]['name']?></b></span>
+<?php }?>
 </div>
 <div class="row">&nbsp;</div>
 <div class="row">&nbsp;</div>
-<div class="row">&nbsp;</div>
-<div class="row">&nbsp;</div>
-<div class="row">&nbsp;</div>
+
 <!-- <div class="row">&nbsp;</div> -->
 <div class="row">
 

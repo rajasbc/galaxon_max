@@ -357,6 +357,37 @@ if (empty($_SESSION)==true) {
           </li>
 
 
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-code-branch"></i>
+              <p>
+               Branch
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="branch.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Branch</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="branch_transaction.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Branch Transaction</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="branch_stock.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Branch Stock</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+
 
 
 
@@ -387,12 +418,7 @@ if (empty($_SESSION)==true) {
                   <p>Profile</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="branch.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Branch</p>
-                </a>
-              </li>
+             
               <!-- <li class="nav-item">
                 <a href="" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -691,6 +717,26 @@ if (empty($_SESSION)==true) {
                   <p>Payment Details</p>
                 </a>
               </li> -->
+
+
+            </ul>
+          </li>
+           <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-globe"></i>
+              <p>
+                Setting
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="branch_profile.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Profile</p>
+                </a>
+              </li>
+              
             </ul>
           </li>
           

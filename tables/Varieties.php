@@ -108,6 +108,16 @@ $result=$this->db->GetResultsArray($sql);
 return $result;
 
 }
+public function get_stock_variety($item_id,$b_id){
+
+$sql = 'select a.*,b.* from variety_items a join Varieties b on a.variety_id=b.variety_id where a.branch_id='.$b_id.' and a.item_id='.$item_id.' and b.branch_id='.$b_id.' ';
+
+$result = $this->db->GetResultsArray($sql);
+
+return $result;
+
+}
+
 
 }
 ?>

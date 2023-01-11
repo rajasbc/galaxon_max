@@ -7,6 +7,7 @@ $branch = $obj->show_branch();
 ?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper watermark_img">
+
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
@@ -21,6 +22,28 @@ $branch = $obj->show_branch();
              
             </ol>
           </div>
+
+
+          <div class="col-lg-3 col-md-3 col-sm-3 mx-1 m-1">
+              <div class="input-group input-group-sm ">
+                
+                  <select class="form-control"  name='select_user' id='select_user' >
+                    <option value="0">Select Branch</option>
+                    <?php
+                    foreach ($branch as $value) {
+                      
+                      echo "<option value='".$value['branch_id']."' data-id='".$value['branch_id']."'>". $value["name"]."</option>";
+                      
+                    }
+
+
+                    ?>
+                  </select>
+
+
+              
+              </div>
+            </div>
        
 		
 					
@@ -44,10 +67,10 @@ $branch = $obj->show_branch();
                   <thead>
                   <tr>
                     <th style="width: 20px">S.No</th>
-                    <th style="width: 100px">Name</th>
-                    <th style="width: 100px">Branch Code</th>
+                    <th style="width: 100px">Product Name</th>
+                    <th style="width: 100px">Quantity</th>
            <!--          <th style="width: 80px">Product Name</th> -->
-                    <th style="width: 100px">Available Quantity</th>
+                    
                     <th style="width: 100px">Action</th>
            
                   </tr>
@@ -94,37 +117,46 @@ include 'footer.php';
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
   });
 </script>
+
 <script type="text/javascript">
-  function get_data(){
+ $("#select_user").change(function(){
+var branch_id = $(this).val();
 
-  $.ajax({
-      type:'post',
-      url:'../ajaxCalls/view_branch_stock.php',
-      dataType:'JSON',
-      data:{},
-      success:function(res){
-        var table = $('#example1').DataTable();
-        table.clear();
-        table.rows.add(res).draw();
+$.ajax({
+ 
+  type:'post',
+  url:'../ajaxCalls/view_branch_stock.php',
+  dataType:'JSON',
+  data:{'branch_id':branch_id},
+    success:function(res){
+    var table = $('#example1').DataTable();
+    table.clear();
+    table.rows.add(res).draw();
 
-      }
+          
+    }
 
-  });
 
-  }
+});
+
+
+
+
+ });
+
+
+
+
+
 </script>
 <script type="text/javascript">
   function view_stock_item(e){
 
-var branch_id = $(e).data('id');
+var item_id = $(e).data('id');
+var branch_id = $(e).val();
 
-$.ajax({
-     type:'post',
-     dataType:'JSON',
-     url:'../ajaxCalls/view_branch_variety.php',
-     data:{'branch_id':branch_id},
 
-});
+window.location='view_branch_variety.php?item_id='+btoa(item_id)+'&branch_id='+btoa(branch_id);
   }
 
 

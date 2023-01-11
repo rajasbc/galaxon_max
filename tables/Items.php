@@ -150,11 +150,12 @@ public function get_sale_items($id){
 		// print_r($result);die();
 		return $result;
 
+
 }
 
-public function get_branch_items(){
+public function get_branch_items($b_id){
 
-$sql = 'select sum(qty) as qty,branch_id from '.$this->tablename.' where branch_id!="'.$_SESSION['branch_id'].'" and is_deleted="NO" group by branch_id';
+$sql = 'select * from '.$this->tablename.' where branch_id="'.$b_id.'" and is_deleted="NO"';
 $result=$this->db->GetResultsArray($sql);
 // print_r($result);die();
 

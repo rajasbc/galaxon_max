@@ -13,7 +13,7 @@ $branch_name = $obj1->get_branch_name($sale_details[0]['branch_id']);
 
 $purchase_order_dt=$obj->get_branch_order($_GET['id'],$_GET['branch_id']);
 
-
+// print_r($purchase_order_dt);die();
 
 
 
@@ -33,7 +33,7 @@ $items=array();
 $i=0;
 foreach ($purchase_order_dt as $key => $value) {
 
-  
+   
 
  $i++;
  $ttl=$value['total']+$value['tax_amt'];
@@ -54,12 +54,13 @@ foreach ($purchase_order_dt as $key => $value) {
   "gstpercentage"=>$value['gst']/100,
   "order_qty"=>$value['qty'],
   "rec_qty"=>$value['received_qty'],
-  "enter_qty"=>$value['qty'],
+  "enter_qty"=>$value['qty']-$value['received_qty'],
   "gstamount"=>$value['tax_amt'],
   "total"=>$value['total'],
   "deleted"=>'no',
   "flag"=>'old',
   "main_id"=>$value['id'],
+
   "po_id"=>$_GET['id'],
  ];
 }
@@ -331,6 +332,10 @@ $items=json_encode($items);
                      $admin_var_qty = $obj2->get_qty($row['var_id']); 
                     $sno++;
                     $description='';
+
+                    $remain_qty = $row['qty']-$row['received_qty'];
+
+                    // print_r($remain_qty);die();
                     if ($row['sub_category']!='' && $row['sub_category']!=0) {
                      $description =  $description_obj->get_description_dt($row['sub_category']);
                      $description_name=$description[0]['name'];
@@ -351,7 +356,7 @@ $items=json_encode($items);
                     echo '<td class=" ch-4">'.$row['var_name'].'</td>';
                     echo '<td class="text-left ch-4">';
 
-                    echo '<input type="hidden" id="admin_qty'.$sno.'" value= "'.$admin_var_qty[0]['qty'].'"><input onkeyup=quantityupdate('.$sno.',this) class="form-control quantity" name="quantity[]" id="quantity'.$sno.'" value="'.$row['qty'].'" style="width:4rem; height:1.75rem; font-size:0.9rem;">';
+                    echo '<input type="hidden" id="admin_qty'.$sno.'" value= "'.$admin_var_qty[0]['qty'].'"><input onkeyup=quantityupdate('.$sno.',this) class="form-control quantity" name="quantity[]" id="quantity'.$sno.'" value="'.$remain_qty.'" style="width:4rem; height:1.75rem; font-size:0.9rem;">';
 
                     echo '</td>';
                     echo '<td class="text-left ch-10">'.$description_name.'</td>';

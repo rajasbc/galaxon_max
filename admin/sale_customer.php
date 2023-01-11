@@ -134,6 +134,11 @@ $category =  $category_obj->get_category_data();
                    <input type="hidden" name="sno" id="sno" value="0">
                    <input type="hidden" name="customer_id" id="customer_id" value="0">
                   <input type="text" name="customer" id="customer" class="form-control" placeholder="Enter Your Customer" autofocus>
+              
+                </div>
+                 <div class="col-3 py-20px form-group mb-2">
+                    <a href=""><i class='fa fa-plus-circle' style="width: 50px;"></i></a>
+                   
                 </div>
 
                      <div class="col-3 form-group mb-2">
@@ -142,6 +147,8 @@ $category =  $category_obj->get_category_data();
                    <input type="hidden" name="nvendor_id" id="nvendor_id" value="0">
                   <!-- <input type="hidden" name="vendor" id="vendor" class="form-control" placeholder="Enter Vendor" autofocus> -->
                 </div>
+
+               
 
 
 

@@ -17,14 +17,16 @@ class Customers extends Dbconnection {
 		if (count($check_res)>0) {
 			return ['status'=>'alert'];
 		}
-		// $sql='select max(vendor_code) as code from '.$this->tablename;
-		// $result=$this->db->GetResultsArray($sql);
-		// if ($result[0]['code']!='') {
-		// 	$vendor_code=$result[0]['code'];
-		// 	$vendor_code++;
-		// }else{
-		// 	$vendor_code='GLXV0001';
-		// }
+		$sql='select max(customer_code) as code from '.$this->tablename.' where branch_id='.$_SESSION['branch_id'].'';
+		$result=$this->db->GetResultsArray($sql);
+	
+		if ($result[0]['code']!='') {
+
+			$customer_code=$result[0]['code'];
+			$customer_code++;
+		}else{
+			$customer_code='GLXC0001';
+		}
 
 		$customer=array();
 		if ($_FILES["image"]["name"]!='') {
@@ -50,7 +52,7 @@ class Customers extends Dbconnection {
 		$customer['branch_id']=$_SESSION['branch_id'];
 		$customer['company_name']=$this->db->getpost('customer_company_name');
 		$customer['mobile_no']=$this->db->getpost('mobile_no');
-		// $customer['vendor_code']=$vendor_code;
+		$customer['customer_code']=$customer_code;
 		$customer['email']=$this->db->getpost('email');
 		$customer['gst']=$this->db->getpost('gst');
 		$customer['address']=$this->db->getpost('address');
@@ -176,6 +178,16 @@ $sql = 'select * from '.$this->tablename.'where branch_id='.$_SESSION['branch_id
 
 $result = $this->db->GetResultsArray($sql);
 return $result;
+
+}
+public function get_customer_name($id){
+
+$sql = 'select * from '.$this->tablename.' where id='.$id.' and branch_id='.$_SESSION['branch_id'].'';
+$result = $this->db->GetResultsArray($sql);
+
+
+return $result;
+
 
 }
 

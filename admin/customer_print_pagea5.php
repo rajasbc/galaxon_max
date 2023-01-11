@@ -310,7 +310,7 @@ if ($vendor['pincode']!='') {
    <span class=""><b>Bill No : </b></span>
    <span class="text-val"><b><?=$sales_item[0]['sale_id']?></b></span>
   </div>
-  <div class="col-6  border-left text-right  border-bottom border-dark" id="invoice_number">
+  <div class="col-6   text-right  border-bottom border-dark" id="invoice_number">
    <span class=""><b>Sale Date : </b></span>
    <span class="text-val"><b><?=date('d-m-Y',strtotime($sales_item[0]['created_at']))?></b></span>
   </div>

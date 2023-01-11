@@ -1,5 +1,4 @@
 <?php
-
 class BranchSale extends Dbconnection {
 	var $name;
 	var $db;

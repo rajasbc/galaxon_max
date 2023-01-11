@@ -883,3 +883,5 @@ if (($last_index-$end_index)<=$numItemShow) {
       return 'INR ' . ucwords($Rupees) . ($paise ? ' and ' . ucwords($paise) : '') . ' Only';
       }
       ?>
+
+      

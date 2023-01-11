@@ -1,5 +1,8 @@
 <?php
 include 'header.php';
+error_reporting(E_ALL);
+
+
 ?>
 
 

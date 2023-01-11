@@ -558,15 +558,14 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
 
       $branch_sale = array();
 
-    $sql = 'select * from branch_sale where po_id = '.$this->db->getpost('po_id').' and branch_id='.$_SESSION['branch_id'].'';
+    $sql = 'select * from branch_sale where po_id = '.$this->db->getpost('po_id').' and branch_id='.$_SESSION['branch_id'].' and status!="PAID"';
+    $total_paid_amt=$this->db->getpost('paid_amt');
     
     $result = $this->db->GetResultsArray($sql);
-
-
-     $branch_sale['paid_amt'] = $result[0]['paid_amt']+$this->db->getpost('paid_amt');
-  $branch_sale['balance_amt'] = $result[0]['balance_amt']-$this->db->getpost('paid_amt');
-
-     // print_r($branch_sale['balance_amt']);die();
+    foreach ($result as $key => $value) {
+      if ($total_paid_amt > 0) {
+  $branch_sale['paid_amt'] = $value['paid_amt']+$total_paid_amt;
+  $branch_sale['balance_amt'] = $value['balance_amt']-$total_paid_amt;
 
      if($branch_sale['balance_amt']==0){
 
@@ -580,7 +579,14 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
 
    }
 
-   $branch_sale_update = $this->db->mysql_update('branch_sale',$branch_sale,'po_id='.$this->db->getpost('po_id'));
+   $branch_sale_update = $this->db->mysql_update('branch_sale',$branch_sale,'id='.$value['id']);
+   $total_paid_amt=$total_paid_amt-$value['balance_amt'];
+      }
+    
+    }
+
+
+   
 
 
 }
@@ -1027,7 +1033,7 @@ public function insert_shipping(){
 
 public function get_order(){
 
-$sql = 'select * from '.$this->tablename.' where branch_id!="0" and vendor_id=0 and order_type="NEW" and is_deleted="NO"';
+$sql = 'select * from '.$this->tablename.' where branch_id!="0" and vendor_id=0 and order_type!="RECEIVED" and is_deleted="NO"';
 
 $result = $this->db->GetResultsArray($sql);
 
@@ -1040,6 +1046,7 @@ public function branch_name($id){
 
 $sql = 'select sum(a.qty) as qty ,b.branch_code,b.name from purchase_order_details a join shop_profile b on a.branch_id=b.branch_id where a.purchase_id='.$id.' and a.is_deleted="NO"';
 $result = $this->db->GetResultsArray($sql);
+
 
 return $result;
 }

@@ -2,11 +2,14 @@
 
 include '../tables/config.php';
 
+// print_r($_POST);die();
+
 $obj = new Items();
 $obj1 = new Shops();
-$result = $obj->get_branch_items();
+$result = $obj->get_branch_items($_POST['branch_id']);
 
 if(count($result)){
+
 
        $i=0;
        $j=0;
@@ -15,18 +18,21 @@ if(count($result)){
        foreach ($result as $key => $value) {
        	 $i++;
 
-                 $name = $obj1->get_shop_name($value['branch_id']);
+                 
        	  
-       	   $output[$j] = [$i,$name[0]['name'],$name[0]['branch_code'],$value['qty'],' <button type="button" class="btn btn-primary" data-id="'.$value['branch_id'].'" onclick="view_stock_item(this);">View</button>'];
+       	   $output[$j] = [$i,$value['item_name'],$value['qty'],' <button type="button" class="btn btn-primary" value='.$value['branch_id'].' data-id="'.$value['item_id'].'" onclick="view_stock_item(this);">Variety</button>'];
                
 
          $j++;
 
 
        }
-
           
-}
+}else{
+
+            $output[$j] = ["No Data Found"];
+       }
+
 
 
 

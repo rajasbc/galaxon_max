@@ -18,10 +18,11 @@ if(count($result)>0){
   $j=0;
  foreach ($result as $key => $value) {
          $result1 = $obj->branch_name($value['id']);
+
          $result2 = $obj2->get_bill_no($value['branch_id'],$value['purchase_no']);
  	$i++;
 
- 	if(count($result2)>0){
+ 	if(count($result2)>0 && $value['order_type']=='RECEIVED'){
           
              $sale_btn = '';
          

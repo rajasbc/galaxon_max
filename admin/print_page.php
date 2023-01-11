@@ -537,15 +537,32 @@ if ($vendor['pincode']!='') {
 
 </div>
 <div class="col-sm-6 col-md-6 col-lg-6 shippingDetails">
-<div class="row">
+<!-- <div class="row">
 
-<div class="col-12 text-center border-left border-right  border-dark" id="invoice_dated">
+<div class="col-12 text-center border-left border-right border-bottom border-dark" id="invoice_dated">
 <?php if($_SESSION['type']=='ADMIN') {?>
+
 <span class=""><b>Purchase Date : </b></span>
 <span class="text-val"><b><?=date('d-m-Y',strtotime($purchase_order_dt[0]['created_at']))?></b></span>
 <?php } ?>
 </div>
+</div> -->
+
+<div class="row">
+  <?php if($_SESSION['type']=='ADMIN') {?>
+
+<div class="col-12 text-center border-left border-right border-bottom border-dark" id="invoice_dated">
+
+
+<span class=""><b>Purchase Date : </b></span>
+<span class="text-val"><b><?=date('d-m-Y',strtotime($purchase_order_dt[0]['created_at']))?></b></span>
+
 </div>
+<?php } ?>
+</div>
+
+
+
 
 
 

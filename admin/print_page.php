@@ -9,6 +9,7 @@ $branch_result = $shop_obj->get_branch_details();
 // print_r($branch_result);die();
 $obj=new PurchaseOrder();
 $purchase_order_dt=$obj->get_purchase_order(base64_decode($_GET['id']));
+// print_r($purchase_order_dt);die();
 $purchase_order_item_dt=$obj->get_purchase_order_item(base64_decode($_GET['id']));
 $purchase_order_shipping=$obj->get_purchase_order_shipping($purchase_order_dt[0]['ship_id']);
 $vendor_obj= new Vendors();
@@ -328,7 +329,13 @@ if ($vendor['pincode']!='') {
 <?php }?>
 
 </div> -->
+<?php if($_SESSION['type']=='ADMIN') { ?> 
 <div class="col-sm-6 col-md-6 col-lg-6 shippingDetails">
+<?php }else{ ?> 
+
+<div class="col-12 shippingDetails">
+<?php } ?>
+
 <div class="row">
   <?php if($_SESSION['type']=="ADMIN"){ ?>
 <div class="col-12 border-left text-center  border-bottom border-dark" id="invoice_number">
@@ -337,10 +344,15 @@ if ($vendor['pincode']!='') {
 <span class="text-val"><b><?=$purchase_order_dt[0]['purchase_no']?></b></span>
 </div>
 <?php }else{ ?>
-<div class="col-12 border-right border-left text-center  border-bottom border-dark" id="invoice_number">
+<div class="col-6 border-right border-left text-center  border-bottom border-dark" id="invoice_number">
 <span class=""><b>Purchase No : </b></span>
 <!-- $shippingDetails['invoice_number'] -->
 <span class="text-val"><b><?=$purchase_order_dt[0]['purchase_no']?></b></span>
+</div>
+<div class="col-6 border-right border-left text-center  border-bottom border-dark" id="invoice_number">
+<span class=""><b>Date : </b></span>
+<!-- $shippingDetails['invoice_number'] -->
+<span class="text-val"><b><?=date('d-m-Y',strtotime($purchase_order_dt[0]['created_at']))?></b></span>
 </div>
 
  <?php } ?> 
@@ -480,7 +492,7 @@ if ($vendor['pincode']!='') {
 </div>
 
 
-<div class="row">
+<!-- <div class="row">
 <div class="col-4 border-left border-right border-dark " id="buyers_order_no">
 <span class="">GST No </span>
 <span class="text-val"></span>
@@ -495,19 +507,63 @@ if ($vendor['pincode']!='') {
 <?php } ?>
 
 </div>
+</div> -->
+
+<?php if($_SESSION['type']=="ADMIN"){ ?>
+<div class="row">
+<div class="col-4 border-left border-right border-dark " id="buyers_order_no">
+<span class="">GST No </span>
+<span class="text-val"></span>
+</div>
+<div class="col-8  border-left border-right  border-dark" id="motor_vehicle_no">
+<span class="text-val"><?=$vendor['gst']?></span>
+</div>
+</div>
+<?php }else{ ?>
+<div class="row">
+<div class="col-4 border-left border-right border-dark " id="buyers_order_no">
+<span class="">GST No </span>
+<span class="text-val"></span>
+</div>
+<div class="col-8  border-left border-right border-dark" id="motor_vehicle_no">
+<span class="text-val">32AAJCG9997N1ZL</span>
+</div>
 </div>
 
 
+
+
+
+<?php } ?>
 
 </div>
 <div class="col-sm-6 col-md-6 col-lg-6 shippingDetails">
-<div class="row">
+<!-- <div class="row">
 
 <div class="col-12 text-center border-left border-right border-bottom border-dark" id="invoice_dated">
+<?php if($_SESSION['type']=='ADMIN') {?>
+
 <span class=""><b>Purchase Date : </b></span>
 <span class="text-val"><b><?=date('d-m-Y',strtotime($purchase_order_dt[0]['created_at']))?></b></span>
+<?php } ?>
 </div>
+</div> -->
+
+<div class="row">
+  <?php if($_SESSION['type']=='ADMIN') {?>
+
+<div class="col-12 text-center border-left border-right border-bottom border-dark" id="invoice_dated">
+
+
+<span class=""><b>Purchase Date : </b></span>
+<span class="text-val"><b><?=date('d-m-Y',strtotime($purchase_order_dt[0]['created_at']))?></b></span>
+
 </div>
+<?php } ?>
+</div>
+
+
+
 
 
 
@@ -827,3 +883,5 @@ if (($last_index-$end_index)<=$numItemShow) {
       return 'INR ' . ucwords($Rupees) . ($paise ? ' and ' . ucwords($paise) : '') . ' Only';
       }
       ?>
+
+      

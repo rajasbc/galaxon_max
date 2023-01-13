@@ -89,9 +89,9 @@ $branch = $obj->show_branch();
                     <th style="width: 100px">Name</th>
                     <th style="width: 100px">Branch Code</th>
                     <th style="width: 80px">Bill No</th>
-                    <th style="width: 100px">Total Amount</th>
+                    <!-- <th style="width: 100px">Total Amount</th>
                     <th style="width: 100px">Paid Amount</th>
-                    <th style="width: 100px">Balance Amount</th>
+                    <th style="width: 100px">Balance Amount</th> -->
            
                   </tr>
                   </thead>

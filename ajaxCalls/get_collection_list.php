@@ -21,7 +21,7 @@ foreach ($result as $key => $value) {
 	// $result2 = $obj1->get_vendor_name($result1[0]['purchase_id']);
 
 	   $i++;
-	$output[$j]=[$i,$result1[0]['name'],$result1[0]['branch_code'],$value['total_qty'],$value['grand_total'],$value['paid_amt'],$value['balance_amt'],$value['status'],'<button type="button" class="btn btn-info" value = "'.$value['branch_id'].'" data-id ="'.$value['po_id'].'" onclick="view_sales_status(this);">Details</button>'];
+	$output[$j]=[$i,$value['bill_no'],$result1[0]['name'],$result1[0]['branch_code'],$value['total_qty']];
 
    $j++;
    $total_amount+=$value['paid_amt'];

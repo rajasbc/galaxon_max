@@ -1,23 +1,54 @@
 <?php 
 include 'header.php';
+
+$obj = new Shops();
+$branch = $obj->show_branch();
+
 ?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper watermark_img">
+
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Collection List</h1>
+            <h1 class="m-0">Branch Top Sale</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
-              <li class="breadcrumb-item active">Collection List</li>
-              <!-- <li class="breadcrumb-item"><a style="color: #007bff;text-decoration: none;background-color: transparent;cursor: pointer;" id="add_vendor">Add Vendor</a></li> -->
+              <li class="breadcrumb-item active">Top Sale</li>
+             
             </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
+          </div>
+
+
+          <div class="col-lg-3 col-md-3 col-sm-3 mx-1 m-1">
+              <div class="input-group input-group-sm ">
+                
+                  <select class="form-control"  name='select_user' id='select_user' >
+                    <option value="0">Select Branch</option>
+                    <?php
+                    foreach ($branch as $value) {
+                      
+                      echo "<option value='".$value['branch_id']."' data-id='".$value['branch_id']."'>". $value["name"]."</option>";
+                      
+                    }
+
+
+                    ?>
+                  </select>
+
+
+              
+              </div>
+            </div>
+       
+		
+					
+
+
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
@@ -35,26 +66,18 @@ include 'header.php';
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>S.No</th>
-                    <th>Bill No</th>
-                    <th>Branch Name</th>
-                    <th>Branch Code</th>
-                    <th>Total Qty</th>
-                    <!-- <th>Total Amount</th>
-                    <th>Total Paid</th>
-                    <th>Balance</th>
-                    <th>Status</th>
- -->
-             
-                   <!--  <th style="width: 150px;">Action</th> -->
+                    <th style="width: 20px">S.No</th>
+                    <th style="width: 100px">Product Name</th>
+                   
+           <!--          <th style="width: 80px">Product Name</th> -->
+                    
+                    <th style="width: 100px">Action</th>
+           
                   </tr>
                   </thead>
                   <tbody>
                   
                   </tbody>
-                  <tfoot colspan="2">
-
-                  </tfoot>
                 </table>
               </div>
               <!-- /.card-body -->
@@ -64,28 +87,29 @@ include 'header.php';
         <!-- /.row (main row) -->
       </div><!-- /.container-fluid -->
     </section>
-    <!-- /.content -->
+   
   </div>
-  <div class="modal fade" id="order_modal" data-backdrop='static'>
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-body">
-             
-            </div>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
   
-      
+
+
+
+
   <?php 
 include 'footer.php';
 ?>
+
+
+
+
+
+     
 <script>
   $(document).ready(function(){
     get_data();
   })
+ 
+</script>
+<script>
   $(function () {
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
@@ -95,47 +119,51 @@ include 'footer.php';
 </script>
 
 <script type="text/javascript">
-  function get_data(){
-      $.ajax({
-type: "POST",
-dataType:"json",
-url: '../ajaxCalls/get_collection_list.php',
-data: {},
-success: function(res){
- var table = $('#example1').DataTable();
-    table.clear();
-    table.rows.add(res).draw();
-}
-
-});
-  }
-</script>
-<script type="text/javascript">
-
- function view_sales_status(e){
-
-  var po_id = $(e).data("id");
-  var branch_id = $(e).val();
-
-
-
- 
+ $("#select_user").change(function(){
+var branch_id = $(this).val();
 
 $.ajax({
-type: "GET",
-dataType:"html",
-url: '../ajaxCalls/get_collection_data.php',
-data: {'id':po_id,'branch_id':branch_id},
-success: function(res){
-  $("#order_modal .modal-body").html(res);
-$("#order_modal").modal('show');
-}
+ 
+  type:'post',
+  url:'../ajaxCalls/view_top_sale.php',
+  dataType:'JSON',
+  data:{'branch_id':branch_id},
+    success:function(res){
+    var table = $('#example1').DataTable();
+    table.clear();
+    table.rows.add(res).draw();
+
+          
+    }
+
 
 });
-    
-  }
+
+
+
+
+ });
+
+
+
+
 
 </script>
+<script type="text/javascript">
+  function view_stock_item(e){
 
+var item_id = $(e).data('id');
+var branch_id = $(e).val();
+
+
+window.location='view_branch_variety.php?item_id='+btoa(item_id)+'&branch_id='+btoa(branch_id);
+  }
+
+
+
+
+
+
+</script>
 
 

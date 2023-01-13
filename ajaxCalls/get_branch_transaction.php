@@ -19,7 +19,7 @@ if(count($get_branch)>0){
 
                   $result = $obj1->get_shop_name($value['branch_id']);
             $i++;
-            $output[$j] = [$i,$result[0]['name'],$result[0]['branch_code'],$value['bill_no'],$value['grand_total'],$value['paid_amt'],$value['balance_amt']];       
+            $output[$j] = [$i,$result[0]['name'],$result[0]['branch_code'],$value['bill_no']];       
 
                  
           $j++;

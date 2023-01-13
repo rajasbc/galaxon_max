@@ -313,6 +313,7 @@ $items=json_encode($items);
                     <th>Tons</th>
                  <!--    <th>Vendor Price</th> -->
                     <th>Mrp</th>
+                    <th>Sales Price</th>
                     <th>Discount</th>
                     <th>Gst</th>
                     <th>Total</th>
@@ -325,6 +326,7 @@ $items=json_encode($items);
                    $totalton = 0;
                    $totdis = 0;
                    $taxableamt = 0;
+                
                    $taxtot = 0;
                    $grandtot = 0;
                    foreach ($purchase_order_dt as $key => $row) {
@@ -335,7 +337,7 @@ $items=json_encode($items);
 
                     $remain_qty = $row['qty']-$row['received_qty'];
 
-                    // print_r($remain_qty);die();
+                  
                     if ($row['sub_category']!='' && $row['sub_category']!=0) {
                      $description =  $description_obj->get_description_dt($row['sub_category']);
                      $description_name=$description[0]['name'];
@@ -343,7 +345,7 @@ $items=json_encode($items);
 
                     $tns = $row['qty']/1000;
 
-                    $ttl=$row['total']+$row['tax_amt'];
+                    $ttl=($row['mrp']* $remain_qty)+$row['tax_amt'];
 
 
                     echo '<tr id="trItem_'.$sno.'">';
@@ -366,13 +368,14 @@ $items=json_encode($items);
                     echo '<td class="text-left ch-4">';
 
                     echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control mrp" name="mrp[]" id="mrp'.$sno.'" value="'.$row['mrp'].'" style="width:5rem; height:1.75rem; font-size:0.9rem;">';
+                    // echo '<td class="text-left ch-4">'.$row['sales_price'].'</td>';
 
-                    // echo '</td>';
-                    // echo '<td class="text-left ch-4">';
+                    echo '</td>';
+                    echo '<td class="text-left ch-4"">';
 
-                    // echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control sale_price" name="sale_price[]" id="sale_price'.$sno.'" value="'.$row['sales_price'].'" style="width:4.3rem; height:1.75rem; font-size:0.9rem;">';
+                    echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control sale_price" name="sale_price[]" id="sale_price'.$sno.'" value="'.$row['sales_price'].'" style="width:4.8rem; height:1.75rem; font-size:0.9rem;">';
 
-                    // echo '</td>';
+                    echo '</td>';
                     echo '<td class="text-left ch-4">';
 
                     echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control discount" name="discount[]" id="discount'.$sno.'" value="'.$row['discount'].'" style="width:4rem; height:1.75rem; font-size:0.9rem;">';
@@ -391,21 +394,24 @@ $items=json_encode($items);
 
                     echo '</tr>';
 
-                    $prt = $row['qty']*$row['mrp'];
+                    $prt =  $remain_qty*$row['mrp'];
                     $disv = $prt*$row['discount']/100;
 
                     $taxable = $prt-$disv;
 
                     $grand = $taxable+$row['tax_amt'];
 
-                    $totalqty = $totalqty+$row['qty'];
+                    $totalqty+= $remain_qty;
+                    // $tot_qty =  $totalqty+$row['qty'];
                     $totalton = $totalton+$tns;
                     $taxableamt = $taxableamt+$taxable;
                     $totdis = $totdis+$disv;
                     $taxtot = $taxtot+$row['tax_amt'];
                     $grandtot = $grandtot+$grand;
 
-                   } ?>
+                   } 
+                  
+                   ?>
                   </tbody>
                   <tfoot>
                    <tr>
@@ -835,7 +841,7 @@ $items=json_encode($items);
       data["category"]=category;
       data["sub_category"]=sub_category;
       data["mrp"]=mrp;
-      // data["sale_price"]=sale_price;
+      data["sale_price"]=sale_price;
       data["discount"]=discount;
       data["gst"]=gst;
       data["quantity"]=quantity;
@@ -893,11 +899,12 @@ $items=json_encode($items);
        '<input onkeyup=fieldupdate({{sno}},this) class="form-control mrp" name="mrp[]" id="mrp{{sno}}" value="{{mrp}}" style="width:5rem; height:1.75rem">',
 
        '</td>',
-       // '<td class="text-left ch-4">',
+       // '<td class="text-left ch-10">{{sale_price}}</td>',
+       '<td class="text-left ch-4">',
 
-       // '<input onkeyup=fieldupdate({{sno}},this) class="form-control sale_price" name="sale_price[]" id="sale_price{{sno}}" value="{{sale_price}}" style="width:5rem; height:1.75rem">',
+       '<input onkeyup=fieldupdate({{sno}},this) class="form-control sale_price" name="sale_price[]" id="sale_price{{sno}}" value="{{sale_price}}" style="width:5rem; height:1.75rem">',
 
-       // '</td>',
+       '</td>',
        '<td class="text-left ch-4">',
 
        '<input onkeyup=fieldupdate({{sno}},this) class="form-control discount" name="discount[]" id="discount{{sno}}" value="{{discount}}" style="width:5rem; height:1.75rem">',
@@ -908,7 +915,7 @@ $items=json_encode($items);
 
        '</td>',
        '<td class="text-left ch-6" id="totalid{{sno}}">{{total}}</td>',
-       '<td class="text-center ch-4">',
+       '<td ch-4">',
        '<button type="button" id="remove_tr{{sno}}" data-id="new" class="btn btn-default btn-sm" onclick="removeItem({{sno}})">',
        '<span class="glyphicon glyphicon-trash">',
        '<i class="fas fa-trash"></i>',

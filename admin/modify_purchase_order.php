@@ -50,7 +50,15 @@ foreach ($purchase_order_item_dt as $key => $value) {
 }
 $items=json_encode($items);
 ?>
+
+
 <style type="text/css">
+<?php if($_SESSION['type']!="ADMIN"){ ?>
+  .hide{
+
+    display: none;
+  }
+ <?php } ?> 
 
  .css-serial {
   counter-reset: serial-number;  /* Set the serial number counter to 0 */
@@ -257,19 +265,19 @@ $items=json_encode($items);
                    <option value="Box">Box</option>
                   </select>
                  </div>
-                 <div class="col-3 form-group mb-3">
+                 <div class="col-3 form-group mb-3 hide">
                   <label>Vendor Price&nbsp;<label class="text-danger">*</label></label>
                   <input type="text" id='mrp' class="form-control enterKeyclass" placeholder="Vendor Price">
                  </div>
-                 <div class="col-3 form-group mb-3">
+                 <div class="col-3 form-group mb-3 hide">
                   <label>Mrp&nbsp;<label class="text-danger">&nbsp;</label></label>
                   <input type="text" id='sale_price' class="form-control enterKeyclass" placeholder="Mrp">
                  </div>
-                 <div class="col-2 form-group mb-3">
+                 <div class="col-2 form-group mb-3 hide">
                   <label>Discount&nbsp;<label class="text-danger">&nbsp;</label></label>
                   <input type="text" id='discount' class="form-control enterKeyclass" placeholder="Discount">
                  </div>
-                 <div class="col-2 form-group mb-3">
+                 <div class="col-2 form-group mb-3 hide">
                   <label>GST&nbsp;<label class="text-danger">&nbsp;</label></label>
 
                   <select class="form-control enterKeyclass" id="gst">
@@ -280,6 +288,8 @@ $items=json_encode($items);
                    <option value="28">28</option>
                   </select>
                  </div>
+
+                 <?php if($_SESSION['type']=="ADMIN"){ ?>
                  <div class="col-2 form-group mb-3">
                   <label>Quantity&nbsp;<label class="text-danger">*</label></label>
                   <input type="text" id='quantity' class="form-control enterKeyclass" placeholder="Quantity">
@@ -287,6 +297,16 @@ $items=json_encode($items);
                  <div class="col-3 form-group mb-3 text-center" style="vertical-align: center">
                   <button class="btn btn-primary" id="add_item">Add</button>
                  </div>
+                 <?php } else{ ?>
+                    <div class="col-1 form-group mb-3">
+                  <label>Quantity&nbsp;<label class="text-danger">*</label></label>
+                  <input type="text" id='quantity' class="form-control enterKeyclass" placeholder="Quantity">
+                 </div>
+                 <div class="col-1 form-group mb-3 text-center" style="vertical-align: center;margin-top: 40px;">
+                  <button class="btn btn-primary" id="add_item">Add</button>
+                 </div>
+                  
+                <?php } ?>
                 </form>
                 <br>
                 
@@ -303,11 +323,11 @@ $items=json_encode($items);
                     <th>Description</th>
                     <th>Units</th>
                     <th>Tons</th>
-                    <th>Vendor Price</th>
-                    <th>Mrp</th>
-                    <th>Discount</th>
-                    <th>Gst</th>
-                    <th>Total</th>
+                    <th class="hide">Vendor Price</th>
+                    <th class="hide">Mrp</th>
+                    <th class="hide">Discount</th>
+                    <th class="hide">Gst</th>
+                    <th class="hide">Total</th>
                     <th>Actions</th>
                    </tr>
                   </thead>
@@ -348,27 +368,27 @@ $items=json_encode($items);
                     echo '<td class="text-left ch-10">'.$row['units'].'</td>';
                     echo '<td class="text-left ch-10" id="tons'.$sno.'">'.$tns.'</td>';
 
-                    echo '<td class="text-left ch-4">';
+                    echo '<td class="text-left ch-4 hide">';
 
                     echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control mrp" name="mrp[]" id="mrp'.$sno.'" value="'.$row['mrp'].'" style="width:5rem; height:1.75rem; font-size:0.9rem;">';
 
                     echo '</td>';
-                    echo '<td class="text-left ch-4">';
+                    echo '<td class="text-left ch-4 hide">';
 
                     echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control sale_price" name="sale_price[]" id="sale_price'.$sno.'" value="'.$row['sales_price'].'" style="width:4.3rem; height:1.75rem; font-size:0.9rem;">';
 
                     echo '</td>';
-                    echo '<td class="text-left ch-4">';
+                    echo '<td class="text-left ch-4 hide">';
 
                     echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control discount" name="discount[]" id="discount'.$sno.'" value="'.$row['discount'].'" style="width:4rem; height:1.75rem; font-size:0.9rem;">';
 
                     echo '</td>';
-                    echo '<td class="text-left ch-4">';
+                    echo '<td class="text-left ch-4 hide">';
 
                     echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control gst" name="gst[]" id="gst'.$sno.'" value="'.$row['gst'].'" style="width:4rem; height:1.75rem; font-size:0.9rem;">';
 
                     echo '</td>';
-                    echo '<td class="text-left ch-6" id="totalid'.$sno.'">'.number_format($ttl,2,'.','').'</td>';
+                    echo '<td class="text-left ch-6 hide" id="totalid'.$sno.'">'.number_format($ttl,2,'.','').'</td>';
 
                     echo'<td><button type="button" class="btn btn-default btn-sm" id="remove_tr'.$sno.'" data-id="old" onclick="removeItem('.$sno.')"><span class="glyphicon glyphicon-trash">
                     <i class="fas fa-trash"></i>
@@ -394,7 +414,7 @@ $items=json_encode($items);
                   </tbody>
                   <tfoot>
                    <tr>
-                    <td colspan="15" class="td-last-1">
+                    <td colspan="15" class="td-last-1 hide">
                      <div class="row">
                       <div class="col-lg-4 col-sm-4 col-md-4">
                        <div class="">
@@ -873,27 +893,27 @@ $items=json_encode($items);
        '<td class="text-left ch-10">{{description}}</td>',
        '<td class="text-left ch-10">{{units}}</td>',
        '<td class="text-left ch-10" id="tons{{sno}}">{{tons}}</td>',
-       '<td class="text-left ch-4">',
+       '<td class="text-left ch-4 hide">',
 
-       '<input onkeyup=fieldupdate({{sno}},this) class="form-control mrp" name="mrp[]" id="mrp{{sno}}" value="{{mrp}}" style="width:5rem; height:1.75rem">',
+       '<input onkeyup=fieldupdate({{sno}},this) class="form-control mrp " name="mrp[]" id="mrp{{sno}}" value="{{mrp}}" style="width:5rem; height:1.75rem">',
 
        '</td>',
-       '<td class="text-left ch-4">',
+       '<td class="text-left ch-4 hide">',
 
        '<input onkeyup=fieldupdate({{sno}},this) class="form-control sale_price" name="sale_price[]" id="sale_price{{sno}}" value="{{sale_price}}" style="width:5rem; height:1.75rem">',
 
        '</td>',
-       '<td class="text-left ch-4">',
+       '<td class="text-left ch-4 hide">',
 
        '<input onkeyup=fieldupdate({{sno}},this) class="form-control discount" name="discount[]" id="discount{{sno}}" value="{{discount}}" style="width:5rem; height:1.75rem">',
 
-       '</td>','<td class="text-left ch-4">',
+       '</td>','<td class="text-left ch-4 hide">',
 
        '<input onkeyup=fieldupdate({{sno}},this) class="form-control gst" name="gst[]" id="gst{{sno}}" value="{{gst}}" style="width:5rem; height:1.75rem">',
 
        '</td>',
-       '<td class="text-left ch-6" id="totalid{{sno}}">{{total}}</td>',
-       '<td class="text-center ch-4">',
+       '<td class="text-left ch-6 hide" id="totalid{{sno}}">{{total}}</td>',
+       '<td class="ch-4">',
        '<button type="button" id="remove_tr{{sno}}" data-id="new" class="btn btn-default btn-sm" onclick="removeItem({{sno}})">',
        '<span class="glyphicon glyphicon-trash">',
        '<i class="fas fa-trash"></i>',

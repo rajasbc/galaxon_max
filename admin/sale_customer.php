@@ -137,7 +137,7 @@ $category =  $category_obj->get_category_data();
               
                 </div>
                  <div class="col-3 py-20px form-group mb-2">
-                    <a href=""><i class='fa fa-plus-circle' style="width: 50px;"></i></a>
+                    <a href=""><i class='fas fa-plus-circle fa-2x pb-1 ' style="width:50px; margin-top:45px"></i></a>
                    
                 </div>
 

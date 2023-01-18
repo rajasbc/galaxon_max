@@ -151,7 +151,7 @@ $sql='select max(sale_id) as sale_id from '.$this->tablename.' where branch_id='
 
   }
   public function customer_sale_details($id){
-  $sql = 'select * from '.$this->tablename2.'where branch_id='.$_SESSION['branch_id'].' and id='.$id.' and is_deleted="NO"';
+  $sql = 'select * from '.$this->tablename.'where branch_id='.$_SESSION['branch_id'].' and id='.$id.' and is_deleted="NO"';
    $result = $this->db->GetResultsArray($sql);
    return $result;
 
@@ -214,6 +214,23 @@ return $result;
 $sql ='select * from '.$this->tablename2.'where sale_id='.$id.' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
 $result = $this->db->GetResultsArray($sql);
 
+return $result;
+
+ }
+ public function get_top_sale($id){
+
+$sql = 'select sum(qty) as qty,item_name,var_id,var_name from '.$this->tablename2.' where branch_id='.$id.' and is_deleted="NO" group by item_name,var_id order by qty DESC';
+$result = $this->db->GetResultsArray($sql);
+
+
+return $result;
+
+
+ }
+ public function product_details($sale_id){
+
+$sql = 'select * from '.$this->tablename2.' where branch_id = '.$_SESSION['branch_id'].' and sale_id='.$sale_id.'';
+$result=$this->db->GetResultsArray($sql);
 return $result;
 
  }

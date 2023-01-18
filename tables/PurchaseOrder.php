@@ -945,6 +945,16 @@ $sql = 'select a.bill_no,a.vendor_id,a.id,b.item_name,b.purchase_id,b.var_id,b.v
 $result = $this->db->GetResultsArray($sql);
 
 
+
+return $result;
+
+
+}
+public function vendor_details_novariety($item_id){
+
+$sql = 'select a.*,b.*,c.* from purchase_order a join purchase_order_details b on a.id=b.purchase_id join vendors c on a.vendor_id=c.id where b.item_id='.$item_id.' and a.bill_no!="" and a.branch_id='.$_SESSION['branch_id'].'';
+
+$result= $this->db->GetResultsArray($sql);
 return $result;
 
 

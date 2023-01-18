@@ -867,7 +867,9 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
       "total":total
       };
             $('#tdata tr').each(function(index) {
-              $(this).find('span.sn').html(index+1);
+            $(this).find('span.sn').html(index+1);
+
+             
             });
             calculation();
             var trItemTemplate = [
@@ -995,6 +997,7 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
      for(vale in itemslist) {
         tempItem = itemslist[vale];
         val=Number(tempItem["quantity"]);
+        alert(val);
         total_qty=total_qty+Number(tempItem["quantity"]);
         total= Number(tempItem["mrp"])*Number(tempItem["quantity"]);
 

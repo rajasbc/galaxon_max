@@ -137,7 +137,7 @@ $category =  $category_obj->get_category_data();
               
                 </div>
                  <div class="col-3 py-20px form-group mb-2">
-                    <a href=""><i class='fas fa-plus-circle fa-2x pb-1 ' style="width:50px; margin-top:45px"></i></a>
+                 <i class='fas fa-plus-circle fa-2x pb-1 ' id='add_customer' style="width:50px; margin-top:45px;color: blue;cursor: pointer;"></i>
                    
                 </div>
 
@@ -478,6 +478,98 @@ $category =  $category_obj->get_category_data();
         <!-- /.modal-dialog -->
 
       <!-- /.modal -->
+      <div class="modal fade" id="add_customer_modal" data-backdrop='static'>
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">customer Details</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form method="POST" id="customerForm" enctype="multipart/form-data" >
+            <div class="modal-body">
+              
+              <input type="hidden" name="edit_customer_id" id="edit_customer_id" value="0">
+              <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">Name&nbsp;<span class="text-danger">*</span></span>
+                  </div>
+                  <input type="text" id='customer_name' name='customer_name' class="form-control enterKeyclass" placeholder="Enter customer Name">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Company Name&nbsp;<span class="text-danger">*</span></span>
+                  </div>
+                  <input type="text" id='customer_company_name' name='customer_company_name' class="form-control enterKeyclass" placeholder="Enter Company Name">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">Mobile.No&nbsp;<span class="text-danger">*</span></span>
+                  </div>
+                  <input type="number" id='mobile_no' name='mobile_no' class="form-control enterKeyclass" placeholder="Enter Mobile Number">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">Email</span>
+                  </div>
+                  <input type="text" id='email' name='email' class="form-control enterKeyclass" placeholder="Enter Email">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">Gst.No</span>
+                  </div>
+                  <input type="text" id='gst' name='gst' class="form-control enterKeyclass" placeholder="Enter GST No">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">Address</span>
+                  </div>
+                  <input type="text" id='address' name='address' class="form-control enterKeyclass" placeholder="Enter Address">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">City</span>
+                  </div>
+                  <input type="text" id='city' name='city' class="form-control enterKeyclass" placeholder="Enter City">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">State</span>
+                  </div>
+                  <input type="text" id='state' name='state' class="form-control enterKeyclass" placeholder="Enter State">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">Country</span>
+                  </div>
+                  <input type="text" id='country' name='country' class="form-control enterKeyclass" placeholder="Enter Country">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">Pincode</span>
+                  </div>
+                  <input type="text" id='pincode' name='pincode' class="form-control enterKeyclass" placeholder="Enter Pincode">
+                </div>
+                 <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">Image</span>
+                  </div>
+                  <input type="file" id='image' name='image' class="form-control " placeholder="Enter Pincode">
+                </div>
+              
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="submit" id="add_customer_btn" class="btn btn-primary">Save</button>
+              <button type="button" style="display: none" id="edit_customer_btn" class="btn btn-primary">Update</button>
+            </div>
+            </form>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
   <?php 
 include 'footer.php';
 ?>
@@ -1034,7 +1126,98 @@ success: function(res){
 });
   }
 </script>
+<script type="text/javascript">
+  $("#add_customer").click(function(){
+     $("#add_customer_modal").modal('show');
+        $("#add_customer_btn").css('display','');
+   $("#edit_customer_btn").css('display','none');
+   $("#customerForm")[0].reset();
 
+  });
+    $("#customerForm").on('submit', function(e){
+    
+        e.preventDefault();
+      var customer_name=$("#customer_name").val();
+      var customer_company_name=$("#customer_company_name").val();
+      var mobile_no=$("#mobile_no").val();
+      var email=$("#email").val();
+      var address=$("#address").val();
+      var city=$("#city").val();
+      var state=$("#state").val();
+      var country=$("#country").val();
+      var pincode=$("#pincode").val();
+     if (customer_name=='' && customer_name==0) {
+      global_alert_modal('warning','Enter customer Name...');
+      $("#customer_name").css("border","1px solid red");
+                    $("#customer_name").focus();
+                    return false;
+        }
+       else{
+        $("#customer_name").css("border","1px solid lightgray");
+       }
+       if (customer_company_name=='' && customer_company_name==0) {
+      global_alert_modal('warning','Enter customer Company Name...');
+      $("#customer_company_name").css("border","1px solid red");
+                    $("#customer_company_name").focus();
+                    return false;
+        }
+       else{
+        $("#customer_company_name").css("border","1px solid lightgray");
+       }
+       if (mobile_no=='' && mobile_no==0) {
+      global_alert_modal('warning','Enter customer Mobile No...');
+      $("#mobile_no").css("border","1px solid red");
+                    $("#mobile_no").focus();
+                    return false;
+        }
+       else{
+        $("#mobile_no").css("border","1px solid lightgray");
+       }
+      var formData = new FormData(this); 
+            formData.append('type','add');
+  $.ajax({
+type: "POST",
+dataType:"json",
+url: '../ajaxCalls/add_customer.php',
+data: formData,
+            dataType: 'json',
+            contentType: false,
+            cache: false,
+            processData:false,
+success: function(res){
+if (res.status=='failed') {
+  
+  global_alert_modal('fail','customer Not Added...');
+    return false;
 
+}else if (res.status=='alert') {
+  
+  global_alert_modal('info','This customer Name Already Stored...');
+  $("#customer_name").focus();
+  $("#customer_name").val('');
+                    return false;
+
+}
+else{
+    global_alert_modal('success','customer Added SuccessFully...');
+    $("#customer_name").val('');
+    $("#customer_company_name").val('');
+    $("#mobile_no").val('');
+    $("#email").val('');
+    $("#address").val('');
+    $("#city").val('');
+    $("#state").val('');
+    $("#country").val('');
+    $("#pincode").val('');
+    $("#add_customer_modal").modal('hide');
+    $("#customerForm")[0].reset();
+    get_data();
+}
+}
+
+});
+});
+    
+</script>
 
 

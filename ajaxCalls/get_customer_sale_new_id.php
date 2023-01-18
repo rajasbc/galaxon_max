@@ -1,9 +1,12 @@
 <?php
 include '../tables/config.php';
+// print_r($_GET['id']);die();
 $obj = new CustomerSale();
 $obj1 = new Customers();
 
 $result =  $obj->customer_sale_details($_GET['id']);
+$result1 = $obj->product_details($result[0]['sale_id']);
+// print_r($result);die();
 $result2 = $obj1->get_customer_details($result[0]['customer_id']);
 $result3 = $obj->get_item_details($_GET['id']);
 $sale_history_result = $obj->sale_payment($result[0]['sale_id']);
@@ -73,7 +76,7 @@ $total_amount_dt=0;
                 </tr>
               </thead>
               <tbody class="text-center" id="tdata">
-              	<?php foreach($result as $item){
+              	<?php foreach($result1 as $item){
               		$item_name
 ?>
               	<tr class=" border-dark line_1">
@@ -151,6 +154,7 @@ $total_amount_dt=0;
 					// print_r($payment_details);
 					$balance=$balance+$total_amount_dt;
 					foreach($sale_history_result as $payment){
+					
 						$i++;
 						$balance=$balance-($payment['credit']+$payment['debit']);
 						

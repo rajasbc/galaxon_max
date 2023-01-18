@@ -13,12 +13,12 @@ $branch = $obj->show_branch();
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Branch Top Sale</h1>
+            <h1 class="m-0">Branch Most Sale</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
-              <li class="breadcrumb-item active">Top Sale</li>
+              <li class="breadcrumb-item active">Most Sale</li>
              
             </ol>
           </div>
@@ -68,10 +68,9 @@ $branch = $obj->show_branch();
                   <tr>
                     <th style="width: 20px">S.No</th>
                     <th style="width: 100px">Product Name</th>
-                   
-           <!--          <th style="width: 80px">Product Name</th> -->
+                    <th  style="width: 20px">Sale Qty</th>
                     
-                    <th style="width: 100px">Action</th>
+                
            
                   </tr>
                   </thead>

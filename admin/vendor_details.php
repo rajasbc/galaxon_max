@@ -1,7 +1,22 @@
 <?php 
 include 'header.php';
+
 $obj = new PurchaseOrder();
 $result=$obj->vendor_variety_details($_GET['id']);
+$result1=$obj->vendor_details_novariety($_GET['id']);
+
+// print_r($result1);die();
+
+if(count($result)>0){
+
+   $vendor_details=$result;
+
+}else{
+
+   $vendor_details =$result1;
+    
+
+}
 ?>
 <div class="content-wrapper">
  <!-- Content Header (Page header) -->
@@ -58,16 +73,25 @@ $result=$obj->vendor_variety_details($_GET['id']);
          $total_qty=0;
          $total_mrp=0;
          $total_sale=0;
- foreach ($result as $key => $value) {
+ foreach ($vendor_details as $key => $value) {
                     // $result2 = $obj->get_bill_no($value['vendor_id']);
+            if($value['var_name']!=""){
 
+              $name = $value['var_name'];
+
+          }else{
+
+              $name = $value['item_name'];
+
+
+          }
                   
 
           $i++;
 
           echo "<tr><td>".$i."</td>
-
-          <td>".$value['var_name']."</td>
+        
+          <td>".$name."</td>
           <td>".$value['bill_no']."</td>
 
           <td>".$value['name']."</td>

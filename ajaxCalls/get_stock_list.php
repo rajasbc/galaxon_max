@@ -17,8 +17,8 @@ if(count($result>0)){
 
 foreach ($result as $key => $value) {
 	$result1 = $obj->get_variety_id($value['item_code']);
-	// $result1 = $
-	// $result2 = $obj1->get_vendor_name($result1[0]['purchase_id']);
+	
+
 
 	   $i++;
 	$output[$j]=[$i,$value['item_name'],$value['qty'],'<button type="button" class="btn btn-info" data-id ="'.$result1[0]['item_id'].'" onclick="view_varieties(this);">Varieties</button> 

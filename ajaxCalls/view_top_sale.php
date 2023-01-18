@@ -4,9 +4,9 @@ include '../tables/config.php';
 
 // print_r($_POST);die();
 
-$obj = new Items();
-$obj1 = new Shops();
-$result = $obj->get_branch_items($_POST['branch_id']);
+$obj = new CustomerSale();
+
+$result = $obj->get_top_sale($_POST['branch_id']);
 
 if(count($result)){
 
@@ -18,9 +18,15 @@ if(count($result)){
        foreach ($result as $key => $value) {
        	 $i++;
 
-                 
+        if($value['var_id']!= 0){
        	  
-       	   $output[$j] = [$i,$value['item_name'],$value['qty'],' <button type="button" class="btn btn-primary" value='.$value['branch_id'].' data-id="'.$value['item_id'].'" onclick="view_stock_item(this);">Variety</button>'];
+       	   $output[$j] = [$i,$value['item_name'].'-'.$value['var_name'],$value['qty']];
+
+            }else{
+
+               $output[$j] = [$i,$value['item_name'],$value['qty']];
+
+            }
                
 
          $j++;

@@ -69,7 +69,7 @@ $branch = $obj->show_branch();
                     <th style="width: 20px">S.No</th>
                     <th style="width: 100px">Product Name</th>
                     <th style="width: 100px">Quantity</th>
-           <!--          <th style="width: 80px">Product Name</th> -->
+                    <th style="width: 80px">Net Amount</th>
                     
                     <th style="width: 100px">Action</th>
            
@@ -78,6 +78,9 @@ $branch = $obj->show_branch();
                   <tbody>
                   
                   </tbody>
+                  <tfoot>
+                    
+                  </tfoot>
                 </table>
               </div>
               <!-- /.card-body -->
@@ -132,8 +135,7 @@ $.ajax({
     var table = $('#example1').DataTable();
     table.clear();
     table.rows.add(res).draw();
-
-          
+   
     }
 
 

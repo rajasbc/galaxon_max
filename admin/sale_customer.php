@@ -88,6 +88,11 @@ $category =  $category_obj->get_category_data();
       z-index: 9999999!important;
     }
     
+    .hide{
+
+      display: none;
+
+    }
 </style>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper ">
@@ -136,14 +141,37 @@ $category =  $category_obj->get_category_data();
                   <input type="text" name="customer" id="customer" class="form-control" placeholder="Enter Your Customer" autofocus>
               
                 </div>
-                 <div class="col-3 py-20px form-group mb-2">
+                 <div class="col-1 form-group mb-2">
                  <i class='fas fa-plus-circle fa-2x pb-1 ' id='add_customer' style="width:50px; margin-top:45px;color: blue;cursor: pointer;"></i>
                    
                 </div>
 
+
+
+              <div class="form-group col-lg-2 col-md-2 col-sm-2" style="padding-top: 50px;">Do you want GST</div>
+              <div class='form-group col-lg-3 col-md-3 col-sm-3'  style="padding-top: 50px;">
+
+                <div class="form-check form-check-inline">
+                  <label class="form-check-label" for="call-yes">Yes&nbsp;</label>
+                  <input class="form-check-input yes" checked= 'checked' type="radio" name='with_gst' id='with_gst' value='yes'>
+                  <label  class="form-check-label" for="call-no">No&nbsp;</label>
+                  <input class="form-check-input no" type="radio" name='with_gst' id='with_gst' value='no'>
+                </div>
+                
+              </div>
+         
+
+ <!-- <div  class="form-check form-check-inline" style="padding-top: 50px;">
+   <label class="form-check-label" for="call-yes">GST&nbsp;&nbsp;</label>
+                  <input class="form-check-input" checked= 'checked' type="radio" name='gst_show' id='gst_show' value='yes'>&nbsp;&nbsp;&nbsp;&nbsp;
+                  <label  class="form-check-label" for="call-no">Without GST&nbsp;&nbsp;</label>
+                  <input class="form-check-input" type="radio" name='gst_show' id='gst_show' value='no'>
+     </div> -->
+
                      <div class="col-3 form-group mb-2">
                   
                    <input type="hidden" name="sno" id="sno" value="0">
+                   <input type="hidden" name="dummy_gst" id="dummy_gst" value="0">
                    <input type="hidden" name="nvendor_id" id="nvendor_id" value="0">
                   <!-- <input type="hidden" name="vendor" id="vendor" class="form-control" placeholder="Enter Vendor" autofocus> -->
                 </div>
@@ -257,7 +285,9 @@ $category =  $category_obj->get_category_data();
                    <label>Discount&nbsp;<label class="text-danger">&nbsp;</label></label>
               <input type="text" id='discount' class="form-control enterKeyclass" placeholder="Discount">
                 </div>
-                <div class="col-2 form-group mb-3">
+
+            
+                <div class="col-2 form-group mb-3" id="main_gst">
                    <label>GST&nbsp;<label class="text-danger">&nbsp;</label></label>
               
               <select class="form-control enterKeyclass" id="gst">
@@ -268,6 +298,9 @@ $category =  $category_obj->get_category_data();
                 <option value="28">28</option>
               </select>
                 </div>
+
+
+
                 <div class="col-2 form-group mb-3">
                    <label>Quantity&nbsp;<label class="text-danger">*</label></label>
               <input type="text" id='quantity' class="form-control enterKeyclass" placeholder="Quantity">
@@ -291,7 +324,7 @@ $category =  $category_obj->get_category_data();
                       <th>Branch Price</th>
                       <th>Mrp</th>
                       <th>Discount</th>
-                      <th>Gst</th>
+                      <th id="test">Gst</th>
                       <th>Total</th>
                       <th>Action</th>
                     </tr>
@@ -309,9 +342,9 @@ $category =  $category_obj->get_category_data();
      <td>&nbsp;</td>
      <td>&nbsp;</td>
      <td>&nbsp;</td>
+     <td class="temp_test">&nbsp;</td>
      <td>&nbsp;</td>
-     <td>&nbsp;</td>
-     <td>&nbsp;</td>
+     <td >&nbsp;</td>
    </tr>
  <?php }?>
 </tbody>
@@ -698,7 +731,18 @@ success: function(res){
      var mrp=$("#mrp").val();
      var sale_price=$("#sale_price").val();
      var discount=$("#discount").val();
-     var gst=$("#gst").val();
+    var a = $("input[type='radio']:checked").val();
+
+   if(a=='no'){
+
+     $("#gst").val(0);
+  var gst = $("#dummy_gst").val();
+
+   }else{
+      var gst =$("#gst").val();
+   
+          
+   }
      var quantity=$("#quantity").val();
      var units=$("#units").val();
      var item_code=$("#item_code").val();
@@ -796,6 +840,7 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
        data["sale_price"]=sale_price;
        data["discount"]=discount;
        data["gst"]=gst;
+
        data["quantity"]=quantity;
        data["units"]=units;
        var tons=quantity/1000;
@@ -808,7 +853,10 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
     prototal=Number(($("#mrp").val()*$("#quantity").val())-(($("#mrp").val()*$("#quantity").val())*($("#discount").val()/100)));
 
      gstamount=prototal*(Number($("#gst").val())/100);
+
      data["total"]=(total+gstamount).toFixed(2);
+
+
       items["sid"+sno] = {
       "item_id":$("#item_id").val(),
       "item_name":$("#item_name").val(),
@@ -832,6 +880,7 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
               $(this).find('span.sn').html(index+1);
             });
             calculation();
+            if(a=='yes'){
             var trItemTemplate = [
             '<tr id="trItem_{{sno}}">',
             '<td class=" ch-4"><span></span></td>',
@@ -854,10 +903,12 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
 
                 '</td>',
                 '<td class="text-left ch-4">',
-
+              
                 '<input onkeyup=fieldupdate({{sno}},this) class="form-control discount" name="discount[]" id="discount{{sno}}" value="{{discount}}" style="width:5rem; height:1.75rem">',
+                
+                '</td>',
 
-                '</td>','<td class="text-left ch-4">',
+                '<td class="text-left ch-4">',
 
                 '<input onkeyup=fieldupdate({{sno}},this) class="form-control gst" name="gst[]" id="gst{{sno}}" value="{{gst}}" style="width:5rem; height:1.75rem">',
 
@@ -881,10 +932,71 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
               tr = tr.replace(getRegEx('description'), $("#sub_category option:selected").text());
               tr = tr.replace(getRegEx('sale_price'), data['sale_price']);
               tr = tr.replace(getRegEx('discount'), data['discount']);
+    
               tr = tr.replace(getRegEx('gst'), data['gst']);
               tr = tr.replace(getRegEx('quantity'), data['quantity']);
               tr = tr.replace(getRegEx('total'), data['total']);
               tr = tr.replace(getRegEx('tons'), data['tons']);
+
+            }else{
+                var trItemTemplate = [
+            '<tr id="trItem_{{sno}}">',
+            '<td class=" ch-4"><span></span></td>',
+            '<td class="text-left ch-10">{{itemname}}</td>',
+            '<td class="text-left ch-10">{{variety}}</td>',
+            '<td class="text-left ch-4">',
+                '<input onkeyup=fieldupdate({{sno}},this) class="form-control quantity" name="quantity[]" id="quantity{{sno}}" value="{{quantity}}" style="width:5rem; height:1.75rem">',
+                '</td>',
+            '<td class="text-left ch-10">{{description}}</td>',
+            '<td class="text-left ch-10">{{units}}</td>',
+            '<td class="text-left ch-10" id="tons{{sno}}">{{tons}}</td>',
+            '<td class="text-left ch-4">',
+
+                '<input onkeyup=fieldupdate({{sno}},this) class="form-control mrp" name="mrp[]" id="mrp{{sno}}" value="{{mrp}}" style="width:5rem; height:1.75rem">',
+
+                '</td>',
+                '<td class="text-left ch-4">',
+
+                '<input onkeyup=fieldupdate({{sno}},this) class="form-control sale_price" name="sale_price[]" id="sale_price{{sno}}" value="{{sale_price}}" style="width:5rem; height:1.75rem">',
+
+                '</td>',
+                '<td class="text-left ch-4">',
+              
+                '<input onkeyup=fieldupdate({{sno}},this) class="form-control discount" name="discount[]" id="discount{{sno}}" value="{{discount}}" style="width:5rem; height:1.75rem">',
+                
+                '</td>',
+
+            
+                '<td class="text-left ch-6" id="totalid{{sno}}">{{total}}</td>',
+                '<td class="text-center ch-4">',
+                '<button type="button" id="remove_tr{{sno}}" class="btn btn-default btn-sm" onclick="removeItem({{sno}})">',
+                '<span class="glyphicon glyphicon-trash">',
+                '<i class="fas fa-trash"></i>',
+                '</span>',
+                '</button>',
+                '</td>',
+                '</tr>'].join(''),
+
+                tr = trItemTemplate;
+                tr = tr.replace(getRegEx('sno'), sno);
+                tr = tr.replace(getRegEx('itemname'), data['item_name']);
+                tr = tr.replace(getRegEx('variety'), data['varieties_name']);
+                tr = tr.replace(getRegEx('units'), data['units']);
+              tr = tr.replace(getRegEx('mrp'), data['mrp']);
+              tr = tr.replace(getRegEx('description'), $("#sub_category option:selected").text());
+              tr = tr.replace(getRegEx('sale_price'), data['sale_price']);
+              tr = tr.replace(getRegEx('discount'), data['discount']);
+    
+              tr = tr.replace(getRegEx('gst'), data['gst']);
+              tr = tr.replace(getRegEx('quantity'), data['quantity']);
+              tr = tr.replace(getRegEx('total'), data['total']);
+              tr = tr.replace(getRegEx('tons'), data['tons']);
+
+
+
+
+
+            }
 
               var emptyTr = $('#tdata .emptyTr').first();
               if (emptyTr.length === 0) {
@@ -964,7 +1076,10 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
         discount=Number(discount)+(Number(total)*Number(tempItem["discount"]/100));
         remamount=(Number(total)-(Number(total)*Number(tempItem["discount"]/100)));
         subtotal1=Number(subtotal1)+Number(remamount);
+       
+           
          tax=Number(tax)+(Number(tempItem['gstpercentage'])*Number(remamount));
+               
 
       i++;
     }
@@ -1218,6 +1333,27 @@ else{
 });
 });
     
+</script>
+<script>
+  $(".no").on("click",function(){
+  $("#main_gst").css('display','none');
+  $(".yes").prop('checked', false);
+  $("#test").css('display','none');
+
+  $("#tdata .temp_test").css('display','none');
+
+  
+
+  })
+</script>
+<script>
+  $(".yes").on("click",function(){
+  $("#main_gst").css('display','');
+  $(".no").prop('checked',false);
+  $("#test").css('display','');
+  $("#tdata .temp_test").css('display','');
+
+  })
 </script>
 
 

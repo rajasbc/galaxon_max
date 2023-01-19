@@ -7,7 +7,7 @@ include '../tables/config.php';
  $obj = new CustomerSale();
  $result =  $obj->add_sales();
 
- // print_r($result);die();
+ 
  
  echo json_encode($result);
 

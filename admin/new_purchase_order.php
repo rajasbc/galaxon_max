@@ -997,7 +997,7 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
      for(vale in itemslist) {
         tempItem = itemslist[vale];
         val=Number(tempItem["quantity"]);
-        alert(val);
+
         total_qty=total_qty+Number(tempItem["quantity"]);
         total= Number(tempItem["mrp"])*Number(tempItem["quantity"]);
 

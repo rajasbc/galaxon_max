@@ -418,6 +418,24 @@ $result = $this->db->GetResultsArray($sql);
 return $result;
 
 }
+public function get_Autocomplete_branch(){
+$sql = "select * from ".$this->tablename." where(name like '%".$this->db->getpost('term')."%' or branch_code like '%".$this->db->getpost('term')."%') and status='ENABLED'";
+
+$result = $this->db->GetResultsArray($sql);
+return $result;
+
+}
+public function get_branch_inf($id){
+$sql = 'select * from '.$this->tablename.'where branch_id='.$id.' and status="ENABLED"';
+
+$result = $this->db->getAsIsArray($sql);
+
+
+return $result;
+
+
+
+}
 
 }
 ?>

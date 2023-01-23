@@ -39,17 +39,17 @@ include 'header.php';
         <div class="col-8">&nbsp;</div>
         <div class="col-4">
           <label>Select Order Type :</label>
-       <?php if($_SESSION['type']=='ADMIN') {?>   
+      
           <select class="form-control" id="select_type">
             <option value="NEW" <?php echo $_GET['type']!='RECEIVED'?'selected="seleted"':''?>>NEW</option>
             <option value="RECEIVED" <?php echo $_GET['type']=='RECEIVED'?'selected="seleted"':''?>>RECEIVED</option>
           </select>
-          <?php }else{ ?>
-              <select class="form-control" id="select_type">
-              <option value="NEW" <?php echo $_GET['type']!='RECEIVED'?'selected="selected"':''?>>NEW</option>
-                 </select>
 
-          <?php } ?>
+             <!--  <select class="form-control" id="select_type">
+              <option value="NEW" <?php echo $_GET['type']!='RECEIVED'?'selected="selected"':''?>>NEW</option>
+                 </select> -->
+
+      
       
 
                
@@ -69,7 +69,9 @@ include 'header.php';
                     <th>S.No</th>
                     <th>Purchase No</th>
                     <th>Bill No</th>
+                    <?php if($_SESSION['type']=='ADMIN'){ ?> 
                     <th>Vendor Name</th>
+                    <?php }?>
                     <th>Received Date</th>
                     <th>Discount</th>
                     <th>Tax Amount</th>
@@ -77,7 +79,7 @@ include 'header.php';
                     <th>Paid Amount</th>
                     <th>Balance Amount</th>
                   
-                    <th>Details</th>
+                    <th >Details</th>
                   </tr>
                 <?php }else{?>
                   <tr>
@@ -93,7 +95,7 @@ include 'header.php';
                     <th>Balance Amount</th>
                     <th>Status</th>
                     
-                    <th width="50%">Details</th>
+                    <th width="30%">Details</th>
                   </tr>
                 <?php }?>
                   </thead>

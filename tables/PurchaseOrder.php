@@ -814,21 +814,14 @@ public function edit_purchase_order()
 	public function get_purchase_orders()
 	{
 
-    if($_SESSION['type']=='ADMIN'){
+    
 		if ($this->db->getpost('type')=='RECEIVED') {
-			$sql='select * from '.$this->tablename.' where is_deleted="NO" and order_type="RECEIVED" and vendor_id!="0" and branch_id='.$_SESSION['branch_id'].'';
+			$sql='select * from '.$this->tablename.' where is_deleted="NO" and order_type="RECEIVED" and branch_id='.$_SESSION['branch_id'].'';
 		}else{
-			$sql='select * from '.$this->tablename.' where is_deleted="NO" and order_type!="RECEIVED" and vendor_id!="0" and branch_id='.$_SESSION['branch_id'].'';
+			$sql='select * from '.$this->tablename.' where is_deleted="NO" and order_type!="RECEIVED" and branch_id='.$_SESSION['branch_id'].'';
 
 		}
 	 
-		
-   
-	}else{
-
-    $sql = 'select * from '.$this->tablename.' where is_deleted="NO" and vendor_id="0" and order_type!="RECEIVED" and branch_id='.$_SESSION['branch_id'].'';
-  }
-
 
   $result=$this->db->GetResultsArray($sql);
     return $result;

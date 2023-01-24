@@ -10,6 +10,7 @@ $output=array();
     $temp_array=array();
     $temp_array['value']=strtoupper($row['item_name']);
     $temp_array['label']=$row['id'];
+    $temp_array['item_id']=$row['item_id'];
     $temp_array['name']=$row['item_name'];
     $temp_array['item_code']=$row['item_code'];
     $temp_array['brand']=$row['brand'];

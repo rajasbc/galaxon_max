@@ -436,6 +436,22 @@ return $result;
 
 
 }
+public function item_frm_branch($b_id){
+
+ $sql= 'select * from '.$this->tablename.'where branch_id = '.$b_id.' and status="ENABLED" group by name';
+$result = $this->db->getAsIsArray($sql);
+return $result;
+
+}
+public function item_to_branch($b_id){
+
+$sql= 'select * from '.$this->tablename.'where branch_id = '.$b_id.' and status="ENABLED" group by name';
+$result = $this->db->getAsIsArray($sql);
+
+return $result;
+
+
+}
 
 }
 ?>

@@ -90,6 +90,27 @@ include 'header.php';
         <!-- /.modal-dialog -->
       </div>
       <!-- /.modal -->
+      <div class="modal fade" id="print_format" role="dialog">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        
+        <div class="modal-body">
+           <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <p>Choose Print Format</p>
+          <div class="form-check form-check-inline">
+<label class="form-check-label" for="call-yes" style="margin-left: 100px;">A4&nbsp;&nbsp;&nbsp;</label>
+                  <input class="form-check-input yes" checked= 'checked' type="radio" name='print' id='print' value='a4'>
+      <label  class="form-check-label" for="call-no" style="margin-left: 30px;">A5&nbsp;&nbsp;&nbsp;</label>
+                  <input class="form-check-input no" type="radio" name='print' id='print' value='a5'>
+                </div>
+        </div>
+        <div class="modal-footer" style="border-top: 0px;">
+
+          <center><button type="button" class="btn btn-primary btn-sm" id="print_btn" data-dismiss="modal">Print</button></center>
+        </div>
+      </div>
+    </div>
+  </div>
   <?php 
 include 'footer.php';
 ?>
@@ -221,9 +242,39 @@ success: function(res){
     }
   })
 </script>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
   function print_page(e) {
 
     window.open('customer_print_page.php?id='+btoa(e),'_blank');
   }
+</script> -->
+<script type="text/javascript">
+  function print_page(e){
+
+  $("#print_format").modal('show');
+  $("#print_btn").val(e);
+
+  }
+
+  $("#print_btn").on('click',function(){
+
+   var id = $(this).val();
+
+
+   var format = $("input[name='print']:checked").val();
+
+ if(format =='a4'){
+
+  window.open('customer_print_page.php?id='+btoa(id),'_blank');
+
+ }else{
+
+window.open('customer_print_pagea5.php?id='+btoa(id),'_blank');
+
+ }
+
+
+
+  });
+
 </script>

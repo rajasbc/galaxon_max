@@ -138,6 +138,12 @@ $category =  $category_obj->get_category_data();
                  <label>From&nbsp;<label class="text-danger">*</label></label>
                  <input type="hidden" name="sno" id="sno" value="0">
                  <input type="hidden" name="branch_id" id="branch_id" >
+
+                  <input type="hidden" name="variety_total_qty" id="variety_total_qty" >
+
+                  <input type="hidden" name="item_total_qty" id="item_total_qty" >
+
+
                  <input type="text" name="branch" id="branch" class="form-control" placeholder="Enter Branch Name" autofocus>
                </div>
                <div class="col-2 form-group mb-2">
@@ -639,6 +645,36 @@ include 'footer.php';
     var item_code=$("#item_code").val();
     var varieties_id=$("#varieties_id option:selected").val();
     var varieties_name=$("#varieties_id option:selected").text();
+    var branch_id = $("#branch_id").val();
+     var tbranch_id = $("#tbranch_id").val();
+    
+ 
+     if (branch_id=='') {
+    global_alert_modal('warning','Select Branch Name...');
+    $("#branch").css("border","1px solid red");
+    $("#branch").focus();
+    return false;
+  }
+  else{
+    $("#branch").css("border","1px solid lightgray");
+  }
+  if (tbranch_id=='') {
+    global_alert_modal('warning','Select Branch Name...');
+    $("#tbranch").css("border","1px solid red");
+    $("#tbranch").focus();
+    return false;
+  }
+  else{
+    $("#tbranch").css("border","1px solid lightgray");
+  }
+
+  if(branch_id==tbranch_id){
+    global_alert_modal('warning','Selected Branch Name are Same...');
+    $("#tbranch").css("border","1px solid red");
+    $("#tbranch").focus();
+     return false;
+  }
+
     if ($("#item_id").val()==0 || $("#item_id").val() =='') {
       global_alert_modal('warning','Enter Stored Product Name...');
       $("#item_name").focus();
@@ -932,32 +968,7 @@ $("#place_order").click(function(){
   var balance = $("#balance").val();
   var payment_mode = $("#payment_mode option:selected").val();
   var purchase_note = $("#purchase_note").val();
-  if (branch_id=='') {
-    global_alert_modal('warning','Select Branch Name...');
-    $("#branch").css("border","1px solid red");
-    $("#branch").focus();
-    return false;
-  }
-  else{
-    $("#branch").css("border","1px solid lightgray");
-  }
-  if (tbranch_id=='') {
-    global_alert_modal('warning','Select Branch Name...');
-    $("#tbranch").css("border","1px solid red");
-    $("#tbranch").focus();
-    return false;
-  }
-  else{
-    $("#tbranch").css("border","1px solid lightgray");
-  }
-
-  if(branch_id==tbranch_id){
-    global_alert_modal('warning','Selected Branch Name are Same...');
-    $("#tbranch").css("border","1px solid red");
-    $("#tbranch").focus();
-
-  }
-
+ 
 
   if (jQuery.isEmptyObject(items)==true) {
     global_alert_modal('fail','Add One Product To Purchase...');
@@ -1088,65 +1099,4 @@ $(".enterKeyclass").keypress(function (event) {
 
     });
   }
-</script>
-<script type="text/javascript">
-  $("#quantity").keypress(function(){
-
-
-    if ($("#branch").val()=="") {
-      $("#branch").css("border","1px solid red");
-      $("#branch").focus();
-      return false;
-    }
-    else{
-      $("#branch").css("border","1px solid lightgray");
-    }
-    if ($("#item_name").val()=="") {
-      $("#item_name").css("border","1px solid red");
-      $("#item_name").focus();
-      return false;
-    }
-    else{
-      $("#item_name").css("border","1px solid lightgray");
-    }
-    if ($("#varieties_id").val()=="") {
-
-      $("#varieties_id").css("border","1px solid red");
-      $("#varieties_id").focus();
-      return false;
-    }
-    else{
-      $("#varieties_id").css("border","1px solid lightgray");
-    }
-
-    var qty = $(this).val();
-
-    var fbranch_id = $('#branch_id').val();
-    var item_id = $('#item_id').val();
-    var varieties_id = $('#varieties_id').val();
-
-    $.ajax({
-        type:'post',
-        dataType:'json',
-        url: '../ajaxCalls/get_item_qty.php',
-        data:{'fbranch_id':fbranch_id,'item_id':item_id,'varieties_id':varieties_id},
-          success: function(res){
-
-             
-      }
-
-          
-    });
-});
-
-</script>
-<script type="text/javascript">
-  $('#item_name').keypress(function(){
-
-alert();
-
-
-
-
-  });
 </script>

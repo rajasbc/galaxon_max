@@ -82,12 +82,13 @@ include 'header.php';
                     <th >Details</th>
                   </tr>
                 <?php }else{?>
+                   <?php if($_SESSION['type']=='ADMIN'){ ?>
                   <tr>
                     <th>S.No</th>
                     <th>Purchase No</th>
-                    <?php if($_SESSION['type']=='ADMIN'){ ?>
+                   
                     <th>Vendor Name</th>
-                    <?php }?>
+     
                     <th>Discount</th>
                     <th>Tax Amount</th>
                     <th>Total Amount</th>
@@ -97,6 +98,18 @@ include 'header.php';
                     
                     <th width="30%">Details</th>
                   </tr>
+                <?php }else{ ?>
+                    <tr>
+                    <th>S.No</th>
+                    <th>Purchase No</th>
+                    <th>Order Quantity</th>
+                    <th>Received Quantity</th>
+                    <th>Status</th>
+                    
+                    <th width="30%">Details</th>
+                  </tr>
+
+                <?php } ?>  
                 <?php }?>
                   </thead>
                   <tbody>

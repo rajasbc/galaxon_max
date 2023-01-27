@@ -79,9 +79,16 @@ if ($this->db->getpost('shipping_d_date')!='') {
 
 		
 		$purchase_id = $this->db->mysql_insert($this->tablename, $purchase);
+   
 		foreach ($item as $itemvar) {
+       if($_SESSION['type']=='ADMIN'){
 
-					if ((isset($itemvar["item_name"]) && $itemvar["item_name"] !== '') && $itemvar["mrp"] != 0) {
+        $item = $itemvar["mrp"];
+
+
+    }
+
+					if ((isset($itemvar["item_name"]) && $itemvar["item_name"] !== '') && $item!= 0) {
 						if ($itemvar['item_id']==0 && $this->db->getpost('order_type')=='received') {
 					   $items=array();
 
@@ -275,8 +282,14 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
 		
 	 $main_purchase_id= $this->db->mysql_insert($this->tablename4, $purchase);
 		foreach ($item as $itemvar) {
+      if($_SESSION['type']=='ADMIN'){
+
+        $item = $itemvar["mrp"];
+
+
+    }
      
-					if ((isset($itemvar["item_name"]) && $itemvar["item_name"] !== '') && $itemvar["mrp"] != 0 && ($itemvar["enter_qty"] != 0 && $itemvar["enter_qty"] !='')) {
+					if ((isset($itemvar["item_name"]) && $itemvar["item_name"] !== '') && $item!= 0 && ($itemvar["enter_qty"] != 0 && $itemvar["enter_qty"] !='')) {
 						if ($itemvar['item_id']==0) {
 
 					   $items=array();
@@ -1121,6 +1134,18 @@ $sql = 'select * from '.$this->tablename3.' where purchase_id="'.$po.'" and bran
 $result = $this->db->GetResultsArray($sql);
 
 return $result;
+
+}
+public function get_item_qty($po){
+$sql = 'select sum(qty) as qty,sum(received_qty) as received_qty from '.$this->tablename2.' where purchase_id="'.$po.'" and branch_id="'.$_SESSION['branch_id'].'"';
+
+$result = $this->db->GetResultsArray($sql);
+
+
+return $result;
+
+
+
 
 }
 

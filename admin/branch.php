@@ -40,7 +40,7 @@ include 'header.php';
                      <th style="width: 100px">Branch Code</th>
                     <th style="width: 80px">Mobile No</th>
                     <th style="width: 100px">Email</th>
-                    <th>Action</th>
+                    <th style="width: 400px">Action</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -726,6 +726,7 @@ success: function(res){
               global_alert_modal('success','Enabled SuccessFully...');
                $('#enable_branch_modal').modal('hide');
 
+
         }
       
 
@@ -738,4 +739,59 @@ get_data();
 
    });
   
+</script>
+<script type="text/javascript">
+  function sale_model_yes(e){
+
+var branch_id = $(e).data("id");
+
+var type = $(e).val();
+
+
+
+
+$.ajax({
+    type:'post',
+    dataType:'json',
+    url:'../ajaxCalls/update_sale_price.php',
+    data:{"id":branch_id,"type":type},
+    success:function(res){
+               if(res.status=='success'){
+              global_alert_modal('success','Disabled SuccessFully...');
+                // location.reload();
+
+               }
+               get_data();
+    }
+
+
+})
+
+  }
+
+  function sale_model_no(e){
+
+var branch_id = $(e).data("id");
+var type = $(e).val();
+$.ajax({
+    type:'post',
+    dataType:'json',
+    url:'../ajaxCalls/update_sale_price.php',
+    data:{"id":branch_id,"type":type},
+    success:function(res){
+               if(res.status=='success'){
+               global_alert_modal('success','Enabled SuccessFully...');
+
+               }
+          get_data();
+    }
+
+
+})
+
+  }
+  
+
+
+
 </script>

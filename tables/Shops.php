@@ -452,6 +452,53 @@ return $result;
 
 
 }
+public function update_price($b_id){
+	$price = array();
+	$price['sale_price']='no';
+
+$sale = $this->db->mysql_update($this->tablename,$price,'branch_id='.$b_id);
+
+if($sale){
+
+return ['status'=>'success'];
+
+}else{
+
+return ['status'=>'failed'];
+
+}
+
+
+}
+
+public function update_price_disable($b_id){
+	$price = array();
+	$price['sale_price']='yes';
+
+$sale = $this->db->mysql_update($this->tablename,$price,'branch_id='.$b_id);
+
+if($sale){
+
+return ['status'=>'success'];
+
+}else{
+
+return ['status'=>'failed'];
+
+}
+
+
+}
+public function get_branch_sale(){
+
+$sql = 'select * from '.$this->tablename.'where branch_id = '.$_SESSION['branch_id'].' and status="ENABLED"';
+$result = $this->db->getAsIsArray($sql);
+
+return $result;
+
+}
+
+
 
 }
 ?>

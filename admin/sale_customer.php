@@ -2,6 +2,7 @@
 include 'header.php';
 // error_reporting(E_ALL);
 $vendor_obj= new Vendors();
+$obj = new Shops();
 $vendor= $vendor_obj->get_vendor_data(); 
 $brand_obj = new Brand();
 $brand =  $brand_obj->get_brand_data();
@@ -9,8 +10,16 @@ $description_obj = new Description();
 $description =  $description_obj->get_description_data();
 $category_obj = new Category();
 $category =  $category_obj->get_category_data();
+$branch_price = $obj->get_branch_sale();
 ?>
 <style type="text/css">
+<?php if($branch_price['sale_price']=='no'){
+ ?>
+ .hidden{
+  display: none;
+ }
+<?php }?>
+
 .ui-autocomplete {
   max-height: 200px;
   overflow-y: auto;
@@ -93,6 +102,10 @@ $category =  $category_obj->get_category_data();
       display: none;
 
     }
+    /*.hidden{
+      display: none;
+    }
+   */
 </style>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper ">
@@ -274,12 +287,12 @@ $category =  $category_obj->get_category_data();
               </select>
                 </div>
                 <div class="col-3 form-group mb-3">
-                   <label>Branch Price&nbsp;<label class="text-danger">*</label></label>
-              <input type="text" id='mrp' class="form-control enterKeyclass" placeholder="Branch Price">
+                   <label>Mrp&nbsp;<label class="text-danger">*</label></label>
+              <input type="text" id='mrp' class="form-control enterKeyclass" placeholder="Mrp">
                 </div>
-                <div class="col-3 form-group mb-3">
-                   <label>Mrp&nbsp;<label class="text-danger">&nbsp;</label></label>
-              <input type="text" id='sale_price' class="form-control enterKeyclass" placeholder="Mrp">
+                <div class="col-3 form-group mb-3 test">
+                   <label>Branch Price&nbsp;<label class="text-danger">&nbsp;</label></label>
+              <input type="text" id='sale_price' class="form-control enterKeyclass " placeholder="Enter Branch Price">
                 </div>
                 <div class="col-2 form-group mb-3">
                    <label>Discount&nbsp;<label class="text-danger">&nbsp;</label></label>
@@ -321,8 +334,8 @@ $category =  $category_obj->get_category_data();
                       <th>Description</th>
                       <th>Units</th>
                       <th>Tons</th>
-                      <th>Branch Price</th>
                       <th>Mrp</th>
+                      <th id="branchprice">Branch Price</th>
                       <th>Discount</th>
                       <th id="test">Gst</th>
                       <th>Total</th>
@@ -340,7 +353,7 @@ $category =  $category_obj->get_category_data();
      <td>&nbsp;</td>
      <td>&nbsp;</td>
      <td>&nbsp;</td>
-     <td>&nbsp;</td>
+     <td class="bprice">&nbsp;</td>
      <td>&nbsp;</td>
      <td class="temp_test">&nbsp;</td>
      <td>&nbsp;</td>
@@ -728,7 +741,7 @@ success: function(res){
      var brand=$("#brand").val();
      var category=$("#category").val();
      var sub_category=$("#sub_category").val();
-     var mrp=$("#mrp").val();
+     var mrp= parseInt($("#mrp").val());
      var sale_price=$("#sale_price").val();
      var discount=$("#discount").val();
     var a = $("input[type='radio']:checked").val();
@@ -897,7 +910,7 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
                 '<input onkeyup=fieldupdate({{sno}},this) class="form-control mrp" name="mrp[]" id="mrp{{sno}}" value="{{mrp}}" style="width:5rem; height:1.75rem">',
 
                 '</td>',
-                '<td class="text-left ch-4">',
+                '<td class="text-left ch-4 hidden">',
 
                 '<input onkeyup=fieldupdate({{sno}},this) class="form-control sale_price" name="sale_price[]" id="sale_price{{sno}}" value="{{sale_price}}" style="width:5rem; height:1.75rem">',
 
@@ -955,7 +968,7 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
                 '<input onkeyup=fieldupdate({{sno}},this) class="form-control mrp" name="mrp[]" id="mrp{{sno}}" value="{{mrp}}" style="width:5rem; height:1.75rem">',
 
                 '</td>',
-                '<td class="text-left ch-4">',
+                '<td class="text-left ch-4 hidden">',
 
                 '<input onkeyup=fieldupdate({{sno}},this) class="form-control sale_price" name="sale_price[]" id="sale_price{{sno}}" value="{{sale_price}}" style="width:5rem; height:1.75rem">',
 
@@ -1354,6 +1367,21 @@ else{
   $("#tdata .temp_test").css('display','');
 
   })
+</script>
+<script type="text/javascript">
+  
+var test = "<?=$branch_price['sale_price'] ?>";
+if(test =="no"){
+$(".test").css('display','none');
+$("#branchprice").css('display','none');
+$(".bprice").css('display','none');
+
+
+}
+
+
+
+
 </script>
 
 

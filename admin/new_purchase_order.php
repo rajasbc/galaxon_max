@@ -734,8 +734,9 @@ success: function(res){
      var brand=$("#brand").val();
      var category=$("#category").val();
      var sub_category=$("#sub_category").val();
-     var mrp=$("#mrp").val();
-     var sale_price=$("#sale_price").val();
+     var mrp=parseFloat($("#mrp").val());
+
+     var sale_price=parseFloat($("#sale_price").val());
      var discount=$("#discount").val();
      var gst=$("#gst").val();
      var quantity=$("#quantity").val();
@@ -803,15 +804,15 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
        else{
         $("#mrp").css("border","1px solid lightgray");
        }
-      //   if (sale_price=='' && sale_price==0) {
-      // global_alert_modal('warning','Enter Sale Price Name...');
-      // $("#sale_price").css("border","1px solid red");
-      //               $("#sale_price").focus();
-      //               return false;
-      //   }
-      //  else{
-      //   $("#sale_price").css("border","1px solid lightgray");
-      //  }
+        if (sale_price=='' && sale_price==0) {
+      global_alert_modal('warning','Enter Sale Price Name...');
+      $("#sale_price").css("border","1px solid red");
+                    $("#sale_price").focus();
+                    return false;
+        }
+       else{
+        $("#sale_price").css("border","1px solid lightgray");
+       }
         if (quantity=='' && quantity==0) {
       global_alert_modal('warning','Enter Product Quantity...');
       $("#quantity").css("border","1px solid red");

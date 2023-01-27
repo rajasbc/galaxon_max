@@ -161,10 +161,34 @@ $result=$this->db->GetResultsArray($sql);
 
 return $result;
 
-
-
-
 }
+
+public function total_var_qty($var_id){
+
+$sql = 'select * from variety_items where branch_id='.$this->db->getpost('fbranch_id').' and variety_id='.$var_id.'';
+$result = $this->db->getAsIsArray($sql);
+return ['status'=>'success','qty'=>$result['qty']];
+}
+
+
+
+public function total_item_qty($item_id){
+	if($_POST['fbranch_id']==0){
+
+$sql = 'select * from '.$this->tablename.' where branch_id='.$this->db->getpost('fbranch_id').' and id='.$item_id.' and is_deleted="NO"';
+$result = $this->db->getAsIsArray($sql);
+return ['status'=>'success','qty'=>$result['qty']];
+// print_r(return);die();
+        }else{
+$sql = 'select * from '.$this->tablename.' where branch_id='.$this->db->getpost('fbranch_id').' and item_id='.$item_id.' and is_deleted="NO"';
+$result = $this->db->getAsIsArray($sql);
+return ['status'=>'success','qty'=>$result['qty']];
+// print_r(return);die();
+
+        }
+}
+
+
 
 }
 ?>

@@ -51,7 +51,7 @@ $branch_sale['balance_amt'] = $this->db->getpost('grand_total');
 $sql = $this->db->mysql_insert($this->tablename,$branch_sale);
 
 foreach ($item as $key => $itemvar) {
-  if ((isset($itemvar["item_name"]) && $itemvar["item_name"] !== '') && $itemvar["mrp"] != 0){  
+  if ((isset($itemvar["item_name"]) && $itemvar["item_name"] !== '')){  
     $sale_item = array();
     $sale_item['branch_id'] = $this->db->getpost('branch_id');
     $sale_item['purchase_no'] = $this->db->getpost('purchase_no');

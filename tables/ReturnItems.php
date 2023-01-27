@@ -36,7 +36,7 @@ class ReturnItems extends Dbconnection {
   foreach ($return_item as $key => $itemvar) {
 
 
-   if ((isset($itemvar["item_name"]) && $itemvar["item_name"] !== '') && $itemvar["mrp"] != 0 && $itemvar["item_id"]!=0) {
+   if ((isset($itemvar["item_name"]) && $itemvar["item_name"] !== '')  && $itemvar["item_id"]!=0) {
 
 
     $return_items_variety=array();

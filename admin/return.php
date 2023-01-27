@@ -1172,6 +1172,7 @@ $(".enterKeyclass").keypress(function (event) {
 
 
 </script>
+
 <script type="text/javascript">
   $('#item_name').keydown(function(){
 
@@ -1185,3 +1186,7 @@ $(".enterKeyclass").keypress(function (event) {
 
   });
 </script>
+
+
+
+

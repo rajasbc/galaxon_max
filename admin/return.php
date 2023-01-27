@@ -1124,15 +1124,29 @@ $(".enterKeyclass").keypress(function (event) {
     var fbranch_id = $('#branch_id').val();
     var item_id = $('#item_id').val();
     var varieties_id = $('#varieties_id').val();
-   
+
+    $.ajax({
+        type:'post',
+        dataType:'json',
+        url: '../ajaxCalls/get_item_qty.php',
+        data:{'fbranch_id':fbranch_id,'item_id':item_id,'varieties_id':varieties_id},
+          success: function(res){
+
+             
+      }
+
+          
+    });
+});
+
+</script>
+<script type="text/javascript">
+  $('#item_name').keypress(function(){
+
+alert();
 
 
 
 
-  
-
-
-})
-
-
+  });
 </script>

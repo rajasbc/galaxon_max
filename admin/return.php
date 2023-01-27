@@ -1145,6 +1145,7 @@ $(".enterKeyclass").keypress(function (event) {
         url: '../ajaxCalls/get_item_qty.php',
         data:{'fbranch_id':fbranch_id,'item_id':item_id,'varieties_id':varieties_id},
           success: function(res){
+<<<<<<< HEAD
        
             if(res.status=='success'){
                var total_qty = res.qty*1;
@@ -1161,6 +1162,12 @@ $(".enterKeyclass").keypress(function (event) {
              
       }
 
+=======
+
+             
+      }
+
+>>>>>>> 59b339a3011bede2b534b9493cd92b9416984122
           
     });
 });
@@ -1168,7 +1175,15 @@ $(".enterKeyclass").keypress(function (event) {
 </script>
 <script type="text/javascript">
   $('#item_name').keypress(function(){
+<<<<<<< HEAD
   $('#quantity').val('');
+=======
+
+alert();
+
+
+
+>>>>>>> 59b339a3011bede2b534b9493cd92b9416984122
 
   });
 </script>

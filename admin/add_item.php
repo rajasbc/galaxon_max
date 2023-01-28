@@ -6,6 +6,8 @@ $category_obj = new Category();
 $category =  $category_obj->get_category_data();
 $description_obj = new Description();
 $description =  $description_obj->get_description_data();
+$group_obj = new GroupName();
+$group_name = $group_obj->get_group_data();
 ?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -110,7 +112,16 @@ $description =  $description_obj->get_description_data();
                 <option value="28">28</option>
               </select>
                 </div>
-                <div class="col-6 form-group mb-3"></div>
+                 <div class="col-6 form-group mb-3">
+                  <label>Group Name&nbsp;<label class="text-danger">*</label></label>
+                  <select class="form-control select2 enterKeyclass" id="group_name" style="width: 100%;">
+                    <option value="">Select Group Name</option>
+                    <?php foreach ($group_name as $key => $value) {?>
+                      <option  value="<?=$value['id']?>"><?=$value['group_name']?></option>
+                    <?php }?>
+                    
+                  </select>
+                </div>
                 <div class="col-6 form-group mb-3">
                    <label>Quantity&nbsp;<label class="text-danger"></label></label>
               <input type="text" class="form-control enterKeyclass" id="quantity" placeholder="Quantity">
@@ -177,8 +188,19 @@ include 'footer.php';
      var discount=$("#discount").val();
      var gst=$("#gst").val();
      var quantity=$("#quantity").val();
+     var group_id = $("#group_name").val();
 
+     if (group_id=='' && group_id==0) {
+      global_alert_modal('warning','Select Group Name...');
+      $("#group_name").css("border","1px solid red");
+                    $("#group_name").focus();
+                    return false;
+        }
+       else{
+        $("#group_name").css("border","1px solid lightgray");
+       }
 
+    
      if (item_name=='' && item_name==0) {
       global_alert_modal('warning','Enter Product Name...');
       $("#item_name").css("border","1px solid red");
@@ -255,7 +277,7 @@ $.ajax({
 type: "POST",
 dataType:"json",
 url: '../ajaxCalls/add_items.php',
-data: {'item_name':item_name,'item_code':item_code,'brand':brand,'category':category,'sub_category':sub_category,"mrp":mrp,'sale_price':sale_price,'discount':discount,'gst':gst,'quantity':quantity,'units':units},
+data: {'item_name':item_name,'item_code':item_code,'brand':brand,'category':category,'sub_category':sub_category,"mrp":mrp,'sale_price':sale_price,'discount':discount,'gst':gst,'quantity':quantity,'units':units,'group_id':group_id},
 success: function(res){
 if (res.status=='failed') {
   

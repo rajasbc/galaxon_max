@@ -86,6 +86,7 @@ public function get_branch_varieties($id){
  $sql = 'select a.*,b.* from variety_items a join varieties b on a.variety_id=b.id where a.item_id='.$id.' and a.branch_id = '.$_SESSION['branch_id'].'';
 
   $result = $this->db->GetResultsArray($sql);
+  
 
   return $result;
 

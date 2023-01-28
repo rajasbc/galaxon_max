@@ -95,9 +95,7 @@ success: function(res){
 	function view_varieties(e){
 
      var id = $(e).data('id');
-     // alert(id);
-
-    
+   
 
 window.location='varieties_modal.php?id='+id;
 	}

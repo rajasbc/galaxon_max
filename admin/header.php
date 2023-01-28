@@ -216,6 +216,12 @@ if (empty($_SESSION)==true) {
                   <p>Description</p>
                 </a>
               </li>
+               <li class="nav-item">
+                <a href="group.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Group</p>
+                </a>
+              </li>
               <li class="nav-item">
                 <a href="item_list.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -223,6 +229,24 @@ if (empty($_SESSION)==true) {
                 </a>
               </li>
               
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-solid fa-object-group"></i>
+              <p>
+                Group Product Name
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+             
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="view_group.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>View Group</p>
+                </a>
+              </li>
             </ul>
           </li>
             <li class="nav-item">

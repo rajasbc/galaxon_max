@@ -1,8 +1,8 @@
 <?php 
 include 'header.php';
 
-$obj = new Shops();
-$branch = $obj->show_branch();
+$obj = new  GroupName();
+$result = $obj->get_group_name();
 
 ?>
   <!-- Content Wrapper. Contains page content -->
@@ -13,12 +13,12 @@ $branch = $obj->show_branch();
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Branch Stock List</h1>
+            <h1 class="m-0">View Product By Group Name</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
-              <li class="breadcrumb-item active">Branch Stock</li>
+              <li class="breadcrumb-item active">View Group</li>
              
             </ol>
           </div>
@@ -28,11 +28,11 @@ $branch = $obj->show_branch();
               <div class="input-group input-group-sm ">
                 
                   <select class="form-control"  name='select_user' id='select_user' >
-                    <option value="0" selected>Select Branch</option>
+                    <option>Select Group</option>
                     <?php
-                    foreach ($branch as $value) {
+                    foreach ($result as $value) {
                       
-                      echo "<option value='".$value['branch_id']."' data-id='".$value['branch_id']."'>". $value["name"]."</option>";
+                      echo "<option value='".$value['id']."' data-id='".$value['id']."'>". $value["group_name"]."</option>";
                       
                     }
 
@@ -68,10 +68,10 @@ $branch = $obj->show_branch();
                   <tr>
                     <th style="width: 20px">S.No</th>
                     <th style="width: 100px">Product Name</th>
-                    <th style="width: 100px">Quantity</th>
-                    <th style="width: 80px">Net Amount</th>
+                     <th style="width: 20px">Quantity</th>
+                  
                     
-                    <th style="width: 100px">Action</th>
+                  
            
                   </tr>
                   </thead>
@@ -123,14 +123,15 @@ include 'footer.php';
 
 <script type="text/javascript">
  $("#select_user").change(function(){
-var branch_id = $(this).val();
+var group_id = $(this).val();
+
 
 $.ajax({
  
   type:'post',
-  url:'../ajaxCalls/view_branch_stock.php',
+  url:'../ajaxCalls/view_group_product.php',
   dataType:'JSON',
-  data:{'branch_id':branch_id},
+  data:{'id':group_id},
     success:function(res){
     var table = $('#example1').DataTable();
     table.clear();
@@ -159,9 +160,11 @@ var branch_id = $(e).val();
 
 
 window.location='view_branch_variety.php?item_id='+btoa(item_id)+'&branch_id='+btoa(branch_id);
-
-
   }
+
+
+
+
 
 
 </script>

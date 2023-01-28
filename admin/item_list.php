@@ -6,6 +6,8 @@ $category_obj = new Category();
 $category =  $category_obj->get_category_data();
 $description_obj = new Description();
 $description =  $description_obj->get_description_data();
+$group_obj = new GroupName();
+$group_name = $group_obj->get_group_data();
 ?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -171,6 +173,18 @@ $description =  $description_obj->get_description_data();
                     <option value="">Select Category</option>
                     <?php foreach ($category as $key => $value) {?>
                       <option  value="<?=$value['id']?>"><?=$value['name']?></option>
+                    <?php }?>
+                    
+                  </select>
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Group Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-danger">&nbsp;</span></span>
+                  </div>
+                  <select class="form-control select2 enterKeyclass" id="edit_group">
+                    <option value="">Select Group</option>
+                    <?php foreach ($group_name as $key => $value) {?>
+                      <option  value="<?=$value['id']?>"><?=$value['group_name']?></option>
                     <?php }?>
                     
                   </select>
@@ -462,10 +476,12 @@ function edit_modal(e){
    $("#edit_category").val($(e).data('form7'));
    $("#edit_sub_category").val($(e).data('form8'));
    $("#edit_units").val($(e).data('form9'));
+   $("#edit_group").val($(e).data('form10'));
 
 
 }
     $('#edit_item_btn').on('click',function(e){
+
       var item_id=$("#edit_item_id").val();
        var edit_item_name=$("#edit_item_name").val();
         var edit_item_mrp=$("#edit_item_mrp").val();
@@ -475,7 +491,8 @@ function edit_modal(e){
             var edit_item_qty=$("#edit_item_qty").val();
             var edit_item_brand=$("#edit_brand").val();
             var edit_item_category=$("#edit_category").val();
-            var edit_item_sub_category=$("#edit_sub_category").val();
+             var edit_item_sub_category=$("#edit_sub_category").val();
+            var edit_item_group=$("#edit_group").val();
             var edit_item_units=$("#edit_units").val();
 
      if (edit_item_name=='' && edit_item_name==0) {
@@ -505,6 +522,17 @@ function edit_modal(e){
        else{
         $("#edit_category").css("border","1px solid lightgray");
        }
+        if (edit_item_group=='' && edit_item_group==0) {
+      global_alert_modal('warning','Enter Product Category...');
+      $("#edit_group").css("border","1px solid red");
+                    $("#edit_category").focus();
+                    return false;
+        }
+       else{
+        $("#edit_group").css("border","1px solid lightgray");
+       }
+
+
        if (edit_item_sub_category=='' && edit_item_sub_category==0) {
       global_alert_modal('warning','Enter Product Sub Category...');
       $("#edit_sub_category").css("border","1px solid red");
@@ -543,7 +571,7 @@ function edit_modal(e){
 type: "POST",
 dataType:"json",
 url: '../ajaxCalls/add_items.php',
-data: {"item_id": item_id,"edit_item_name": edit_item_name,"edit_item_mrp": edit_item_mrp,"edit_item_sale_price": edit_item_sale_price,"edit_item_discount": edit_item_discount,"edit_item_gst": edit_item_gst,"edit_item_qty": edit_item_qty,"edit_item_brand": edit_item_brand,"edit_item_category": edit_item_category,"edit_item_sub_category": edit_item_sub_category,"edit_item_units": edit_item_units,"edit_item_sub_category": edit_item_sub_category,"type":"edit"},
+data: {"item_id": item_id,"edit_item_name": edit_item_name,"edit_item_mrp": edit_item_mrp,"edit_item_sale_price": edit_item_sale_price,"edit_item_discount": edit_item_discount,"edit_item_gst": edit_item_gst,"edit_item_qty": edit_item_qty,"edit_item_brand": edit_item_brand,"edit_item_category": edit_item_category,"edit_item_sub_category": edit_item_sub_category,"edit_item_units": edit_item_units,"edit_item_sub_category": edit_item_sub_category,"edit_item_group":edit_item_group,"type":"edit"},
 success: function(res){
 if (res.status=='failed') {
   
@@ -555,7 +583,7 @@ if (res.status=='failed') {
   global_alert_modal('info','This ProductName Already Stored...');
   $("#edit_item_name").focus();
   $("#edit_item_name").val('');
-                    return false;
+  return false;
 
 }
 else{

@@ -12,7 +12,7 @@ class Items extends Dbconnection {
 	}
 	public function add_items()
 	{
-		$check_sql='select * from '.$this->tablename.' where item_name="'.$this->db->getpost('item_name').'" and is_deleted="NO"';
+		$check_sql='select * from '.$this->tablename.' where item_name="'.$this->db->getpost('item_name').'" and is_deleted="NO" and branch_id='.$_SESSION['branch_id'].'';
 		$check_res=$this->db->GetResultsArray($check_sql);
 		if (count($check_res)>0) {
 			return ['status'=>'alert'];
@@ -21,8 +21,10 @@ class Items extends Dbconnection {
 		$item['item_name']=$this->db->getpost('item_name');
 		$item['item_code']=$this->db->getpost('item_code');
 		$item['shop_id']=$_SESSION['shop_id'];
+		$item['branch_id']=$_SESSION['branch_id'];
 		$item['brand']=$this->db->getpost('brand');
 		$item['category']=$this->db->getpost('category');
+		$item['group_id']=$this->db->getpost('group_id');
 		$item['units']=$this->db->getpost('units');
 		if ($this->db->getpost('sub_category')!='' && $this->db->getpost('sub_category') !=0) {
 		 $item['sub_category']=$this->db->getpost('sub_category');
@@ -74,7 +76,7 @@ $item['gst']=$this->db->getpost('gst');
 	}
 	public function edit_items()
 	{
-		$check_sql='select * from '.$this->tablename.' where item_name="'.$this->db->getpost('edit_item_name').'" and id!='.$this->db->getpost('item_id').' and is_deleted="NO"';
+		$check_sql='select * from '.$this->tablename.' where item_name="'.$this->db->getpost('edit_item_name').'" and id!='.$this->db->getpost('item_id').' and is_deleted="NO" and branch_id='.$_SESSION['branch_id'].'';
 		$check_res=$this->db->GetResultsArray($check_sql);
 		if (count($check_res)>0) {
 			return ['status'=>'alert'];
@@ -83,6 +85,7 @@ $item['gst']=$this->db->getpost('gst');
 		$item['item_name']=$this->db->getpost('edit_item_name');
 		$item['brand']=$this->db->getpost('edit_item_brand');
 		$item['category']=$this->db->getpost('edit_item_category');
+		$item['group_id']=$this->db->getpost('edit_item_group');
 		$item['sub_category']=$this->db->getpost('edit_item_sub_category');
 		$item['mrp']=$this->db->getpost('edit_item_mrp');
 		$item['sales_price']=$this->db->getpost('edit_item_sale_price');
@@ -163,6 +166,7 @@ return $result;
 
 }
 
+
 public function total_var_qty($var_id){
 
 $sql = 'select * from variety_items where branch_id='.$this->db->getpost('fbranch_id').' and variety_id='.$var_id.'';
@@ -178,14 +182,24 @@ public function total_item_qty($item_id){
 $sql = 'select * from '.$this->tablename.' where branch_id='.$this->db->getpost('fbranch_id').' and id='.$item_id.' and is_deleted="NO"';
 $result = $this->db->getAsIsArray($sql);
 return ['status'=>'success','qty'=>$result['qty']];
-// print_r(return);die();
+
         }else{
 $sql = 'select * from '.$this->tablename.' where branch_id='.$this->db->getpost('fbranch_id').' and item_id='.$item_id.' and is_deleted="NO"';
 $result = $this->db->getAsIsArray($sql);
 return ['status'=>'success','qty'=>$result['qty']];
-// print_r(return);die();
+
 
         }
+}
+
+public function get_group_name_dt($id){
+
+$sql = 'select * from '.$this->tablename.' where branch_id= '.$_SESSION['branch_id'].' and group_id='.$id.' and is_deleted="NO"';
+$result = $this->db->GetResultsArray($sql);
+
+return $result;
+
+
 }
 
 

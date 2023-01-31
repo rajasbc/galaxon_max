@@ -67,5 +67,11 @@ class GroupName extends Dbconnection {
 	
 		return $result;
 	}
+	public function get_group_dt(){
+
+$sql='select * from '.$this->tablename.' where status="ENABLED"';
+		$result=$this->db->GetResultsArray($sql);
+		return $result;	
+	}
 }
 ?>

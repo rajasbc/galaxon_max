@@ -1,5 +1,7 @@
 <?php 
 include 'header.php';
+$group_obj = new GroupName();
+$group_name = $group_obj->get_group_dt();
 ?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper watermark_img">
@@ -7,10 +9,33 @@ include 'header.php';
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-6">
+          <div class="col-sm-2">
             <h1 class="m-0">customer List</h1>
           </div><!-- /.col -->
-          <div class="col-sm-6">
+
+          <div class="col-sm-3">
+              <div class="input-group input-group-sm ">
+                
+                  <select class="form-control"  name='group_id' id='group_id' >
+                    <option value="0">Select Group Name</option>
+                    <?php
+                    foreach ($group_name as $value) {
+                      
+                      echo "<option value='".$value['id']."' data-id='".$value['group_id']."'>". $value["group_name"]."</option>";
+                      
+                    }
+
+                    ?>
+                  </select>
+              </div>
+            </div>
+
+
+
+
+
+
+          <div class="col-sm-7">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
               <li class="breadcrumb-item active">customer List</li>
@@ -155,6 +180,25 @@ include 'header.php';
                   </div>
                   <input type="text" id='pincode' name='pincode' class="form-control enterKeyclass" placeholder="Enter Pincode">
                 </div>
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">Group Name <span class="text-danger">*</span></span>
+                  </div>
+                  <select class="form-control enterKeyclass" id="group_name" name="group_name" >
+                    <option value="">Select Group Name</option>
+                    <?php foreach ($group_name as $key => $value) {?>
+                      <option  value="<?=$value['id']?>"><?=$value['group_name']?></option>
+                    <?php }?>
+                    
+                  </select>
+                </div>
+
+
+
+
+
+
                  <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text" style="width: 8.3rem">Image</span>
@@ -235,6 +279,9 @@ include 'footer.php';
       var state=$("#state").val();
       var country=$("#country").val();
       var pincode=$("#pincode").val();
+      var group_name = $("#group_name").val();
+
+
      if (customer_name=='' && customer_name==0) {
       global_alert_modal('warning','Enter customer Name...');
       $("#customer_name").css("border","1px solid red");
@@ -262,6 +309,19 @@ include 'footer.php';
        else{
         $("#mobile_no").css("border","1px solid lightgray");
        }
+       if(group_name=='' && group_name==0){
+      global_alert_modal('warning','Select Group Name...');
+      $("#group_name").css("border","1px solid red");
+      $("#group_name").focus();
+      return false;
+
+       } else{
+        $("#group_name").css("border","1px solid lightgray");
+       }
+   
+
+
+
       var formData = new FormData(this); 
             formData.append('type','add');
   $.ajax({
@@ -317,6 +377,7 @@ else{
       var country=$("#country").val();
       var pincode=$("#pincode").val();
       var customer_id=$("#edit_customer_id").val();
+      var group_name = $("#group_name").val(); 
      if (customer_name=='' && customer_name==0) {
       global_alert_modal('warning','Enter customer Name...');
       $("#customer_name").css("border","1px solid red");
@@ -343,6 +404,15 @@ else{
         }
        else{
         $("#mobile_no").css("border","1px solid lightgray");
+       }
+        if(group_name=='' && group_name==0){
+      global_alert_modal('warning','Select Group Name...');
+      $("#group_name").css("border","1px solid red");
+      $("#group_name").focus();
+      return false;
+
+       } else{
+        $("#group_name").css("border","1px solid lightgray");
        }
       var formData = new FormData($("#customerForm")[0]);
       formData.append('type','edit');
@@ -447,6 +517,7 @@ success: function(res){
     $("#state").val(res.state);
     $("#country").val(res.country);
     $("#pincode").val(res.pincode);
+    $("#group_name").val(res.group_id);
       $("#add_customer_modal").modal('show');
    $("#edit_customer_id").val($(e).data('id'));
    $("#add_customer_btn").css('display','none');
@@ -522,5 +593,25 @@ $(".enterKeyclass").keypress(function (event) {
 
    });
 
+
+</script>
+<script type="text/javascript">
+  $("#group_id").on('change',function(){
+    var group_id = $(this).val();
+  $.ajax({
+     type: "POST",
+dataType:"json",
+url: '../ajaxCalls/get_customer_group.php',
+data: {"group_id":group_id},
+success: function(res){
+ var table = $('#example1').DataTable();
+    table.clear();
+    table.rows.add(res).draw();
+}  
+
+
+  });
+
+  });
 
 </script>

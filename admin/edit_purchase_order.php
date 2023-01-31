@@ -45,6 +45,14 @@ foreach ($purchase_order_item_dt as $key => $value) {
 $items=json_encode($items);
 ?>
 <style type="text/css">
+  <?php if($_SESSION['type']!="ADMIN") { ?>
+       .hide{
+          display: none;
+
+       }
+   <?php } ?>    
+
+
 
   .css-serial {
       counter-reset: serial-number;  /* Set the serial number counter to 0 */
@@ -105,7 +113,7 @@ $items=json_encode($items);
         <div class="row mb-2">
           <div class="col-sm-6">
               <h1 class="m-0">Receiving Order</h1>
-            
+            <input  type="hidden" name="type" id="type" value="<?=$_SESSION['type']?>" >
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -186,13 +194,13 @@ $items=json_encode($items);
                       <th>Tons</th>
                       <th>Order Qty</th>
                       <th>Received Qty</th>
-                      <th>Vendor Price</th>
-                      <th>Purchase Price</th>
-                      <th>Mrp</th>
-                      <th>Discount</th>
-                      <th>Gst</th>
+                      <th class='hide'>Vendor Price</th>
+                      <th class='hide'>Purchase Price</th>
+                      <th class='hide'>Mrp</th>
+                      <th class='hide'>Discount</th>
+                      <th class='hide'>Gst</th>
                       
-                      <th>Total</th>
+                      <th class='hide'>Total</th>
                     </tr>
                   </thead>
                   <tbody class="text-left css-serial" id="tdata">
@@ -222,36 +230,36 @@ $items=json_encode($items);
             echo '<td class="text-left ch-10" id="tons'.$sno.'">0</td>';
              echo '<td class="text-left ch-10" id="order_qty'.$sno.'">'.$row['qty'].'</td>';
              echo '<td class="text-left ch-10" id="rec_qty'.$sno.'">'.$row['received_qty'].'</td>';
-             echo '<td class="text-left ch-10">'.$row['mrp'].'</td>';
+             echo '<td class="text-left ch-10 hide">'.$row['mrp'].'</td>';
 
-            echo '<td class="text-left ch-4">';
+            echo '<td class="text-left ch-4 hide">';
 
                 echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control mrp" name="mrp[]" id="mrp'.$sno.'" value="'.$row['mrp'].'" style="width:5rem; height:1.75rem">';
 
                 echo '</td>';
-                echo '<td class="text-left ch-4">';
+                echo '<td class="text-left ch-4 hide">';
 
                 echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control sale_price" name="sale_price[]" id="sale_price'.$sno.'" value="'.$row['sales_price'].'" style="width:5rem; height:1.75rem">';
 
                 echo '</td>';
-                echo '<td class="text-left ch-4">';
+                echo '<td class="text-left ch-4 hide">';
 
                 echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control discount" name="discount[]" id="discount'.$sno.'" value="'.$row['discount'].'" style="width:5rem; height:1.75rem">';
 
                 echo '</td>';
-                echo '<td class="text-left ch-4">';
+                echo '<td class="text-left ch-4 hide">';
 
                 echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control gst" name="gst[]" id="gst'.$sno.'" value="'.$row['gst'].'" style="width:5rem; height:1.75rem">';
 
                 echo '</td>';
-                echo '<td class="text-left ch-6" id="totalid'.$sno.'"></td>';
+                echo '<td class="text-left ch-6 hide" id="totalid'.$sno.'"></td>';
               
                 echo '</tr>';
  } ?>
 </tbody>
 <tfoot>
 <tr>
-  <td colspan="15" class="td-last-1">
+  <td colspan="15" class="td-last-1 hide">
  <div class="row">
 <div class="col-lg-4 col-sm-4 col-md-4">
   <div class="">
@@ -309,16 +317,16 @@ $items=json_encode($items);
               </div>
                <div class="row col-12">
                   <div class="col-4">&nbsp;</div>
-                  <div class="col-8 text-right">
-                    <div class="row col-12 mt-2">
-                      <div class="col-6">
+                  <div class="col-8 text-right ">
+                    <div class="row col-12 mt-2 hide">
+                      <div class="col-6 ">
                         <label>Bill No :</label>
                       </div>
-                       <div class="col-6">
-                        <input type="text" id='bill_no' class="form-control" placeholder="Enter Bill No">
+                       <div class="col-6 ">
+                        <input type="text" id='bill_no' class="form-control " placeholder="Enter Bill No">
                       </div>
                     </div>
-                     <div class="row col-12 mt-2">
+                     <div class="row col-12 mt-2 hide">
                       <div class="col-6">
                         <label>Received Date :</label>
                       </div>
@@ -326,7 +334,7 @@ $items=json_encode($items);
                         <input type="date" id='received_date' class="form-control" value="<?=date('Y-m-d')?>">
                       </div>
                     </div>
-                     <div class="row col-12 mt-2">
+                     <div class="row col-12 mt-2 hide">
                       <div class="col-6">
                         <label>Paid Amount :</label>
                       </div>
@@ -334,7 +342,7 @@ $items=json_encode($items);
                         <input type="text" id='paid_amt' class="form-control" placeholder="Paid Amount ">
                       </div>
                     </div>
-                     <div class="row col-12 mt-2">
+                     <div class="row col-12 mt-2 hide">
                       <div class="col-6">
                         <label>Balance Amount :</label>
                       </div>
@@ -342,7 +350,7 @@ $items=json_encode($items);
                         <input type="text" id='balance' class="form-control" placeholder="0.00" readonly>
                       </div>
                     </div>
-                    <div class="row col-12 mt-2">
+                    <div class="row col-12 mt-2 hide">
                       <div class="col-6">
                         <label>Payment Mode :</label>
                       </div>
@@ -361,9 +369,16 @@ $items=json_encode($items);
                       <div class="col-6">
                         &nbsp;
                       </div>
+                      <?php if($_SESSION['type']=="ADMIN"){ ?>
                       <div class="col-6 text-center">
                         <button class="col-12 btn btn-primary" id="place_order">SAVE</button>
                       </div>
+                    <?php }else{ ?>
+                       <div class="col-6 text-center">
+                        <button class="col-2 btn btn-primary btn-sm" id="place_order">SAVE</button>
+                      </div>
+                      
+                     <?php  } ?> 
                       
                     </div>
                   </div>
@@ -556,6 +571,8 @@ if (val!=0 && val!='') {
        $("#grandid").html(grand_total);
   }
 $("#place_order").click(function(){
+      var type = $("#type").val();
+   if(type=="ADMIN"){
       var vendor_id = $("#vendor_id option:selected").val();
       var bill_no = $("#bill_no").val();
       var received_date = $("#received_date").val();
@@ -598,7 +615,7 @@ $("#place_order").click(function(){
       $("#paid_amt").css("border","1px solid lightgray");
       }
 
-      
+    }  
       detailsarray = [];
       detailsarray['vendor_id']=vendor_id;
       detailsarray['bill_no']=bill_no;

@@ -195,6 +195,7 @@ class Shops extends Dbconnection {
 		$branch['mobile_no'] = $this->db->getpost('mobile_no');
 		$branch['alt_mobile_no'] = $this->db->getpost('alt_mobile_no');
 		$branch['landline_no'] = $this->db->getpost('Landline_no');
+		$branch['group_id'] = $this->db->getpost('group_name');
 		$branch['branch'] = $_SESSION['shop_id'];
 		$branch['username'] = $this->db->getpost('username');
 		$pass1 = md5($this->db->getpost('password'));
@@ -273,6 +274,7 @@ class Shops extends Dbconnection {
 		$branch['pincode'] = $this->db->getpost('pincode');
 		$branch['mobile_no'] = $this->db->getpost('mobile_no');
 		$branch['alt_mobile_no'] = $this->db->getpost('alt_mobile_no');
+		$branch['group_id'] = $this->db->getpost('group_name');
 		$branch['landline_no'] = $this->db->getpost('Landline_no');
 		$branch['branch'] = $_SESSION['shop_id'];
 
@@ -494,6 +496,13 @@ public function get_branch_sale(){
 $sql = 'select * from '.$this->tablename.'where branch_id = '.$_SESSION['branch_id'].' and status="ENABLED"';
 $result = $this->db->getAsIsArray($sql);
 
+return $result;
+
+}
+public function get_branch_grp($g_id){
+
+$sql = 'select * from '.$this->tablename.' where group_id='.$g_id.' and branch_id!=0';
+$result = $this->db->GetResultsArray($sql);
 return $result;
 
 }

@@ -28,7 +28,7 @@ $result = $obj->get_group_name();
               <div class="input-group input-group-sm ">
                 
                   <select class="form-control"  name='select_user' id='select_user' >
-                    <option>Select Group</option>
+                    <option value="0">Select Group</option>
                     <?php
                     foreach ($result as $value) {
                       

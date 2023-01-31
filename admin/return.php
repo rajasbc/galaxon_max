@@ -643,7 +643,14 @@ include 'footer.php';
     var quantity=$("#quantity").val();
     var units=$("#units").val();
     var item_code=$("#item_code").val();
-    var varieties_id=$("#varieties_id option:selected").val();
+    if($("#varieties_id option:selected").val()!=null){
+       var varieties_id=$("#varieties_id").val();
+         
+    }else{
+         var varieties_id = 0;
+        
+    }
+    
     var varieties_name=$("#varieties_id option:selected").text();
     var branch_id = $("#branch_id").val();
      var tbranch_id = $("#tbranch_id").val();
@@ -810,6 +817,8 @@ include 'footer.php';
       '<td class="text-left ch-10">{{itemname}}</td>',
       '<td class="text-left ch-10">{{variety}}</td>',
       '<td class="text-left ch-4">',
+      '<input type="hidden" class="form-control quantity" name="item[]" id="item{{sno}}" value="{{item_id}}" style="width:5rem; height:1.75rem">',
+      '<input type="hidden" class="form-control quantity" name="variety[]" id="Variety{{sno}}" value="{{var_id}}" style="width:5rem; height:1.75rem">',
       '<input onkeyup=fieldupdate({{sno}},this) class="form-control quantity" name="quantity[]" id="quantity{{sno}}" value="{{quantity}}" style="width:5rem; height:1.75rem">',
       '</td>',
       '<td class="text-left ch-10">{{description}}</td>',
@@ -855,6 +864,8 @@ include 'footer.php';
       tr = tr.replace(getRegEx('discount'), data['discount']);
       tr = tr.replace(getRegEx('gst'), data['gst']);
       tr = tr.replace(getRegEx('quantity'), data['quantity']);
+      tr = tr.replace(getRegEx('var_id'), data['varieties_id']);
+       tr = tr.replace(getRegEx('item_id'), data['item_id']);
       tr = tr.replace(getRegEx('total'), data['total']);
       tr = tr.replace(getRegEx('tons'), data['tons']);
 
@@ -876,6 +887,7 @@ include 'footer.php';
  <script type="text/javascript">
    function fieldupdate(idval,ele){
 
+
     var ref = "sid"+idval;
 
 
@@ -885,6 +897,14 @@ include 'footer.php';
     var discount = $("#discount"+idval).val();
     var gst = $("#gst"+idval).val();
     var quantity = $("#quantity"+idval).val();
+    
+    var fbranch_id = $("#branch_id").val();
+    var item_id = $("#item"+idval).val();
+    var var_id = $("#Variety"+idval).val();
+
+    get_qty(fbranch_id,item_id,var_id,idval);
+
+
     var tons=Number($("#quantity"+idval).val())/1000;
     prototal=Number(mrp*quantity)-(Number(mrp*quantity)*(discount/100));
     gstamount=prototal*(gst/100);
@@ -1139,6 +1159,7 @@ $(".enterKeyclass").keypress(function (event) {
     var item_id = $('#item_id').val();
     var varieties_id = $('#varieties_id').val();
 
+
     $.ajax({
         type:'post',
         dataType:'json',
@@ -1184,6 +1205,75 @@ $(".enterKeyclass").keypress(function (event) {
 
 
   });
+
+function get_qty(fbranch_id,item_id,var_id,idval){
+
+if ($("#quantity"+idval).val()=="") {
+      global_alert_modal('success','Enter Quantity...');
+      $("#quantity"+idval).css("border","1px solid red");
+      $("#quantity"+idval).focus();
+       $('#place_order').attr('disabled','disabled');
+      return false;
+
+    }else if($("#quantity"+idval).val()==0){
+          global_alert_modal('success','Enter valid Quantity...');
+      $("#quantity"+idval).css("border","1px solid red");
+      $("#quantity"+idval).focus();
+      $('#place_order').attr('disabled','disabled');
+      return false;
+        
+    }
+    else{
+      $("#quantity"+idval).css("border","1px solid lightgray");
+       $('#place_order').removeAttr('disabled','');
+    }
+
+$.ajax({
+        type:'post',
+        dataType:'json',
+        url: '../ajaxCalls/get_item_qty.php',
+        data:{'fbranch_id':fbranch_id,'item_id':item_id,'varieties_id':var_id,'type':idval},
+          success: function(res){
+
+       
+            if(res.status=='success'){
+               var total_qty = res.qty*1;
+               var qty = $('#quantity'+idval).val()*1;
+                 if(qty>total_qty){
+                  global_alert_modal('success','Available Quantity is' +res.qty);
+                  $('#quantity'+idval).val('');
+                  //  $('#quantity'+idval).focus();
+                  //   return false;
+                    $('#place_order').attr('disabled','disabled');
+
+                 }else{
+
+                   $('#place_order').removeAttr('disabled','');
+
+                 }
+             
+               }
+
+            } 
+      });
+
+
+             
+     
+
+
+
+
+
+
+}
+
+
+
+
+
+
 </script>
+
 
 

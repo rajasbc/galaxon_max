@@ -52,6 +52,7 @@ class Customers extends Dbconnection {
 		$customer['branch_id']=$_SESSION['branch_id'];
 		$customer['company_name']=$this->db->getpost('customer_company_name');
 		$customer['mobile_no']=$this->db->getpost('mobile_no');
+		$customer['group_id']=$this->db->getpost('group_name');
 		$customer['customer_code']=$customer_code;
 		$customer['email']=$this->db->getpost('email');
 		$customer['gst']=$this->db->getpost('gst');
@@ -107,6 +108,7 @@ class Customers extends Dbconnection {
 		$customer['state']=$this->db->getpost('state');
 		$customer['country']=$this->db->getpost('country');
 		$customer['pincode']=$this->db->getpost('pincode');
+		$customer['group_id']=$this->db->getpost('group_name');
 		$id = $this->db->mysql_update($this->tablename, $customer,'id='.$this->db->getpost('edit_customer_id'));
 		if ($id!=0) {
 			return ['status'=>'success'];
@@ -186,6 +188,14 @@ $sql = 'select * from '.$this->tablename.' where id='.$id.' and branch_id='.$_SE
 $result = $this->db->GetResultsArray($sql);
 
 
+return $result;
+
+
+}
+public function get_customer_grp_dt($g_id){
+
+$sql = 'select * from '.$this->tablename.' where group_id='.$g_id.' and branch_id='.$_SESSION['branch_id'].' and status="ENABLED"';
+$result = $this->db->GetResultsArray($sql);
 return $result;
 
 

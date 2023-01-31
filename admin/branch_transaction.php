@@ -4,6 +4,7 @@ include 'header.php';
 $obj = new Shops();
 $branch = $obj->show_branch();
 
+
 ?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper watermark_img">

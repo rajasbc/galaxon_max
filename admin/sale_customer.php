@@ -11,6 +11,8 @@ $description =  $description_obj->get_description_data();
 $category_obj = new Category();
 $category =  $category_obj->get_category_data();
 $branch_price = $obj->get_branch_sale();
+$group_obj = new GroupName();
+$group_name = $group_obj->get_group_dt();
 ?>
 <style type="text/css">
 <?php if($branch_price['sale_price']=='no'){
@@ -200,30 +202,35 @@ $branch_price = $obj->get_branch_sale();
                 </div>
               <?php }?>
                 </div>
-                <div class="row col-12" id="customer_dt" style="display: none;">
+                <div class="row col-12" id="mcustomer_dt" style="display: none;">
                   
                 <div class="col-11">
                   <label>Customer Details</label><br>
                   <div class="row col-12">
                     <div class="col-6">
-                      <label>Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label><span id="customer_name"></span>
+                      <label>Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label><span id="mcustomer_name"></span>
                     </div>
                     <div class="col-6">
-                      <label>Company Name :</label><span id="customer_company_name"></span>
+                      <label>Company Name :</label><span id="mcustomer_company_name"></span>
                     </div>
                     <div class="col-6">
-                      <label>Mobile No :</label><span id="customer_mobile"></span>
+                      <label>Mobile No :</label><span id="mcustomer_mobile"></span>
                     </div>
-                    <div class="col-6" id="c_email">
-                      <label>Email &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label><span id="customer_email"></span>
+                    <div class="col-6" id="mc_email">
+                      <label>Email &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label><span id="mcustomer_email"></span>
                     </div>
-                    <div class="col-6" id="c_gst">
-                      <label>GST No &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label><span id="customer_gst"></span>
+                    <div class="col-6" id="mc_gst">
+                      <label>GST No &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label><span id="mcustomer_gst"></span>
                     </div>
                   </div>
                 </div>
+
+
+
+
+
                 <div class="col-1">
-                  <img src="" id="customer_image" style="width: 100px;height: 100px;border-radius: 50px;">
+                  <img src="" id="mcustomer_image" style="width: 100px;height: 100px;border-radius: 50px;">
                 </div>
                 </div>
                 <form id="add_product" class="row col-12" onsubmit="return(false);">
@@ -599,6 +606,18 @@ $branch_price = $obj->get_branch_sale();
                 </div>
                  <div class="input-group mb-3">
                   <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 8.3rem">Group Name <span class="text-danger">*</span></span>
+                  </div>
+                  <select class="form-control enterKeyclass" id="group_name" name="group_name" >
+                    <option value="">Select Group Name</option>
+                    <?php foreach ($group_name as $key => $value) {?>
+                      <option  value="<?=$value['id']?>"><?=$value['group_name']?></option>
+                    <?php }?>
+                    
+                  </select>
+                </div>
+                 <div class="input-group mb-3">
+                  <div class="input-group-prepend">
                     <span class="input-group-text" style="width: 8.3rem">Image</span>
                   </div>
                   <input type="file" id='image' name='image' class="form-control " placeholder="Enter Pincode">
@@ -630,30 +649,30 @@ dataType:"json",
 url: '../ajaxCalls/get_customer_data.php',
 data: {'customer_id':e},
 success: function(res){
-    $("#customer_name").html(res.name);
-    $("#customer_company_name").html(res.company_name);
-    $("#customer_mobile").html(res.mobile_no);
+    $("#mcustomer_name").html(res.name);
+    $("#mcustomer_company_name").html(res.company_name);
+    $("#mcustomer_mobile").html(res.mobile_no);
     if (res.email!='') {
-      $("#customer_email").html(res.email);
-      $("#c_email").css('display','');
+      $("#mcustomer_email").html(res.email);
+      $("#mc_email").css('display','');
     }else{
-      $("#c_email").css('display','none');
+      $("#mc_email").css('display','none');
     }
      if (res.gst!='' && res.gst!=null) {
-      $("#customer_gst").html(res.gst);
-      $("#c_gst").css('display','');
+      $("#mcustomer_gst").html(res.gst);
+      $("#mc_gst").css('display','');
     }else{
-      $("#c_gst").css('display','none');
+      $("#mc_gst").css('display','none');
     }
     
     if (res.vendor_logo!='') {
-      $("#customer_image").attr('src','../uploads/customer/'+res.vendor_logo);
-      $("#customer_image").css('display','');
+      $("#mcustomer_image").attr('src','../uploads/customer/'+res.vendor_logo);
+      $("#mcustomer_image").css('display','');
     }else{
-      $("#customer_image").css('display','none');
+      $("#mcustomer_image").css('display','none');
     }
     
-    $("#customer_dt").css('display','');
+    $("#mcustomer_dt").css('display','');
 
   }
 

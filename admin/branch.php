@@ -1,5 +1,7 @@
 <?php 
 include 'header.php';
+$group_obj = new GroupName();
+$group_name = $group_obj->get_group_data();
 ?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper watermark_img">
@@ -7,10 +9,29 @@ include 'header.php';
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-6">
+          <div class="col-sm-2">
             <h1 class="m-0">Branch List</h1>
           </div><!-- /.col -->
-          <div class="col-sm-6">
+          
+          <div class="col-sm-3">
+              <div class="input-group input-group-sm ">
+                
+                  <select class="form-control"  name='group_id' id='group_id' >
+                    <option value="0">Select Group Name</option>
+                    <?php
+                    foreach ($group_name as $value) {
+                      
+                      echo "<option value='".$value['id']."' data-id='".$value['group_id']."'>". $value["group_name"]."</option>";
+                      
+                    }
+
+                    ?>
+                  </select>
+              </div>
+            </div>
+
+
+          <div class="col-sm-7">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
               <li class="breadcrumb-item active">Branch List</li>
@@ -151,16 +172,28 @@ include 'header.php';
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text"style="width: 12rem">Alternative Mobile Number&nbsp;
+                    <span class="input-group-text"style="width: 12rem">Alternative Mobile Number&nbsp;</span>
                   </div>
                   <input type="number" id='alt_mobile_no' name='alt_mobile_no' class="form-control enterKeyclass" placeholder="Enter Alternative Mobile Number">
                 </div>
 
                  <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text" style="width: 12rem">Telephone Number&nbsp;
+                    <span class="input-group-text" style="width: 12rem">Telephone Number&nbsp;</span>
                   </div>
                   <input type="number" id='Landline_no' name='Landline_no' class="form-control enterKeyclass" placeholder="Enter Telephone Number">
+                </div>
+                 <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 12rem">Group Name <span class="text-danger">*</span></span>
+                  </div>
+                  <select class="form-control enterKeyclass" id="group_name" name="group_name" >
+                    <option value="">Select Group Name</option>
+                    <?php foreach ($group_name as $key => $value) {?>
+                      <option  value="<?=$value['id']?>"><?=$value['group_name']?></option>
+                    <?php }?>
+                    
+                  </select>
                 </div>
 
                  <div class="input-group mb-3" id="edit_user">
@@ -369,6 +402,7 @@ include 'footer.php';
 
         var email = $("#email").val();
         var name = $("#name").val();
+        var group_name = $("#group_name").val();
        
 
        if (name=='' && name==0) {
@@ -390,6 +424,29 @@ include 'footer.php';
        else{
         $("#email").css("border","1px solid lightgray");
        }
+       if (email=='' && email==0) {
+      global_alert_modal('warning','Enter Email Id...');
+      $("#email").css("border","1px solid red");
+                    $("#email").focus();
+                    return false;
+        }
+       else{
+        $("#email").css("border","1px solid lightgray");
+       }
+
+       if(group_name=='' && group_name==0){
+      global_alert_modal('warning','Select Group Name...');
+      $("#group_name").css("border","1px solid red");
+      $("#group_name").focus();
+      return false;
+
+       } else{
+        $("#group_name").css("border","1px solid lightgray");
+       }
+
+
+
+
      //   if (vendor_company_name=='' && vendor_company_name==0) {
      //  global_alert_modal('warning','Enter Vendor Company Name...');
      //  $("#vendor_company_name").css("border","1px solid red");
@@ -488,6 +545,15 @@ success: function(res){
         }
        else{
         $("#email").css("border","1px solid lightgray");
+       }
+        if(group_name=='' && group_name==0){
+      global_alert_modal('warning','Select Group Name...');
+      $("#group_name").css("border","1px solid red");
+      $("#group_name").focus();
+      return false;
+
+       } else{
+        $("#group_name").css("border","1px solid lightgray");
        }
               var address = $("#address").val();
               var country = $("#country").val();
@@ -603,6 +669,7 @@ success: function(res){
     $("#mobile_no").val(res.mobile_no);
      $("#alt_mobile_no").val(res.alt_mobile_no);
      $("#Landline_no").val(res.landline_no);
+     $("#group_name").val(res.group_id);
     $("#email").val(res.email);
     $("#address").val(res.address1);
     $("#gst_no").val(res.shop_gst_no);
@@ -792,6 +859,37 @@ $.ajax({
   }
   
 
+</script>
+<script type="text/javascript">
 
+  $(function () {
+     //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
+
+  });
+</script>
+<script type="text/javascript">
+  $("#group_id").on('change',function(){
+    var group_id = $(this).val();
+  $.ajax({
+     type: "POST",
+dataType:"json",
+url: '../ajaxCalls/get_branch_group.php',
+data: {"group_id":group_id},
+success: function(res){
+ var table = $('#example1').DataTable();
+    table.clear();
+    table.rows.add(res).draw();
+     
+}  
+
+  });
+
+  });
 
 </script>

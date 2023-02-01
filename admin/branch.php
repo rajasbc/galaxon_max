@@ -1,7 +1,7 @@
 <?php 
 include 'header.php';
 $group_obj = new GroupName();
-$group_name = $group_obj->get_group_data();
+$group_name = $group_obj->get_branch_group_data();
 ?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper watermark_img">
@@ -16,7 +16,7 @@ $group_name = $group_obj->get_group_data();
           <div class="col-sm-3">
               <div class="input-group input-group-sm ">
                 
-                  <select class="form-control"  name='group_id' id='group_id' >
+                  <select class="form-control"  name='group_id' id='group_id'  >
                     <option value="0">Select Group Name</option>
                     <?php
                     foreach ($group_name as $value) {
@@ -57,11 +57,11 @@ $group_name = $group_obj->get_group_data();
                   <thead>
                   <tr>
                     <th style="width: 20px">S.No</th>
-                    <th >Name</th>
+                    <th style="width: 100px">Name</th>
                      <th style="width: 100px">Branch Code</th>
                     <th style="width: 80px">Mobile No</th>
                     <th style="width: 100px">Email</th>
-                    <th style="width: 400px">Action</th>
+                    <th style="width: 600px">Action</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -601,7 +601,7 @@ else{
     $("#country").val('');
     $("#pincode").val('');
     $("#add_branch_modal").modal('hide');
-    $("#vendorForm")[0].reset();
+    // $("#vendorForm")[0].reset();
     get_data();
 }
 }
@@ -876,6 +876,7 @@ $.ajax({
 <script type="text/javascript">
   $("#group_id").on('change',function(){
     var group_id = $(this).val();
+ 
   $.ajax({
      type: "POST",
 dataType:"json",

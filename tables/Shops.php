@@ -506,6 +506,13 @@ $result = $this->db->GetResultsArray($sql);
 return $result;
 
 }
+public function get_Autocomplete_branch_expenses(){
+$sql = 'select * from '.$this->tablename.' where (name like "%'.$this->db->getpost('term').'%" or branch_code like "%'.$this->db->getpost('term').'%") and status="ENABLED"';
+$result = $this->db->GetResultsArray($sql);
+
+return $result;
+
+}
 
 
 

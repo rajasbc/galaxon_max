@@ -82,6 +82,19 @@ if (empty($_SESSION)==true) {
   /*flex: 1;*/
   /*z-index: 1;*/
 }
+  .file_upload{
+ border-bottom-width: 0px;
+    border-right-width: 0px;
+    border-left-width: 0px;
+    border-top-width: 0px;
+
+    
+  }
+
+
+
+
+
   </style>
 }
 </head>
@@ -391,6 +404,12 @@ if (empty($_SESSION)==true) {
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
+                <a href="add_branch_group.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Branch Group</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="branch.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add Branch</p>
@@ -436,6 +455,30 @@ if (empty($_SESSION)==true) {
              
             </ul>
           </li>
+<li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-receipt"></i>
+              <p>
+                Expenses
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="expense_category.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Category</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="expense_modules.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Expenses Modules</p>
+                </a>
+              </li>
+             
+            </ul>
+          </li>          
 
 
 
@@ -752,6 +795,12 @@ if (empty($_SESSION)==true) {
               </p>
             </a>
             <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="customer_group.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add customer Group</p>
+                </a>
+              </li>
               <li class="nav-item">
                 <a href="customer.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>

@@ -39,16 +39,16 @@ include 'header.php';
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                   <th style="width: 33px padding-right: 25px;">S.No</th>
-                    <th style="width: 50px padding-right: 20px; padding-left: 10px ;">Purchase No</th>
-                    <th style="width: 50px;">Branch Name</th>
+                   <th>S.No</th>
+                    <th >Purchase No</th>
+                    <th >Branch Name</th>
                   <!--   <th >Branch code</th> -->
                     <th>Received Date</th>
-                    <th style="width: 30px; padding-right: 25px; padding-left: 10px">Discount</th>
+                   <!--  <th style="width: 30px; padding-right: 25px; padding-left: 10px">Discount</th>
                     <th>Tax Amount</th>
                     <th>Total Amount</th>
                     <th>Paid Amount</th>
-                    <th style="width: 30px; padding-right: 25px;">Balance Amount</th>
+                    <th style="width: 30px; padding-right: 25px;">Balance Amount</th> -->
                     <th style="width: 30px;  padding-right: 25px;">Status</th>
                     <th style="width: 100px;">Details</th>
                   </tr>

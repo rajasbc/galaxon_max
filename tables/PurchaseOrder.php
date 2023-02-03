@@ -25,6 +25,7 @@ class PurchaseOrder extends Dbconnection {
 		$purchase=array();
 		$purchase_log=array();
 		$shipping_array=array();
+     $shipping = array();
 
 		$sql='select max(purchase_no) as purchase_no from '.$this->tablename.' where shop_id='.$_SESSION['shop_id']." and branch_id=".$_SESSION['branch_id'];
 		$result=$this->db->GetResultsArray($sql);
@@ -59,11 +60,35 @@ if ($this->db->getpost('order_type')=='received') {
 	$purchase['order_type']='NEW';
 	$purchase['order_orgin']='NEW';
 }
+if($this->db->getpost('shipping_id')==''){
+      $shipping['name'] = $this->db->getpost('shipping_name');
+      $shipping['email']= $this->db->getpost('email');
+     $shipping['company_name'] = $this->db->getpost('shipping_company_name');
+      $shipping['mobile_no'] = $this->db->getpost('mobile_no');
+      $shipping['gst_no'] = $this->db->getpost('ship_gst');
+      $shipping['address'] = $this->db->getpost('address');
+      $shipping['city'] = $this->db->getpost('city');
+      $shipping['state'] = $this->db->getpost('state');
+      $shipping['country'] = $this->db->getpost('country');
+      $shipping['pincode'] = $this->db->getpost('pincode');
+      $shipping['shipping_terms'] = $this->db->getpost('ship_terms');  
+      $shipping['method'] = $this->db->getpost('shipping_method');
+     
+      $shipping['shop_id'] = $_SESSION['shop_id'];
+ 
+
+   $result = $this->db->mysql_insert($this->tablename6,$shipping);
+
+
+}
 if ($this->db->getpost('ship_terms')!='') {
   $purchase['shipping_terms']=$this->db->getpost('ship_terms');
 }
 if ($this->db->getpost('shipping_id')!='') {
   $purchase['ship_id']=$this->db->getpost('shipping_id');
+}else{
+   $purchase['ship_id']=$result;
+
 }
 if ($this->db->getpost('shipping_method')!='') {
  $purchase['method']=$this->db->getpost('shipping_method');
@@ -71,6 +96,7 @@ if ($this->db->getpost('shipping_method')!='') {
 if ($this->db->getpost('shipping_d_date')!='') {
   $purchase['delivery_date']=$this->db->getpost('shipping_d_date');
 }
+    
 
   $purchase['po_id']=$purchase_id;
   $purchase['shop_id']=$_SESSION['shop_id'];
@@ -186,6 +212,23 @@ if ($this->db->getpost('shipping_d_date')!='') {
                        	}
                        }
 
+                // mrp and sale price update
+              if($itemvar['varieties_id']!=0 && $itemvar['varieties_id']!='' && $itemvar['varieties_name']!=''){
+                    $price_update = array();
+                    $price_update['mrp'] = $itemvar['mrp'];
+                    $price_update['sale_price'] = $itemvar['sale_price'];
+                  $this->db->mysql_update('varieties',$price_update,'id='.$itemvar['varieties_id']);
+                    
+              }else{
+                     $price_update = array();
+                    $price_update['mrp'] = $itemvar['mrp'];
+                    $price_update['sales_price'] = $itemvar['sale_price'];
+                  $this->db->mysql_update('items',$price_update,'id='.$itemvar['item_id']);
+
+              }
+
+
+
 					}
 				}
 if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
@@ -200,50 +243,7 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
 		$this->db->mysql_insert($this->tablename3, $purchase_log);
 }
 				
-// 		if ($this->db->getpost('shipping_name')!='') {
-// 	$shipping_array['name']=$this->db->getpost('shipping_name');
-// }
-// if ($this->db->getpost('shipping_company_name')!='') {
-// 	$shipping_array['company_name']=$this->db->getpost('shipping_company_name');
-// }
-// if ($this->db->getpost('smobile_no')!='') {
-// 	$shipping_array['mobile_no']=$this->db->getpost('smobile_no');
-// }
-// if ($this->db->getpost('semail')!='') {
-// 	$shipping_array['email']=$this->db->getpost('semail');
-// }
-// if ($this->db->getpost('sgst')!='') {
-// 	$shipping_array['gst_no']=$this->db->getpost('sgst');
-// }
-// if ($this->db->getpost('saddress')!='') {
-// 	$shipping_array['address']=$this->db->getpost('saddress');
-// }
-// if ($this->db->getpost('scity')!='') {
-// 	$shipping_array['city']=$this->db->getpost('scity');
-// }
-// if ($this->db->getpost('sstate')!='') {
-// 	$shipping_array['state']=$this->db->getpost('sstate');
-// }
-// if ($this->db->getpost('scountry')!='') {
-// 	$shipping_array['country']=$this->db->getpost('scountry');
-// }
-// if ($this->db->getpost('spincode')!='') {
-// 	$shipping_array['pincode']=$this->db->getpost('spincode');
-// }
-// if ($this->db->getpost('ship_terms')!='') {
-// 	$shipping_array['shipping_terms']=$this->db->getpost('ship_terms');
-// }
-// if ($this->db->getpost('shipping_method')!='') {
-// 	$shipping_array['method']=$this->db->getpost('shipping_method');
-// }
-// if ($this->db->getpost('shipping_d_date')!='') {
-// 	$shipping_array['delivery_date']=$this->db->getpost('shipping_d_date');
-// }
-// if (!empty($shipping_array)) {
-// 	$shipping_array['po_id']=$purchase_id;
-// 	$shipping_array['shop_id']=$_SESSION['shop_id'];
-// 	$this->db->mysql_insert($this->tablename6, $shipping_array);
-// }
+
 
 
      return ['status'=>'success'];
@@ -273,7 +273,12 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
 		$purchase['created_by']=$_SESSION['uid'];
 		$purchase['created_at']=date('Y-m-d H:i:s');
 		$purchase['bill_no']=$this->db->getpost('bill_no');
+    if($_SESSION['type']=='ADMIN'){
 		$purchase['received_date']=$this->db->getpost('received_date');
+       }else{
+
+    $purchase['received_date'] = date("Y-m-d");  
+       }
 		$purchase['paid_amt']=$this->db->getpost('paid_amt');
 		$purchase['balance_amt']=$this->db->getpost('balance');
     

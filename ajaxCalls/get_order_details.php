@@ -34,7 +34,7 @@ $result2= $obj->get_purchase_no($_GET['id'],$_GET['branch_id']);
 	<hr>
 	<!-- End Of Purchase Details -->
 	
-	<hr>
+
 		<!-- End Of Vendor Details -->
 		<div class="form-row">
    <div class="form-group col-lg-12">
@@ -51,17 +51,17 @@ $result2= $obj->get_purchase_no($_GET['id'],$_GET['branch_id']);
                   <td class="text-left">Products</td>
                    <td class="text-left">Variety</td>
                   <td class="text-rigth">Quantity</td>
-                   <td class="text-rigth">Rate</td>
+                   <!-- <td class="text-rigth">Rate</td> -->
                   <!--  <td class="text-rigth">Sale Price</td> -->
-                    <td class="text-rigth">Discount(%)</td>
+                   <!--  <td class="text-rigth">Discount(%)</td> -->
                   <!--  <td class="text-rigth">GST(%)</td> -->
-                   <td class="text-rigth">GST(%)</td>
+                  <!--  <td class="text-rigth">GST(%)</td> -->
                 
-                   	<td class="text-rigth">Price<br>(excl.GST)</td>
+                   <!-- 	<td class="text-rigth">Price<br>(excl.GST)</td> -->
                   
                  
                  
-                  <td class="text-rigth">Total Amount</td>
+                  <!-- <td class="text-rigth">Total Amount</td> -->
                 </tr>
               </thead>
               <tbody class="text-center" id="tdata">
@@ -86,20 +86,20 @@ $result2= $obj->get_purchase_no($_GET['id'],$_GET['branch_id']);
                     <td class="text-left" style="width:30px"><?php echo strtoupper($item['var_name']); ?></td>
                    
                  <td style="width:30px" class="text-center"><?php echo $item['qty']; ?></td>
-                 <td style="width:30px"><?php echo ($item['mrp']); ?></td>
+                 <!-- <td style="width:30px"><?php echo ($item['mrp']); ?></td> -->
                  <!--  <td style="width:30px"><?php echo ($item['sales_price']); ?></td> -->
-                <td style="width:30px"><?php echo $item['discount']; ?></td>
-
-                  <td style="width:30px" class="text-center"><?php echo $item['gst']; ?></td>
+              <!--   <td style="width:30px"><?php echo $item['discount']; ?></td>
+ -->
+                 <!--  <td style="width:30px" class="text-center"><?php echo $item['gst']; ?></td> -->
                   <!--  <td style="width:30px" class="text-center"><?php echo $res[0]['tax_amt']; ?></td>
                      -->
-                   <td style="width:30px" class="text-center"><?php echo $item['total']; ?></td>
+                  <!--  <td style="width:30px" class="text-center"><?php echo $item['total']; ?></td> -->
                    
                    
                   
-                    <td style="width:30px" ><?php echo $total_amount; ?>
+                    <!-- <td style="width:30px" ><?php echo $total_amount; ?>
                     
-                    </td>
+                    </td> -->
                   </tr>
                   <?php $sno++;
 

@@ -147,6 +147,7 @@ $group_name = $group_obj->get_group_data();
             </div>
             <div class="modal-body">
               <input type="hidden" name="edit_item_id" id="edit_item_id">
+               <input type="hidden" name="edit_var_id" id="edit_var_id">
               <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text">Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-danger">*</span></span>
@@ -284,7 +285,7 @@ $group_name = $group_obj->get_group_data();
         <!-- /.modal-dialog -->
       </div>
       <!-- /.modal -->
-   <div class="modal fade" id="add_varities_modal" data-backdrop='static'>
+   <div class="modal fade" id="add_varities_modal" data-backdrop='static' >
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
@@ -297,12 +298,27 @@ $group_name = $group_obj->get_group_data();
               <input type="hidden" name="variety_item_id" id="variety_item_id">
               <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Name&nbsp;<span class="text-danger">*</span></span>
+                    <span class="input-group-text" style="padding-right: 28px;">Name&nbsp;<span class="text-danger">*</span></span>
                   </div>
                   <input type="text" id='variety_name' class="form-control enterAsTab" placeholder="Enter Variety Name">
                 </div>
+                 <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+      <span class="input-group-text" style="padding-right: 50px;">Mrp&nbsp;</span>
+                  </div>
+                  <input type="text" id='mrp' class="form-control enterAsTab" placeholder="Enter Mrp">
+                </div>
+                 <div class="input-group mb-3">
+                  <div class="input-group-prepend"><span class="input-group-text" >Sale Price&nbsp;</span>
+                  </div>
+                  <input type="text" id='sale_price' class="form-control enterAsTab" placeholder="Enter Sale Price">
+                </div>
+                <div class="form-group mb-3 text-right" style="float: left;">
+                  <button type="button" id="reset_btn" class="btn btn-warning enterAsTab" style="display: none">Reset</button>
+                </div>
                 <div class="form-group mb-3 text-right">
                   <button type="button" id="add_variety_btn" class="btn btn-primary enterAsTab">Save</button>
+                  <button type="button" id="update_variety_btn" class="btn btn-danger enterAsTab" style="display: none">Update</button>
                 </div>
                 <div class="row">
                   <table class="table">
@@ -310,6 +326,8 @@ $group_name = $group_obj->get_group_data();
                       <tr>
                         <th>S.No</th>
                         <th>Name</th>
+                        <th>Mrp</th>
+                        <th>Sale Price</th>
                         <th>Action</th>
                       </tr>
                     </thead>
@@ -383,6 +401,9 @@ $("#variety_table").html(res);
 $("#add_variety_btn").click(function(){
   var item_id=$("#variety_item_id").val();
   var variety_name=$("#variety_name").val();
+  var mrp = $("#mrp").val();
+  var sale_price = $("#sale_price").val();
+
    if (variety_name=='' && variety_name==0) {
       global_alert_modal('warning','Enter Variety Name...');
       $("#variety_name").css("border","1px solid red");
@@ -396,7 +417,7 @@ $("#add_variety_btn").click(function(){
 type: "POST",
 dataType:"json",
 url: '../ajaxCalls/add_variety.php',
-data: {'item_id':item_id,'variety_name':variety_name,'type':'add'},
+data: {'item_id':item_id,'variety_name':variety_name,'mrp':mrp,'sale_price':sale_price,'type':'add'},
 success: function(res){
 if (res.status=='failed') {
   
@@ -596,4 +617,58 @@ else{
 
 });
 });
+
+</script>
+<script type="text/javascript">
+  function edit_variety(e){
+  var var_id = $(e).data('id');
+  $.ajax({
+type: "POST",
+dataType:"json",
+url: '../ajaxCalls/update_var_dt.php',
+data:{'var_id':var_id},
+success:function(res){
+  $("#variety_name").val(res.name);
+  $("#mrp").val(res.mrp);
+  $("#sale_price").val(res.sale_price);
+  $("#add_variety_btn").css('display','none');
+  $("#update_variety_btn").css('display','');
+  $("#reset_btn").css('display','')
+  $("#edit_var_id").val(var_id);
+  
+}
+
+});
+
+}
+$("#reset_btn").on('click',function(){
+ $("#variety_name").val('');
+  $("#mrp").val('');
+  $("#sale_price").val('');
+ $("#update_variety_btn").css('display','none');
+  $("#add_variety_btn").css('display','');
+  $("#reset_btn").css('display','none');
+
+})
+$("#update_variety_btn").on('click',function(){
+var id = $("#edit_var_id").val();
+var variety_name = $("#variety_name").val();
+var mrp = $("#mrp").val();
+var sale_price = $("#sale_price").val();
+$.ajax({
+type: "POST",
+dataType:"json",
+url: '../ajaxCalls/update_varieties.php',
+data:{'id':id,'variety_name':variety_name,'mrp':mrp,'sale_price':sale_price},
+success:function(res){
+if(res.status=='success'){
+  location.reload();
+}
+  
+}
+
+});
+
+});
+
 </script>

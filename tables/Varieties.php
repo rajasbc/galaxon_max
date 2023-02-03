@@ -25,9 +25,33 @@ class Varieties extends Dbconnection {
 		$variety=array();
 		$variety['item_id']=$this->db->getpost('item_id');
 		$variety['name']=$this->db->getpost('variety_name');
+		$variety['mrp']=$this->db->getpost('mrp');
+		$variety['sale_price'] = $this->db->getpost('sale_price');
 		$id = $this->db->mysql_insert($this->tablename, $variety);
 		if ($id!=0) {
 			return ['status'=>'success'];
+		}else{
+			return ['status'=>'failed'];
+		}
+	}
+	public function update_varieties_data(){
+
+  //    $check_sql='select * from '.$this->tablename.' where name="'.$this->db->getpost('variety_name').'" and id="'.$this->db->getpost('id').'" and is_deleted="NO"';
+
+		
+		// $check_res=$this->db->GetResultsArray($check_sql);
+		// if (count($check_res)>0) {
+		// 	return ['status'=>'alert'];
+		// }
+
+		$variety=array();
+		
+		$variety['name']=$this->db->getpost('variety_name');
+		$variety['mrp']=$this->db->getpost('mrp');
+		$variety['sale_price'] = $this->db->getpost('sale_price');
+		$id = $this->db->mysql_update($this->tablename, $variety,'id='.$this->db->getpost('id'));
+		if ($id!=0) {
+			return ['status'=>'success',];
 		}else{
 			return ['status'=>'failed'];
 		}
@@ -117,6 +141,25 @@ $result = $this->db->GetResultsArray($sql);
 
 return $result;
 
+}
+public function get_var_price($v_id){
+
+$sql = 'select * from '.$this->tablename.' where id='.$v_id.' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
+$result = $this->db->getAsIsArray($sql);
+// print_r($result);die();
+if($result!=''){
+
+	return ['status'=>'success','mrp'=>$result['mrp'],'sale_price'=>$result['sale_price']];
+}else{
+
+	return 'failed';
+}
+
+}
+public function get_var_dt($v_id){
+$sql = 'select * from '.$this->tablename.' where id='.$v_id.' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
+$result = $this->db->getAsIsArray($sql);
+return $result;
 }
 
 

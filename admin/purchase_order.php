@@ -39,10 +39,12 @@ include 'header.php';
         <div class="col-8">&nbsp;</div>
         <div class="col-4">
           <label>Select Order Type :</label>
-      
+        
           <select class="form-control" id="select_type">
             <option value="NEW" <?php echo $_GET['type']!='RECEIVED'?'selected="seleted"':''?>>NEW</option>
+            <?php if($_SESSION['type']=='ADMIN'){ ?>
             <option value="RECEIVED" <?php echo $_GET['type']=='RECEIVED'?'selected="seleted"':''?>>RECEIVED</option>
+          <?php } ?>
           </select>
 
              <!--  <select class="form-control" id="select_type">

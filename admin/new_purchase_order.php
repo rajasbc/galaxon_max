@@ -192,7 +192,9 @@ $category =  $category_obj->get_category_data();
                    <label>Product Varieties&nbsp;<label class="text-danger">&nbsp;</label></label>
                    
               <select id='varieties_id' class="form-control enterKeyclass">
+
               </select>
+
                 </div>
                 <div class="col-3 form-group mb-3">
                    <label>Product Code&nbsp;<label class="text-danger">&nbsp;</label></label>
@@ -583,6 +585,28 @@ include 'footer.php';
 ?>
 
 <script type="text/javascript">
+  $("#varieties_id").on('change',function(){
+ var var_id = $(this).val();
+$.ajax({
+type: "POST",
+dataType:"json",
+url: '../ajaxCalls/get_variety_price.php',
+data: {'var_id':var_id},
+success: function(res){
+   console.log(res);
+   if(res.status=='success'){
+   $("#mrp").val(res.mrp);
+    $("#sale_price").val(res.sale_price);
+  }else{
+     $("#mrp").val(0);
+    $("#sale_price").val(0);
+   
+  }
+  }
+
+});
+
+  });
 
   function get_vendor_dt(e){
           $.ajax({
@@ -726,6 +750,7 @@ success: function(res){
 
   
 </script>
+
 
 
 <script type="text/javascript">
@@ -1098,7 +1123,10 @@ $("#place_order").click(function(){
 $("#place_order").attr('disabled','disabled');
 var dobj=$.extend({},detailsarray);
 var obj = $.extend({}, items);
+// checkArray(shipping_data);
 var shipobj = $.extend({}, shipping_data);
+
+
 $.ajax({
 type: "POST",
 dataType:"json",
@@ -1146,17 +1174,91 @@ $(".enterKeyclass").keypress(function (event) {
     }
 });
 </script>
+
+
+<!-- <script type="text/javascript">
+ function checkArray(array){
+  if($.isEmptyObject(array)){
+
+     
+   var shipobj = $.extend({}, shipping_data);
+
+    
+  }else{
+    
+    var shipobj = $.extend({}, shipping_data);
+
+  }
+
+
+ }
+
+
+</script> -->
+
+
 <script type="text/javascript">
   $("#shipping_dt_add").click(function(){
+if($("#shipping_id").val()!=''){
        shipping_data["shipping_id"]=$("#shipping_id").val();
        shipping_data["ship_terms"]=$("#ship_terms").val();
        shipping_data["shipping_method"]=$("#shipping_method").val();
        shipping_data["shipping_d_date"]=$("#shipping_d_date").val();
        $("#shipping_modal").modal('hide');
+     }else{
+      shipping_data["shipping_id"]=$("#shipping_id").val();
+      if($("#shipping_name").val()==''){
+        global_alert_modal('warning','Enter Shipping_name...');
+      $("#shipping_name").css("border","1px solid red");
+      $("#shipping_name").focus();
+      return false;
+       
+      }else{
+        shipping_data['shipping_name'] = $("#shipping_name").val();
+         $("#shipping_name").css("border","1px solid lightgray");
+      }
+
+      if($("#shipping_company_name").val()==''){
+        global_alert_modal('warning','Enter Shipping Company Name...');
+      $("#shipping_company_name").css("border","1px solid red");
+      $("#shipping_company_name").focus();
+      return false;
+       
+      }else{
+        shipping_data['shipping_company_name'] = $("#shipping_company_name").val();
+         $("#shipping_company_name").css("border","1px solid lightgray");
+      }
+
+
+    if($("#mobile_no").val()==''){
+        global_alert_modal('warning','Enter Mobile Number...');
+      $("#mobile_no").css("border","1px solid red");
+      $("#mobile_no").focus();
+      return false;
+       
+      }else{
+        shipping_data['mobile_no'] = $("#mobile_no").val();
+         $("#mobile_no").css("border","1px solid lightgray");
+      }
+
+ shipping_data['email'] = $("#email").val();
+ shipping_data['ship_gst'] = $("#ship_gst").val();
+ shipping_data['address'] = $("#address").val();
+ shipping_data['city'] = $("#city").val();
+ shipping_data['state'] = $("#state").val();
+ shipping_data['country'] = $('#country').val();
+ shipping_data['pincode'] = $("#pincode").val();
+ shipping_data['ship_terms'] = $("#ship_terms").val();
+ shipping_data['shipping_method'] = $("#shipping_method").val();
+$("#shipping_modal").modal('hide');
+
+     }
+     
        
   })
   function get_item_dt(e) {
     $.ajax({
+  
 type: "POST",
 dataType:"json",
 url: '../ajaxCalls/get_item_details.php',
@@ -2312,15 +2414,7 @@ $(".enterKeyclass").keypress(function (event) {
 });
 </script>
 <script type="text/javascript">
-  $("#shipping_dt_add").click(function(){
-       shipping_data["shipping_id"]=$("#shipping_id").val();
-       shipping_data["ship_terms"]=$("#ship_terms").val();
-       shipping_data["shipping_method"]=$("#shipping_method").val();
-       shipping_data["shipping_d_date"]=$("#shipping_d_date").val();
-       $("#shipping_modal").modal('hide');
-       
-  })
-  function get_item_dt(e) {
+    function get_item_dt(e) {
     $.ajax({
 type: "POST",
 dataType:"json",

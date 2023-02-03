@@ -50,6 +50,7 @@ $total_amount_dt=0;
 
 	<hr>
 		<!-- End Of Vendor Details -->
+
 		<div class="form-row">
    <div class="form-group col-lg-12">
 		<h4>Purchase Product Details</h4></div></div>
@@ -94,7 +95,9 @@ $total_amount_dt=0;
           <table class="table">
 				<thead>
 					<tr>
+						<?php if($_SESSION['type']=='ADMIN'){?>
 						<th>Bill No</th>
+					<?php } ?>
 						<th>Received Date</th>
 						<th>Taxable</th>
 						<th>Tax</th>
@@ -108,7 +111,9 @@ $total_amount_dt=0;
 							$total_amount_dt=$total_amount_dt+$val['grand_total']
 							?>
 							<tr>
+								<?php if($_SESSION['type']=='ADMIN'){?>
 							<td><?=$val['bill_no']?></td>
+							<?php } ?>
 						<td><?=date('d-m-Y',strtotime($val['received_date']))?></td>
 						<td><?=$val['taxable_amt']?></td>
 						<td><?=$val['tax_amt']?></td>
@@ -124,6 +129,7 @@ $total_amount_dt=0;
 	</div>
 	<hr>
 		<!-- End Of Product Details -->
+		<?php if($_SESSION['type']=='ADMIN'){ ?>	
 		<div class="form-row">
    <div class="form-group col-lg-12">
 		<h4>Purchase Log Details</h4></div></div>
@@ -242,7 +248,7 @@ $total_amount_dt=0;
 		<!-- End Of Paid Details -->
 	
 </div>
-
+<?php } ?>
 
 <script type="text/javascript">
 

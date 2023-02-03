@@ -3,11 +3,12 @@ include '../tables/config.php';
 $customer_obj = new Customers();
 $obj=new Shops();
 $sales_obj = new CustomerSale();
-$customer_result = $customer_obj->get_customer(base64_decode($_GET['id']));
+
 $shop_result=$obj->shop_details();
 
 $sales_item = $sales_obj->get_sale_dt(base64_decode($_GET['id']));
 $sales_item_variety=$sales_obj->get_sale_item_dt($sales_item[0]['sale_id']);
+$customer_result = $customer_obj->get_customer($sales_item_variety[0]['customer_id']);
 
 // $purchase_order_item_dt=$obj->get_purchase_order_item(base64_decode($_GET['id']));
 // $purchase_order_shipping=$obj->get_purchase_order_shipping($purchase_order_dt[0]['ship_id']);
@@ -309,11 +310,11 @@ if ($vendor['pincode']!='') {
 <div class="col-sm-12 col-md-12 col-lg-12 ">
 <div class="row">
   
-<div class="col-6  border-left text-left  border-bottom border-dark" id="invoice_number">
+<div class="col-4  border-left border-right text-left  border-bottom border-dark" id="invoice_number">
 <span class=""><b>Bill No : </b></span>
 <span class="text-val"><b><?=$sales_item[0]['sale_id']?></b></span>
 </div>
-<div class="col-6  border-left text-right  border-bottom border-dark" id="invoice_number">
+<div class="col-8  border-left border-right text-right  border-bottom border-dark" id="invoice_number">
 <span class=""><b>Sale Date : </b></span>
 <span class="text-val"><b><?=date('d-m-Y',strtotime($sales_item[0]['created_at']))?></b></span>
 </div>
@@ -475,6 +476,8 @@ if ($customer_result[0]['pincode']!='') {
 <th class="border border-dark">Product Code</th>
 <th class="border border-dark">Variety</th>
 <th class="border border-dark">Quantity</th>
+<th class="border border-dark">Price</th>
+<th class="border border-dark">Total Amount</th>
 <th class="border border-dark">Description</th>
 <th class="border border-dark">Units</th>
 <th class="border border-dark">Tons</th>
@@ -490,6 +493,7 @@ if ($customer_result[0]['pincode']!='') {
    $sno++;
    $temp++;
    $description='';
+  
    $total_qty=$total_qty+$row['qty'];
    $total_ton=$total_ton+($row['qty']/1000);
    $total_amount=$total_amount+($row['total']+$row['tax_amt']);
@@ -503,11 +507,13 @@ if ($customer_result[0]['pincode']!='') {
 <td><?=$row['item_code']?></td>
 <td><?=$row['var_name']?></td>
 <td ><?=$row['qty']?></td>
+<td class="text-right"><?=$row['mrp']?></td>
+<td class="text-right"><?=($row['total']+$row['tax_amt'])?></td>
 <td><?=$description_name?></td>
 <td class="text-right"><?=$row['units']?></td>
 <td class="text-right"><?=($row['qty']/1000)?></td>
-<!-- <td class="text-right"><?=$row['mrp']?></td>
-<td class="text-right"><?=$row['sales_price']?></td> 
+<!-- <td class="text-right"><?=$row['mrp']?></td> -->
+<!-- <td class="text-right"><?=$row['sales_price']?></td> 
 <td class="text-right"><?=round($row['discount'])?></td>
 <td class="text-right"><?=round($row['gst'])?></td>
 <td class="text-right"><?=($row['total']+$row['tax_amt'])?></td> -->
@@ -522,26 +528,29 @@ if ($customer_result[0]['pincode']!='') {
 <td class="text-right">&nbsp;</td>
 <td class="text-right">&nbsp;</td>
 <td class="text-right">&nbsp;</td> 
+<td class="text-right">&nbsp;</td>
+<td class="text-right">&nbsp;</td> 
 </tr>
 
  <?php if ($last_index==$temp) { ?>
   </tbody>
-<!-- <tfoot>
+<tfoot>
 <tr class="border-right border-top border-dark font-weight-bold line_1">
 <td class="border-left-0">&nbsp;</td>
 <td class="w-50 text-left"><b>Total</b></td>
-<td ><?=$total_qty?></td>
+<!-- <td ><?=$total_qty?></td> -->
 <td >&nbsp;</td>
 <td >&nbsp;</td>
+<td >&nbsp;</td>
+<td >&nbsp;</td>
+<td class="text-right"><?=number_format($total_amount,2,".","")?></td>
+<!-- <td><?=$total_ton?></td> -->
+<td class="text-right">&nbsp;</td>
+<td class="text-right">&nbsp;</td>
+<td class="text-right">&nbsp;</td>
 
-<td><?=$total_ton?></td>
-<td class="text-right">&nbsp;</td>
-<td class="text-right">&nbsp;</td>
-<td class="text-right">&nbsp;</td>
-<td class="text-right">&nbsp;</td> 
-<td class="text-right"><?=$total_amount?></td>
 </tr>
-</tfoot> -->
+</tfoot>
 </table>
 </div>
 </div>

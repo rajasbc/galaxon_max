@@ -1,10 +1,8 @@
 <?php
 include '../tables/config.php';
+$obj = new Varieties();
 
- $obj = new PurchaseOrder();
- $result =  $obj->add_purchase();
- 
+ $result =  $obj->update_varieties_data();
  echo json_encode($result);
-
 
 ?>

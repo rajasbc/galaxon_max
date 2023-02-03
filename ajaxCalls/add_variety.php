@@ -1,6 +1,6 @@
 <?php
 include '../tables/config.php';
-
+// print_r($_POST);die();
  $obj = new Varieties();
 if ($_POST['type']=='add') {
 	 $result =  $obj->add_varieties();

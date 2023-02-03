@@ -166,9 +166,10 @@ $result = $obj->get_catagory_data();
                 </div>
                  <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text "style="width: 12rem">Upload File</span>
+                    <span class="input-group-text "style="width: 12rem;height: 29.6px;">Upload File</span>
                   </div>
-                  <input type="file" id='myfile' name='myfile' class="form-control enterKeyclass file_upload" value='' accept="image/*" onchange="readURL(this);" placeholder="Upload File">
+                  <input style="width: 12rem" type="file" id='myfile' name='myfile' class="enterKeyclass" value='' accept="image/*" onchange="readURL(this);" placeholder="Upload File">
+                  <img id="preview" src="" >
                   
                 </div>
 
@@ -369,6 +370,8 @@ success: function(res){
      $("#note").val(res.note);
     $("#contact").val(res.contact_no);
     $("#amount").val(res.amount);
+    $("#preview").attr('src','../uploads/files/'+res.file);
+
     
     
     $("#add_expenses_modal").modal('show');
@@ -378,7 +381,6 @@ success: function(res){
 }
 
 });
-
 
 }
 function delete_modal(e){
@@ -409,10 +411,6 @@ $(".enterKeyclass").keypress(function (event) {
     }
 });
 </script>
-
-
-
-
 
 <script>
   function view_btn(e){

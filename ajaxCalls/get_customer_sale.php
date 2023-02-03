@@ -7,7 +7,7 @@ include '../tables/config.php';
   
  $result =  $obj->get_sale_details();
 
- // print_r($result);die();
+
 
 $output=array();
 $main=array();

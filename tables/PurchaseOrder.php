@@ -60,7 +60,7 @@ if ($this->db->getpost('order_type')=='received') {
 	$purchase['order_type']='NEW';
 	$purchase['order_orgin']='NEW';
 }
-if($this->db->getpost('shipping_id')==''){
+if($this->db->getpost('shipping_id')=='' && $this->db->getpost('shipping_id')!=0){
       $shipping['name'] = $this->db->getpost('shipping_name');
       $shipping['email']= $this->db->getpost('email');
      $shipping['company_name'] = $this->db->getpost('shipping_company_name');
@@ -526,17 +526,31 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
 		$purchase_log['created_at']=date('Y-m-d H:i:s');
 		$this->db->mysql_insert($this->tablename3, $purchase_log);
 }
-		$item_check_sql	= "select * from ".$this->tablename2." where purchase_id=".$purchase_id." and qty=received_qty and branch_id=".$_SESSION['branch_id']."";
+		$item_check_sql	= "select sum(qty)as qty,sum(received_qty)as received_qty from ".$this->tablename2." where purchase_id=".$purchase_id." and branch_id=".$_SESSION['branch_id']."";
 		$item_check_res=$this->db->GetResultsArray($item_check_sql);
-		if (count($item_check_res) > 0) {
-			$purchase_update=array();
-			$purchase_update['order_type']='RECEIVED';
-		$this->db->mysql_update($this->tablename, $purchase_update,'id='.$purchase_id);
-		}else{
-			$purchase_update=array();
-			$purchase_update['order_type']='PARTIAL COMPLETE';
-		$this->db->mysql_update($this->tablename, $purchase_update,'id='.$purchase_id);
-		}
+    $total = $item_check_res[0]['qty']-$item_check_res[0]['received_qty'];
+    if($total==0){
+     $purchase_update=array();
+     $purchase_update['order_type']='RECEIVED';
+    $this->db->mysql_update($this->tablename, $purchase_update,'id='.$purchase_id);
+
+    }else{
+      $purchase_update=array();
+     $purchase_update['order_type']='PARTIAL COMPLETE';
+    $this->db->mysql_update($this->tablename, $purchase_update,'id='.$purchase_id);
+
+    }
+
+     
+		// if (count($item_check_res) > 0) {
+		// 	$purchase_update=array();
+		// 	$purchase_update['order_type']='RECEIVED';
+		// $this->db->mysql_update($this->tablename, $purchase_update,'id='.$purchase_id);
+		// }else{
+		// 	$purchase_update=array();
+		// 	$purchase_update['order_type']='PARTIAL COMPLETE';
+		// $this->db->mysql_update($this->tablename, $purchase_update,'id='.$purchase_id);
+		// }
 
 		$history_sql='select bill_no,received_date,sum(taxable_amt) as taxable,sum(tax_amt) as tax,sum(discount_amt) as discount,sum(grand_total) as total from '.$this->tablename4.' where po_id='.$purchase_id.' and branch_id='.$_SESSION['branch_id'].' group by po_id order by id asc';
 		$history_res=$this->db->GetResultsArray($history_sql);

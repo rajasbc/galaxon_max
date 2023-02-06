@@ -650,6 +650,7 @@ success: function(res){
   $(document).ready(function(){
  items = [];
  shipping_data = [];
+ shipping_data1 = [];
  data=[];
      $('#item_name').autocomplete({
       source: "../ajaxCalls/autocomplete_item_list.php",
@@ -1050,6 +1051,7 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
   return new RegExp('{{' + str + '}}', 'g');
 }
 $("#place_order").click(function(){
+      shipping_data1['shipping_id'] = 0;
       var vendor_id = $("#vendor_id").val();
      
       var nvendor_id = $("#nvendor_id").val();
@@ -1074,6 +1076,7 @@ $("#place_order").click(function(){
         $("#item_name").focus();
         return false;
       }
+
 
       if ("<?=$_GET['type']?>"=='received') {
         if (bill_no=='' && bill_no==0) {
@@ -1121,10 +1124,18 @@ $("#place_order").click(function(){
       detailsarray['grand_total']=Number($("#grandid").text());
       detailsarray['order_type']="<?=$_GET['type']?>";
 $("#place_order").attr('disabled','disabled');
+if (jQuery.isEmptyObject(shipping_data)==true) {
+      var shipobj =  $.extend({}, shipping_data1);;
+       
+      }else{
+         var shipobj = $.extend({}, shipping_data);
+
+      }
+
 var dobj=$.extend({},detailsarray);
 var obj = $.extend({}, items);
 // checkArray(shipping_data);
-var shipobj = $.extend({}, shipping_data);
+// var shipobj = $.extend({}, shipping_data);
 
 
 $.ajax({

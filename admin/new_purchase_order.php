@@ -1051,7 +1051,7 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
   return new RegExp('{{' + str + '}}', 'g');
 }
 $("#place_order").click(function(){
-      shipping_data1['shipping_id'] = 0;
+      shipping_data1['shipping_id'] = 'empty';
       var vendor_id = $("#vendor_id").val();
      
       var nvendor_id = $("#nvendor_id").val();

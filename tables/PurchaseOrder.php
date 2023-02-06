@@ -60,7 +60,8 @@ if ($this->db->getpost('order_type')=='received') {
 	$purchase['order_type']='NEW';
 	$purchase['order_orgin']='NEW';
 }
-if($this->db->getpost('shipping_id')=='' && $this->db->getpost('shipping_id')!=0){
+if($this->db->getpost('shipping_id')==0){
+              if($this->db->getpost('shipping_id')!='empty'){
       $shipping['name'] = $this->db->getpost('shipping_name');
       $shipping['email']= $this->db->getpost('email');
      $shipping['company_name'] = $this->db->getpost('shipping_company_name');
@@ -79,7 +80,7 @@ if($this->db->getpost('shipping_id')=='' && $this->db->getpost('shipping_id')!=0
 
    $result = $this->db->mysql_insert($this->tablename6,$shipping);
 
-
+   }
 }
 if ($this->db->getpost('ship_terms')!='') {
   $purchase['shipping_terms']=$this->db->getpost('ship_terms');

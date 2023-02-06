@@ -71,7 +71,7 @@ $total_amount_dt=0;
                 <tr class="font-weight-bold" style="font-size:<?=$fontsize?>px">
                   <td>S.No</td>
                   <td class="text-left">Products</td>
-                  <td class="text-rigth">Order Quantity</td>
+                 <!--  <td class="text-rigth">Order Quantity</td> -->
                   <td class="text-rigth">Received Quantity</td>
                 </tr>
               </thead>
@@ -90,10 +90,10 @@ $total_amount_dt=0;
                  	<?php echo $item['qty']; ?>
                  		
                  	</td>
-                 	<td style="text-align: center" >
+                 	<!-- <td style="text-align: center" >
                     	<?php echo ($item['received_qty'] ); ?>
                     
-                    </td>
+                    </td> -->
                   </tr>
                   <?php $sno++;
               }

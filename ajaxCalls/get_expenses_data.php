@@ -21,7 +21,7 @@ if (count($result)>0) {
        
                $output [$j] =[$i,$value['branch_name'],$result['name'],$value['expenses_name'],$value['amount'],
                '<button style="margin-right: 20px"; type="button"  class="btn btn-primary" data-id="'.$value['id'].'" data-form="'.$value['name'].'" onclick="edit_modal(this);">Edit</button> 
-               <button style="margin-right: 20px"; type="button"   class="btn btn-primary" data-id="'.$value['id'].'" onclick="view_btn(this);">View</button>'];
+               <button style="margin-right: 20px"; type="button"   class="btn btn-primary" data-id="'.$value['id'].'" onclick="view_btn(this);">View</button> <button style="margin-right: 20px"; type="button"   class="btn btn-danger" data-id="'.$value['id'].'" onclick="del_btn(this);">Delete</button>'];
       $j++;
 
               }
@@ -35,6 +35,7 @@ echo json_encode($main);
 }else{
 
 	$result=$obj->get_expenses_dt($_POST['expenses_id']);
+
 	echo json_encode($result);
 }
 ?>

@@ -6,6 +6,7 @@ $obj = new Items();
 $result =  $obj->get_items_dt($_POST['item_id']);
 $Vobj = new Varieties();
 $Vresult =  $Vobj->get_varieties_data($_POST['item_id']);
+// print_r($Vresult);die();
 
 $var_select='';
 if (count($Vresult)>0) {
@@ -27,8 +28,8 @@ $output['units']=$result[0]['units'];
 $output['item_name']=$result[0]['item_name'];
 $output['item_code']=$result[0]['item_code'];
 if(count($Vresult)>0){
-$output['mrp']=$Vresult[0]['mrp'];
-$output['sales_price']=$Vresult[0]['sales_price'];
+$output['mrp']=0;
+$output['sales_price']=0;
 
 }else{
 $output['mrp']=$result[0]['mrp'];

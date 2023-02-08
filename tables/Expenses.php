@@ -23,7 +23,24 @@ $add['vehicle_no']=$this->db->getpost('v_no');
 $add['note']=$this->db->getpost('note');
 $add['contact_no']=$this->db->getpost('contact');
 $add['amount']=$this->db->getpost('amount');
+
+$add['tax_amt']=$this->db->getpost('tax_amount');
+if($this->db->getpost('tax')=="yes"){
+
+$add['total_amt']=$this->db->getpost('amount_with_tax');
+$add['tax_percentage'] = $this->db->getpost('tax_percentage');
+$add['tax']=$this->db->getpost('tax');
+
+}else{
+$add['total_amt']=$this->db->getpost('amount_without_tax');
+$add['tax']=$this->db->getpost('tax');
+}
+$add['refund_amt']=$this->db->getpost('refund_value');
+$add['refund']=$this->db->getpost('refund_amt');
+
+
 $add['created_by'] = $_SESSION['uid'];
+
 
 
 $filename = basename($_FILES["myfile"]["name"]);
@@ -70,6 +87,23 @@ $add['vehicle_no']=$this->db->getpost('v_no');
 $add['note']=$this->db->getpost('note');
 $add['contact_no']=$this->db->getpost('contact');
 $add['amount']=$this->db->getpost('amount');
+
+$add['tax_amt']=$this->db->getpost('tax_amount');
+if($this->db->getpost('tax')=="yes"){
+
+$add['total_amt']=$this->db->getpost('amount_with_tax');
+$add['tax_percentage'] = $this->db->getpost('tax_percentage');
+$add['tax']=$this->db->getpost('tax');
+
+}else{
+$add['total_amt']=$this->db->getpost('amount_without_tax');
+$add['tax_percentage'] = 0;
+$add['tax']=$this->db->getpost('tax');
+}
+$add['refund_amt']=$this->db->getpost('refund_value');
+$add['refund']=$this->db->getpost('refund_amt');
+
+
 $add['created_by'] = $_SESSION['uid'];
 
 
@@ -95,6 +129,20 @@ $sql ='select * from '.$this->tablename.' where  id='.$id.' and status="ENABLED"
 $result = $this->db->getAsIsArray($sql);
 
 return $result;
+
+}
+public function delete_category($id){
+
+  $expenses = array();
+  $expenses['status'] = "DISABLED";
+
+$result = $this->db->mysql_update($this->tablename,$expenses,'id='.$id);
+if($result){
+
+  return 'success';
+
+}
+
 
 }
 

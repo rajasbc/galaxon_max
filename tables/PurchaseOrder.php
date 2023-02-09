@@ -214,21 +214,22 @@ if ($this->db->getpost('shipping_d_date')!='') {
                        }
 
                 // mrp and sale price update
-              if($itemvar['varieties_id']!=0 && $itemvar['varieties_id']!='' && $itemvar['varieties_name']!=''){
-                    $price_update = array();
-                    $price_update['mrp'] = $itemvar['mrp'];
-                    $price_update['sale_price'] = $itemvar['sale_price'];
-                  $this->db->mysql_update('varieties',$price_update,'id='.$itemvar['varieties_id']);
+            // if($_SESSION['type']=='ADMIN'){           
+            //   if($itemvar['varieties_id']!=0 && $itemvar['varieties_id']!='' && $itemvar['varieties_name']!=''){
+            //         $price_update = array();
+            //         $price_update['mrp'] = $itemvar['mrp'];
+            //         $price_update['sale_price'] = $itemvar['sale_price'];
+            //       $this->db->mysql_update('varieties',$price_update,'id='.$itemvar['varieties_id']);
                     
-              }else{
-                     $price_update = array();
-                    $price_update['mrp'] = $itemvar['mrp'];
-                    $price_update['sales_price'] = $itemvar['sale_price'];
-                  $this->db->mysql_update('items',$price_update,'id='.$itemvar['item_id']);
+            //   }else{
+            //          $price_update = array();
+            //         $price_update['mrp'] = $itemvar['mrp'];
+            //         $price_update['sales_price'] = $itemvar['sale_price'];
+            //       $this->db->mysql_update('items',$price_update,'id='.$itemvar['item_id']);
 
-              }
+            //   }
 
-
+            // }
 
 					}
 				}
@@ -326,6 +327,28 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
 						$item_id=$itemvar['item_id'];
 						}      
 
+                // price_update
+           if($itemvar['varieties_id']!='' && $itemvar['varieties_id']!=0){
+              
+              $update_price = array();
+              $update_price['updated_purchase_price']=$itemvar['mrp'];
+               $this->db->mysql_update('varieties',$update_price,'id='.$itemvar['varieties_id']);
+
+            }else{
+
+               $update_price = array();
+              $update_price['updated_purchase_price']=$itemvar['mrp'];
+               $this->db->mysql_update('items',$update_price,'id='.$itemvar['item_id']);
+
+            }
+
+              // price_update completed
+
+
+
+
+
+
              if($_SESSION['type']!="ADMIN"){
 
             $sql ='select * from items where branch_id='.$_SESSION['branch_id'].' and item_code="'.$itemvar['item_code'].'"';
@@ -377,9 +400,9 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
 
                              $this->db->mysql_update('items',$items,'id='.$res[0]['id']);
 
+                 }
 
                  
-                 }
 
         if($itemvar['varieties_id']!=0 && $itemvar['varieties_id']!=''){
            $sql = 'select * from varieties where branch_id='.$_SESSION['branch_id'].' and variety_id='.$itemvar['varieties_id'].'';
@@ -868,7 +891,7 @@ public function edit_purchase_order()
 	}
 	public function get_purchase_order_item($id)
 	{
-	 $sql='select * from '.$this->tablename2.' where purchase_id='.$id.'';
+	 $sql='select * from '.$this->tablename2.' where purchase_id='.$id.' and branch_id='.$_SESSION['branch_id'].'';
 		$result=$this->db->GetResultsArray($sql);
 		return $result;
 	}
@@ -1119,7 +1142,7 @@ return $result;
 }
 public function get_purchase_no($id,$b_id){
 
-$sql = 'select * from '.$this->tablename.' where id="'.$id.'" and branch_id = "'.$b_id.'" and is_deleted="NO" and order_type="NEW" ';
+$sql = 'select * from '.$this->tablename.' where id="'.$id.'" and branch_id = "'.$b_id.'" and is_deleted="NO"';
 
 $result = $this->db->GetResultsArray($sql);
 
@@ -1164,11 +1187,7 @@ $result = $this->db->GetResultsArray($sql);
 
 return $result;
 
-
-
-
 }
-
 
 
 

@@ -111,7 +111,6 @@ public function get_branch_varieties($id){
 
   $result = $this->db->GetResultsArray($sql);
   
-
   return $result;
 
 	}
@@ -160,6 +159,14 @@ public function get_var_dt($v_id){
 $sql = 'select * from '.$this->tablename.' where id='.$v_id.' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
 $result = $this->db->getAsIsArray($sql);
 return $result;
+}
+public function get_updated_price($v_id){
+$sql = 'select * from '.$this->tablename.' where id='.$v_id.' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
+$result = $this->db->getAsIsArray($sql);
+
+return $result;
+
+
 }
 
 

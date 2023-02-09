@@ -1,8 +1,6 @@
 <?php
 include 'header.php';
 
-
-
 ?>
 
 
@@ -12,13 +10,13 @@ include 'header.php';
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Branch OrderList</h1>
+            <h1 class="m-0">Branch Sale Completed List</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
-              <li class="breadcrumb-item active">Received List</li>
-               <li class="breadcrumb-item"><a href="sale_completed.php?type=received">Sale Completed List</a></li>
+              <li class="breadcrumb-item"><a href="branch_received_order.php">Received List</a></li>
+               <li class="breadcrumb-item active">Sale Completed List</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -42,14 +40,16 @@ include 'header.php';
                    <th>S.No</th>
                     <th >Purchase No</th>
                     <th >Branch Name</th>
+                    <th>Order Qty</th>
+                    <th>Sale Qty</th>
                   <!--   <th >Branch code</th> -->
-                    <th>Received Date</th>
+                 
                    <!--  <th style="width: 30px; padding-right: 25px; padding-left: 10px">Discount</th>
                     <th>Tax Amount</th>
                     <th>Total Amount</th>
                     <th>Paid Amount</th>
                     <th style="width: 30px; padding-right: 25px;">Balance Amount</th> -->
-                    <th style="width: 30px;  padding-right: 25px;">Status</th>
+                    <!-- <th style="width: 30px;  padding-right: 25px;">Status</th> -->
                     <th style="width: 100px;">Details</th>
                   </tr>
                   </thead>
@@ -106,15 +106,15 @@ function order_detail(e){
 
 
 var po_id = $(e).data('id');
-var branch_id = $(e).val();
 
+var branch_id = $(e).val();
 
 
 
 $.ajax({
 type: "GET",
 dataType:"html",
-url: '../ajaxCalls/get_order_details.php',
+url: '../ajaxCalls/branch_sale_details.php',
 data: {'id':po_id,'branch_id':branch_id},
 success: function(res){
   $("#order_modal .modal-body").html(res);
@@ -150,7 +150,7 @@ $.ajax({
 
   type:'POST',
   dataType:'json',
-  url:'../ajaxCalls/get_branch_order.php',
+  url:'../ajaxCalls/get_sale_completed.php',
   data:{},
   success:function(res){
    

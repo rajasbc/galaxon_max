@@ -58,14 +58,14 @@ $group_name = $group_obj->get_group_data();
                   </select>
                 </div>
                  <div class="col-6 form-group mb-3">
-                   <label>Mrp&nbsp;<label class="text-danger">&nbsp;</label></label>
-              <input type="text" class="form-control enterKeyclass" id="mrp" placeholder="Mrp">
+                   <label>Sale Price/Vendor Price&nbsp;<label class="text-danger">&nbsp;</label></label>
+              <input type="text" class="form-control enterKeyclass" id="mrp" placeholder="Sale Price/Vendor Price">
                 </div>
                 <div class="col-6 form-group mb-3">
                   <label>Category&nbsp;<label class="text-danger">*</label></label>
                   <select class="form-control select2 enterKeyclass" id="category" style="width: 100%;">
                     <option value="">Select Category</option>
-                    <?php foreach ($category as $key => $value) {?>
+                    <?php foreach ($category as $key => $value) {?> 
                       <option  value="<?=$value['id']?>"><?=$value['name']?></option>
                     <?php }?>
                     
@@ -73,8 +73,8 @@ $group_name = $group_obj->get_group_data();
                 </div>
                 
                 <div class="col-6 form-group mb-3">
-                   <label>Sale Price&nbsp;<label class="text-danger">&nbsp;</label></label>
-              <input type="text" class="form-control enterKeyclass" id="sale_price" placeholder="Sale Price">
+                   <label>Mrp&nbsp;<label class="text-danger">&nbsp;</label></label>
+              <input type="text" class="form-control enterKeyclass" id="sale_price" placeholder="Mrp Price">
                 </div>
                 <div class="col-6 form-group mb-3">
                   <label>Description</label>

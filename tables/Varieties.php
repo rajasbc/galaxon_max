@@ -142,8 +142,14 @@ return $result;
 
 }
 public function get_var_price($v_id){
+	if($_SESSION['type']=='ADMIN'){
 
 $sql = 'select * from '.$this->tablename.' where id='.$v_id.' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
+}else{
+   $sql = 'select * from '.$this->tablename.' where id='.$v_id.' and branch_id=0 and is_deleted="NO"';
+
+
+}
 $result = $this->db->getAsIsArray($sql);
 // print_r($result);die();
 if($result!=''){

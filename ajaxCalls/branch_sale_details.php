@@ -55,7 +55,7 @@ $result2= $obj->get_purchase_no($_GET['id'],$_GET['branch_id']);
 						<th>Product Name</th>
 						<th>Variety Name</th>
 						<th>Order qty</th>
-						<th>Received qty</th>
+						<th>Sale qty</th>
 					</tr>
 				</thead>
 				<tbody>

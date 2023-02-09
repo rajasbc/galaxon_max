@@ -513,6 +513,17 @@ $result = $this->db->GetResultsArray($sql);
 return $result;
 
 }
+public function get_salebranch_name($b_id){
+$sql = 'select * from '.$this->tablename.'where branch_id='.$b_id.' and status="ENABLED"';
+
+$result = $this->db->getAsIsArray($sql);
+
+
+return $result;
+
+
+
+}
 
 
 

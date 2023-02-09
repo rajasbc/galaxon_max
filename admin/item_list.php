@@ -111,8 +111,8 @@ $group_name = $group_obj->get_group_data();
                   <tr>
                     <th>S.No</th>
                     <th>Name</th>
+                    <th>SalePrice/VendorPrice</th>
                     <th>Mrp</th>
-                    <th>Sale Price</th>
                     <th>Discount</th>
                     <th>Gst</th>
                     <th>Quantity</th>
@@ -216,13 +216,13 @@ $group_name = $group_obj->get_group_data();
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Mrp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-danger">&nbsp;</span></span>
+                    <span class="input-group-text">SalePrice/VendorPrice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-danger">&nbsp;</span></span>
                   </div>
                   <input type="text" id='edit_item_mrp' class="form-control enterAsTab" placeholder="Enter MRP">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Sales Price&nbsp;&nbsp;&nbsp;<span class="text-danger">&nbsp;</span></span>
+                    <span class="input-group-text">Mrp&nbsp;&nbsp;&nbsp;<span class="text-danger">&nbsp;</span></span>
                   </div>
                   <input type="text" id='edit_item_sale_price' class="form-control enterAsTab" placeholder="Enter Sales Price">
                 </div>
@@ -304,14 +304,14 @@ $group_name = $group_obj->get_group_data();
                 </div>
                  <div class="input-group mb-3">
                   <div class="input-group-prepend">
-      <span class="input-group-text" style="padding-right: 50px;">Mrp&nbsp;</span>
+      <span class="input-group-text" style="padding-right: 50px;">SalePrice/VendorPrice&nbsp;</span>
                   </div>
-                  <input type="text" id='mrp' class="form-control enterAsTab" placeholder="Enter Mrp">
+                  <input type="text" id='mrp' class="form-control enterAsTab" placeholder="Enter SalePrice/VendorPrice">
                 </div>
                  <div class="input-group mb-3">
-                  <div class="input-group-prepend"><span class="input-group-text" >Sale Price&nbsp;</span>
+                  <div class="input-group-prepend"><span class="input-group-text" >Mrp&nbsp;</span>
                   </div>
-                  <input type="text" id='sale_price' class="form-control enterAsTab" placeholder="Enter Sale Price">
+                  <input type="text" id='sale_price' class="form-control enterAsTab" placeholder="Enter Mrp">
                 </div>
                 <div class="form-group mb-3 text-right" style="float: left;">
                   <button type="button" id="reset_btn" class="btn btn-warning enterAsTab" style="display: none">Reset</button>
@@ -326,8 +326,8 @@ $group_name = $group_obj->get_group_data();
                       <tr>
                         <th>S.No</th>
                         <th>Name</th>
+                        <th>SalePrice/VendorPrice</th>
                         <th>Mrp</th>
-                        <th>Sale Price</th>
                         <th>Action</th>
                       </tr>
                     </thead>

@@ -5,6 +5,7 @@ include 'header.php';
 $obj = new PurchaseOrder();
 $obj1 = new Shops();
 $obj2 = new Varieties();
+$obj3 = new Items();
 
 $sale_details = $obj->get_details($_GET['id'],$_GET['branch_id']);
 
@@ -12,6 +13,7 @@ $branch_name = $obj1->get_branch_name($sale_details[0]['branch_id']);
 
 
 $purchase_order_dt=$obj->get_branch_order($_GET['id'],$_GET['branch_id']);
+// print_r($purchase_order_dt);die();
 
 // print_r($purchase_order_dt);die();
 
@@ -32,9 +34,15 @@ $category =  $category_obj->get_category_data();
 $items=array();
 $i=0;
 foreach ($purchase_order_dt as $key => $value) {
+      if($value['var_id']!=0){
+ 
+       $updated_price = $obj2->get_updated_price($value['var_id']);
 
+    }else{
+       $updated_price = $obj3->get_item_price($value['item_id']);
+
+    }
    
-
  $i++;
  $ttl=$value['total']+$value['tax_amt'];
  $items['sid'.$i]=[
@@ -48,7 +56,7 @@ foreach ($purchase_order_dt as $key => $value) {
   "sub_category"=>$value['sub_category'],
   "units"=>$value['units'],
   "mrp"=>$value['mrp'],
-  "sale_price"=>$value['sales_price'],
+  "sale_price"=>$updated_price,
   "discount"=>$value['discount'],
   "gst"=>$value['gst'],
   "gstpercentage"=>$value['gst']/100,
@@ -330,7 +338,8 @@ $items=json_encode($items);
                    $taxtot = 0;
                    $grandtot = 0;
                    foreach ($purchase_order_dt as $key => $row) {
-
+                         
+                    // print_r($purchase_order_dt);die();
                      $admin_var_qty = $obj2->get_qty($row['var_id']); 
                     $sno++;
                     $description='';
@@ -342,6 +351,14 @@ $items=json_encode($items);
                      $description =  $description_obj->get_description_dt($row['sub_category']);
                      $description_name=$description[0]['name'];
                     }
+                    if($row['var_id']!=0){
+ 
+           $updated_price = $obj2->get_updated_price($row['var_id']);
+
+           }else{
+       $updated_price = $obj3->get_item_price($row['item_id']);
+
+               }
 
                     $tns = $row['qty']/1000;
 
@@ -367,13 +384,13 @@ $items=json_encode($items);
 
                     echo '<td class="text-left ch-4">';
 
-                    echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control mrp" name="mrp[]" id="mrp'.$sno.'" value="'.$row['mrp'].'" style="width:5rem; height:1.75rem; font-size:0.9rem;">';
+                    echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control mrp" name="mrp[]" id="mrp'.$sno.'" value="'.$updated_price['mrp'].'" style="width:5rem; height:1.75rem; font-size:0.9rem;">';
                     // echo '<td class="text-left ch-4">'.$row['sales_price'].'</td>';
 
                     echo '</td>';
                     echo '<td class="text-left ch-4"">';
 
-                    echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control sale_price" name="sale_price[]" id="sale_price'.$sno.'" value="'.$row['sales_price'].'" style="width:4.8rem; height:1.75rem; font-size:0.9rem;">';
+                    echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control sale_price" name="sale_price[]" id="sale_price'.$sno.'" value="'.$updated_price['updated_purchase_price'].'" style="width:4.8rem; height:1.75rem; font-size:0.9rem;">';
 
                     echo '</td>';
                     echo '<td class="text-left ch-4">';

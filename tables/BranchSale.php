@@ -182,6 +182,22 @@ return $result;
 
 
 }
+public function get_branch_sale(){
+
+$sql = 'select * from '.$this->tablename.'where created_by='.$_SESSION['uid'].'';
+$result = $this->db->GetResultsArray($sql);
+
+return $result;
+
+}
+public function branch_sale_item($po_id,$b_id){
+
+$sql = 'select po_id,sum(qty) as qty from '.$this->tablename2.'where po_id='.$po_id.' and branch_id='.$b_id.' group by po_id';
+$result = $this->db->GetResultsArray($sql);
+
+return $result;
+
+}
 
 
 }

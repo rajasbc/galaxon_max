@@ -3,6 +3,8 @@ include 'header.php';
 // error_reporting(E_All);
 // print_r(base64_decode($_GET['id']));die();
 $obj=new PurchaseOrder();
+$obj1 = new Varieties();
+$obj2 = new Items();
 $purchase_order_dt=$obj->get_purchase_order(base64_decode($_GET['id']));
 // print_r($purchase_order_dt);die();
 $purchase_order_item_dt=$obj->get_purchase_order_item(base64_decode($_GET['id']));
@@ -18,6 +20,15 @@ $description_obj = new Description();
 $items=array();
 $i=0;
 foreach ($purchase_order_item_dt as $key => $value) {
+
+    if($value['var_id']!=0){
+ 
+       $updated_price = $obj1->get_updated_price($value['var_id']);
+
+    }else{
+       $updated_price = $obj2->get_item_price($value['item_id']);
+
+    }
   $i++;
   $items['sid'.$i]=[
       "po_id"=>$value['id'],
@@ -30,7 +41,7 @@ foreach ($purchase_order_item_dt as $key => $value) {
       "category"=>$value['category'],
       "sub_category"=>$value['sub_category'],
       "units"=>$value['units'],
-      "mrp"=>$value['mrp'],
+      "mrp"=>$updated_price['updated_purchase_price'],
       "sale_price"=>$value['sales_price'],
       "discount"=>$value['discount'],
       "gst"=>$value['gst'],
@@ -211,6 +222,14 @@ $items=json_encode($items);
      $description =  $description_obj->get_description_dt($row['sub_category']);
      $description_name=$description[0]['name'];
    }
+    if($row['var_id']!='' && $row['var_id']!=0){
+ 
+       $updated_price = $obj1->get_updated_price($row['var_id']);
+
+    }else{
+       $updated_price = $obj2->get_item_price($row['item_id']);
+
+    }
    
    echo '<tr id="trItem_'.$sno.'">';
            echo '<td class=" ch-4"><span></span></td>';
@@ -234,7 +253,7 @@ $items=json_encode($items);
 
             echo '<td class="text-left ch-4 hide">';
 
-                echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control mrp" name="mrp[]" id="mrp'.$sno.'" value="'.$row['mrp'].'" style="width:5rem; height:1.75rem">';
+                echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control mrp" name="mrp[]" id="mrp'.$sno.'" value="'.$updated_price['updated_purchase_price'].'" style="width:5rem; height:1.75rem">';
 
                 echo '</td>';
                 echo '<td class="text-left ch-4 hide">';

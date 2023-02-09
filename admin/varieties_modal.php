@@ -5,7 +5,7 @@ include 'header.php';
 $obj = new Varieties();
 
 $result=$obj->get_branch_varieties($_GET['id']);
-// print_r($result);die();
+
 
 ?>
 
@@ -51,6 +51,8 @@ $result=$obj->get_branch_varieties($_GET['id']);
 										<th>S.No</th>
 										<th>Name</th>
 										<th>Quantity</th>
+										<th>Mrp</th>
+										<th>SalesPrice</th>
 										<!-- <th>Mrp</th>
 										<th>Sale Price</th>
  -->
@@ -83,10 +85,10 @@ $result=$obj->get_branch_varieties($_GET['id']);
 
 											echo "<td>".$value['qty']."</td>";
 										}
-										// echo " <td>".$result2[0]['mrp']."</td>
+										echo " <td>".$value['mrp']."</td>
 
-										// <td>".$result2[0]['sales_price']."</td>
-										// </tr>";
+										 <td>".$value['updated_purchase_price']."</td>
+										 </tr>";
 										$total_qty+=$value['qty'];
 										// $total_mrp+=$result2[0]['mrp'];
 										// $total_sale+=$result2[0]['sales_price'];

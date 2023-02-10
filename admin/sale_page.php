@@ -55,8 +55,8 @@ foreach ($purchase_order_dt as $key => $value) {
   "category"=>$value['category'],
   "sub_category"=>$value['sub_category'],
   "units"=>$value['units'],
-  "mrp"=>$value['mrp'],
-  "sale_price"=>$updated_price,
+  "mrp"=>$updated_price['sale_price'],
+  "sale_price"=>$updated_price['updated_purchase_price'],
   "discount"=>$value['discount'],
   "gst"=>$value['gst'],
   "gstpercentage"=>$value['gst']/100,
@@ -351,7 +351,7 @@ $items=json_encode($items);
                      $description =  $description_obj->get_description_dt($row['sub_category']);
                      $description_name=$description[0]['name'];
                     }
-                    if($row['var_id']!=0){
+                    if($row['var_id']!=0 && $row['var_id']!=''){
  
            $updated_price = $obj2->get_updated_price($row['var_id']);
 
@@ -384,7 +384,7 @@ $items=json_encode($items);
 
                     echo '<td class="text-left ch-4">';
 
-                    echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control mrp" name="mrp[]" id="mrp'.$sno.'" value="'.$updated_price['mrp'].'" style="width:5rem; height:1.75rem; font-size:0.9rem;">';
+                    echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control mrp" name="mrp[]" id="mrp'.$sno.'" value="'.$updated_price['sale_price'].'" style="width:5rem; height:1.75rem; font-size:0.9rem;">';
                     // echo '<td class="text-left ch-4">'.$row['sales_price'].'</td>';
 
                     echo '</td>';
@@ -1232,80 +1232,5 @@ $items=json_encode($items);
       });
      }
     </script>
-<script type="text/javascript">
-  $("#shipping_dt_add").on('click',function(){
- var id = $("#shipping_id").val();
- var po_id = "<?=base64_decode($_GET['id'])?>";
- var shipping_name = $("#shipping_name").val();
- var shipping_company_name = $("#shipping_company_name").val();
- var mobile_no = $("#mobile_no").val();
- var email = $("#email").val();
- var ship_gst = $("#ship_gst").val();
- var address = $("#address").val();
- var city = $("#city").val();
- var state = $("#state").val();
- var country = $('#country').val();
- var pincode = $("#pincode").val();
- var ship_terms = $("#ship_terms").val();
- var shipping_method = $("#shipping_method").val();
- var shipping_d_date = $("#shipping_d_date").val();
-$.ajax({
 
-  type:'post',
-  dataType:'json',
-  url:'../ajaxCalls/update_shipping.php',
-  data:{"id":id,"po_id":po_id,"shipping_name":shipping_name,"shipping_company_name":shipping_company_name,"mobile_no":mobile_no,"email":email,"ship_gst":ship_gst,"address":address,"city":city,"state":state,"country":country,"pincode":pincode,"ship_terms":ship_terms,"shipping_method":shipping_method,"shipping_d_date":shipping_d_date},
-    success:function(res){
-
-            if(res.status=='success'){
-                global_alert_modal('success','Edited SuccessFully...');
-                 $("#shipping_modal").modal('hide');
-            
-
-            }
  
-    }
-
-
-});
-
-  });
-
- </script>
- <script type="text/javascript">
-  $("#shipping_name").autocomplete({
-
-   source: "../ajaxCalls/autocomplete_shipping_list.php",
-   minLength: 1,
-   select:function(event,ui){
-
-    $("#shipping_company_name").val(ui.item.company_name);
-    $("#shipping_id").val(ui.item.id);
-    $("#mobile_no").val(ui.item.mobile_no);
-    $("#email").val(ui.item.email);
-    $("#ship_gst").val(ui.item.gst_no);
-    $("#city").val(ui.item.city);
-    $("#address").val(ui.item.address);
-    $("#state").val(ui.item.state);
-    $("#country").val(ui.item.country);
-    $("#pincode").val(ui.item.pincode);
-    $("#ship_terms").val(ui.item.shipping_terms);
-
-
-   }
-
-
-
-  }).data('ui-autocomplete')._renderItem = function(ul,item){
-   return $("<li class='ui-autocomplete-row'></li>")
-   .data("item.autocomplete", item)
-   .append(item.value)
-   .appendTo(ul);
-  };
-
-
-
-
-
-
- </script>

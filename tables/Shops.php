@@ -518,7 +518,7 @@ $sql = 'select * from '.$this->tablename.'where branch_id='.$b_id.' and status="
 
 $result = $this->db->getAsIsArray($sql);
 
-
+// print_r($result);die();
 return $result;
 
 

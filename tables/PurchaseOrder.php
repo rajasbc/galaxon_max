@@ -328,6 +328,7 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
 						}      
 
                 // price_update
+            if($_SESSION['type']=='ADMIN'){
            if($itemvar['varieties_id']!='' && $itemvar['varieties_id']!=0){
               
               $update_price = array();
@@ -341,6 +342,7 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
                $this->db->mysql_update('items',$update_price,'id='.$itemvar['item_id']);
 
             }
+          }
 
               // price_update completed
 
@@ -1184,6 +1186,22 @@ $sql = 'select sum(qty) as qty,sum(received_qty) as received_qty from '.$this->t
 
 $result = $this->db->GetResultsArray($sql);
 
+
+return $result;
+
+}
+public function get_received_dt(){
+$sql = 'select * from '.$this->tablename.' where branch_id!=0 and order_type="RECEIVED" and is_deleted="NO"';
+$result = $this->db->GetResultsArray($sql);
+// print_r($result);die();
+
+return $result;
+
+
+}
+public function get_order_dt($id,$b_id){
+ $sql = 'select sum(qty) as qty,sum(received_qty) as received_qty from '.$this->tablename2.' where purchase_id='.$id.' and branch_id='.$b_id.' and is_deleted="NO" group by purchase_id';
+$result = $this->db->GetResultsArray($sql);
 
 return $result;
 

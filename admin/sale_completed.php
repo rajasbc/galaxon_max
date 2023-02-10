@@ -107,6 +107,7 @@ function order_detail(e){
 
 var po_id = $(e).data('id');
 
+
 var branch_id = $(e).val();
 
 

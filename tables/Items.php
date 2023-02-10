@@ -203,8 +203,9 @@ return $result;
 }
 public function get_item_price($it_id){
 
-$sql = 'select * from '.$this->tablename.' where branch_id= '.$_SESSION['branch_id'].' and id='.$it_id.' and is_deleted="NO"';
+$sql = 'select sales_price as sale_price,updated_purchase_price from '.$this->tablename.' where branch_id= '.$_SESSION['branch_id'].' and id='.$it_id.' and is_deleted="NO"';
 $result = $this->db->getAsIsArray($sql);
+
 return $result;
 
 

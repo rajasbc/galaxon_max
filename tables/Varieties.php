@@ -167,7 +167,7 @@ $result = $this->db->getAsIsArray($sql);
 return $result;
 }
 public function get_updated_price($v_id){
-$sql = 'select * from '.$this->tablename.' where id='.$v_id.' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
+$sql = 'select sale_price,updated_purchase_price from '.$this->tablename.' where id='.$v_id.' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
 $result = $this->db->getAsIsArray($sql);
 
 return $result;

@@ -95,7 +95,7 @@ $result = $obj->get_stock_variety(base64_decode($_GET['item_id']),base64_decode(
 
 									?>
 									<tfoot>  
-          <?php echo "<tr><td colspan='1'></td><td><b>Total</b></td><td>".$total_qty."</td>
+          <?php echo "<tr><td colspan='1'></td><td><b>Total</b></td><td>".$total_qty."</td><td></td><td></td>
          
           </tr>";
           ?> 

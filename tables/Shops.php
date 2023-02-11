@@ -521,7 +521,12 @@ $result = $this->db->getAsIsArray($sql);
 // print_r($result);die();
 return $result;
 
+}
+public function branch_details(){
+$sql ='select * from '.$this->tablename.' where branch_id!=0 and status="ENABLED"';
+$result = $this->db->GetResultsArray($sql);
 
+return $result;
 
 }
 

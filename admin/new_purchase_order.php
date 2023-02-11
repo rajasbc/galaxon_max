@@ -1313,7 +1313,7 @@ success: function(res){
     .table-scroll {
      position: relative;
      width:100%;
-     z-index: 1;
+     z-index: 0;
      margin: auto;
      overflow: auto;
      height: 350px;

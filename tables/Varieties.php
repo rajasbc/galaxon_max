@@ -107,7 +107,7 @@ class Varieties extends Dbconnection {
 
 public function get_branch_varieties($id){
 
- $sql = 'select a.*,b.* from variety_items a join varieties b on a.variety_id=b.id where a.item_id='.$id.' and a.branch_id = '.$_SESSION['branch_id'].'';
+  $sql = 'select a.*,b.* from variety_items a join varieties b on a.variety_id=b.id where a.item_id='.$id.' and a.branch_id = '.$_SESSION['branch_id'].'';
 
   $result = $this->db->GetResultsArray($sql);
   
@@ -171,6 +171,16 @@ $sql = 'select sale_price,updated_purchase_price from '.$this->tablename.' where
 $result = $this->db->getAsIsArray($sql);
 
 return $result;
+
+
+}
+public function get_variety_price($id){
+ $sql = 'select * from '.$this->tablename.' where id='.$id.' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
+
+$result = $this->db->GetResultsArray($sql);
+
+return $result;
+
 
 
 }

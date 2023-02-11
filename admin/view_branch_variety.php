@@ -50,6 +50,8 @@ $result = $obj->get_stock_variety(base64_decode($_GET['item_id']),base64_decode(
 										
 										<th>Variety</th>
 										<th>Quantity</th>
+										<th>Mrp</th>
+										<th>Sales Price</th>
 										
 
 									</tr>
@@ -64,7 +66,7 @@ $result = $obj->get_stock_variety(base64_decode($_GET['item_id']),base64_decode(
 									$total_sale=0;
 									foreach ($result as $key => $value) {
 										
-
+                                       $price = $obj->get_variety_price($value['variety_id']);
 
 
 										$i++;
@@ -80,6 +82,8 @@ $result = $obj->get_stock_variety(base64_decode($_GET['item_id']),base64_decode(
 
 											echo "<td>".$value['qty']."</td>";
 										}
+										echo "<td>".$price[0]['sale_price']."</td>
+									          <td>".$price[0]['updated_purchase_price']."</td> </tr>";
 										
 										$total_qty+=$value['qty'];
 										

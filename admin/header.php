@@ -816,6 +816,33 @@ if (empty($_SESSION)==true) {
 
 
             </ul>
+
+             <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-solid fa-clipboard"></i>
+              <p>
+                Expenses
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+               <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="customer_expenses_category.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Category</p>
+                </a>
+              </li>
+            </ul>
+             
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="customer_expenses_modules.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Expenses Modules</p>
+                </a>
+              </li>
+            </ul>
+          </li>
           </li>
            <li class="nav-item">
             <a href="#" class="nav-link">

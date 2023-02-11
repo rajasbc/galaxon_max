@@ -5,7 +5,7 @@ include 'header.php';
 $obj = new Varieties();
 
 $result=$obj->get_branch_varieties($_GET['id']);
-// print_r($result);die();
+// print_r($result);die();/
 
 ?>
 
@@ -51,9 +51,9 @@ $result=$obj->get_branch_varieties($_GET['id']);
 										<th>S.No</th>
 										<th>Name</th>
 										<th>Quantity</th>
-										<!-- <th>Mrp</th>
+										<th>Mrp</th>
 										<th>Sale Price</th>
- -->
+
 
 									</tr>
 
@@ -66,7 +66,7 @@ $result=$obj->get_branch_varieties($_GET['id']);
 									$total_mrp=0;
 									$total_sale=0;
 									foreach ($result as $key => $value) {
-										// $result2 = $obj->get_branch_varieties($value['id']);
+										$result2 = $obj->get_variety_price($value['item_id']);
 
 
 
@@ -83,10 +83,10 @@ $result=$obj->get_branch_varieties($_GET['id']);
 
 											echo "<td>".$value['qty']."</td>";
 										}
-										// echo " <td>".$result2[0]['mrp']."</td>
+										echo " <td>".$value['sale_price']."</td>
 
-										// <td>".$result2[0]['sales_price']."</td>
-										// </tr>";
+										<td>".$value['updated_purchase_price']."</td>
+										</tr>";
 										$total_qty+=$value['qty'];
 										// $total_mrp+=$result2[0]['mrp'];
 										// $total_sale+=$result2[0]['sales_price'];
@@ -99,7 +99,7 @@ $result=$obj->get_branch_varieties($_GET['id']);
 
 									?>
 									<tfoot>  
-          <?php echo "<tr><td colspan='1'></td><td><b>Total</b></td><td>".$total_qty."</td>
+          <?php echo "<tr><td colspan='1'></td><td><b>Total</b></td><td>".$total_qty."</td><td></td><td></td>
          
           </tr>";
           ?> 

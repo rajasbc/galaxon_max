@@ -19,7 +19,7 @@ foreach ($result as $key => $value) {
 	
 	
 	   $i++;
-	$output[$j]=[$i,$value['item_name'],$value['qty'],'<button type="button" class="btn btn-info" data-id ="'.$result1[0]['item_id'].'" onclick="view_varieties(this);">Varieties</button>'];
+	$output[$j]=[$i,$value['item_name'],$value['qty'],'<button type="button" class="btn btn-info" data-id ="'.$value['item_id'].'" onclick="view_varieties(this);">Varieties</button>'];
 
    $j++;
 }

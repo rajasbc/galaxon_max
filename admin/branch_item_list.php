@@ -96,7 +96,6 @@ success: function(res){
 
      var id = $(e).data('id');
 
-     // alert(id);
 
 window.location='varieties_branch.php?id='+id;
 	}

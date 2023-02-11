@@ -19,10 +19,10 @@ if(count($result)){
 
  foreach ($result as $key => $value) {
   $i++;
-  $net_worth = $value['qty']*$value['mrp'];
+  // $net_worth = $value['qty']*$value['mrp'];
 
 
-  $output[$j] = [$i,$value['item_name'],$value['qty'],number_format($net_worth,2,'.',''),' <button type="button" class="btn btn-primary" value='.$value['branch_id'].' data-id="'.$value['item_id'].'" onclick="view_stock_item(this);">Variety</button>'];
+  $output[$j] = [$i,$value['item_name'],$value['qty'],' <button type="button" class="btn btn-primary" value='.$value['branch_id'].' data-id="'.$value['item_id'].'" onclick="view_stock_item(this);">Variety</button>'];
 
   // $total+=$net_worth;
 

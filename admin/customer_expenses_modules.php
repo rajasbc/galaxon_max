@@ -1,9 +1,9 @@
 <?php 
 include 'header.php';
 $obj = new ExpenseCategory();
-$obj1 = new Shops();
+$obj1 = new Customers();
 $result = $obj->get_catagory_data();
-$result1 = $obj1->branch_details();
+$result1 = $obj1->customer_details();
 
 ?>
 <style type="text/css">
@@ -54,7 +54,7 @@ $result1 = $obj1->branch_details();
                   <thead>
                   <tr>
                     <th style="width: 20px">S.No</th>
-                    <th >Branch Name</th>
+                    <th >Customer Name</th>
                      <th style="width: 100px">Category</th>
                     <th style="width: 80px">Expenses Name</th>
                     <th style="width: 100px">Total Amount</th>
@@ -121,13 +121,13 @@ $result1 = $obj1->branch_details();
                 </div> -->
                  <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                     <input type="hidden" id='branch_id' name='branch_id'>
-                    <span class="input-group-text" style="width: 12rem">Branch Name <!-- <span class="text-danger">*</span> --></span>
+                     <input type="hidden" id='customer_id' name='customer_id'>
+                    <span class="input-group-text" style="width: 12rem">Customer Name <!-- <span class="text-danger">*</span> --></span>
                   </div>
-                  <select class="form-control enterKeyclass" id="branch_name" name="branch_name" >
-                    <option value="">Select Branch Name</option>
+                  <select class="form-control enterKeyclass" id="customer_name" name="customer_name" >
+                    <option value="">Select Customer Name</option>
                     <?php foreach ($result1 as $key => $value) {?>
-                      <option  value="<?=$value['name']?>" data-id="<?=$value['branch_id']?>"><?=$value['name']?></option>
+                      <option  value="<?=$value['name']?>" data-id="<?=$value['id']?>"><?=$value['name']?></option>
                     <?php }?>
                     
                   </select>
@@ -314,7 +314,7 @@ include 'footer.php';
   $.ajax({
 type: "POST",
 dataType:"json",
-url: '../ajaxCalls/add_expenses.php',
+url: '../ajaxCalls/customer_expenses.php',
 data: formData,
             dataType: 'json',
             contentType: false,
@@ -395,7 +395,7 @@ success: function(res){
   $.ajax({
 type: "POST",
 dataType:"json",
-url: '../ajaxCalls/add_expenses.php',
+url: '../ajaxCalls/customer_expenses.php',
 data: formData,
             dataType: 'json',
             contentType: false,
@@ -463,7 +463,7 @@ get_data();
       $.ajax({
 type: "POST",
 dataType:"json",
-url: '../ajaxCalls/get_expenses_data.php',
+url: '../ajaxCalls/get_customer_expenses.php',
 data: {},
 success: function(res){
  var table = $('#example1').DataTable();
@@ -480,10 +480,10 @@ function edit_modal(e){
     $.ajax({
 type: "POST",
 dataType:"json",
-url: '../ajaxCalls/get_expenses_data.php',
+url: '../ajaxCalls/get_customer_expenses.php',
 data: {'expenses_id':$(e).data('id')},
 success: function(res){
-    $("#branch_name").val(res.branch_name);
+    $("#customer_name").val(res.customer_name);
     $("#category_name").val(res.expenses_category);
     $("#expenses_name").val(res.expenses_name);
      $("#ref_no").val(res.ref_no);
@@ -614,7 +614,7 @@ get_data();
  $.ajax({
     type:'post',
     dataType:'json',
-    url:'../ajaxCalls/add_expenses.php',
+    url:'../ajaxCalls/customer_expenses.php',
     data:{'id':id,'type':'delete'},
     success:function(res){
 
@@ -768,11 +768,11 @@ $(".btn_close").on('click',function(){
 location.reload();
 
 });
-$("#branch_name").on('change',function(){
+$("#customer_name").on('change',function(){
 
-var branch_id = $('#branch_name option:selected').data('id');
+var customer_id = $('#customer_name option:selected').data('id');
 
-$("#branch_id").val(branch_id);
+$("#customer_id").val(customer_id);
 
 })
 

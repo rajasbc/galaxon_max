@@ -594,7 +594,7 @@ url: '../ajaxCalls/get_variety_price.php',
 data: {'var_id':var_id},
 success: function(res){
    console.log(res);
-   if(res.status=='success'){
+   if(res){
    $("#mrp").val(res.mrp);
     $("#sale_price").val(res.sale_price);
   }else{
@@ -2018,6 +2018,7 @@ success: function(res){
      var category=$("#category").val();
      var sub_category=$("#sub_category").val();
      var mrp=$("#mrp").val();
+   
      var sale_price=$("#sale_price").val();
      var discount=$("#discount").val();
      var gst=$("#gst").val();
@@ -2436,8 +2437,10 @@ success: function(res){
       $('#item_name').val(res.item_name);
       $('#item_code').val(res.item_code);
       $("#brand").val(res.brand);
-      $("#category").val(res.category);        
-      $("#mrp").val(res.mrp);
+      $("#category").val(res.category); 
+
+     $("#mrp").val(res.updated_sale_price);
+    
       $("#units").val(res.units);
       $("#sale_price").val(res.sales_price);
       $("#discount").val(res.discount);
@@ -2448,6 +2451,36 @@ success: function(res){
 
 });
   }
+</script>
+<script type="text/javascript">
+ $("#varieties_id").on('change',function(){
+
+ var var_id = $(this).val();
+$.ajax({
+type: "POST",
+dataType:"json",
+url: '../ajaxCalls/get_variety_price.php',
+data: {'var_id':var_id},
+success: function(res){
+   console.log(res);
+   if(res){
+   $("#mrp").val(res.mrp);
+
+    $("#sale_price").val(res.sale_price);
+  }else{
+     $("#mrp").val(0);
+    $("#sale_price").val(0);
+   
+  }
+  }
+
+});
+
+  }); 
+
+
+
+
 </script>
 <?php } ?>
 

@@ -4,7 +4,7 @@ include 'header.php';
 
 $obj = new Varieties();
 
-$result=$obj->get_branch_varieties($_GET['id']);
+$result=$obj->get_branch_varieties_dt($_GET['id']);
 
 
 ?>
@@ -68,7 +68,7 @@ $result=$obj->get_branch_varieties($_GET['id']);
 									$total_mrp=0;
 									$total_sale=0;
 									foreach ($result as $key => $value) {
-										// $result2 = $obj->get_variety($value['id']);
+										$result2 = $obj->get_price($value['variety_id']);
 
 
 
@@ -85,9 +85,9 @@ $result=$obj->get_branch_varieties($_GET['id']);
 
 											echo "<td>".$value['qty']."</td>";
 										}
-										echo " <td>".$value['mrp']."</td>
+										echo " <td>".$result2[0]['sale_price']."</td>
 
-										 <td>".$value['updated_purchase_price']."</td>
+										 <td>".$result2[0]['updated_purchase_price']."</td>
 										 </tr>";
 										$total_qty+=$value['qty'];
 										// $total_mrp+=$result2[0]['mrp'];

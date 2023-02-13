@@ -4,6 +4,7 @@ include '../tables/config.php';
 
 $obj = new Items();
 $result =  $obj->get_items_dt($_POST['item_id']);
+// print_r($result);die();
 $Vobj = new Varieties();
 $Vresult =  $Vobj->get_varieties_data($_POST['item_id']);
 // print_r($Vresult);die();
@@ -29,11 +30,16 @@ $output['item_name']=$result[0]['item_name'];
 $output['item_code']=$result[0]['item_code'];
 if(count($Vresult)>0){
 $output['mrp']=0;
-$output['sales_price']=0;
+$output['sale_price']=0;
+$output['updated_sale_price']=$result[0]['updated_purchase_price'];
 
 }else{
 $output['mrp']=$result[0]['mrp'];
+
+
 $output['sales_price']=$result[0]['sales_price'];
+// print_r($output['sales_price']);die();
+$output['updated_sale_price']=$result[0]['updated_purchase_price'];
 
 }
 

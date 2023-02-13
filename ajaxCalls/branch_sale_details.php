@@ -4,12 +4,15 @@ include '../tables/config.php';
 
 
 $obj = new PurchaseOrder();
-$result = $obj->order_details($_GET['id'],$_GET['branch_id']);
+$obj1 = new BranchSale();
+// $result = $obj->order_details($_GET['id'],$_GET['branch_id']);
+$result = $obj1->get_amount_details($_GET['id'],$_GET['branch_id']);
 // print_r($result);die();
 
 $result1 = $obj->branch_code($result[0]['branch_id']);
 
 $result2= $obj->get_purchase_no($_GET['id'],$_GET['branch_id']);
+// $price_details = $obj1->get_amount_details($_GET['id'],$_GET['branch_id']);
 
 // print_r($result2);die();
 
@@ -50,18 +53,21 @@ $result2= $obj->get_purchase_no($_GET['id'],$_GET['branch_id']);
 					<tr>
 						
 						<th>S.No</th>
-					
-				
 						<th>Product Name</th>
 						<th>Variety Name</th>
-						<th>Order qty</th>
 						<th>Sale qty</th>
+						<th>Mrp</th>
+						<th>Sale Price </th>
+						<th>Discount</th>
+						<th>GST</th>
+						<th>Total Amount</th>
 					</tr>
 				</thead>
 				<tbody>
 				<?php
 $i = 0;
 foreach ($result as $key => $value) {
+	
 	
 	$i=$i+1;
 
@@ -73,7 +79,12 @@ echo "<tr>
 <td>".$value['item_name']."</td>
 <td>".$value['var_name']."</td>
 <td>".$value['qty']."</td>
-<td>".$value['received_qty']."</td>
+
+<td>".$value['mrp']."</td>
+<td>".$value['sale_price']."</td>
+<td>".$value['discount']."</td>
+<td>".$value['gst']."</td>
+<td>".$value['total']."</td>
 </tr>";
 
 }

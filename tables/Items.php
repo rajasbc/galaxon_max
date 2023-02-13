@@ -201,17 +201,38 @@ return $result;
 
 
 }
-public function get_item_price($it_id){
+public function get_item_price($it_id,$b_id){
 
-$sql = 'select sales_price as sale_price,updated_purchase_price from '.$this->tablename.' where branch_id= '.$_SESSION['branch_id'].' and id='.$it_id.' and is_deleted="NO"';
+$sql = 'select sales_price as sale_price,updated_purchase_price from '.$this->tablename.' where item_id='.$it_id.' and branch_id='.$b_id.' and is_deleted="NO"';
 $result = $this->db->getAsIsArray($sql);
+if(count($result)>0){
 
+return $result;
+
+}else{
+  $sql = 'select sales_price as sale_price,updated_purchase_price from '.$this->tablename.' where id='.$it_id.' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
+$result = $this->db->getAsIsArray($sql);
+// print_r($result);die();
 return $result;
 
 
 }
 
+}
+public function update_item_price($it_id,$b_id){
 
+ if($_SESSION['type']=='ADMIN'){
+   $sql = 'select sales_price as sale_price,updated_purchase_price from '.$this->tablename.' where id='.$it_id.' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
+$result = $this->db->getAsIsArray($sql);
+    return $result;
 
+ }else{
+  $sql = 'select sales_price as sale_price,updated_purchase_price from '.$this->tablename.' where item_id='.$it_id.' and branch_id='.$b_id.' and is_deleted="NO"';
+$result = $this->db->getAsIsArray($sql);
+    return $result;
+
+ }
+
+}
 }
 ?>

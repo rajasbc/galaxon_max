@@ -29,14 +29,16 @@ $output['item_code']=$result[0]['item_code'];
 if(count($Vresult)>0){
 $output['mrp']=0;
 $output['sales_price']=0;
+$output['updated_sale_price']=$result[0]['updated_purchase_price'];
 
 }else{
 $output['mrp']=$result[0]['mrp'];
 $output['sales_price']=$result[0]['sales_price'];
+$output['updated_sale_price']=$result[0]['updated_purchase_price'];
 
 }
-$output['mrp']=$result[0]['mrp'];
-$output['sales_price']=$result[0]['sales_price'];
+// $output['mrp']=$result[0]['mrp'];
+// $output['sales_price']=$result[0]['sales_price'];
 $output['discount']=$result[0]['discount'];
 $output['gst']=$result[0]['gst'];
 $output['varieties']=$var_select;

@@ -74,6 +74,9 @@ foreach ($item as $key => $itemvar) {
     $sale_item['var_id'] = $itemvar['varieties_id'];
     $sale_item['var_name']=$itemvar["varieties_name"];
     $sale_item['mrp']=$itemvar["mrp"];
+
+    $sale_item['sale_price'] = $itemvar['sale_price'];
+
     $sale_item['discount']=$itemvar["discount"];
     $sale_item['gst']=$itemvar["gst"];
     $sale_item['qty']=$itemvar["enter_qty"];
@@ -129,6 +132,8 @@ $update_id = $this->db->mysql_update('items',$update_item,'id='.$update_item_qty
 
 
 }
+ 
+
 
 }
 if($update_id){
@@ -196,6 +201,15 @@ $sql = 'select po_id,sum(qty) as qty from '.$this->tablename2.'where po_id='.$po
 $result = $this->db->GetResultsArray($sql);
 
 return $result;
+
+}
+public function get_amount_details($p_id,$b_id){
+$sql = 'select * from '.$this->tablename2.'where po_id='.$p_id.' and branch_id='.$b_id.'';
+
+$result = $this->db->GetResultsArray($sql);
+
+return $result;
+
 
 }
 

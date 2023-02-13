@@ -290,7 +290,7 @@ $group_name = $group_obj->get_group_data();
           <div class="modal-content">
             <div class="modal-header">
               <h4 class="modal-title">Varieties</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <button type="button" id="var_close" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
@@ -338,7 +338,7 @@ $group_name = $group_obj->get_group_data();
                 </div>
             </div>
             <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" id="close_modal" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
           </div>
           <!-- /.modal-content -->
@@ -652,6 +652,7 @@ $("#reset_btn").on('click',function(){
 })
 $("#update_variety_btn").on('click',function(){
 var id = $("#edit_var_id").val();
+var item_id = $("#variety_item_id").val();
 var variety_name = $("#variety_name").val();
 var mrp = $("#mrp").val();
 var sale_price = $("#sale_price").val();
@@ -662,12 +663,22 @@ url: '../ajaxCalls/update_varieties.php',
 data:{'id':id,'variety_name':variety_name,'mrp':mrp,'sale_price':sale_price},
 success:function(res){
 if(res.status=='success'){
-  location.reload();
+  global_alert_modal('success','Update SuccessFully...');
+   get_varieties(item_id);
 }
   
 }
 
 });
+
+});
+
+$("#var_close").on('click',function(){
+location.reload();
+
+});
+$("#close_modal").on('click',function(){
+location.reload();
 
 });
 

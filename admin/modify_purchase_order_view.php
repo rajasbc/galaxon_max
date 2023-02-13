@@ -14,6 +14,11 @@ $category =  $category_obj->get_category_data();
 
 ?>
 <style type="text/css">
+  <?php if($_SESSION['type']!='ADMIN'){ ?>
+         .hide{
+           display: none;
+         }
+    <?php } ?>
 
   .css-serial {
       counter-reset: serial-number;  /* Set the serial number counter to 0 */
@@ -145,6 +150,7 @@ $category =  $category_obj->get_category_data();
                       <th>Product</th>
                       <th>Variety</th>
                       <th>Qty</th>
+                      <?php if($_SESSION['type']=='ADMIN'){ ?>
                       <th>Description</th>
                       <th>Units</th>
                       <th>Tons</th>
@@ -153,6 +159,7 @@ $category =  $category_obj->get_category_data();
                       <th>Discount</th>
                       <th>Gst</th>
                       <th>Total</th>
+                    <?php } ?>
                     </tr>
                   </thead>
                   <tbody class="text-left" id="tdata">
@@ -184,15 +191,15 @@ $category =  $category_obj->get_category_data();
             echo '</td>';
              echo '<td class=" ch-4">'.$row['var_name'].'</td>';
             echo '<td class="text-left ch-4">'.$row['qty'].'</td>';
-                echo '<td class="text-left ch-10">'.$description_name.'</td>';
-                echo '<td class="text-left ch-10">'.$row['units'].'</td>';
-            echo '<td class="text-left ch-10" id="tons'.$sno.'">'.$tns.'</td>';
+                echo '<td class="text-left ch-10 hide">'.$description_name.'</td>';
+                echo '<td class="text-left ch-10 hide">'.$row['units'].'</td>';
+            echo '<td class="text-left ch-10 hide" id="tons'.$sno.'">'.$tns.'</td>';
 
-            echo '<td class="text-left ch-4">'.$row['mrp'].'</td>';
-                echo '<td class="text-left ch-4">'.$row['sales_price'].'</td>';
-                echo '<td class="text-left ch-4">'.$row['discount'].'</td>';
-                echo '<td class="text-left ch-4">'.$row['gst'].'</td>';
-                echo '<td class="text-left ch-6" id="totalid'.$sno.'">'.number_format($ttl,2,'.','').'</td>';
+            echo '<td class="text-left ch-4 hide">'.$row['mrp'].'</td>';
+                echo '<td class="text-left ch-4 hide">'.$row['sales_price'].'</td>';
+                echo '<td class="text-left ch-4 hide">'.$row['discount'].'</td>';
+                echo '<td class="text-left ch-4 hide">'.$row['gst'].'</td>';
+                echo '<td class="text-left ch-6 hide" id="totalid'.$sno.'">'.number_format($ttl,2,'.','').'</td>';
 
               
                 echo '</tr>';

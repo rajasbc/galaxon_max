@@ -82,8 +82,8 @@ $result = $obj->get_stock_variety(base64_decode($_GET['item_id']),base64_decode(
 
 											echo "<td>".$value['qty']."</td>";
 										}
-										echo "<td>".$price[0]['sale_price']."</td>
-									          <td>".$price[0]['updated_purchase_price']."</td> </tr>";
+										echo "<td>".$value['mrp']."</td>
+									          <td>".$value['updated_purchase_price']."</td> </tr>";
 										
 										$total_qty+=$value['qty'];
 										

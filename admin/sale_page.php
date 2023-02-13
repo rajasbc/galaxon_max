@@ -1,5 +1,6 @@
 <?php 
 include 'header.php';
+// error_reporting(E_ALL);
 // print_r($_GET);die();
 
 $obj = new PurchaseOrder();
@@ -13,7 +14,7 @@ $branch_name = $obj1->get_branch_name($sale_details[0]['branch_id']);
 
 
 $purchase_order_dt=$obj->get_branch_order($_GET['id'],$_GET['branch_id']);
-// print_r($purchase_order_dt);die();
+
 
 // print_r($purchase_order_dt);die();
 
@@ -34,17 +35,25 @@ $category =  $category_obj->get_category_data();
 $items=array();
 $i=0;
 foreach ($purchase_order_dt as $key => $value) {
-      if($value['var_id']!=0){
+
+   $tot = $obj->get_total($value['purchase_id']);      
+    //     $total = $value['qty']*$value['sales_price'];
+   
+
+    //   if($value['var_id']!=0){
  
-       $updated_price = $obj2->get_updated_price($value['var_id']);
-
-    }else{
-       $updated_price = $obj3->get_item_price($value['item_id']);
-
-    }
+    //    $updated_price = $obj2->get_updated_price($value['var_id'],$value['branch_id']);
+    //    $total = $updated_price['updated_purchase_price']*$value['qty'];
+         
+    // }else{
+    //    $updated_price = $obj3->get_item_price($value['item_id'],$value['branch_id']);
+    //    // print_r($updated_price);die();
+    //    $total = $updated_price['updated_purchase_price']*$value['qty'];
+    // }
    
  $i++;
  $ttl=$value['total']+$value['tax_amt'];
+
  $items['sid'.$i]=[
   "item_id"=>$value['item_id'],
   "item_name"=>$value['item_name'],
@@ -55,8 +64,8 @@ foreach ($purchase_order_dt as $key => $value) {
   "category"=>$value['category'],
   "sub_category"=>$value['sub_category'],
   "units"=>$value['units'],
-  "mrp"=>$updated_price['sale_price'],
-  "sale_price"=>$updated_price['updated_purchase_price'],
+  "mrp"=>$value['sales_price'],
+  "sale_price"=>$value['mrp'],
   "discount"=>$value['discount'],
   "gst"=>$value['gst'],
   "gstpercentage"=>$value['gst']/100,
@@ -64,7 +73,7 @@ foreach ($purchase_order_dt as $key => $value) {
   "rec_qty"=>$value['received_qty'],
   "enter_qty"=>$value['qty']-$value['received_qty'],
   "gstamount"=>$value['tax_amt'],
-  "total"=>$value['total'],
+  "total"=>$ttl,
   "deleted"=>'no',
   "flag"=>'old',
   "main_id"=>$value['id'],
@@ -320,6 +329,7 @@ $items=json_encode($items);
                     <th>Units</th>
                     <th>Tons</th>
                  <!--    <th>Vendor Price</th> -->
+                    
                     <th>Mrp</th>
                     <th>Sales Price</th>
                     <th>Discount</th>
@@ -338,7 +348,7 @@ $items=json_encode($items);
                    $taxtot = 0;
                    $grandtot = 0;
                    foreach ($purchase_order_dt as $key => $row) {
-                         
+                      $tot = $obj->get_total($row['purchase_id'],$row['branch_id']);     
                     // print_r($purchase_order_dt);die();
                      $admin_var_qty = $obj2->get_qty($row['var_id']); 
                     $sno++;
@@ -351,20 +361,21 @@ $items=json_encode($items);
                      $description =  $description_obj->get_description_dt($row['sub_category']);
                      $description_name=$description[0]['name'];
                     }
-                    if($row['var_id']!=0 && $row['var_id']!=''){
+    //                 if($value['var_id']!=0){
  
-           $updated_price = $obj2->get_updated_price($row['var_id']);
-
-           }else{
-       $updated_price = $obj3->get_item_price($row['item_id']);
-
-               }
+    //    $updated_price = $obj2->get_updated_price($row['var_id'],$row['branch_id']);
+    //    $total = $updated_price['updated_purchase_price']*$row['qty'];
+         
+    // }else{
+    //    $updated_price = $obj3->get_item_price($row['item_id'],$row['branch_id']);
+    //    $total = $row['sales_price']*$row['qty'];
+    // }
 
                     $tns = $row['qty']/1000;
 
                     $ttl=($row['mrp']* $remain_qty)+$row['tax_amt'];
-
-
+                     
+                         
                     echo '<tr id="trItem_'.$sno.'">';
                     echo '<td class=" ch-4"><span></span></td>';
                     echo '<td class="text-left ch-10">'.$row['item_name'];
@@ -384,13 +395,13 @@ $items=json_encode($items);
 
                     echo '<td class="text-left ch-4">';
 
-                    echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control mrp" name="mrp[]" id="mrp'.$sno.'" value="'.$updated_price['sale_price'].'" style="width:5rem; height:1.75rem; font-size:0.9rem;">';
+                    echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control mrp" name="mrp[]" id="mrp'.$sno.'" value="'.$row['sales_price'].'" style="width:5rem; height:1.75rem; font-size:0.9rem;">';
                     // echo '<td class="text-left ch-4">'.$row['sales_price'].'</td>';
 
                     echo '</td>';
                     echo '<td class="text-left ch-4"">';
 
-                    echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control sale_price" name="sale_price[]" id="sale_price'.$sno.'" value="'.$updated_price['updated_purchase_price'].'" style="width:4.8rem; height:1.75rem; font-size:0.9rem;">';
+                    echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control sale_price" name="sale_price[]" id="sale_price'.$sno.'" value="'.$row['mrp'].'" style="width:4.8rem; height:1.75rem; font-size:0.9rem;">';
 
                     echo '</td>';
                     echo '<td class="text-left ch-4">';
@@ -418,6 +429,7 @@ $items=json_encode($items);
 
                     $grand = $taxable+$row['tax_amt'];
 
+
                     $totalqty+= $remain_qty;
                     // $tot_qty =  $totalqty+$row['qty'];
                     $totalton = $totalton+$tns;
@@ -425,6 +437,8 @@ $items=json_encode($items);
                     $totdis = $totdis+$disv;
                     $taxtot = $taxtot+$row['tax_amt'];
                     $grandtot = $grandtot+$grand;
+
+
 
                    } 
                   
@@ -476,7 +490,7 @@ $items=json_encode($items);
                       <div class="col-lg-4 col-sm-4 col-md-4">
                        <div class="">
                         <span class="">Purchase Amount (Include Tax ₹)</span>
-                        <span class="" id="grandid"><?=$grandtot?></span>
+                        <span class="" id="grandid"><?=$tot['grand_total']?></span>
                         <input type='hidden' class="text" id="grandid1" value="<?=$grandtot?>">
                        </div>
                       </div>
@@ -762,6 +776,7 @@ $items=json_encode($items);
           var category=$("#category").val();
           var sub_category=$("#sub_category").val();
           var mrp=$("#mrp").val();
+
           var sale_price=$("#sale_price").val();
           var discount=$("#discount").val();
           var gst=$("#gst").val();
@@ -884,8 +899,8 @@ $items=json_encode($items);
         "category":category,
         "sub_category":sub_category,
         "units":units,
-        "mrp":mrp,
-        // "sale_price":sale_price,
+        "mrp":sale_price,
+        "sale_price":mrp,
         "discount":discount,
         "gst":gst,
         "gstpercentage":gst/100,
@@ -946,9 +961,9 @@ $items=json_encode($items);
        tr = tr.replace(getRegEx('itemname'), data['item_name']);
        tr = tr.replace(getRegEx('variety'), data['varieties_name']);
        tr = tr.replace(getRegEx('units'), data['units']);
-       tr = tr.replace(getRegEx('mrp'), data['mrp']);
+       tr = tr.replace(getRegEx('mrp'),data['sale_price']);
        tr = tr.replace(getRegEx('description'), $("#sub_category option:selected").text());
-       tr = tr.replace(getRegEx('sale_price'), data['sale_price']);
+       tr = tr.replace(getRegEx('sale_price'),data['mrp']);
        tr = tr.replace(getRegEx('discount'), data['discount']);
        tr = tr.replace(getRegEx('gst'), data['gst']);
        tr = tr.replace(getRegEx('quantity'), data['quantity']);
@@ -973,22 +988,28 @@ $items=json_encode($items);
 
      <script type="text/javascript">
       function fieldupdate(idval,ele){
-
+        
        var ref = "sid"+idval;
 
        var mrp = $("#mrp"+idval).val();
+
+
+
        var sale_price = $("#sale_price"+idval).val();
+    
+
        var discount = $("#discount"+idval).val();
        var gst = $("#gst"+idval).val();
        var quantity = $("#quantity"+idval).val();
 
-       prototal=Number(mrp*quantity)-(Number(mrp*quantity)*(discount/100));
+       prototal=Number(sale_price*quantity)-(Number(sale_price*quantity)*(discount/100));
        gstamount=prototal*(gst/100);
        $("#totalid"+idval).html((prototal+gstamount).toFixed(2));
        var tons=Number($("#quantity"+idval).val())/1000;
        $("#tons"+idval).html(tons);
-       items[ref].sale_price=sale_price;
        items[ref].mrp=mrp;
+
+       items[ref].sale_price=sale_price;
        items[ref].enter_qty=quantity;
        items[ref].discount=discount;
        items[ref].gst=gst;
@@ -1008,6 +1029,7 @@ $items=json_encode($items);
 
        var quantity = $(ele).val()*1;
 
+
        var admin_qty = $("#admin_qty"+idval).val()*1;
 
     
@@ -1026,7 +1048,9 @@ $items=json_encode($items);
       // if ((Number($("#order_qty"+idval).text())-Number($("#rec_qty"+idval).text())) < quantity) {
       //   $("#quantity"+idval).val((Number($("#order_qty"+idval).text())-Number($("#rec_qty"+idval).text())));
       // }
-      prototal=Number(mrp*quantity)-(Number(mrp*quantity)*(discount/100));
+      prototal=Number(sale_price*quantity)-(Number(sale_price*quantity)*(discount/100));
+
+
       gstamount=prototal*(gst/100);
       $("#totalid"+idval).html((prototal+gstamount).toFixed(2));
       var tons=Number($("#quantity"+idval).val())/1000;
@@ -1101,12 +1125,17 @@ $items=json_encode($items);
 
         val=Number(tempItem["enter_qty"]);
 
+
         total_qty=total_qty+Number(tempItem["enter_qty"]);
-        total= Number(tempItem["mrp"])*Number(tempItem["enter_qty"]);
 
+        total= Number(tempItem["sale_price"])*Number(tempItem["enter_qty"]);
 
+         console.log(total);
+     
         discount=Number(discount)+(Number(total)*Number(tempItem["discount"]/100));
+
         remamount=(Number(total)-(Number(total)*Number(tempItem["discount"]/100)));
+
         subtotal1=Number(subtotal1)+Number(remamount);
         tax=Number(tax)+(Number(tempItem['gstpercentage'])*Number(remamount));
 
@@ -1118,12 +1147,14 @@ $items=json_encode($items);
       grand_total=Number(subtotal2);
       $("#balance").val(grand_total);
       grand_total= grand_total.toFixed(2) ;
+    
       $("#tot_qty").html(total_qty);
       $("#tot_ton").html(total_qty/1000); 
       $("#subid").html(subtotal1.toFixed(2));
       $("#taxid").html(tax.toFixed(2));
       $("#discid").html(discount.toFixed(2));
-      $("#grandid").html(grand_total);
+       $("#grandid").html(grand_total);
+     
      }
 
      function getRegEx(str) {
@@ -1232,5 +1263,35 @@ $items=json_encode($items);
       });
      }
     </script>
+    <script type="text/javascript">
+ $("#varieties_id").on('change',function(){
+
+ var var_id = $(this).val();
+$.ajax({
+type: "POST",
+dataType:"json",
+url: '../ajaxCalls/get_variety_price.php',
+data: {'var_id':var_id},
+success: function(res){
+   console.log(res);
+   if(res){
+   $("#mrp").val(res.mrp);
+
+    $("#sale_price").val(res.sale_price);
+  }else{
+     $("#mrp").val(0);
+    $("#sale_price").val(0);
+   
+  }
+  }
+
+});
+
+  }); 
+
+
+
+
+</script>
 
  

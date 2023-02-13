@@ -9,7 +9,7 @@ $purchase_order_dt=$obj->get_purchase_order(base64_decode($_GET['id']));
 // print_r($purchase_order_dt);die();
 $purchase_order_item_dt=$obj->get_purchase_order_item(base64_decode($_GET['id']));
 
-// print_r($purchase_order_item_dt);die();
+
 
 $vendor_obj= new Vendors();
 $vendor= $vendor_obj->get_vendor_dt($purchase_order_dt[0]['vendor_id']); 
@@ -23,10 +23,11 @@ foreach ($purchase_order_item_dt as $key => $value) {
 
     if($value['var_id']!=0){
  
-       $updated_price = $obj1->get_updated_price($value['var_id']);
+       $updated_price = $obj1->updated_var_price($value['var_id'],$value['branch_id']);
+        // print_r(hakkim);die();
 
     }else{
-       $updated_price = $obj2->get_item_price($value['item_id']);
+       $updated_price = $obj2->update_item_price($value['item_id'],$value['branch_id']);
 
     }
   $i++;
@@ -41,7 +42,8 @@ foreach ($purchase_order_item_dt as $key => $value) {
       "category"=>$value['category'],
       "sub_category"=>$value['sub_category'],
       "units"=>$value['units'],
-      "mrp"=>$updated_price['updated_purchase_price'],
+      "update_sale_price"=>$updated_price['updated_purchase_price'],
+      "mrp"=>$value['mrp'],
       "sale_price"=>$value['sales_price'],
       "discount"=>$value['discount'],
       "gst"=>$value['gst'],
@@ -205,8 +207,9 @@ $items=json_encode($items);
                       <th>Tons</th>
                       <th>Order Qty</th>
                       <th>Received Qty</th>
+                       <th class='hide'>Sales Price</th>
                       <th class='hide'>Vendor Price</th>
-                      <th class='hide'>Purchase Price</th>
+                     
                       <th class='hide'>Mrp</th>
                       <th class='hide'>Discount</th>
                       <th class='hide'>Gst</th>
@@ -222,12 +225,13 @@ $items=json_encode($items);
      $description =  $description_obj->get_description_dt($row['sub_category']);
      $description_name=$description[0]['name'];
    }
-    if($row['var_id']!='' && $row['var_id']!=0){
+     if($row['var_id']!=0){
  
-       $updated_price = $obj1->get_updated_price($row['var_id']);
-
+       $updated_price = $obj1->updated_var_price($row['var_id'],$row['branch_id']);
+       
+       
     }else{
-       $updated_price = $obj2->get_item_price($row['item_id']);
+       $updated_price = $obj2->update_item_price($row['item_id'],$row['branch_id']);
 
     }
    
@@ -249,11 +253,16 @@ $items=json_encode($items);
             echo '<td class="text-left ch-10" id="tons'.$sno.'">0</td>';
              echo '<td class="text-left ch-10" id="order_qty'.$sno.'">'.$row['qty'].'</td>';
              echo '<td class="text-left ch-10" id="rec_qty'.$sno.'">'.$row['received_qty'].'</td>';
-             echo '<td class="text-left ch-10 hide">'.$row['mrp'].'</td>';
+             // echo '<td class="text-left ch-10 hide">' .$updated_price['updated_purchase_price'].'</td>';
+             echo '<td class="text-left ch-4 hide">';
+
+                echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control updated_price" name="updated_price[]" id="updated_price'.$sno.'" value="'.$updated_price['updated_purchase_price'].'" style="width:5rem; height:1.75rem">';
+
+                echo '</td>';
 
             echo '<td class="text-left ch-4 hide">';
 
-                echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control mrp" name="mrp[]" id="mrp'.$sno.'" value="'.$updated_price['updated_purchase_price'].'" style="width:5rem; height:1.75rem">';
+                echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control mrp" name="mrp[]" id="mrp'.$sno.'" value="'.$row['mrp'].'" style="width:5rem; height:1.75rem">';
 
                 echo '</td>';
                 echo '<td class="text-left ch-4 hide">';
@@ -488,8 +497,9 @@ if (val!=0 && val!='') {
 <script type="text/javascript">
    function fieldupdate(idval,ele){
 
+
       var ref = "sid"+idval;
-      
+      var update_sale_price = $("#updated_price"+idval).val();
       var mrp = $("#mrp"+idval).val();
       var sale_price = $("#sale_price"+idval).val();
       var discount = $("#discount"+idval).val();
@@ -503,6 +513,7 @@ if (val!=0 && val!='') {
      $("#tons"+idval).html(tons);
     items[ref].sale_price=sale_price;
     items[ref].mrp=mrp;
+    items[ref].update_sale_price = update_sale_price;
     items[ref].enter_qty=quantity;
     items[ref].discount=discount;
     items[ref].gst=gst;
@@ -529,6 +540,7 @@ if (val!=0 && val!='') {
      var tons=Number($("#quantity"+idval).val())/1000;
      $("#tons"+idval).html(tons);
     items[ref].sale_price=sale_price;
+    items[ref].updated_price;
     items[ref].mrp=mrp;
     items[ref].enter_qty=$("#quantity"+idval).val();
     items[ref].discount=discount;

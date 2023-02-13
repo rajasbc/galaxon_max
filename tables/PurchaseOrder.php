@@ -214,9 +214,11 @@ if ($this->db->getpost('shipping_d_date')!='') {
                        }
 
                 // mrp and sale price update
-            // if($_SESSION['type']=='ADMIN'){           
+            // if($_SESSION['type']!='ADMIN'){           
             //   if($itemvar['varieties_id']!=0 && $itemvar['varieties_id']!='' && $itemvar['varieties_name']!=''){
-            //         $price_update = array();
+            //     $sql = 'select * from varieties where branch_id=0 and id='.$itemvar['varieties_id'].' and is_deleted="NO"';
+            //      $res =  $this->db->GetResultsArray($sql);
+            //               $price_update = array();
             //         $price_update['mrp'] = $itemvar['mrp'];
             //         $price_update['sale_price'] = $itemvar['sale_price'];
             //       $this->db->mysql_update('varieties',$price_update,'id='.$itemvar['varieties_id']);
@@ -314,6 +316,7 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
                        $items['item_code']=$itemvar["item_code"];
                        $items['mrp']=$itemvar["mrp"];
                        $items['sales_price']=$itemvar["sale_price"];
+                       $items['updated_purchase_price'] =$itemvar["updated_sale_price"];
                        $items['discount']=$itemvar["discount"];
                        $items['gst']=$itemvar["gst"];
                        $items['units']=$itemvar["units"];
@@ -332,26 +335,23 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
            if($itemvar['varieties_id']!='' && $itemvar['varieties_id']!=0){
               
               $update_price = array();
-              $update_price['updated_purchase_price']=$itemvar['mrp'];
+              $update_price['updated_purchase_price']=$itemvar['update_sale_price'];
                $this->db->mysql_update('varieties',$update_price,'id='.$itemvar['varieties_id']);
 
             }else{
 
                $update_price = array();
-              $update_price['updated_purchase_price']=$itemvar['mrp'];
+              $update_price['updated_purchase_price']=$itemvar['update_sale_price'];
                $this->db->mysql_update('items',$update_price,'id='.$itemvar['item_id']);
 
             }
           }
-
-              // price_update completed
-
-
-
-
+            
 
 
              if($_SESSION['type']!="ADMIN"){
+
+             
 
             $sql ='select * from items where branch_id='.$_SESSION['branch_id'].' and item_code="'.$itemvar['item_code'].'"';
             $res  = $this->db->GetResultsArray($sql);
@@ -373,7 +373,7 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
                        $items['item_id']=$itemvar["item_id"];
                        $items['item_code']=$itemvar["item_code"];
                        $items['mrp']=$itemvar["mrp"];
-                       $items['sales_price']=$itemvar["sale_price"];
+                       // $items['sales_price']=$itemvar["sale_price"];
                        $items['discount']=$itemvar["discount"];
                        $items['gst']=$itemvar["gst"];
                        $items['units']=$itemvar["units"];
@@ -428,6 +428,44 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
           }
 
       }
+      // price_update
+ 
+
+
+        
+           if($itemvar['varieties_id']!='' && $itemvar['varieties_id']!=0){
+
+            $sql = 'select * from branch_sale_items where po_id='.$this->db->getpost('po_id').' and branch_id='.$_SESSION['branch_id'].' and var_id='.$itemvar['varieties_id'].' order by Id DESC limit 1';
+            $res = $this->db->getAsIsArray($sql);
+
+            $sql1 = 'select * from varieties where branch_id='.$_SESSION['branch_id'].' and variety_id='.$itemvar['varieties_id'].'';
+             $result = $this->db->getAsIsArray($sql1);
+              
+              
+              $update_price = array();
+              $update_price['updated_purchase_price']=$res['sale_price'];
+              $update_price['mrp']=$res['mrp'];
+               $this->db->mysql_update('varieties',$update_price,'id='.$result['id']);
+
+
+            }else{
+               $sql = 'select * from branch_sale_items where po_id='.$this->db->getpost('po_id').' and branch_id='.$_SESSION['branch_id'].' and item_id='.$itemvar['item_id'].' order by Id DESC limit 1';
+            $res = $this->db->getAsIsArray($sql);
+
+              
+               $sql1 = 'select * from items where branch_id='.$_SESSION['branch_id'].' and item_id='.$itemvar['item_id'].'';
+             $result = $this->db->getAsIsArray($sql1);
+
+               $update_price = array();
+              $update_price['updated_purchase_price']=$res['sale_price'];
+               $update_price['mrp']=$res['mrp'];
+               $this->db->mysql_update('items',$update_price,'id='.$result['id']);
+
+            }
+          
+
+              // price_update completed
+
 
 
 }
@@ -457,8 +495,10 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
                        
                        $purchase__history_items['item_name']=$itemvar["item_name"];
                        $purchase__history_items['item_code']=$itemvar["item_code"];
+                    $purchase__history_items['update_sale_price'] = $itemvar["update_sale_price"];
                        $purchase__history_items['mrp']=$itemvar["mrp"];
                        $purchase__history_items['sales_price']=$itemvar["sale_price"];
+
                        $purchase__history_items['discount']=$itemvar["discount"];
                        $purchase__history_items['gst']=$itemvar["gst"];
                        $purchase__history_items['qty']=$itemvar["quantity"];
@@ -609,10 +649,7 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
 
     if($_SESSION['type']!='ADMIN'){
 
-      // $sale_amount = array();
-      // $sale_amount['paid_amt']= $log_res[0]['credit'];
-
-      // $this->db->mysql_update('branch_sale',$sale_amount,)
+     
 
       $branch_sale = array();
 
@@ -642,65 +679,9 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
       }
     
     }
-
-
-   
-
-
 }
-  //   if($_SESSION['type']!='ADMIN'){
-  //   $branch_sale['paid_amt'] = $log_res[0]['credit'];
-
-  //   // print_r($branch_sale['paid_amt']);die();
-  //   $branch_sale['balance_amt'] =$history_res[0]['total']-$log_res[0]['credit'];
-      
-  //     if($branch_sale['balance_amt']==0){
-
-  //        $branch_sale['status']="PAID";
-
-  //     }else{
-
-  //        $branch_sale['status']="PENDING";
-
-  //     }
-
-
-  
-  //   $branch_sale_id= $this->db->mysql_update('branch_sale',$branch_sale,'po_id='.$purchase_id);
-
-  // }
-// if($_SESSION['type']!='ADMIN'){
-
-//   foreach ($item as $key => $value) {
-//       if($value['variety_id']!=0 && $value['variety_id']!=''){
-//            $sql = 'select * from varieties where branch_id='.$_SESSION['branch_id'].' and variety_id='.$value['variety_id'].'';
-           
-//           $var = $this->db->GetResultsArray($sql);
-
-//           $varieties = array();
-//           $varieties['branch_id'] = $_SESSION['branch_id'];
-//           $varieties['item_id'] = $value['item_id'];
-//           $varieties['variety_id'] = $value['varieties_id'];
-//           $varieties['name'] = $value['varieties_name'];
-
-
-
-//           if($var[0]['varieties_id']!=''){
-//              $this->db->mysql_update('varieties',$varieties,'id='.$var[0]['id']);
-//           }else{
-
-//             $this->db->mysql_insert('varieties',$varieties);
-//           }
-
-//       }
-
-
-//   }
-
-// }
-
-
-
+ 
+ 
 		}
 
      return ['status'=>'success'];
@@ -1204,6 +1185,17 @@ public function get_order_dt($id,$b_id){
 $result = $this->db->GetResultsArray($sql);
 
 return $result;
+
+}
+public function get_total($id){
+
+
+$sql = 'select * from '.$this->tablename.' where id='.$id.' and is_deleted="NO"';
+$result = $this->db->getAsIsArray($sql);
+// print_r($result);
+
+return $result;
+
 
 }
 

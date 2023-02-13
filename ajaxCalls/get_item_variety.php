@@ -4,6 +4,7 @@ include '../tables/config.php';
  $obj = new Varieties();
 
  $result =  $obj->get_varieties_data($_POST['item_id']);
+ // print_r($result);die();
 $output='';
 
 if (count($result)>0) {

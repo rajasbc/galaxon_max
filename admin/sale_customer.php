@@ -761,6 +761,7 @@ success: function(res){
      var category=$("#category").val();
      var sub_category=$("#sub_category").val();
      var mrp= parseInt($("#mrp").val());
+
      var sale_price=$("#sale_price").val();
      var discount=$("#discount").val();
     var a = $("input[type='radio']:checked").val();
@@ -877,12 +878,12 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
        data["units"]=units;
        var tons=quantity/1000;
        data["tons"]=tons;
-       total1=Number(data["mrp"])*Number(data["quantity"]);
+       total1=Number(data["sale_price"])*Number(data["quantity"]);
        total2=Number(total1)-Number(total1)*Number(data["discount"])/100;
        total=Number(total2);
        // total=total.toFixed(2);
        
-    prototal=Number(($("#mrp").val()*$("#quantity").val())-(($("#mrp").val()*$("#quantity").val())*($("#discount").val()/100)));
+    prototal=Number(($("#sale_price").val()*$("#quantity").val())-(($("#sale_price").val()*$("#quantity").val())*($("#discount").val()/100)));
 
      gstamount=prototal*(Number($("#gst").val())/100);
 
@@ -1058,7 +1059,7 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
       var gst = $("#gst"+idval).val();
       var quantity = $("#quantity"+idval).val();
       var tons=Number($("#quantity"+idval).val())/1000;
-     prototal=Number(mrp*quantity)-(Number(mrp*quantity)*(discount/100));
+     prototal=Number(sale_price*quantity)-(Number(sale_price*quantity)*(discount/100));
      gstamount=prototal*(gst/100);
      $("#totalid"+idval).html((prototal+gstamount).toFixed(2));
      $("#tons"+idval).html(tons);
@@ -1102,7 +1103,7 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
         tempItem = itemslist[vale];
         val=Number(tempItem["quantity"]);
         total_qty=total_qty+Number(tempItem["quantity"]);
-        total= Number(tempItem["mrp"])*Number(tempItem["quantity"]);
+        total= Number(tempItem["sale_price"])*Number(tempItem["quantity"]);
 
 
         discount=Number(discount)+(Number(total)*Number(tempItem["discount"]/100));
@@ -1263,7 +1264,7 @@ success: function(res){
       $("#category").val(res.category);        
       $("#mrp").val(res.mrp);
       $("#units").val(res.units);
-      $("#sale_price").val(res.sales_price);
+      $("#sale_price").val(res.updated_sale_price);
       $("#discount").val(res.discount);
       $("#gst").val(res.gst);
       $("#sub_category").val(res.sub_category);
@@ -1406,13 +1407,14 @@ $(".bprice").css('display','none');
 $.ajax({
 type: "POST",
 dataType:"json",
-url: '../ajaxCalls/get_variety_price.php',
+url: '../ajaxCalls/get_variety_price_dt.php',
 data: {'var_id':var_id},
 success: function(res){
    console.log(res);
-   if(res.status=='success'){
-   $("#mrp").val(res.mrp);
-    $("#sale_price").val(res.sale_price);
+   if(res){
+    $("#mrp").val(res.mrp);
+
+    $("#sale_price").val(res.updated_purchase_price);
   }else{
      $("#mrp").val(0);
     $("#sale_price").val(0);

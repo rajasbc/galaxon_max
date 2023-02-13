@@ -101,13 +101,20 @@ class Varieties extends Dbconnection {
       $result = $this->db->GetResultsArray($sql);
       
       return $result;
-
-
 	}
 
 public function get_branch_varieties($id){
 
-  $sql = 'select a.*,b.* from variety_items a join varieties b on a.variety_id=b.id where a.item_id='.$id.' and a.branch_id = '.$_SESSION['branch_id'].'';
+$sql = 'select a.branch_id,a.item_id,a.qty,b.name,b.mrp,b.sale_price,a.variety_id,b.updated_purchase_price from variety_items a join varieties b on a.variety_id=b.id where b.item_id='.$id.' and a.branch_id = '.$_SESSION['branch_id'].' and b.is_deleted="NO"';
+
+  $result = $this->db->GetResultsArray($sql);
+  
+  return $result;
+
+	}
+	public function get_branch_varieties_dt($id){
+
+ $sql = 'select a.branch_id,a.item_id,a.qty,b.name,b.mrp,b.sale_price,a.variety_id,b.updated_purchase_price from variety_items a join varieties b on a.variety_id=b.id where b.item_id='.$id.' and a.branch_id = '.$_SESSION['branch_id'].' and b.is_deleted="NO"';
 
   $result = $this->db->GetResultsArray($sql);
   
@@ -134,7 +141,7 @@ return $result;
 }
 public function get_stock_variety($item_id,$b_id){
 
-$sql = 'select a.*,b.* from variety_items a join Varieties b on a.variety_id=b.variety_id where a.branch_id='.$b_id.' and a.item_id='.$item_id.' and b.branch_id='.$b_id.' ';
+ $sql = 'select a.*,b.* from variety_items a join Varieties b on a.variety_id=b.variety_id where a.branch_id='.$b_id.' and a.item_id='.$item_id.' and b.branch_id='.$b_id.' ';
 
 $result = $this->db->GetResultsArray($sql);
 
@@ -142,23 +149,18 @@ return $result;
 
 }
 public function get_var_price($v_id){
-	if($_SESSION['type']=='ADMIN'){
-
-$sql = 'select * from '.$this->tablename.' where id='.$v_id.' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
-}else{
-   $sql = 'select * from '.$this->tablename.' where id='.$v_id.' and branch_id=0 and is_deleted="NO"';
-
-
-}
+	
+$sql = 'select * from '.$this->tablename.' where id='.$v_id.' and branch_id=0 and is_deleted="NO"';
 $result = $this->db->getAsIsArray($sql);
-// print_r($result);die();
-if($result!=''){
 
-	return ['status'=>'success','mrp'=>$result['mrp'],'sale_price'=>$result['sale_price']];
-}else{
 
-	return 'failed';
+return $result;
 }
+
+public function get_var_price_dt($v_id){
+ $sql = 'select * from '.$this->tablename.' where variety_id='.$v_id.' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
+$result = $this->db->getAsIsArray($sql);
+return $result;
 
 }
 public function get_var_dt($v_id){
@@ -166,21 +168,55 @@ $sql = 'select * from '.$this->tablename.' where id='.$v_id.' and branch_id='.$_
 $result = $this->db->getAsIsArray($sql);
 return $result;
 }
-public function get_updated_price($v_id){
-$sql = 'select sale_price,updated_purchase_price from '.$this->tablename.' where id='.$v_id.' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
+public function get_updated_price($v_id,$b_id){
+ 
+$sql = 'select sale_price,updated_purchase_price from '.$this->tablename.' where variety_id='.$v_id.' and branch_id='.$b_id.' and is_deleted="NO"';
+$result = $this->db->getAsIsArray($sql);
+if(count($result)>0){
+
+return $result;
+
+}else{
+  $sql = 'select sale_price,updated_purchase_price from '.$this->tablename.' where id='.$v_id.' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
 $result = $this->db->getAsIsArray($sql);
 
 return $result;
 
+}
+
+
+}
+public function updated_var_price($v_id,$b_id){
+if($_SESSION['type']=='ADMIN'){
+ $sql = 'select sale_price,updated_purchase_price from '.$this->tablename.' where id='.$v_id.' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
+$result = $this->db->getAsIsArray($sql);
+
+    return $result;
+
+}else{
+ $sql = 'select sale_price,updated_purchase_price from '.$this->tablename.' where variety_id='.$v_id.' and branch_id='.$b_id.' and is_deleted="NO"';
+$result = $this->db->getAsIsArray($sql);
+    return $result;
+
+}
+
 
 }
 public function get_variety_price($id){
- $sql = 'select * from '.$this->tablename.' where id='.$id.' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
+ $sql = 'select * from '.$this->tablename.' where variety_id='.$id.' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
 
 $result = $this->db->GetResultsArray($sql);
 
 return $result;
 
+
+}
+public function get_price($id){
+ $sql = 'select * from '.$this->tablename.' where id='.$id.' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
+
+$result = $this->db->GetResultsArray($sql);
+
+return $result;
 
 
 }

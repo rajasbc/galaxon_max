@@ -82,6 +82,7 @@ include 'header.php';
                     <th>Balance Amount</th>
                   
                     <th >Details</th>
+                    <th >Pay</th>
                   </tr>
                 <?php }else{?>
                    <?php if($_SESSION['type']=='ADMIN'){ ?>

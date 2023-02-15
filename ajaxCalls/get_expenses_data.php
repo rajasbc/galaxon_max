@@ -17,10 +17,20 @@ if (count($result)>0) {
      $result = $obj1->get_category_name($value['expenses_category']);
 		
 		$i++;
+		if($value['refund']=='yes'){
+			
+           $total_expenses =$value['total_amt']-$value['refund_amt'];
+           $btn_color = 'btn-info';
+		}
+		else{
+
+          $total_expenses = $value['total_amt'];
+           $btn_color = 'btn-primary';
+		}
 
        
-               $output [$j] =[$i,$value['branch_name'],$result['name'],$value['expenses_name'],$value['total_amt'],
-               '<button style="margin-right: 20px"; type="button"  class="btn btn-primary" data-id="'.$value['id'].'" data-form="'.$value['name'].'" onclick="edit_modal(this);">Edit</button> 
+               $output [$j] =[$i,$value['branch_name'],$result[0]['name'],$value['expenses_name'],$total_expenses,
+               '<button style="margin-right: 20px"; type="button"  class="btn '.$btn_color.'" data-id="'.$value['id'].'" data-form="'.$value['name'].'" onclick="edit_modal(this);">Edit</button> 
                <button style="margin-right: 20px"; type="button"   class="btn btn-danger" data-id="'.$value['id'].'" onclick="del_btn(this);">Delete</button>'];
       $j++;
 

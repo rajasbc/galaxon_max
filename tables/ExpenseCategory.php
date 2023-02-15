@@ -87,7 +87,7 @@ class ExpenseCategory extends Dbconnection {
 	public function get_category_name($id){
 
       $sql='select * from '.$this->tablename.' where id="'.$id.'" and status="ENABLED"';
-		$result=$this->db->getAsIsArray($sql);
+		$result=$this->db->GetResultsArray($sql);
 	
 		return $result;
 
@@ -150,5 +150,11 @@ class ExpenseCategory extends Dbconnection {
 			return ['status'=>'failed'];
 		}
 	}
+  public function get_category($cat_id){
+      
+     $sql = 'select * from '.$this->tablename.'where id='.$cat_id.' and status="ENABLED"';
+     $result = $this->GetResultsArray($sql);
+     return $result;
+  }	
 }
 ?>

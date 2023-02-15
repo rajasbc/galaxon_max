@@ -39,6 +39,49 @@ $result1 = $obj1->branch_details();
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
+      <div class=" form-row col-lg-12 col-md-12 col-sm-12" id="sort">
+            <div class="col-lg-3 col-md-3 col-sm-3 mx-1 m-1">
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <span class="input-group-text ">From</span>
+                </div>
+                <input type="date" class="form-control" name="date" id="fdate" value='<?=date('Y-m-d')?>'>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 mx-1 m-1">
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <span class="input-group-text ">To</span>
+                </div>
+                <input type="date" class="form-control" name="date" id="tdate" value='<?=date('Y-m-d')?>' >
+              </div>
+            </div>
+            <!-- <div class="col-lg-3 col-md-3 col-sm-3 mx-1 m-1">
+              <div class="input-group input-group-sm ">
+                
+                  <select class="form-control"  name='select_user' id='select_user' >
+                    <option value="0">Select Branch</option>
+                    <?php
+                    foreach ($branch as $value) {
+                      
+                      echo "<option value='".$value['branch_id']."' data-id='".$value['branch_id']."'>". $value["name"]."</option>";
+                      
+                    }
+
+
+                    ?>
+                  </select>
+
+
+              
+              </div>
+            </div> -->
+            <div class="col-lg-1 col-md-1 col-sm-1 mx-1 m-1">
+              <div class="input-group input-group-sm ">
+                <button class="form-control btn btn-danger btn-sm" id="search" name="Search" type="submit">Search</button>
+              </div>
+            </div>
+          </div>
 
     <!-- Main content -->
     <section class="content ">
@@ -57,7 +100,7 @@ $result1 = $obj1->branch_details();
                     <th >Branch Name</th>
                      <th style="width: 100px">Category</th>
                     <th style="width: 80px">Expenses Name</th>
-                    <th style="width: 100px">Total Amount</th>
+                    <th style="width: 100px">Total Expenses</th>
                     <th style="width: 400px">Action</th>
                   </tr>
                   </thead>
@@ -197,7 +240,11 @@ $result1 = $obj1->branch_details();
                     <span class="input-group-text" style="width: 12rem">Total Amount(incl.Tax)</span>
                   </div>
                   <input type="text" readonly="readonly" id='amount_with_tax' name='amount_with_tax' class="form-control enterKeyclass" placeholder="Enter Amount">
+                  
                 </div>
+
+
+
                  <div class="input-group mb-3" style="display: none" id="tot_amount">
                   <div class="input-group-prepend">
                     <span class="input-group-text" style="width: 12rem">Total Amount</span>
@@ -205,16 +252,33 @@ $result1 = $obj1->branch_details();
                   <input type="text" readonly="readonly" id='amount_without_tax' name='amount_without_tax' class="form-control enterKeyclass" placeholder="Enter Amount">
                 </div>
 
-
-                <div class="input-group mb-3 form-check form-check-inline" id="refund" >
+                 <div class="input-group mb-3 form-check form-check-inline" id="refund_grp" >
                   <div class="input-group-prepend">
                     <span class="input-group-text" style="width: 12rem">Refund Amount(if yes)</span>
                   </div>
                   <label class="form-check-label" for="call-yes" style="margin-left: 26px;padding-top: 6px;">Yes&nbsp;</label>
-                  <input class="form-check-input ref_yes"  type="radio" name='refund_amt' id='refund_amt_yes' value='yes'>
+                  <input class="form-check-input ref_yes"  type="radio" name='refund' id='refund_amt_yes' value='yes'>
                   <label  class="form-check-label" for="call-no"  style="margin-left: 26px;padding-top: 6px;">No&nbsp;</label>
-                  <input class="form-check-input ref_no" checked="checked" type="radio" name='refund_amt' id='refund_amt_no' value='no'>
+                  <input class="form-check-input ref_no" checked="checked" type="radio" name='refund' id='refund_amt_no' value='no'>
                    <input type="text"  style="width: 105px;margin-left: 10px;margin-top: 5px; display:none;" id='refund_value' name='refund_value' class="enterKeyclass" placeholder="Enter Amount">
+                </div>
+
+               
+                 <div class="input-group mb-3" id="after_refund" style="display: none;">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 12rem">Total Amount After Refund</span>
+                  </div>
+                  
+                   <input type="text" readonly="readonly" id='amount_after_refund' name='amount_after_refund' class="form-control enterKeyclass" placeholder="Enter Amount" >
+                </div>
+
+
+               
+                 <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 12rem">Expenses Date</span>
+                  </div>
+                  <input type="date" id='exp_date' name='exp_date' class="form-control enterKeyclass" value='<?=date("Y-m-d")?>'>
                 </div>
 
 
@@ -224,9 +288,9 @@ $result1 = $obj1->branch_details();
                   <div class="input-group-prepend">
                     <span class="input-group-text "style="width: 12rem;height: 29.6px;">Upload File</span>
                   </div>
-                  <input style="width: 12rem"  type="file" id='myfile' name='myfile' class="enterKeyclass" value=''   placeholder="Upload File">
-                 <!--  <img id="preview" src="" style="max-width: 201px;max-height: 175px;"> -->
-                 <span id="preview" ></span>
+                  <input style="width: 14rem" multiple type="file" id='myfile[]' name='myfile[]' class="enterKeyclass" value='' placeholder="Upload File">
+                  <img id="preview_img" src="" style="max-width: 201px;max-height: 175px;display: none;">
+                 <span id="preview" style="display: none;"></span>
                 </div>
 
                
@@ -346,7 +410,7 @@ success: function(res){
      $('#edit_expense_btn').on('click',function(e){
           var tax_check = $("input[name='tax']:checked").val();
 
-          var ref_cond = $("input[name='refund_amt']:checked").val();
+          var ref_cond = $("input[name='refund']:checked").val();
 
           if(tax_check=='yes'){
             if($("#tax_percentage").val()=='' || $("#tax_percentage").val()==0){
@@ -484,6 +548,7 @@ url: '../ajaxCalls/get_expenses_data.php',
 data: {'expenses_id':$(e).data('id')},
 success: function(res){
     $("#branch_name").val(res.branch_name);
+    $("#branch_id").val(res.branch_id);
     $("#category_name").val(res.expenses_category);
     $("#expenses_name").val(res.expenses_name);
      $("#ref_no").val(res.ref_no);
@@ -491,6 +556,7 @@ success: function(res){
      $("#note").val(res.note);
     $("#contact").val(res.contact_no);
     $("#amount").val(res.amount);
+    $("#exp_date").val(res.exp_date);
    
     if(res.tax=="yes"){
       $("#tax-yes").prop('checked',true);
@@ -501,6 +567,8 @@ $("#tot_amount").css('display','none');
       $("#tax_percentage").val(res.tax_percentage);
       $("#amount_with_tax").val(res.total_amt);
       $("#amount_without_tax").val(0);
+      $("#tax_amount").val(res.tax_amt);
+
 
     }else{
 
@@ -517,20 +585,33 @@ $("#tot_amount").css('display','none');
       $("#refund_amt_yes").prop('checked',true);
       $("#refund_value").css('display','');
       $("#refund_value").val(res.refund_amt);
-
+      $('#amount_after_refund').val(res.amount_after_refund);
+      $('#after_refund').css('display','');
+     
   }else{
       $("#refund_amt_no").prop('checked',true);
       $("#refund_value").css('display','none');
-      $("#refund_value").val();
+      
 
   }  
  
 
 
 
-    $("#preview").html('../uploads/files/'+res.file);
+    // $("#preview").html('../uploads/files/'+res.file);
+    // var filename = res.file;
+    //  var fileExtension = filename.replace(/^.*\./, '');
+    //  if(fileExtension=='png' || fileExtension=='jpg' || fileExtension=='jpeg' ){
+    //     $("#preview_img").css('display','');
+    //     $("#preview_img").attr('src','../uploads/files/'+res.file);
 
-    
+    //  }
+    //  if(res.file!='' && fileExtension!='png'){
+    //   $("#preview").css('display','');
+    //     $("#preview").html('../uploads/files/'+res.file);
+
+    //  }
+  
     
     $("#add_expenses_modal").modal('show');
    $("#edit_expenses_id").val($(e).data('id'));
@@ -678,6 +759,7 @@ get_data();
 <script type="text/javascript">
   $(".no").on('click',function(){
  
+var amount = $("#amount").val();
 
  $("#amount_with_tax").val(0);
 $("#tot_amount").val($("#amount").val()*1);
@@ -687,7 +769,9 @@ $("#tot_amount").css('display','');
  $("#tax_percentage").css('display','none');
  $("#tax_percentage").val(0);
   $("#tax_amount").val(0);
- 
+  $("#amount_without_tax").val(amount);
+  $("#amount_after_refund").val('');
+  $("#refund_value").val('');
  
 
   });
@@ -721,6 +805,9 @@ var tot_amount = (amount)+(tax_val_amount);
 
  $("#amount_with_tax").val(tot_amount);
  $("#tax_amount").val(tax_val_amount);
+ $("#amount_after_refund").val('');
+ $("#refund_value").val('');
+
 
 
 });
@@ -736,6 +823,7 @@ var tax_value = (amount)*(tax_perc_val);
 var total_amount = (amount*1)+(tax_value*1);
 $("#amount_with_tax").val(total_amount);
 $("#amount_without_tax").val(0);
+$("#refund_value").val('');
 }else{
    $("#amount_without_tax").val(amount);
 
@@ -747,7 +835,13 @@ $("#amount_without_tax").val(0);
 </script>
 <script type="text/javascript">
   $(".ref_yes").on('click',function(){
- $("#refund_value").css('display','');
+
+    var expenses_id = $("#edit_expenses_id").val();
+  if(expenses_id!=0){
+     $("#refund_value").css('display','');
+ $("#after_refund").css('display','');
+
+  }
 
   });
 
@@ -756,6 +850,9 @@ $("#amount_without_tax").val(0);
 
 $("#refund_value").css('display','none');
 $("#refund_value").val(0);
+$("#after_refund").css('display','none');
+$("#amount_after_refund").val(0);
+
   })
 
 $(".btn_wrong").on('click',function(){
@@ -776,6 +873,50 @@ $("#branch_id").val(branch_id);
 
 })
 
+$("#refund_value").keyup(function(){
+  
+
+  var refund_amount = $(this).val();
+
+
+  if($("input[type='radio']:checked").val()=='yes'){
+    
+     expenses_amount = $('#amount_with_tax').val()-(refund_amount);
+   
+     $("#amount_after_refund").val(expenses_amount);
+     
+  }else{
+
+     expenses_amount = $('#amount_without_tax').val()-(refund_amount);
+       $("#amount_after_refund").val(expenses_amount);
+
+  }
+
+})
+ 
+</script>
+<script type="text/javascript">
+  $("#search").on('click',function(){
+  var fdate = $("#fdate").val();
+  var tdate = $("#tdate").val();
+
+  $.ajax({
+
+     type:"POST",
+     dataType:"json",
+     url:'../ajaxCalls/get_expenses_dt.php',
+     data:{"fdate":fdate,"tdate":tdate},
+     success:function(res){
+       
+      var table = $("#example1").DataTable();
+    table.clear();
+    table.rows.add(res).draw();
+         
+     }
+
+  });
+
+  });
 </script>
 
 

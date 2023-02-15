@@ -188,7 +188,7 @@ return $result;
 }
 public function updated_var_price($v_id,$b_id){
 if($_SESSION['type']=='ADMIN'){
- $sql = 'select sale_price,updated_purchase_price from '.$this->tablename.' where id='.$v_id.' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
+ $sql = 'select sale_price,updated_purchase_price,mrp from '.$this->tablename.' where id='.$v_id.' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
 $result = $this->db->getAsIsArray($sql);
 
     return $result;

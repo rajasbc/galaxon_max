@@ -288,7 +288,7 @@ $result1 = $obj1->branch_details();
                   <div class="input-group-prepend">
                     <span class="input-group-text "style="width: 12rem;height: 29.6px;">Upload File</span>
                   </div>
-                  <input style="width: 14rem" multiple type="file" id='myfile[]' name='myfile[]' class="enterKeyclass" value='' placeholder="Upload File">
+                  <input style="width: 14rem" multiple type="file" id='myfile' name='myfile' class="enterKeyclass" value='' placeholder="Upload File">
                   <img id="preview_img" src="" style="max-width: 201px;max-height: 175px;display: none;">
                  <span id="preview" style="display: none;"></span>
                 </div>
@@ -599,18 +599,18 @@ $("#tot_amount").css('display','none');
 
 
     // $("#preview").html('../uploads/files/'+res.file);
-    // var filename = res.file;
-    //  var fileExtension = filename.replace(/^.*\./, '');
-    //  if(fileExtension=='png' || fileExtension=='jpg' || fileExtension=='jpeg' ){
-    //     $("#preview_img").css('display','');
-    //     $("#preview_img").attr('src','../uploads/files/'+res.file);
+    var filename = res.file;
+     var fileExtension = filename.replace(/^.*\./, '');
+     if(fileExtension=='png' || fileExtension=='jpg' || fileExtension=='jpeg' ){
+        $("#preview_img").css('display','');
+        $("#preview_img").attr('src','../uploads/files/'+res.file);
 
-    //  }
-    //  if(res.file!='' && fileExtension!='png'){
-    //   $("#preview").css('display','');
-    //     $("#preview").html('../uploads/files/'+res.file);
+     }
+     if(res.file!='' && fileExtension!='png'){
+      $("#preview").css('display','');
+        $("#preview").html('../uploads/files/'+res.file);
 
-    //  }
+     }
   
     
     $("#add_expenses_modal").modal('show');

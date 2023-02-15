@@ -37,9 +37,9 @@ $add['total_amt']=$this->db->getpost('amount_without_tax');
 $add['tax']=$this->db->getpost('tax');
 }
 $add['refund_amt']=$this->db->getpost('refund_value');
-$add['refund']=$this->db->getpost('refund_amt');
+$add['refund']=$this->db->getpost('refund');
 
-
+$add['exp_date']=$this->db->getpost('exp_date');
 $add['created_by'] = $_SESSION['uid'];
 
 
@@ -65,9 +65,10 @@ if($result){
 }
 
 public function get_expenses_data(){
+ $fdate = date('Y-m-d');
+ $tdate = date('Y-m-d');
 
-
-$sql = 'select * from '.$this->tablename.' where branch_id='.$_SESSION['branch_id'].' and status="ENABLED"';
+ $sql = 'select * from '.$this->tablename.' where exp_date>="'.$fdate.'" and exp_date<="'.$tdate.'" and status="ENABLED"';
 
 
 $result = $this->db->GetResultsArray($sql);
@@ -115,10 +116,19 @@ $add['total_amt']=$this->db->getpost('amount_without_tax');
 $add['tax_percentage'] = 0;
 $add['tax']=$this->db->getpost('tax');
 }
+
+$add['refund']=$this->db->getpost('refund');
+if($this->db->getpost('refund')=='yes'){
 $add['refund_amt']=$this->db->getpost('refund_value');
-$add['refund']=$this->db->getpost('refund_amt');
+$add['amount_after_refund']=$this->db->getpost('amount_after_refund');
 
+}else{
+  $add['refund_amt']=0;
+$add['amount_after_refund']=0;
 
+}
+
+$add['exp_date']=$this->db->getpost('exp_date');
 $add['created_by'] = $_SESSION['uid'];
 
 
@@ -284,7 +294,14 @@ $result = $this->db->mysql_update($this->tablename1,$add,'id='.$this->db->getpos
 return ['status'=>'success'];
 
 }
+public function get_expenses_date($fdate,$tdate){
 
+$sql = 'select * from '.$this->tablename.' where exp_date>="'.date($fdate).'" and exp_date<="'.date($tdate).'" and status="ENABLED"';
+$res = $this->db->GetResultsArray($sql);
+return $res;
+
+
+}
 
 
 

@@ -42,7 +42,7 @@ foreach ($purchase_order_item_dt as $key => $value) {
       "category"=>$value['category'],
       "sub_category"=>$value['sub_category'],
       "units"=>$value['units'],
-      "update_sale_price"=>$updated_price['updated_purchase_price'],
+      "update_sale_price"=>$updated_price['mrp'],
       "mrp"=>$value['mrp'],
       "sale_price"=>$value['sales_price'],
       "discount"=>$value['discount'],
@@ -256,7 +256,7 @@ $items=json_encode($items);
              // echo '<td class="text-left ch-10 hide">' .$updated_price['updated_purchase_price'].'</td>';
              echo '<td class="text-left ch-4 hide">';
 
-                echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control updated_price" name="updated_price[]" id="updated_price'.$sno.'" value="'.$updated_price['updated_purchase_price'].'" style="width:5rem; height:1.75rem">';
+                echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control updated_price" name="updated_price[]" id="updated_price'.$sno.'" value="'.$updated_price['mrp'].'" style="width:5rem; height:1.75rem">';
 
                 echo '</td>';
 

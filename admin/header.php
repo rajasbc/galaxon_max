@@ -436,7 +436,41 @@ if (empty($_SESSION)==true) {
             </ul>
           </li>
 
-
+<li class="nav-item">
+            <a href="#" class="nav-link">
+             <i class="nav-icon fa fa-child"></i>
+              <p>
+              Employee
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+            <li class="nav-item">
+                <a href="add_employee.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Employee</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="add_department.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Department</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="attendance.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Attendance</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="salary_slip.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Salary Slip</p>
+                </a>
+              </li>
+            </ul>
+          </li>
 <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-reply"></i>

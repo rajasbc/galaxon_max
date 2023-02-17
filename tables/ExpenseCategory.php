@@ -85,9 +85,16 @@ class ExpenseCategory extends Dbconnection {
 
 	}
 	public function get_category_name($id){
-
+      if($_SESSION['type']=='ADMIN'){
       $sql='select * from '.$this->tablename.' where id="'.$id.'" and status="ENABLED"';
 		$result=$this->db->GetResultsArray($sql);
+	}else{
+
+      $sql='select * from '.$this->tablename.' where id="'.$id.'" and  branch_id='.$_SESSION['branch_id'].' and status="ENABLED"';
+		$result=$this->db->GetResultsArray($sql);
+
+
+	}
 	
 		return $result;
 

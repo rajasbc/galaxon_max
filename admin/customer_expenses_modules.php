@@ -211,11 +211,31 @@ $result1 = $obj1->customer_details();
                     <span class="input-group-text" style="width: 12rem">Refund Amount(if yes)</span>
                   </div>
                   <label class="form-check-label" for="call-yes" style="margin-left: 26px;padding-top: 6px;">Yes&nbsp;</label>
-                  <input class="form-check-input ref_yes"  type="radio" name='refund_amt' id='refund_amt_yes' value='yes'>
+                  <input class="form-check-input ref_yes"  type="radio" name='refund' id='refund_amt_yes' value='yes'>
                   <label  class="form-check-label" for="call-no"  style="margin-left: 26px;padding-top: 6px;">No&nbsp;</label>
-                  <input class="form-check-input ref_no" checked="checked" type="radio" name='refund_amt' id='refund_amt_no' value='no'>
+                  <input class="form-check-input ref_no" checked="checked" type="radio" name='refund' id='refund_amt_no' value='no'>
                    <input type="text"  style="width: 105px;margin-left: 10px;margin-top: 5px; display:none;" id='refund_value' name='refund_value' class="enterKeyclass" placeholder="Enter Amount">
                 </div>
+
+
+                 <div class="input-group mb-3" id="after_refund" style="display: none;">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 12rem">Total Amount After Refund</span>
+                  </div>
+                  
+                   <input type="text" readonly="readonly" id='amount_after_refund' name='amount_after_refund' class="form-control enterKeyclass" placeholder="Enter Amount" >
+                </div>
+
+
+               
+                 <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="width: 12rem">Expenses Date</span>
+                  </div>
+                  <input type="date" id='exp_date' name='exp_date' class="form-control enterKeyclass" value='<?=date("Y-m-d")?>'>
+                </div>
+
+
 
 
 
@@ -224,9 +244,23 @@ $result1 = $obj1->customer_details();
                   <div class="input-group-prepend">
                     <span class="input-group-text "style="width: 12rem;height: 29.6px;">Upload File</span>
                   </div>
-                  <input style="width: 12rem"  type="file" id='myfile' name='myfile' class="enterKeyclass" value=''   placeholder="Upload File">
+                  <input style="width: 14rem" multiple type="file" id='myfile[]' name='myfile[]' class="enterKeyclass" value=''   placeholder="Upload File">
                  <!--  <img id="preview" src="" style="max-width: 201px;max-height: 175px;"> -->
                  <span id="preview" ></span>
+                </div>
+                 <div class="row">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>S.No</th>
+                        <th>File Name</th>
+                        <th class="text-center">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="file_table">
+                      
+                    </tbody>
+                  </table>
                 </div>
 
                
@@ -483,6 +517,7 @@ dataType:"json",
 url: '../ajaxCalls/get_customer_expenses.php',
 data: {'expenses_id':$(e).data('id')},
 success: function(res){
+    $("#customer_id").val(res.customer_id);
     $("#customer_name").val(res.customer_name);
     $("#category_name").val(res.expenses_category);
     $("#expenses_name").val(res.expenses_name);
@@ -517,18 +552,19 @@ $("#tot_amount").css('display','none');
       $("#refund_amt_yes").prop('checked',true);
       $("#refund_value").css('display','');
       $("#refund_value").val(res.refund_amt);
-
+      $('#amount_after_refund').val(res.amount_after_refund);
+      $('#after_refund').css('display','');
   }else{
       $("#refund_amt_no").prop('checked',true);
       $("#refund_value").css('display','none');
-      $("#refund_value").val();
+
 
   }  
  
+         get_file(res.id);
 
 
-
-    $("#preview").html('../uploads/files/'+res.file);
+    // $("#preview").html('../uploads/files/'+res.file);
 
     
     
@@ -679,6 +715,8 @@ get_data();
   $(".no").on('click',function(){
  
 
+ var amount = $("#amount").val();
+
  $("#amount_with_tax").val(0);
 $("#tot_amount").val($("#amount").val()*1);
 $("#tot_amount").css('display','');
@@ -687,7 +725,9 @@ $("#tot_amount").css('display','');
  $("#tax_percentage").css('display','none');
  $("#tax_percentage").val(0);
   $("#tax_amount").val(0);
- 
+  $("#amount_without_tax").val(amount);
+  $("#amount_after_refund").val('');
+  $("#refund_value").val('');
  
 
   });
@@ -697,6 +737,7 @@ $("#tot_amount_tax").css('display','');
  $("#tot_amount").css('display','none');
  $("#tax_percentage").css('display','');
  $("#amount_without_tax").val(0);
+
 
   });
 
@@ -721,6 +762,8 @@ var tot_amount = (amount)+(tax_val_amount);
 
  $("#amount_with_tax").val(tot_amount);
  $("#tax_amount").val(tax_val_amount);
+ $("#amount_after_refund").val('');
+ $("#refund_value").val('');
 
 
 });
@@ -736,6 +779,7 @@ var tax_value = (amount)*(tax_perc_val);
 var total_amount = (amount*1)+(tax_value*1);
 $("#amount_with_tax").val(total_amount);
 $("#amount_without_tax").val(0);
+$("#refund_value").val('');
 }else{
    $("#amount_without_tax").val(amount);
 
@@ -747,15 +791,21 @@ $("#amount_without_tax").val(0);
 </script>
 <script type="text/javascript">
   $(".ref_yes").on('click',function(){
- $("#refund_value").css('display','');
+ var expenses_id = $("#edit_expenses_id").val();
+  if(expenses_id!=0){
+     $("#refund_value").css('display','');
+ $("#after_refund").css('display','');
+
+  }
 
   });
 
 
   $(".ref_no").on('click',function(){
-
 $("#refund_value").css('display','none');
 $("#refund_value").val(0);
+$("#after_refund").css('display','none');
+$("#amount_after_refund").val(0);
   })
 
 $(".btn_wrong").on('click',function(){
@@ -775,7 +825,71 @@ var customer_id = $('#customer_name option:selected').data('id');
 $("#customer_id").val(customer_id);
 
 })
+$("#refund_value").keyup(function(){
+  
+
+  var refund_amount = $(this).val();
+
+
+  if($("input[type='radio']:checked").val()=='yes'){
+    
+     expenses_amount = $('#amount_with_tax').val()-(refund_amount);
+   
+     $("#amount_after_refund").val(expenses_amount);
+     
+  }else{
+
+     expenses_amount = $('#amount_without_tax').val()-(refund_amount);
+       $("#amount_after_refund").val(expenses_amount);
+
+  }
+
+})
 
 </script>
+<script type="text/javascript">
+  function get_file(e){
+   
+
+ $.ajax({
+      type:'post',
+      dataType:'json',
+      url:'../ajaxCalls/get_expenses_file.php',
+      data:{'expenses_id':e},
+      success:function(res){
+      $("#file_table").html(res);
+       
+
+
+      }
+ })
+
+  }
+  function delete_file(e){
+  var id = $(e).data('id');
+ 
+  $.ajax({
+      type:'post',
+      dataType:'json',
+      url:'../ajaxCalls/dele_expenses_file.php',
+      data:{'file_id':id},
+      success:function(res){
+
+            global_alert_modal('success','Deleted SuccessFully...');
+
+          var expenses_id = $("#edit_expenses_id").val();
+            get_file(expenses_id);
+      
+      }
+       
+  })
+  }
+
+
+
+
+
+</script>
+
 
 

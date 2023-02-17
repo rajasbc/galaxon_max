@@ -288,9 +288,24 @@ $result1 = $obj1->branch_details();
                   <div class="input-group-prepend">
                     <span class="input-group-text "style="width: 12rem;height: 29.6px;">Upload File</span>
                   </div>
-                  <input style="width: 14rem" multiple type="file" id='myfile' name='myfile' class="enterKeyclass" value='' placeholder="Upload File">
+                  <input style="width: 14rem" multiple type="file" id='myfile[]' name='myfile[]' class="enterKeyclass" value='' placeholder="Upload File">
                   <img id="preview_img" src="" style="max-width: 201px;max-height: 175px;display: none;">
                  <span id="preview" style="display: none;"></span>
+                </div>
+
+                 <div class="row">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>S.No</th>
+                        <th>File Name</th>
+                        <th class="text-center">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="file_table">
+                      
+                    </tbody>
+                  </table>
                 </div>
 
                
@@ -323,12 +338,6 @@ include 'footer.php';
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
   });
 </script>
-
-  
-
-
-
-        
 
 <script>
   $(document).ready(function(){
@@ -547,6 +556,8 @@ dataType:"json",
 url: '../ajaxCalls/get_expenses_data.php',
 data: {'expenses_id':$(e).data('id')},
 success: function(res){
+
+
     $("#branch_name").val(res.branch_name);
     $("#branch_id").val(res.branch_id);
     $("#category_name").val(res.expenses_category);
@@ -595,22 +606,22 @@ $("#tot_amount").css('display','none');
 
   }  
  
-
+        get_file(res.id);     
 
 
     // $("#preview").html('../uploads/files/'+res.file);
-    var filename = res.file;
-     var fileExtension = filename.replace(/^.*\./, '');
-     if(fileExtension=='png' || fileExtension=='jpg' || fileExtension=='jpeg' ){
-        $("#preview_img").css('display','');
-        $("#preview_img").attr('src','../uploads/files/'+res.file);
+    // var filename = res.file;
+    //  var fileExtension = filename.replace(/^.*\./, '');
+    //  if(fileExtension=='png' || fileExtension=='jpg' || fileExtension=='jpeg' ){
+    //     $("#preview_img").css('display','');
+    //     $("#preview_img").attr('src','../uploads/files/'+res.file);
 
-     }
-     if(res.file!='' && fileExtension!='png'){
-      $("#preview").css('display','');
-        $("#preview").html('../uploads/files/'+res.file);
+    //  }
+    //  if(res.file!='' && fileExtension!='png'){
+    //   $("#preview").css('display','');
+    //     $("#preview").html('../uploads/files/'+res.file);
 
-     }
+    //  }
   
     
     $("#add_expenses_modal").modal('show');
@@ -618,6 +629,8 @@ $("#tot_amount").css('display','none');
    $("#add_expense_btn").css('display','none');
    $("#edit_expense_btn").css('display','');
     $("#refund").css('display','');
+
+   
 
 }
 
@@ -917,6 +930,65 @@ $("#refund_value").keyup(function(){
   });
 
   });
+</script>
+<script type="text/javascript">
+  function get_file(e){
+   
+
+ $.ajax({
+      type:'post',
+      dataType:'json',
+      url:'../ajaxCalls/get_expenses_file.php',
+      data:{'expenses_id':e},
+      success:function(res){
+      $("#file_table").html(res);
+       
+
+
+      }
+ })
+
+  }
+
+  function delete_file(e){
+  var id = $(e).data('id');
+ 
+  $.ajax({
+      type:'post',
+      dataType:'json',
+      url:'../ajaxCalls/dele_expenses_file.php',
+      data:{'file_id':id},
+      success:function(res){
+
+            global_alert_modal('success','Deleted SuccessFully...');
+
+          var expenses_id = $("#edit_expenses_id").val();
+            get_file(expenses_id);
+      
+      }
+       
+  })
+  }
+  // function  get_after_del(exp_id){
+
+  //   $.ajax({
+  //     type:'post',
+  //     dataType:'json',
+  //     url:'../ajaxCalls/get_expenses_file_doc.php',
+  //     data:{'exp_id':exp_id},
+  //     success:function(res){
+        
+          
+          
+      
+  //     }
+       
+  // })
+
+
+
+  // }
+
 </script>
 
 

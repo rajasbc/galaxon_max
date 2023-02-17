@@ -46,6 +46,7 @@ echo json_encode($main);
 
 	$result=$obj->get_expenses_dt($_POST['expenses_id']);
 
+
 	echo json_encode($result);
 }
 ?>

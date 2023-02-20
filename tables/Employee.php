@@ -120,6 +120,13 @@ public function update_employee()
 		$result = $this->db->GetResultsArray($sql);
 		return $result;
 	}
+	public function get_employee_salary($id){
+
+       $sql = 'select * from '.$this->tablename.'where branch_id='.$_SESSION['branch_id'].' and id='.$id.'';
+       $result = $this->db->getAsIsArray($sql);
+		return $result;
+
+	}
 	
 }
 ?>

@@ -46,15 +46,16 @@ include 'header.php';
                   <thead>
                     
                   <tr>
-                    <th width="10%">S.No</th>
-                    <th width="10%">Bill No</th>
+                    <th width="5%">S.No</th>
+                    <th width="5%">Bill No</th>
+                    <th width="10%">Sale Date</th>
                     <th width="20%">Customer Name</th>
                     <th width="10%">Discount</th>
                     <th width="10%">Tax Amount</th>
                     <th width="10%">Total Amount</th> 
                     <th width="10%">Paid Amount</th>
                     <th width="10%">Balance Amount</th>
-                     <th width="10%">Details</th>
+                     <th width="30%">Details</th>
                     
              
              

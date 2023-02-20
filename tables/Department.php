@@ -19,7 +19,7 @@ class Department extends Dbconnection {
 		}
 		$department=array();
 		$department['name']=$this->db->getpost('department_name');
-		$department['shop_id']=$_SESSION['shop_id'];
+		$department['branch_id']=$_SESSION['branch_id'];
 		$id = $this->db->mysql_insert($this->tablename, $department);
 		if ($id!=0) {
 			return ['status'=>'success'];

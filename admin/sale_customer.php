@@ -920,6 +920,8 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
             '<td class="text-left ch-10">{{itemname}}</td>',
             '<td class="text-left ch-10">{{variety}}</td>',
             '<td class="text-left ch-4">',
+              '<input type="hidden" class="form-control quantity" name="item[]" id="item{{sno}}" value="{{item_id}}" style="width:5rem; height:1.75rem">',
+      '<input type="hidden" class="form-control quantity" name="variety[]" id="Variety{{sno}}" value="{{var_id}}" style="width:5rem; height:1.75rem">',
                 '<input onkeyup=fieldupdate({{sno}},this) class="form-control quantity" name="quantity[]" id="quantity{{sno}}" value="{{quantity}}" style="width:5rem; height:1.75rem">',
                 '</td>',
             '<td class="text-left ch-10">{{description}}</td>',
@@ -967,6 +969,8 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
               tr = tr.replace(getRegEx('discount'), data['discount']);
     
               tr = tr.replace(getRegEx('gst'), data['gst']);
+               tr = tr.replace(getRegEx('var_id'), data['varieties_id']);
+               tr = tr.replace(getRegEx('item_id'), data['item_id']);
               tr = tr.replace(getRegEx('quantity'), data['quantity']);
               tr = tr.replace(getRegEx('total'), data['total']);
               tr = tr.replace(getRegEx('tons'), data['tons']);
@@ -978,6 +982,8 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
             '<td class="text-left ch-10">{{itemname}}</td>',
             '<td class="text-left ch-10">{{variety}}</td>',
             '<td class="text-left ch-4">',
+            '<input type="text" class="form-control quantity" name="item[]" id="item{{sno}}" value="{{item_id}}" style="width:5rem; height:1.75rem">',
+      '<input type="text" class="form-control quantity" name="variety[]" id="Variety{{sno}}" value="{{var_id}}" style="width:5rem; height:1.75rem">',
                 '<input onkeyup=fieldupdate({{sno}},this) class="form-control quantity" name="quantity[]" id="quantity{{sno}}" value="{{quantity}}" style="width:5rem; height:1.75rem">',
                 '</td>',
             '<td class="text-left ch-10">{{description}}</td>',
@@ -1021,6 +1027,8 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
               tr = tr.replace(getRegEx('discount'), data['discount']);
     
               tr = tr.replace(getRegEx('gst'), data['gst']);
+               tr = tr.replace(getRegEx('var_id'), data['varieties_id']);
+              tr = tr.replace(getRegEx('item_id'), data['item_id']);
               tr = tr.replace(getRegEx('quantity'), data['quantity']);
               tr = tr.replace(getRegEx('total'), data['total']);
               tr = tr.replace(getRegEx('tons'), data['tons']);
@@ -1058,6 +1066,13 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
       var discount = $("#discount"+idval).val();
       var gst = $("#gst"+idval).val();
       var quantity = $("#quantity"+idval).val();
+      
+      var item_id = $("#item"+idval).val();
+   
+    var var_id = $("#Variety"+idval).val();
+    get_qty(item_id,var_id,idval);
+
+
       var tons=Number($("#quantity"+idval).val())/1000;
      prototal=Number(sale_price*quantity)-(Number(sale_price*quantity)*(discount/100));
      gstamount=prototal*(gst/100);
@@ -1426,12 +1441,132 @@ success: function(res){
 
   });
 
+</script>
+<script type="text/javascript">
+  $("#quantity").keypress(function(){
+
+     
+    // if ($("#branch").val()=="") {
+    //   global_alert_modal('success','Enter Branch Name...');
+    //   $("#branch").css("border","1px solid red");
+    //   $("#branch").focus();
+    //   return false;
+
+    // }
+    // else{
+    //   $("#branch").css("border","1px solid lightgray");
+    // }
+    if ($("#item_name").val()=="") {
+      global_alert_modal('success','Enter Stored Product...');
+      $("#item_name").css("border","1px solid red");
+      $("#item_name").focus();
+      return false;
+    }
+    else{
+      $("#item_name").css("border","1px solid lightgray");
+    }
+    if ($("#varieties_id").val()=="") {
+   
+      $("#varieties_id").css("border","1px solid red");
+      $("#varieties_id").focus();
+      return false;
+    }
+    else{
+      $("#varieties_id").css("border","1px solid lightgray");
+    }
+
+    var qty = $(this).val();
+
+    var item_id = $('#item_id').val();
+    var varieties_id = $('#varieties_id').val();
 
 
 
+    $.ajax({
+        type:'post',
+        dataType:'json',
+        url: '../ajaxCalls/get_branch_item_qty.php',
+        data:{'item_id':item_id,'varieties_id':varieties_id},
+          success: function(res){
+
+       
+            if(res.status=='success'){
+               var total_qty = res.qty*1;
+               var qty = $('#quantity').val()*1;
+                 if(qty>total_qty){
+                  global_alert_modal('success','Available Quantity is' +res.qty);
+                  $('#quantity').val('');
+
+                 }
+            
+
+            }
+
+             
+      }
 
 
-  
+             
+      });
+
+
+          
+    });
+
+  function get_qty(item_id,var_id,idval){
+
+if ($("#quantity"+idval).val()=="") {
+      global_alert_modal('success','Enter Quantity...');
+      $("#quantity"+idval).css("border","1px solid red");
+      $("#quantity"+idval).focus();
+       $('#place_order').attr('disabled','disabled');
+      return false;
+
+    }else if($("#quantity"+idval).val()==0){
+          global_alert_modal('success','Enter valid Quantity...');
+      $("#quantity"+idval).css("border","1px solid red");
+      $("#quantity"+idval).focus();
+      $('#place_order').attr('disabled','disabled');
+      return false;
+        
+    }
+    else{
+      $("#quantity"+idval).css("border","1px solid lightgray");
+       $('#place_order').removeAttr('disabled','');
+    }
+
+$.ajax({
+        type:'post',
+        dataType:'json',
+        url: '../ajaxCalls/get_branch_item_qty.php',
+        data:{'item_id':item_id,'varieties_id':var_id,'type':idval},
+          success: function(res){
+
+       
+            if(res.status=='success'){
+               var total_qty = res.qty*1;
+               var qty = $('#quantity'+idval).val()*1;
+                 if(qty>total_qty){
+                  global_alert_modal('success','Available Quantity is' +res.qty);
+                  $('#quantity'+idval).val('');
+                  //  $('#quantity'+idval).focus();
+                  //   return false;
+                    $('#place_order').attr('disabled','disabled');
+
+                 }else{
+
+                   $('#place_order').removeAttr('disabled','');
+
+                 }
+             
+               }
+
+            } 
+      });
+
+}
+
+
 </script>
 
 

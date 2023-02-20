@@ -50,6 +50,7 @@ $result = $obj->get_employee();
           <th>Phone No</th>
           <th>Email</th>
           <th>Details</th>
+          <th>Print</th>
          </tr>
         </thead>
         <tbody>
@@ -64,6 +65,8 @@ $result = $obj->get_employee();
           <td>".$value['mobile_no']."</td>
           <td>".$value['email']."</td>
           <td><a type='button' class='btn btn-primary'  href='add_employee_list.php?id=".base64_encode($value['id'])."'>Edit</a></td>
+          <td><a type='button' class='btn btn-lg'  href='salary_slip.php?id=".base64_encode($value['id'])."'><i class='fa fa-print ' aria-hidden='true'></i></a></td>
+         
           </tr>";
          }
 
@@ -105,4 +108,5 @@ include 'footer.php';
   }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
  });
 </script>
+
 

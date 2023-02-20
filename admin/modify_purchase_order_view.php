@@ -1,8 +1,11 @@
 <?php 
 include 'header.php';
+
 $obj=new PurchaseOrder();
 $purchase_order_dt=$obj->get_purchase_order($_GET['id']);
-$purchase_order_item_dt=$obj->get_purchase_order_item($_GET['id']);
+$purchase_order_item_dt=$obj->updated_sale_price($_GET['id']);
+// $purchase_order_item_dt=$obj->get_purchase_order_item($_GET['id']);
+// print_r($purchase_order_item_dt);die();
 $vendor_obj= new Vendors();
 $vendor= $vendor_obj->get_vendor_dt($purchase_order_dt[0]['vendor_id']); 
 $brand_obj = new Brand();
@@ -154,6 +157,7 @@ $category =  $category_obj->get_category_data();
                       <th>Description</th>
                       <th>Units</th>
                       <th>Tons</th>
+                       <th>Sale Price</th>
                       <th>Vendor Price</th>
                       <th>Mrp</th>
                       <th>Discount</th>
@@ -171,14 +175,17 @@ $category =  $category_obj->get_category_data();
  $taxtot = 0;
  $grandtot = 0;
  foreach ($purchase_order_item_dt as $key => $row) {
+   
+
    $sno++;
    $description='';
    if ($row['sub_category']!='' && $row['sub_category']!=0) {
      $description =  $description_obj->get_description_dt($row['sub_category']);
      $description_name=$description[0]['name'];
    }
+    $res = $obj->get_purchase_order_item($row['purchase_id'],$row['item_id'],$row['var_id']);
 
-   $tns = $row['qty']/1000;
+   $tns = $res['qty']/1000;
 
    $ttl=$row['total']+$row['tax_amt'];
    
@@ -190,11 +197,11 @@ $category =  $category_obj->get_category_data();
             }
             echo '</td>';
              echo '<td class=" ch-4">'.$row['var_name'].'</td>';
-            echo '<td class="text-left ch-4">'.$row['qty'].'</td>';
+            echo '<td class="text-left ch-4">'.$res['qty'].'</td>';
                 echo '<td class="text-left ch-10 hide">'.$description_name.'</td>';
                 echo '<td class="text-left ch-10 hide">'.$row['units'].'</td>';
             echo '<td class="text-left ch-10 hide" id="tons'.$sno.'">'.$tns.'</td>';
-
+            echo '<td class="text-left ch-4 hide">'.$row['update_sale_price'].'</td>';
             echo '<td class="text-left ch-4 hide">'.$row['mrp'].'</td>';
                 echo '<td class="text-left ch-4 hide">'.$row['sales_price'].'</td>';
                 echo '<td class="text-left ch-4 hide">'.$row['discount'].'</td>';

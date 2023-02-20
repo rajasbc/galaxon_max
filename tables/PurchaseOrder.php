@@ -878,10 +878,10 @@ public function edit_purchase_order()
 		$result=$this->db->GetResultsArray($sql);
 		return $result;
 	}
-	public function get_purchase_order_item($id,$itemid,$varid)
+	public function get_purchase_order_item($id)
 	{
-	 $sql='select * from '.$this->tablename2.' where purchase_id="'.$id.'" and item_id="'.$itemid.'" and var_id="'.$varid.'" and branch_id="'.$_SESSION['branch_id'].'"';
-		$result=$this->db->getAsIsArray($sql);
+	 $sql='select * from '.$this->tablename2.' where purchase_id='.$id.' and branch_id='.$_SESSION['branch_id'].'';
+		$result=$this->db->GetResultsArray($sql);
 		return $result;
 	}
 	public function get_purchase_order_log($id)
@@ -1204,10 +1204,10 @@ return $result;
 
 
 }
-public function updated_sale_price($p_id){
+public function updated_sale_price($p_id,$item_id,$var_id){
 
-$sql = 'select * from '.$this->tablename5.' where purchase_id='.$p_id.' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
-$result = $this->db->GetResultsArray($sql);
+$sql = 'select * from '.$this->tablename5.' where purchase_id="'.$p_id.'" and branch_id="'.$_SESSION['branch_id'].'" and var_id="'.$var_id.'" and item_id="'.$item_id.'" and is_deleted="NO"';
+$result = $this->db->getAsIsArray($sql);
 return $result;
 
 }

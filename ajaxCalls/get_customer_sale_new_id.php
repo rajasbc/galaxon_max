@@ -71,8 +71,9 @@ $total_amount_dt=0;
                 <tr class="font-weight-bold" style="font-size:<?=$fontsize?>px">
                   <td>S.No</td>
                   <td class="text-left">Products</td>
+                 <td class="text-center">Variety</td>
                  <!--  <td class="text-rigth">Order Quantity</td> -->
-                  <td class="text-rigth">Received Quantity</td>
+                  <td class="text-rigth">Quantity</td>
                 </tr>
               </thead>
               <tbody class="text-center" id="tdata">
@@ -85,6 +86,10 @@ $total_amount_dt=0;
                     <td class="text-left" style="width:150px"><?php echo strtoupper($item['item_name']); if ($item['item_code']!='') {
                     	echo strtoupper(' - '.$item['item_code']);
                     } ?></td>
+                     <td class="text-center">
+                 	<?php echo $item['var_name']; ?>
+                 		
+                 	</td>
                    
                  <td class="text-center">
                  	<?php echo $item['qty']; ?>

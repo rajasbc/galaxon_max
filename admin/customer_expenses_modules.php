@@ -54,7 +54,7 @@ $result1 = $obj1->customer_details();
                   <thead>
                   <tr>
                     <th style="width: 20px">S.No</th>
-                    <th >Customer Name</th>
+                
                      <th style="width: 100px">Category</th>
                     <th style="width: 80px">Expenses Name</th>
                     <th style="width: 100px">Total Amount</th>
@@ -119,10 +119,10 @@ $result1 = $obj1->customer_details();
                   <input type="hidden" id='branch_id' name='branch_id'>
                   <input type="text" id='branch_name' name='branch_name' class="form-control enterKeyclass" placeholder="Enter Name">
                 </div> -->
-                 <div class="input-group mb-3">
+                 <!-- <div class="input-group mb-3">
                   <div class="input-group-prepend">
                      <input type="hidden" id='customer_id' name='customer_id'>
-                    <span class="input-group-text" style="width: 12rem">Customer Name <!-- <span class="text-danger">*</span> --></span>
+                    <span class="input-group-text" style="width: 12rem">Customer Name </span>
                   </div>
                   <select class="form-control enterKeyclass" id="customer_name" name="customer_name" >
                     <option value="">Select Customer Name</option>
@@ -131,7 +131,7 @@ $result1 = $obj1->customer_details();
                     <?php }?>
                     
                   </select>
-                </div>
+                </div> -->
 
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">

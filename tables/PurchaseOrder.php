@@ -345,6 +345,11 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
                $this->db->mysql_update('items',$update_price,'id='.$itemvar['item_id']);
 
             }
+
+
+
+
+
           }
             
 
@@ -479,8 +484,9 @@ if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
                       $purchase__history_items=array();
                        $purchase__history_items['shop_id']=$_SESSION['shop_id'];
                         $purchase__history_items['branch_id']=$_SESSION['branch_id'];
-
-                       $purchase__history_items['purchase_id']=$main_purchase_id;
+                       
+                        $purchase__history_items['purchase_id']=$this->db->getpost('po_id');
+                       // $purchase__history_items['purchase_id']=$main_purchase_id;
                        $purchase__history_items['item_id']=$item_id;
                        $purchase__history_items['brand']=$itemvar["brand"];
                        $purchase__history_items['units']=$itemvar["units"];
@@ -872,10 +878,10 @@ public function edit_purchase_order()
 		$result=$this->db->GetResultsArray($sql);
 		return $result;
 	}
-	public function get_purchase_order_item($id)
+	public function get_purchase_order_item($id,$itemid,$varid)
 	{
-	 $sql='select * from '.$this->tablename2.' where purchase_id='.$id.' and branch_id='.$_SESSION['branch_id'].'';
-		$result=$this->db->GetResultsArray($sql);
+	 $sql='select * from '.$this->tablename2.' where purchase_id="'.$id.'" and item_id="'.$itemid.'" and var_id="'.$varid.'" and branch_id="'.$_SESSION['branch_id'].'"';
+		$result=$this->db->getAsIsArray($sql);
 		return $result;
 	}
 	public function get_purchase_order_log($id)
@@ -1196,6 +1202,13 @@ $result = $this->db->getAsIsArray($sql);
 
 return $result;
 
+
+}
+public function updated_sale_price($p_id){
+
+$sql = 'select * from '.$this->tablename5.' where purchase_id='.$p_id.' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
+$result = $this->db->GetResultsArray($sql);
+return $result;
 
 }
 

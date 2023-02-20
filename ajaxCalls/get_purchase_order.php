@@ -64,7 +64,7 @@ if (count($result)>0) {
 				$btn='<button type="button" id="'.$value['id'].'" class="btn btn-default btn-sm" onclick="detail_modal('.$value['id'].')"><span class="glyphicon glyphicon-eye"><i class="fas fa-eye"></i></span></button>';
 			}
 			if($_SESSION['type']=='ADMIN'){
-				$output [$j] =[$i,'<a  href= modify_purchase_order_view.php?id='.$value['id'].' id="'.$value['id'].'" >'.$value["purchase_no"].'</a>',$value['bill_no'],($vendor_dt['name'].' - '. $vendor_dt['vendor_code']),date('d-m-Y',strtotime($value['received_date'])),$value['discount_amt'],$value['tax_amt'],$value['grand_total'],$value['paid_amt'],$value['balance_amt'],$value['status'],$btn];
+				$output [$j] =[$i,'<a  href= modify_purchase_order_view.php?id='.$value['id'].' id="'.$value['id'].'" >'.$value["purchase_no"].'</a>',$value['bill_no'],($vendor_dt['name'].' - '. $vendor_dt['vendor_code']),date('d-m-Y',strtotime($value['received_date'])),$value['mrp'],$value['discount_amt'],$value['tax_amt'],$value['grand_total'],$value['paid_amt'],$value['balance_amt'],$value['status'],$btn];
 
 			}else{
 

@@ -235,8 +235,56 @@ return $result;
 
  }
 
+ public function get_collection($fdate,$tdate,$b_id){
+ $sql = "select * from ".$this->tablename." where date(created_at)>='".$fdate."' and date(created_at)<='".$tdate."' and branch_id=".$b_id." and  is_deleted='NO'";
+$result=$this->db->GetResultsArray($sql);
 
-  }
+return $result;
+
+ }
+ public function branch_sale_details($sale_id,$b_id){
+
+ $sql = "select * from ".$this->tablename." where sale_id='".$sale_id."' and branch_id
+ ='".$b_id."' and is_deleted='NO'";
+
+$result=$this->db->GetResultsArray($sql);
+
+
+return $result;
+
+
+ }
+public function get_variety_details($sale_id,$b_id){
+
+$sql = "select * from ".$this->tablename2." where sale_id='".$sale_id."' and branch_id
+ ='".$b_id."' and is_deleted='NO'";
+
+
+$result=$this->db->GetResultsArray($sql);
+return $result;
+
+}
+public function branch_sale_customer_dt($fdate,$tdate){
+ $sql = "select * from ".$this->tablename." where date(created_at)>='".$fdate."' and date(created_at)<='".$tdate."' and branch_id=".$_SESSION['branch_id']." and  is_deleted='NO'";
+$result=$this->db->GetResultsArray($sql);
+  
+return $result;
+
+}
+public function get_customer_collection($fdate,$tdate,$c_id){
+
+$sql = "select * from ".$this->tablename."where date(created_at)>='".$fdate."' and date(created_at)<='".$tdate."' and branch_id=".$_SESSION['branch_id']." and customer_id='".$c_id."' and  is_deleted='NO'";
+$result=$this->db->GetResultsArray($sql);
+
+
+return $result;
+}
+
+
+}
+
+
+  
 
 
 

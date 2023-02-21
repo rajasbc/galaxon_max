@@ -208,7 +208,28 @@ return $result;
 
 
 }
+public function branch_customer_data($c_id){
 
+$sql = "select * from ".$this->tablename."where id='".$c_id."' and status='ENABLED'";
+
+$result = $this->db->getAsIsArray($sql);
+return $result;
+
+}
+public function get_customer_detail(){
+
+$sql = "select * from ".$this->tablename." where branch_id='".$_SESSION['branch_id']."' and status='ENABLED'";
+
+$result = $this->db->GetResultsArray($sql);
+return $result;
+
+}
+public function customer_dt($c_id){
+$sql = "select * from ".$this->tablename." where branch_id='".$_SESSION['branch_id']."' and id = '".$c_id."' and status='ENABLED'";
+$result = $this->db->GetResultsArray($sql);
+return $result;
+
+}
 
 	// public function get_Autocomplete_customer()
 	// {

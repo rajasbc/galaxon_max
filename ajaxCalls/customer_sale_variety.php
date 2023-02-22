@@ -2,9 +2,9 @@
 include '../tables/config.php';
 $obj = new CustomerSale();
 $obj1 = new Customers();
-$result = $obj->branch_sale_details($_GET['sale_id']);
+$result = $obj->branch_sale_details($_GET['sale_id'],$_SESSION['branch_id']);
 $result1 = $obj1->branch_customer_data($result[0]['customer_id']);
-$sale_details=$obj->get_variety_details($result[0]['sale_id']);
+$sale_details=$obj->get_variety_details($_GET['sale_id'],$_SESSION['branch_id']);
 
 
 ?>

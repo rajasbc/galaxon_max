@@ -1125,7 +1125,7 @@ $("#place_order").click(function(){
       detailsarray['order_type']="<?=$_GET['type']?>";
 $("#place_order").attr('disabled','disabled');
 if (jQuery.isEmptyObject(shipping_data)==true) {
-      var shipobj =  $.extend({}, shipping_data1);;
+      var shipobj =  $.extend({}, shipping_data1);
        
       }else{
          var shipobj = $.extend({}, shipping_data);

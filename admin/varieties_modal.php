@@ -101,7 +101,7 @@ $result=$obj->get_branch_varieties_dt($_GET['id']);
 
 									?>
 									<tfoot>  
-          <?php echo "<tr><td colspan='1'></td><td><b>Total</b></td><td>".$total_qty."</td>
+          <?php echo "<tr><td colspan='1'></td><td><b>Total</b></td><td>".$total_qty."</td><td></td><td></td>
          
           </tr>";
           ?> 

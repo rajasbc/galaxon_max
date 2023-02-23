@@ -15,6 +15,9 @@ if (count($result)>0) {
 	$j=0;
 	foreach ($result as $key => $value) {
      $result = $obj1->get_category_name($value['expenses_category']);
+         $date = date('d-m-Y',strtotime($value['exp_date']));
+        
+        
 		
 		$i++;
 		if($value['refund']=='yes'){
@@ -29,7 +32,7 @@ if (count($result)>0) {
 		}
 
        
-               $output [$j] =[$i,$value['branch_name'],$result[0]['name'],$value['expenses_name'],$total_expenses,
+               $output [$j] =[$i,$date,$value['branch_name'],$result[0]['name'],$value['expenses_name'],$total_expenses,
                '<button style="margin-right: 20px"; type="button"  class="btn '.$btn_color.'" data-id="'.$value['id'].'" data-form="'.$value['name'].'" onclick="edit_modal(this);">Edit</button> 
                <button style="margin-right: 20px"; type="button"   class="btn btn-danger" data-id="'.$value['id'].'" onclick="del_btn(this);">Delete</button>'];
       $j++;

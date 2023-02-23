@@ -15,7 +15,7 @@ class Expenses extends Dbconnection{
 	}
 public function add_expenses(){
  $add = array();
- $uplaod = array();
+
  
  $add['branch_id']=$this->db->getpost('branch_id');
  $add['branch_name']=$this->db->getpost('branch_name');
@@ -46,17 +46,23 @@ $add['created_by'] = $_SESSION['uid'];
 
 
 $result = $this->db->mysql_insert($this->tablename,$add); 
+
+
+
+
+if(count($result)>0){
+  
+$upload = array();
 $image = array();
 $image['expenses_id'] = $result;
 $image['branch_id'] = $this->db->getpost('branch_id');
 
 
-if(count($result)>0){
   $number_file = count($_FILES['myfile']['name']);
     $i=0;
  while($i<$number_file){
   $filename = basename($_FILES["myfile"]["name"][$i]);
-
+if($filename!=''){
 $temp_name = "GALAXON_MAX-".$filename;
 $path = '../uploads/files/';
 $target_path = $path.$temp_name;
@@ -70,11 +76,15 @@ if($upload!=''){
 
 $result = $this->db->mysql_insert($this->tablename2,$image); 
    $i++;
+ }else{
+  return ['status'=>'success'];
 
+ }
  }
   
 }
-if($result){
+
+if(count($result)>0){
  return ['status'=>'success'];
 }else{
  return ['status'=>'failed'];	
@@ -95,8 +105,9 @@ return $result;
 
 }
 public function customer_expenses_data(){
-$sql = 'select * from '.$this->tablename1.' where branch_id='.$_SESSION['branch_id'].' and status="ENABLED"';
-
+  $fdate = date('Y-m-d');
+ $tdate = date('Y-m-d');
+$sql = 'select * from '.$this->tablename1.' where  exp_date>="'.$fdate.'" and exp_date<="'.$tdate.'" and branch_id='.$_SESSION['branch_id'].' and status="ENABLED"';
 
 $result = $this->db->GetResultsArray($sql);
 
@@ -109,7 +120,7 @@ return $result;
 public function edit_expenses(){
 
 $add = array();
- $uplaod = array();
+ 
  
  $add['branch_id']=$this->db->getpost('branch_id');
  $add['branch_name']=$this->db->getpost('branch_name');
@@ -151,17 +162,19 @@ $add['created_by'] = $_SESSION['uid'];
 
 $result = $this->db->mysql_update($this->tablename,$add,'id='.$this->db->getpost('edit_expenses_id'));
 
+if(count($result)>0){
+  
+$upload = array();
 $image = array();
-$image['expenses_id'] = $result;
+$image['expenses_id'] =$this->db->getpost('edit_expenses_id');
 $image['branch_id'] = $this->db->getpost('branch_id');
 
 
-if(count($result)>0){
   $number_file = count($_FILES['myfile']['name']);
     $i=0;
  while($i<$number_file){
   $filename = basename($_FILES["myfile"]["name"][$i]);
-
+if($filename!=''){
 $temp_name = "GALAXON_MAX-".$filename;
 $path = '../uploads/files/';
 $target_path = $path.$temp_name;
@@ -175,7 +188,10 @@ if($upload!=''){
 
 $result = $this->db->mysql_insert($this->tablename2,$image); 
    $i++;
+ }else{
+  return ['status'=>'success'];
 
+ }
  }
   
 }
@@ -230,7 +246,7 @@ if($result){
 }
 public function add_customer_expenses(){
   $add = array();
- $uplaod = array();
+ 
  
  $add['branch_id']=$_SESSION['branch_id'];
  $add['customer_id']=$this->db->getpost('customer_id');
@@ -263,19 +279,22 @@ $add['created_by'] = $_SESSION['uid'];
 
 $result = $this->db->mysql_insert($this->tablename1,$add); 
 
-$image = array();
+
+
+if(count($result)>0){
+  $image = array();
+  $upload = array();
 $image['expenses_id'] = $result;
 $image['branch_id'] = $_SESSION['branch_id'];
 $image['customer_id'] = $this->db->getpost('customer_id');
 
-
-if(count($result)>0){
   
   
   $number_file = count($_FILES['myfile']['name']);
     $i=0;
  while($i<$number_file){
   $filename = basename($_FILES["myfile"]["name"][$i]);
+  if($filename!=''){
 
 $temp_name = "GALAXON_MAX-".$filename;
 $path = '../uploads/files/';
@@ -291,7 +310,11 @@ if($upload!=''){
 $result = $this->db->mysql_insert($this->tablename3,$image); 
    $i++;
 
+ }else{
+  return ['status'=>'success'];
+
  }
+}
   
 }
 if($result){
@@ -303,7 +326,7 @@ if($result){
 public function edit_customer_expenses(){
 
 $add = array();
- $uplaod = array();
+ 
  
  $add['branch_id']=$_SESSION['branch_id'];
  $add['customer_id']=$this->db->getpost('customer_id');
@@ -350,14 +373,18 @@ $result = $this->db->mysql_update($this->tablename1,$add,'id='.$this->db->getpos
 
 if(count($result)>0){
   $image = array();
+  $upload = array();
 $image['expenses_id'] = $this->db->getpost('edit_expenses_id');
-$image['customer_id'] = $this->db->getpost('customer_id');
 $image['branch_id'] = $_SESSION['branch_id'];
+$image['customer_id'] = $this->db->getpost('customer_id');
 
+  
+  
   $number_file = count($_FILES['myfile']['name']);
     $i=0;
  while($i<$number_file){
   $filename = basename($_FILES["myfile"]["name"][$i]);
+  if($filename!=''){
 
 $temp_name = "GALAXON_MAX-".$filename;
 $path = '../uploads/files/';
@@ -373,12 +400,18 @@ if($upload!=''){
 $result = $this->db->mysql_insert($this->tablename3,$image); 
    $i++;
 
+ }else{
+  return ['status'=>'success'];
+
  }
+}
   
 }
-
-
-return ['status'=>'success'];
+if($result){
+ return ['status'=>'success'];
+}else{
+ return ['status'=>'failed']; 
+}
 
 }
 public function get_expenses_date($fdate,$tdate){
@@ -412,6 +445,16 @@ $sql = $this->db->mysql_delete('expenses_file','id='.$_POST['file_id']);
 $sql = $this->db->mysql_delete('customer_expenses_file','id='.$_POST['file_id']);
 }
 return 'success';
+
+}
+public function customer_expenses_date($fdate,$tdate){
+  // print_r($fdate);die();
+
+$sql = 'select * from '.$this->tablename1.' where exp_date>="'.$fdate.'" and exp_date<="'.$tdate.'" and status="ENABLED"';
+$res = $this->db->GetResultsArray($sql);
+return $res;
+
+
 
 }
 

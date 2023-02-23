@@ -8,6 +8,7 @@ if ($_POST['type']=='add') {
 $result =  $obj->add_customer_expenses();
 
 }elseif($_POST['type']=='edit'){
+	// print_r($_POST);die();
 	 $result =  $obj->edit_customer_expenses();
 }elseif($_POST['type']=='delete'){
 	

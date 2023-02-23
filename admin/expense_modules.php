@@ -53,7 +53,7 @@ $result1 = $obj1->branch_details();
                 <div class="input-group-prepend">
                   <span class="input-group-text ">To</span>
                 </div>
-                <input type="date" class="form-control" name="date" id="tdate" value='<?=date('Y-m-d')?>' >
+                <input type="date" class="form-control" name="date" id="tdate" value='<?=date('Y-m-d')?>'>
               </div>
             </div>
             <!-- <div class="col-lg-3 col-md-3 col-sm-3 mx-1 m-1">
@@ -97,8 +97,9 @@ $result1 = $obj1->branch_details();
                   <thead>
                   <tr>
                     <th style="width: 20px">S.No</th>
+                    <th style="width: 80px">Date</th>
                     <th >Branch Name</th>
-                     <th style="width: 100px">Category</th>
+                    <th style="width: 100px">Category</th>
                     <th style="width: 80px">Expenses Name</th>
                     <th style="width: 100px">Total Expenses</th>
                     <th style="width: 400px">Action</th>
@@ -408,6 +409,7 @@ success: function(res){
               $("#add_expenses_modal").modal('hide');       
               $("#expenseForm")[0].reset();
                get_data();
+               location.reload();
           
            }
        
@@ -969,26 +971,6 @@ $("#refund_value").keyup(function(){
        
   })
   }
-  // function  get_after_del(exp_id){
-
-  //   $.ajax({
-  //     type:'post',
-  //     dataType:'json',
-  //     url:'../ajaxCalls/get_expenses_file_doc.php',
-  //     data:{'exp_id':exp_id},
-  //     success:function(res){
-        
-          
-          
-      
-  //     }
-       
-  // })
-
-
-
-  // }
+  
 
 </script>
-
-

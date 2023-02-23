@@ -38,6 +38,49 @@ $result1 = $obj1->customer_details();
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
+     <div class=" form-row col-lg-12 col-md-12 col-sm-12" id="sort">
+            <div class="col-lg-3 col-md-3 col-sm-3 mx-1 m-1">
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <span class="input-group-text ">From</span>
+                </div>
+                <input type="date" class="form-control" name="date" id="fdate" value='<?=date('Y-m-d')?>'>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 mx-1 m-1">
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <span class="input-group-text ">To</span>
+                </div>
+                <input type="date" class="form-control" name="date" id="tdate" value='<?=date('Y-m-d')?>' >
+              </div>
+            </div>
+            <!-- <div class="col-lg-3 col-md-3 col-sm-3 mx-1 m-1">
+              <div class="input-group input-group-sm ">
+                
+                  <select class="form-control"  name='select_user' id='select_user' >
+                    <option value="0">Select Branch</option>
+                    <?php
+                    foreach ($branch as $value) {
+                      
+                      echo "<option value='".$value['branch_id']."' data-id='".$value['branch_id']."'>". $value["name"]."</option>";
+                      
+                    }
+
+
+                    ?>
+                  </select>
+
+
+              
+              </div>
+            </div> -->
+            <div class="col-lg-1 col-md-1 col-sm-1 mx-1 m-1">
+              <div class="input-group input-group-sm ">
+                <button class="form-control btn btn-danger btn-sm" id="search" name="Search" type="submit">Search</button>
+              </div>
+            </div>
+          </div>
     <!-- /.content-header -->
 
     <!-- Main content -->
@@ -54,8 +97,9 @@ $result1 = $obj1->customer_details();
                   <thead>
                   <tr>
                     <th style="width: 20px">S.No</th>
-                
+                      <th style="width: 100px">Date</th>
                      <th style="width: 100px">Category</th>
+
                     <th style="width: 80px">Expenses Name</th>
                     <th style="width: 100px">Total Amount</th>
                     <th style="width: 400px">Action</th>
@@ -369,6 +413,7 @@ success: function(res){
               $("#add_expenses_modal").modal('hide');       
               $("#expenseForm")[0].reset();
                get_data();
+               location.reload();
           
            }
        
@@ -885,10 +930,29 @@ $("#refund_value").keyup(function(){
   })
   }
 
+</script>
+<script type="text/javascript">
+  $("#search").on('click',function(){
+  var fdate = $("#fdate").val();
+  var tdate = $("#tdate").val();
 
+  $.ajax({
 
+     type:"POST",
+     dataType:"json",
+     url:'../ajaxCalls/get_customer_expenses_dt.php',
+     data:{"fdate":fdate,"tdate":tdate},
+     success:function(res){
+       
+      var table = $("#example1").DataTable();
+    table.clear();
+    table.rows.add(res).draw();
+         
+     }
 
+  });
 
+  });
 </script>
 
 

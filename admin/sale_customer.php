@@ -881,6 +881,7 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
        total1=Number(data["sale_price"])*Number(data["quantity"]);
        total2=Number(total1)-Number(total1)*Number(data["discount"])/100;
        total=Number(total2);
+      
        // total=total.toFixed(2);
        
     prototal=Number(($("#sale_price").val()*$("#quantity").val())-(($("#sale_price").val()*$("#quantity").val())*($("#discount").val()/100)));
@@ -1078,6 +1079,7 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
      gstamount=prototal*(gst/100);
      $("#totalid"+idval).html((prototal+gstamount).toFixed(2));
      $("#tons"+idval).html(tons);
+     prototalamount=Number(prototal)+Number(gstamount);
     items[ref].sale_price=sale_price;
     items[ref].mrp=mrp;
     items[ref].quantity=quantity;
@@ -1085,7 +1087,7 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
     items[ref].gst=gst;
     items[ref].gstpercentage=gst/100;
     items[ref].gstamount=gstamount;
-    items[ref].total=prototal;
+    items[ref].total=prototalamount;
       calculation();
   }
     function removeItem(idval){

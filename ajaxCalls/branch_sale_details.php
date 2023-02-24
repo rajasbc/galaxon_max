@@ -70,7 +70,7 @@ foreach ($result as $key => $value) {
 	
 	
 	$i=$i+1;
-
+   $ttl=$value['total']+$value['tax_amount'];
 
 echo "<tr>
 
@@ -84,7 +84,7 @@ echo "<tr>
 <td>".$value['sale_price']."</td>
 <td>".$value['discount']."</td>
 <td>".$value['gst']."</td>
-<td>".$value['total']."</td>
+<td>".$ttl."</td>
 </tr>";
 
 }

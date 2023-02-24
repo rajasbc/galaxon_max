@@ -522,8 +522,24 @@ $result = $this->db->getAsIsArray($sql);
 return $result;
 
 }
+
+
 public function branch_details(){
 $sql ='select * from '.$this->tablename.' where branch_id!=0 and status="ENABLED"';
+$result = $this->db->GetResultsArray($sql);
+
+return $result;
+
+}
+public function get_return_branch($b_id){
+$sql ='select * from '.$this->tablename.' where branch_id='.$b_id.' and status="ENABLED"';
+$result = $this->db->GetResultsArray($sql);
+
+return $result;
+
+}
+public function return_to_branch($t_bid){
+$sql ='select * from '.$this->tablename.' where branch_id='.$t_bid.' and status="ENABLED"';
 $result = $this->db->GetResultsArray($sql);
 
 return $result;

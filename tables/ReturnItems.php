@@ -255,6 +255,7 @@ class ReturnItems extends Dbconnection {
  public function return_qty($id){
 
   $sql = 'select sum(return_qty)as qty from '.$this->tablename2.' where return_id='.$id.' and is_deleted="NO" group by return_qty';
+
   $result = $this->db->GetResultsArray($sql);
 
   return $result;
@@ -269,15 +270,33 @@ class ReturnItems extends Dbconnection {
 
   return $result;
 
+ }
+ public function get_return_from(){
 
-
-
+$sql = 'select * from '.$this->tablename.' where tbranch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
+  $result = $this->db->GetResultsArray($sql);
+  return $result;
 
  }
+public function get_return_to(){
+$sql = 'select * from '.$this->tablename.' where branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
+  $result = $this->db->GetResultsArray($sql);
+  return $result;
+}
+
+
+
+public function get_return_qty($id){
+$sql = 'select sum(return_qty)as qty from '.$this->tablename2.' where return_id='.$id.' and is_deleted="NO" group by return_qty';
+
+  $result = $this->db->GetResultsArray($sql);
+
+  return $result;
 
 
 
 
+}
 
 
 

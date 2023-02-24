@@ -429,12 +429,15 @@ if (res.status=='failed') {
   global_alert_modal('info','This VarietyName Already Stored...');
   $("#variety_name").focus();
   $("#variety_name").val('');
+  
                     return false;
 
 }
 else{
    global_alert_modal('success','Variety Added SuccessFully...');
    $("#variety_name").val('');
+   $("#mrp").val('');
+  $("#sale_price").val('');
     get_varieties(item_id);
 }
 }

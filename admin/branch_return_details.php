@@ -22,7 +22,7 @@ include 'header.php';
               <li class="breadcrumb-item active">Return List</li>
              
           
-              <li class="breadcrumb-item"><a style="color: #007bff;text-decoration: none;background-color: transparent;cursor: pointer;" href="return.php">New Return Items</a></li>
+              
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -36,19 +36,20 @@ include 'header.php';
      
         <!-- Main row -->
         <div class="row">
-          <div class="col-12">
+          <div class="col-6">
           <div class="card">
             
               <div class="card-body">
+                <h5>Quantity Return From</h5>
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                     
                   <tr>
                     <th>S.No</th>
-                    <th>From Branch</th>
-                    <th>To Branch</th>
-                    <th>Return Quantity</th>
-                    <th>Return Date</th>
+                     <th>Return Date</th>
+                     <th>From</th>
+                      
+                    <th>Quantity</th>
                     <th>Details</th>
                   </tr>
 
@@ -61,6 +62,36 @@ include 'header.php';
               <!-- /.card-body -->
             </div>
           </div>
+
+        
+         <div class="col-6">
+          <div class="card">
+            
+              <div class="card-body">
+                <h5>Quantity Return To</h5>
+                <table id="example2" class="table table-bordered table-striped">
+                  <thead>
+                    
+                  <tr>
+                    <th>S.No</th>
+                     <th>Return Date</th>
+                      <th>To</th>
+                    <th>Quantity</th>
+                    <th>Details</th>
+                  </tr>
+
+                  </thead>
+                  <tbody>
+                  
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+          </div>
+
+
+
         </div>
         <!-- /.row (main row) -->
       </div><!-- /.container-fluid -->
@@ -89,6 +120,14 @@ include 'footer.php';
       "responsive": true, "lengthChange": false, "autoWidth": false,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+  });
+</script>
+<script>
+  $(function () {
+    $("#example2").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)');
   });
 </script>
 <script type="text/javascript">
@@ -121,12 +160,15 @@ $("#order_modal").modal('show');
       $.ajax({
 type: "POST",
 dataType:"json",
-url: '../ajaxCalls/get_return_item.php',
+url: '../ajaxCalls/branch_return_item.php',
 data: {},
 success: function(res){
  var table = $('#example1').DataTable();
     table.clear();
-    table.rows.add(res).draw();
+    table.rows.add(res.res).draw();
+ var table = $('#example2').DataTable();
+    table.clear();
+    table.rows.add(res.res1).draw();   
 }
 
 });

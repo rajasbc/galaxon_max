@@ -20,11 +20,12 @@ if (count($result)>0) {
 	 	$name = $obj1->item_frm_branch($value['branch_id']); 
 	 	$name1 = $obj1->item_to_branch($value['tbranch_id']);
 	 	$qty = $obj->return_qty($value['id']);
+	 	$date = date('d-m-Y',strtotime($value['return_date']));
 	 
 
 	 	$i++;
 
-			$output[$j] =[$i,($name['name'].'-'.$name['branch_code']),($name1['name'].'-'.$name1['branch_code']),$qty[0]['qty'],$value['return_date'],'<button type="button" id="'.$value['id'].'" class="btn btn-primary btn-sm" onclick="detail_return('.$value['id'].')">Details</button>'];
+			$output[$j] =[$i,($name['name'].'-'.$name['branch_code']),($name1['name'].'-'.$name1['branch_code']),$qty[0]['qty'],$date,'<button type="button" id="'.$value['id'].'" class="btn btn-primary btn-sm" onclick="detail_return('.$value['id'].')">Details</button>'];
                $j++;
   
           }

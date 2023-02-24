@@ -897,6 +897,29 @@ if (empty($_SESSION)==true) {
             </ul>
           </li>
           </li>
+          
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-reply"></i>
+              <p>
+               Return 
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="branch_return_details.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Return Details</p>
+                </a>
+              </li>
+              
+            </ul>
+          </li>
+
+
+
+
            <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-newspaper"></i>

@@ -363,11 +363,11 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 </div>
 
 <div class="row slip">
-<div class="col-5 border-left border-top border-right border-dark text-middle" id="buyers_order_no">
+<div class="col-5 border-left border-top  border-bottom border-right border-dark text-middle" id="buyers_order_no">
 <span class="">LOP days</span>
 <span class="text-val"></span>
 </div>
-<div class="col-7 border-left border-top border-right border-dark text-middle" id="motor_vehicle_no">
+<div class="col-7 border-left border-top border-bottom border-right border-dark text-middle" id="motor_vehicle_no">
 <span class="text-val">2</span>
 </div>
 </div>
@@ -380,11 +380,11 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 </div>
 
 <div class="row slip">
-<div class="col-5 border-left border-bottom border-right  border-dark text-middle" id="buyers_order_no">
+<div class="col-5 border-left border-bottom  border-top border-right  border-dark text-middle" id="buyers_order_no">
 <span class="">Basic Wage</span>
 <span class="text-val"></span>
 </div>
-<div class="col-7  border-left border-bottom border-right  border-dark text-middle" id="motor_vehicle_no">
+<div class="col-7  border-left border-top border-bottom border-right  border-dark text-middle" id="motor_vehicle_no">
 <span class="text-val"><?=$salary['basic_wage']?></span>
 </div>
 </div>
@@ -442,8 +442,15 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 
 
 <div class="row slip">
-<div class="text-center col-12 border-left border-bottom border-dark text-middle" id="buyers_order_no">
+<div class="text-center col-12 border-top border-left border-bottom border-dark text-middle" id="buyers_order_no">
 <span class=""><b>Net Salary</b></span>
+<span class="text-val"></span>
+</div>
+
+</div>
+<div class="row slip">
+<div class="text-center col-12 border-top  border-dark text-middle" id="buyers_order_no">
+<span class=""></span>
 <span class="text-val"></span>
 </div>
 
@@ -471,7 +478,7 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <span class="">UAN</span>
 <span class="text-val"></span>
 </div>
-<div class="col-8 border-left border-bottom border-dark  text-middle" id="motor_vehicle_no">
+<div class="col-8 border-left border-right border-bottom border-dark  text-middle" id="motor_vehicle_no">
 <span class="text-val"></span>
 </div>
 </div>
@@ -480,7 +487,7 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <span class="">PF No </span>
 <span class="text-val"></span>
 </div>
-<div class="col-8 border-left border-bottom border-dark text-middle" id="motor_vehicle_no">
+<div class="col-8 border-left border-right border-bottom border-dark text-middle" id="motor_vehicle_no">
 <span class="text-val"></span>
 </div>
 </div>
@@ -490,7 +497,7 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <span class="">ESI No </span>
 <span class="text-val"></span>
 </div>
-<div class="col-8 border-left border-bottom border-dark text-middle" id="motor_vehicle_no">
+<div class="col-8 border-left border-right border-bottom border-dark text-middle" id="motor_vehicle_no">
 <span class="text-val"></span>
 </div>
 </div>
@@ -499,7 +506,7 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <span class="">Bank Name </span>
 <span class="text-val"></span>
 </div>
-<div class="col-8 border-left border-bottom border-dark text-middle" id="motor_vehicle_no">
+<div class="col-8 border-left border-right border-bottom border-dark text-middle" id="motor_vehicle_no">
 <span class="text-val"><?=$salary['bank_name']?></span>
 </div>
 </div>
@@ -508,7 +515,7 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <span class="">Bank A/C No </span>
 <span class="text-val"></span>
 </div>
-<div class="col-8  border-left  border-dark text-middle" id="motor_vehicle_no">
+<div class="col-8  border-left border-right border-dark text-middle" id="motor_vehicle_no">
 <span class="text-val"><?=$salary['account_number']?></span>
 </div>
 </div>
@@ -518,7 +525,7 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <span class="">Paid Days </span>
 <span class="text-val"></span>
 </div>
-<div class="col-8 border-left border-bottom  border-dark border-top text-middle" id="motor_vehicle_no">
+<div class="col-8 border-left border-right border-bottom  border-dark border-top text-middle" id="motor_vehicle_no">
 <span class="text-val">31</span>
 </div>
 </div>
@@ -530,7 +537,7 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <span class="">Leaves Taken</span>
 <span class="text-val"></span>
 </div>
-<div class="col-8 border-left border-bottom  border-dark text-middle" id="motor_vehicle_no">
+<div class="col-8 border-left border-right border-bottom  border-dark text-middle" id="motor_vehicle_no">
 <span class="text-val">2</span>
 </div>
 </div>
@@ -545,11 +552,11 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 </div>
 
 <div class="row slip">
-<div class="col-6 border-left border-right  border-bottom border-dark text-middle" id="buyers_order_no">
+<div class="col-6 border-left border-top border-right  border-bottom border-dark text-middle" id="buyers_order_no">
 <span class="">EPF</span>
 <span class="text-val"></span>
 </div>
-<div class="col-6  border-left border-right  border-bottom  border-dark text-middle" id="motor_vehicle_no">
+<div class="col-6  border-left border-top border-right  border-bottom  border-dark text-middle" id="motor_vehicle_no">
 <span class="text-val"><?=$salary['ta_da']?></span>
 </div>
 </div>
@@ -604,13 +611,21 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 </div>
 
 <div class="row slip">
-<div class="col-6 border-right border-bottom border-dark text-middle" id="buyers_order_no">
+<div class="col-6 border-right border-top border-bottom border-dark text-middle" id="buyers_order_no">
 <span class=""></span>
 <span class="text-val"></span>
 </div>
-<div class="col-6  border-left border-right border-bottom  border-dark text-middle" id="motor_vehicle_no">
+<div class="col-6  border-left border-right border-top border-bottom  border-dark text-middle" id="motor_vehicle_no">
 <span class="text-val">1500</span>
 </div>
+
+</div>
+<div class="row slip">
+<div class="text-center col-12 border-top  border-dark text-middle" id="buyers_order_no">
+<span class=""></span>
+<span class="text-val"></span>
+</div>
+
 </div>
 
 </div>

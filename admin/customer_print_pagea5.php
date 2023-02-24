@@ -474,7 +474,7 @@ if ($vendor['pincode']!='') {
       <th class="border border-dark">Product Code</th>
       <th class="border border-dark">Variety</th>
       <th class="border border-dark">Quantity</th>
-      <th class="border border-dark">Price</th>
+      <th class="border border-dark">Mrp</th>
       <th class="border border-dark">Total Amount</th>
       <th class="border border-dark">Description</th>
       <th class="border border-dark">Units</th>
@@ -493,7 +493,7 @@ if ($vendor['pincode']!='') {
   $description='';
   $total_qty=$total_qty+$row['qty'];
   $total_ton=$total_ton+($row['qty']/1000);
-  $total_amount=$total_amount+($row['total']+$row['tax_amt']);
+  $total_amount=$total_amount+($row['total']);
   if ($row['sub_category']!='' && $row['sub_category']!=0) {
    $description =  $description_obj->get_description_dt($row['sub_category']);
    $description_name=$description[0]['name'];
@@ -538,7 +538,7 @@ if ($vendor['pincode']!='') {
 <td class="w-50 text-left"><b>Total</b></td>
 <!-- <td ><?=$total_qty?></td> -->
 <td >&nbsp;</td>
-<td >&nbsp;</td>  $total_amount
+<td >&nbsp;</td> 
 <td >&nbsp;</td>
 <td >&nbsp;</td>
 <td class="text-right"><?=number_format($total_amount,2,".","")?></td>

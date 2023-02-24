@@ -96,14 +96,14 @@ public function add_branch_group(){
 
 public function add_customer_group(){
 
- $check_sql='select * from '.$this->tablename2.' where group_name="'.$this->db->getpost('group_name').'" and status="ENABLED"';
+ $check_sql='select * from '.$this->tablename2.' where group_name="'.$this->db->getpost('group_name').'" and status="ENABLED" and branch_id='.$_SESSION['branch_id'].'';
 		$check_res=$this->db->GetResultsArray($check_sql);
 		if (count($check_res)>0) {
 			return ['status'=>'alert'];
 		}
 		$group=array();
 		$group['group_name']=$this->db->getpost('group_name');
-		// $group['branch_id']=$_SESSION['branch_id'];
+		$group['branch_id']=$_SESSION['branch_id'];
 		$id = $this->db->mysql_insert($this->tablename2,$group);
 		if ($id!=0) {
 		
@@ -124,7 +124,7 @@ $sql='select * from '.$this->tablename1.' where status="ENABLED"';
 		return $result;
 }
 public function get_customer_group_data(){
-$sql='select * from '.$this->tablename2.' where status="ENABLED"';
+$sql='select * from '.$this->tablename2.' where status="ENABLED" and branch_id='.$_SESSION['branch_id'].'';
 		$result=$this->db->GetResultsArray($sql);
 
 		return $result;

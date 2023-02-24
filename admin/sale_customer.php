@@ -11,11 +11,12 @@ $description =  $description_obj->get_description_data();
 $category_obj = new Category();
 $category =  $category_obj->get_category_data();
 $branch_price = $obj->get_branch_sale();
+
 $group_obj = new GroupName();
 $group_name = $group_obj->get_group_dt();
 ?>
 <style type="text/css">
-<?php if($branch_price['sale_price']=='no'){
+<?php if($branch_price['sale_price']=='yes'){
  ?>
  .hidden{
   display: none;
@@ -297,7 +298,7 @@ $group_name = $group_obj->get_group_dt();
                    <label>Mrp&nbsp;<label class="text-danger">*</label></label>
               <input type="text" id='mrp' class="form-control enterKeyclass" placeholder="Mrp">
                 </div>
-                <div class="col-3 form-group mb-3 test">
+                <div class="col-3 form-group mb-3 hidden">
                    <label>Branch Price&nbsp;<label class="text-danger">&nbsp;</label></label>
               <input type="text" id='sale_price' class="form-control enterKeyclass " placeholder="Enter Branch Price">
                 </div>
@@ -342,7 +343,7 @@ $group_name = $group_obj->get_group_dt();
                       <th>Units</th>
                       <th>Tons</th>
                       <th>Mrp</th>
-                      <th id="branchprice">Branch Price</th>
+                      <th class="hidden" id="branchprice">Branch Price</th>
                       <th>Discount</th>
                       <th id="test">Gst</th>
                       <th>Total</th>
@@ -360,7 +361,7 @@ $group_name = $group_obj->get_group_dt();
      <td>&nbsp;</td>
      <td>&nbsp;</td>
      <td>&nbsp;</td>
-     <td class="bprice">&nbsp;</td>
+     <td class="hidden">&nbsp;</td>
      <td>&nbsp;</td>
      <td class="temp_test">&nbsp;</td>
      <td>&nbsp;</td>
@@ -1405,19 +1406,24 @@ else{
 
   })
 </script>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
   
-var test = "<?=$branch_price['sale_price'] ?>";
-if(test =="no"){
+var branch_price = "<?=$branch_price['sale_price'] ?>";
+if(branch_price =="no"){
 $(".test").css('display','none');
 $("#branchprice").css('display','none');
 $(".bprice").css('display','none');
+
+}else{
+$(".test").css('display','');
+$("#branchprice").css('display','');
+$(".bprice").css('display','');
 
 
 }
 
 
-</script>
+</script> -->
 <script type="text/javascript">
    $("#varieties_id").on('change',function(){
  var var_id = $(this).val();

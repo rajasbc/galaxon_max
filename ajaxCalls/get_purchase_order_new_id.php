@@ -3,6 +3,7 @@ include '../tables/config.php';
 $obj = new PurchaseOrder();
 $result =  $obj->get_purchase_order($_GET['id']);
 $item_result =  $obj->get_purchase_order_item($_GET['id']);
+// print_r($item_result);die();
 $payment_result =  $obj->get_purchase_order_log($_GET['id']);
 $purchase_history_result =  $obj->get_purchase_order_history($_GET['id']);
 $vendor_obj=new Vendors();
@@ -65,6 +66,7 @@ $total_amount_dt=0;
                   <td>S.No</td>
                   <td class="text-left">Products</td>
                   <td class="text-rigth">Total Quantity</td>
+                  <td class="text-rigth">Received Quantity</td>
                  <!--  <td class="text-rigth">Received Quantity</td> -->
                 </tr>
               </thead>
@@ -82,22 +84,23 @@ $total_amount_dt=0;
                  	<?php echo $item['qty']; ?>
                  		
                  	</td>
-                 	<!-- <td style="text-align: center" >
+                 <td style="text-align: center" >
                     	<?php echo ($item['received_qty'] ); ?>
                     
-                    </td> -->
+                    </td>
                   </tr>
                   <?php $sno++;
               }
                   ?>
               </tbody>
           </table> 
+          <?php if($_SESSION['type']=='ADMIN') {?>
           <table class="table">
 				<thead>
 					<tr>
-						<?php if($_SESSION['type']=='ADMIN'){?>
+						
 						<th>Bill No</th>
-					<?php } ?>
+					
 						<th>Received Date</th>
 						<th>Taxable</th>
 						<th>Tax</th>
@@ -124,7 +127,8 @@ $total_amount_dt=0;
 					
 				</tbody>
 			</table>
-            
+
+          <?php } ?>  
 		</div>
 	</div>
 	<hr>

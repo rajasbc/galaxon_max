@@ -5,6 +5,7 @@ include '../tables/config.php';
  $obj = new PurchaseOrder();
   $obj1 = new BranchSale();
  $result =  $obj->get_purchase_orders();
+ // print_r($result);die();
 
  // print_r($result);die();
  $vendor_obj=new Vendors();

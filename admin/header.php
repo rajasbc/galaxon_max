@@ -368,7 +368,7 @@ if (empty($_SESSION)==true) {
           </li>
           
 
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-briefcase"></i>
               <p>
@@ -384,14 +384,8 @@ if (empty($_SESSION)==true) {
                 </a>
               </li>
              
-              <!-- <li class="nav-item">
-                <a href="" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Payment Details</p>
-                </a>
-              </li> -->
             </ul>
-          </li>
+          </li> -->
 
 
           <li class="nav-item">
@@ -415,12 +409,12 @@ if (empty($_SESSION)==true) {
                   <p>Add Branch</p>
                 </a>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a href="branch_transaction.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Branch Transaction</p>
                 </a>
-              </li>
+              </li> -->
               <li class="nav-item">
                 <a href="branch_stock.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -482,12 +476,12 @@ if (empty($_SESSION)==true) {
                   <p>Attendance</p>
                 </a>
               </li>
-              <li class="nav-item">
+             <!--  <li class="nav-item">
                 <a href="salary_slip.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Salary Slip</p>
                 </a>
-              </li>
+              </li> -->
             </ul>
           </li>
 <li class="nav-item">

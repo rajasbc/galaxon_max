@@ -221,8 +221,8 @@ class Shops extends Dbconnection {
 		$result = $this->db->mysql_insert($this->tablename,$branch);
 		$result1 = $this->db->mysql_insert($this->tablename1,$branch1);
 
-        $obj = new Mail();
-        $mail = $obj->sendEmail();
+        // $obj = new Mail();
+        // $mail = $obj->sendEmail();
 
 
 		if($result1){

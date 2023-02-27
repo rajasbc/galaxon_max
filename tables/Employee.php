@@ -54,6 +54,15 @@ class Employee extends Dbconnection {
 		$employee["addition_emp_tax"]=$this->db->getpost('addition_emp_tax');
 		$employee["date_of_joining"]=$this->db->getpost('date_of_joining');
 		$employee["uid"]=$_SESSION['uid'];
+
+		$employee["uan"]=$this->db->getpost('uan');
+        $employee["pf_no"]=$this->db->getpost('pf_no');
+        $employee["esi_no"]=$this->db->getpost('esi_no');
+        $employee["hra"]=$this->db->getpost('hra');
+        $employee["other_allowances"]=$this->db->getpost('other_allowances');
+        $employee["loan"]=$this->db->getpost('loan');
+
+
 		$employee["branch_id"]=$_SESSION['branch_id'];
 		$employee["created_at"]= date('Y-m-d H:i:s');
 		$employee_insert = $this->db->mysql_insert($this->tablename, $employee);
@@ -102,6 +111,15 @@ public function update_employee()
 		$employee["addition_emp_tax"]=$this->db->getpost('addition_emp_tax');
 		$employee["date_of_joining"]=$this->db->getpost('date_of_joining');
 		$employee["uid"]=$_SESSION['uid'];
+
+        $employee["uan"]=$this->db->getpost('uan');
+        $employee["pf_no"]=$this->db->getpost('pf_no');
+        $employee["esi_no"]=$this->db->getpost('esi_no');
+        $employee["hra"]=$this->db->getpost('hra');
+        $employee["other_allowances"]=$this->db->getpost('other_allowances');
+        $employee["loan"]=$this->db->getpost('loan');
+
+
 		$employee["branch_id"]=$_SESSION['branch_id'];
 		$employee["created_at"]= date('Y-m-d H:i:s');
 		$employee_insert = $this->db->mysql_update($this->tablename, $employee,'id='.$this->db->getpost('id'));
@@ -110,7 +128,7 @@ public function update_employee()
 	}
 	public function get_employee()
 	{
-		$sql = "select * from employee where branch_id = ".$_SESSION['branch_id'];
+		$sql = "select * from employee where branch_id = ".$_SESSION['branch_id']." and is_delete='no'";
 		$result = $this->db->GetResultsArray($sql);
 		return $result;
 	}
@@ -126,6 +144,27 @@ public function update_employee()
        $result = $this->db->getAsIsArray($sql);
 		return $result;
 
+	}
+
+	public function get_customerdata(){
+
+    $sql = 'select * from '.$this->tablename.' where branch_id='.$_SESSION['branch_id'].' and is_delete="no"';
+    $result = $this->db->GetResultsArray($sql);
+    // print_r( $result);die();
+    return $result;
+
+
+	}
+	public function del_employee($id){
+
+		$del_employ = array();
+		$del_employ['is_delete']="yes";
+     
+     $result = $this->db->mysql_update('employee',$del_employ,'id='.$id);
+
+     if($result){
+       return 'success';
+     }
 	}
 	
 }

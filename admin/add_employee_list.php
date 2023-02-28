@@ -5,6 +5,7 @@ if ($_GET['id']!='') {
  // print_r($id);die();
  $obj = new Employee();
  $result = $obj->get_employee_details($id);
+
  // $dep = new Department();
  // $res_dep = $dep->get_department_details($result[0]['department_name']);
 }
@@ -362,8 +363,37 @@ $result1 = $obj1->get_department_data();
          </ul>
         </div>
 
+         <div class="row col-12 mt-3">
+        
+         <div class="col-4">
+          <div class="input-group mb-3">
+           <div class="input-group-prepend">
+            <span class="input-group-text">UAN</span>
+           </div>
+           <input type='text' name='uan' id='uan' class='form-control enterKeyclass' placeholder="Enter UAN Number" value="<?=$result[0]['uan']?>">        
+          </div>
+         </div>
+         <div class="col-4">
+          <div class="input-group mb-3">
+           <div class="input-group-prepend">
+            <span class="input-group-text" >PF No&nbsp;</span>
+           </div>
+           <input type='text' name='pf_no' id='pf_no' class='form-control enterKeyclass' value="<?=$result[0]['pf_no']?>"> 
+          </div>
+         </div>
+         <div class="col-4">
+          <div class="input-group mb-3">
+           <div class="input-group-prepend">
+            <span class="input-group-text">ESI No&nbsp;</span>
+           </div>
+           <input type='text' name='esi_no' id='esi_no' class='form-control enterKeyclass' value="<?=$result[0]['esi_no']?>"> 
+          </div>
+         </div>
 
-        <div class="row col-12 mt-3">
+        </div>
+
+
+        <div class="row col-12">
          <div class="col-4">
           <div class="input-group mb-3">
            <div class="input-group-prepend">
@@ -457,6 +487,34 @@ $result1 = $obj1->get_department_data();
             <span class="input-group-text" >Conveyance Allowances&nbsp;</span>
            </div>
            <input type='text' name='conveyance_allowances' id='conveyance_allowances' class='form-control enterKeyclass' placeholder="Enter Conveyance Allowances" value="<?=$result[0]['conveyance_allowances']?>"> 
+          </div>
+         </div>
+        </div>
+
+         <div class="row col-12">
+         
+         <div class="col-4">
+          <div class="input-group mb-3">
+           <div class="input-group-prepend">
+            <span class="input-group-text">House Rent Allowances</span>
+           </div>
+           <input type='text' name='hra' id='hra' class='form-control enterKeyclass' placeholder="Enter HRA" value="<?=$result[0]['hra']?>">        
+          </div>
+         </div>
+         <div class="col-4">
+          <div class="input-group mb-3">
+           <div class="input-group-prepend">
+            <span class="input-group-text" >Other Allowances&nbsp;</span>
+           </div>
+           <input type='text' name='other_allowances' id='other_allowances' class='form-control enterKeyclass' placeholder="Enter Other Allowances" value="<?=$result[0]['other_allowances']?>"> 
+          </div>
+         </div>
+         <div class="col-4">
+          <div class="input-group mb-3">
+           <div class="input-group-prepend">
+            <span class="input-group-text" >Loan Recovery&nbsp;</span>
+           </div>
+           <input type='text' name='loan' id='loan' class='form-control enterKeyclass' placeholder="Enter Loan Recovery Amount" value="<?=$result[0]['loan']?>">
           </div>
          </div>
         </div>

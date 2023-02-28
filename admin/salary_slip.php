@@ -1,8 +1,12 @@
 <?php 
 include '../tables/config.php';
+// print_r(base64_decode($_GET['month']));die();
 $obj = new Employee();
+$obj1 = new StaffAttendance();
 $salary = $obj->get_employee_salary(base64_decode($_GET['id']));
-// print_r($salary);die();
+$total_leave = $obj1->get_leave_taken(base64_decode($_GET['id']),base64_decode($_GET['month']));
+// print_r($total_leave );die();
+$deduction = $salary['epf']+$salary['esi_health_insurance']+$salary['addition_emp_tax']+$salary['loan'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -264,7 +268,7 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <div class="row ">
   <div class = "text-center col-sm-12 col-md-12 col-lg-12 border-bottom border-dark">
     
- <h5 class=""><b>Pay Slip</b></h5>
+ <h5 class=""><b>Pay Slip for <?=date('M-Y',strtotime(base64_decode($_GET['month'])));?></b></h5>
 
   </div>
 
@@ -358,7 +362,7 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <span class="text-val"></span>
 </div>
 <div class="col-7  border-left border-right  border-dark text-middle" id="motor_vehicle_no">
-<span class="text-val">31</span>
+<span class="text-val"><?=base64_decode($_GET['working_days'])?></span>
 </div>
 </div>
 
@@ -368,7 +372,9 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <span class="text-val"></span>
 </div>
 <div class="col-7 border-left border-top border-bottom border-right border-dark text-middle" id="motor_vehicle_no">
-<span class="text-val">2</span>
+<?php if($total_leave['leave']!=''){ ?>
+<span class="text-val"><?=$total_leave['leave']-1?></span>
+<?php } ?>
 </div>
 </div>
 <div class="row slip">
@@ -395,7 +401,7 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <span class="text-val"></span>
 </div>
 <div class="col-7  border-left border-bottom border-right  border-dark text-middle" id="motor_vehicle_no">
-<span class="text-val"></span>
+<span class="text-val"><?=$salary['hra']?></span>
 </div>
 </div>
 
@@ -427,7 +433,7 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <span class="text-val"></span>
 </div>
 <div class="col-7  border-left border-bottom border-right  border-dark text-middle" id="motor_vehicle_no">
-<span class="text-val">31</span>
+<span class="text-val"><?=$salary['other_allowances']?></span>
 </div>
 </div>
 <div class="row slip">
@@ -479,7 +485,7 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <span class="text-val"></span>
 </div>
 <div class="col-8 border-left border-right border-bottom border-dark  text-middle" id="motor_vehicle_no">
-<span class="text-val"></span>
+<span class="text-val"><?=$salary['uan']?></span>
 </div>
 </div>
 <div class="row slip">
@@ -488,7 +494,7 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <span class="text-val"></span>
 </div>
 <div class="col-8 border-left border-right border-bottom border-dark text-middle" id="motor_vehicle_no">
-<span class="text-val"></span>
+<span class="text-val"><?=$salary['pf_no']?></span>
 </div>
 </div>
 
@@ -498,7 +504,7 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <span class="text-val"></span>
 </div>
 <div class="col-8 border-left border-right border-bottom border-dark text-middle" id="motor_vehicle_no">
-<span class="text-val"></span>
+<span class="text-val"><?=$salary['esi_no']?></span>
 </div>
 </div>
 <div class="row slip">
@@ -526,7 +532,9 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <span class="text-val"></span>
 </div>
 <div class="col-8 border-left border-right border-bottom  border-dark border-top text-middle" id="motor_vehicle_no">
-<span class="text-val">31</span>
+<?php if($total_leave['leave']!=''){ ?>
+<span class="text-val"><?=base64_decode($_GET['working_days'])-($total_leave['leave']-1)?></span>
+<?php } ?>
 </div>
 </div>
 
@@ -538,7 +546,7 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <span class="text-val"></span>
 </div>
 <div class="col-8 border-left border-right border-bottom  border-dark text-middle" id="motor_vehicle_no">
-<span class="text-val">2</span>
+<span class="text-val"><?=$total_leave['leave'];?></span>
 </div>
 </div>
 
@@ -557,7 +565,7 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <span class="text-val"></span>
 </div>
 <div class="col-6  border-left border-top border-right  border-bottom  border-dark text-middle" id="motor_vehicle_no">
-<span class="text-val"><?=$salary['ta_da']?></span>
+<span class="text-val"><?=$salary['epf']?></span>
 </div>
 </div>
 
@@ -587,7 +595,7 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <span class="text-val"></span>
 </div>
 <div class="col-6  border-left border-right  border-bottom border-dark text-middle" id="motor_vehicle_no">
-<span class="text-val">31</span>
+<span class="text-val"><?=$salary['loan']?></span>
 </div>
 </div>
 <div class="row slip">
@@ -596,7 +604,7 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <span class="text-val"></span>
 </div>
 <div class="col-6  border-left border-right  border-bottom border-dark text-middle" id="motor_vehicle_no">
-<span class="text-val">31</span>
+<span class="text-val"></span>
 </div>
 </div>
 
@@ -606,7 +614,7 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <span class="text-val"></span>
 </div>
 <div class="col-6  border-left border-right border-bottom border-dark text-middle" id="motor_vehicle_no">
-<span class="text-val">31</span>
+<span class="text-val"><?=$deduction?></span>
 </div>
 </div>
 
@@ -616,7 +624,7 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <span class="text-val"></span>
 </div>
 <div class="col-6  border-left border-right border-top border-bottom  border-dark text-middle" id="motor_vehicle_no">
-<span class="text-val">1500</span>
+<span class="text-val"><?=$salary['gross_wage']-$deduction?></span>
 </div>
 
 </div>

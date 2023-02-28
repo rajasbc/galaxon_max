@@ -120,7 +120,18 @@ function get_leave_taken($id,$date){
     $to = date('Y-m-t',strtotime($date));
  $sql = "select * from ".$this->tablename." where branch_id=".$_SESSION['branch_id']." and attendance_date>='".$from."' and attendance_date<='".$to."' and staff_id='".$id."' and attendance='Absent'";   
  $result = $this->db->GetResultsArray($sql);
- return ['leave'=>count($result)];
+ return ['absent'=>count($result)];
+
+}
+function get_holiday($id,$date){
+
+ $from = date('01-m-Y',strtotime($date));
+ $to = date('Y-m-t',strtotime($date));
+ $sql = "select * from ".$this->tablename." where branch_id=".$_SESSION['branch_id']." and attendance_date>='".$from."' and attendance_date<='".$to."' and staff_id='".$id."' and attendance='Leave'";
+ $result = $this->db->GetResultsArray($sql);
+ return ['holiday'=>count($result)];
+ 
+
 
 }
 

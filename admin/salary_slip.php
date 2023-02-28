@@ -5,8 +5,20 @@ $obj = new Employee();
 $obj1 = new StaffAttendance();
 $salary = $obj->get_employee_salary(base64_decode($_GET['id']));
 $total_leave = $obj1->get_leave_taken(base64_decode($_GET['id']),base64_decode($_GET['month']));
-// print_r($total_leave );die();
+$total_holiday = $obj1->get_holiday(base64_decode($_GET['id']),base64_decode($_GET['month']));
+$mon = date('m',strtotime(base64_decode($_GET['month']))); 
+
+$year = date('Y',strtotime(base64_decode($_GET['month'])));
+
+$total_days = cal_days_in_month(CAL_GREGORIAN,$mon,$year);
+$working_days = $total_days-$total_holiday['holiday'];
+// print_r($working_days);die();
+
+$earnings = $salary['basic_wage']+$salary['hra']+$salary['conveyance_allowances']+$salary['medical_allowances']+$salary['other_allowances'];
+
 $deduction = $salary['epf']+$salary['esi_health_insurance']+$salary['addition_emp_tax']+$salary['loan'];
+$net_salary = $earnings-$deduction;
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -362,7 +374,7 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <span class="text-val"></span>
 </div>
 <div class="col-7  border-left border-right  border-dark text-middle" id="motor_vehicle_no">
-<span class="text-val"><?=base64_decode($_GET['working_days'])?></span>
+<span class="text-val"><?=$working_days?></span>
 </div>
 </div>
 
@@ -372,8 +384,8 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <span class="text-val"></span>
 </div>
 <div class="col-7 border-left border-top border-bottom border-right border-dark text-middle" id="motor_vehicle_no">
-<?php if($total_leave['leave']!=''){ ?>
-<span class="text-val"><?=$total_leave['leave']-1?></span>
+<?php if($total_leave['absent']!=''){ ?>
+<span class="text-val"><?=$total_leave['absent']-1?></span>
 <?php } ?>
 </div>
 </div>
@@ -442,7 +454,7 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <span class="text-val"></span>
 </div>
 <div class="col-7 border-left border-right border-bottom border-dark  text-middle" id="motor_vehicle_no">
-<span class="text-val"><?=$salary['gross_wage']?></span>
+<span class="text-val"><?=$earnings?></span>
 </div>
 </div>
 
@@ -532,8 +544,8 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <span class="text-val"></span>
 </div>
 <div class="col-8 border-left border-right border-bottom  border-dark border-top text-middle" id="motor_vehicle_no">
-<?php if($total_leave['leave']!=''){ ?>
-<span class="text-val"><?=base64_decode($_GET['working_days'])-($total_leave['leave']-1)?></span>
+<?php if($total_leave['absent']!=''){ ?>
+<span class="text-val"><?=$working_days-($total_leave['absent']-1)?></span>
 <?php } ?>
 </div>
 </div>
@@ -546,7 +558,7 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <span class="text-val"></span>
 </div>
 <div class="col-8 border-left border-right border-bottom  border-dark text-middle" id="motor_vehicle_no">
-<span class="text-val"><?=$total_leave['leave'];?></span>
+<span class="text-val"><?=$total_leave['absent'];?></span>
 </div>
 </div>
 
@@ -624,7 +636,7 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <span class="text-val"></span>
 </div>
 <div class="col-6  border-left border-right border-top border-bottom  border-dark text-middle" id="motor_vehicle_no">
-<span class="text-val"><?=$salary['gross_wage']-$deduction?></span>
+<span class="text-val"><?=$net_salary?></span>
 </div>
 
 </div>

@@ -372,7 +372,9 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <span class="text-val"></span>
 </div>
 <div class="col-7 border-left border-top border-bottom border-right border-dark text-middle" id="motor_vehicle_no">
+<?php if($total_leave['leave']!=''){ ?>
 <span class="text-val"><?=$total_leave['leave']-1?></span>
+<?php } ?>
 </div>
 </div>
 <div class="row slip">
@@ -530,7 +532,9 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <span class="text-val"></span>
 </div>
 <div class="col-8 border-left border-right border-bottom  border-dark border-top text-middle" id="motor_vehicle_no">
+<?php if($total_leave['leave']!=''){ ?>
 <span class="text-val"><?=base64_decode($_GET['working_days'])-($total_leave['leave']-1)?></span>
+<?php } ?>
 </div>
 </div>
 

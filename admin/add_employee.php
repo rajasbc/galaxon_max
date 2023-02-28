@@ -146,8 +146,8 @@ include 'footer.php';
      url:'../ajaxCalls/delete_employee.php',
      data:{'id':id},
    success:function(res){
-
-
+      
+        location.reload();
    }
 
  });
@@ -190,5 +190,7 @@ $("#print_btn").on('click',function(){
 })
 
 </script>
+
+
 
 

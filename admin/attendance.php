@@ -2,6 +2,7 @@
 include 'header.php';
 $curPageName =  $_SERVER['HTTP_HOST']; 
 
+
 $obj=new StaffAttendance();
 $result=$obj->month_wise_report1($curPageName);
 
@@ -329,6 +330,9 @@ include 'footer.php';
            }
           });
          </script>
+
+
+
 
 
 

@@ -45,6 +45,7 @@ class StaffAttendance extends Dbconnection {
         return["status"=>"success"];
     }
     function count_attendance($id){ 
+        
         $from=date("Y-m-d", strtotime("first day of this month"));
         $to=date("Y-m-d", strtotime("last day of this month"));
         $sql1 = "select attendance_date,attendance from " . $this->tablename . "  where branch_id=" . $_SESSION['branch_id']." and attendance_date>='".$from."' and attendance_date<='".$to."' and attendance='Present' and staff_id=".$id;

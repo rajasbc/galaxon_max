@@ -112,10 +112,10 @@ $result = $obj->get_employee();
           <p>Select Month</p>
           <input type="month" name="month" id="month" class="col-5  m-1" value="<?=date('Y-m')?>">
            </div>
-         <div class="col-12">
+        <!--  <div class="col-12">
           <span>Number Of Working Days &nbsp;&nbsp; </span>
           <input style="margin-top: 20px;width: 57.2px;" type='text' name='working_days' id="working_days">
-         </div>
+         </div> -->
         </div>
         <div class="modal-footer" style="border-top: 0px;">
 
@@ -176,14 +176,14 @@ $("#print_btn").on('click',function(){
  
         $("#month").css("border","1px solid gray");
   }
-  if(working_days==''){
-    global_alert_modal('success','Enter Number Of Working Days..');
-    $("#working_days").css('border','1px solid red');
-   $("#working_days").focus();
-   return false;
-  }else{
-        $("#working_days").css("border","1px solid gray");
-  }
+  // if(working_days==''){
+  //   global_alert_modal('success','Enter Number Of Working Days..');
+  //   $("#working_days").css('border','1px solid red');
+  //  $("#working_days").focus();
+  //  return false;
+  // }else{
+  //       $("#working_days").css("border","1px solid gray");
+  // }
   window.location="salary_slip.php?id="+btoa(id)+"&month="+btoa(month)+"&working_days="+btoa(working_days);
 
 

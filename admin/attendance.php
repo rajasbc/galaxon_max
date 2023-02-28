@@ -179,7 +179,7 @@ body{
               $present = "A";
              }
              if($val['attendance']=='Leave'){
-              $present = "Leave";
+              $present = "L";
              }
              if($val['attendance']=='Late'){
               $present = "Late";

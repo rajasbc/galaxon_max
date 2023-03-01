@@ -668,6 +668,7 @@ success:function(res){
 if(res.status=='success'){
   global_alert_modal('success','Update SuccessFully...');
    get_varieties(item_id);
+   location.reload();
 }
   
 }

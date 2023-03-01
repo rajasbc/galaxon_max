@@ -116,7 +116,8 @@ function time_in_report($id){
 }
 function get_leave_taken($id,$date){
 
-    $from = date('01-m-Y',strtotime($date));
+    $from = date('Y-m-01',strtotime($date));
+
     $to = date('Y-m-t',strtotime($date));
  $sql = "select * from ".$this->tablename." where branch_id=".$_SESSION['branch_id']." and attendance_date>='".$from."' and attendance_date<='".$to."' and staff_id='".$id."' and attendance='Absent'";   
  $result = $this->db->GetResultsArray($sql);
@@ -125,7 +126,7 @@ function get_leave_taken($id,$date){
 }
 function get_holiday($id,$date){
 
- $from = date('01-m-Y',strtotime($date));
+ $from = date('Y-m-01',strtotime($date));
  $to = date('Y-m-t',strtotime($date));
  $sql = "select * from ".$this->tablename." where branch_id=".$_SESSION['branch_id']." and attendance_date>='".$from."' and attendance_date<='".$to."' and staff_id='".$id."' and attendance='Leave'";
  $result = $this->db->GetResultsArray($sql);

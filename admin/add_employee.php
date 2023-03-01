@@ -50,7 +50,7 @@ $result = $obj->get_employee();
           <th>Phone No</th>
           <th>Email</th>
           <th>Details</th>
-          <th>Print</th>
+          <th>Salary Slip</th>
          </tr>
         </thead>
         <tbody>
@@ -110,7 +110,7 @@ $result = $obj->get_employee();
            <button type="button" class="close" data-dismiss="modal">&times;</button>
           <div > 
           <p>Select Month</p>
-          <input type="month" name="month" id="month" class="col-5  m-1" value="<?=date('Y-m')?>">
+          <input type="month" name="month" id="month" class="col-5  m-1" value="<?=date('Y-m')?>" max="<?=date('Y-m')?>">
            </div>
         <!--  <div class="col-12">
           <span>Number Of Working Days &nbsp;&nbsp; </span>

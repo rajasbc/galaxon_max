@@ -908,7 +908,7 @@ public function edit_purchase_order()
 public function get_purchase_list(){
 
 
-  $sql='select * from '.$this->tablename.' where is_deleted="NO" and order_type!="NEW" and status="PENDING"';
+  $sql='select * from '.$this->tablename.' where is_deleted="NO" and order_type!="NEW" and status="PENDING" and branch_id='.$_SESSION['branch_id'].'';
   $result=$this->db->GetResultsArray($sql);
     return $result;
 

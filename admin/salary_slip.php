@@ -1,10 +1,11 @@
 <?php 
 include '../tables/config.php';
-// print_r(base64_decode($_GET['month']));die();
+
 $obj = new Employee();
 $obj1 = new StaffAttendance();
 $salary = $obj->get_employee_salary(base64_decode($_GET['id']));
 $total_leave = $obj1->get_leave_taken(base64_decode($_GET['id']),base64_decode($_GET['month']));
+
 $total_holiday = $obj1->get_holiday(base64_decode($_GET['id']),base64_decode($_GET['month']));
 $mon = date('m',strtotime(base64_decode($_GET['month']))); 
 
@@ -384,9 +385,11 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <span class="text-val"></span>
 </div>
 <div class="col-7 border-left border-top border-bottom border-right border-dark text-middle" id="motor_vehicle_no">
-<?php if($total_leave['absent']!=''){ ?>
+<?php if($total_leave['absent']!='') {?>
 <span class="text-val"><?=$total_leave['absent']-1?></span>
-<?php } ?>
+<?php }else{ ?>
+<span class="text-val">0</span>
+<?php } ?>  
 </div>
 </div>
 <div class="row slip">
@@ -546,6 +549,9 @@ for ($i1 = 0; $i1 <=$page_count; $i1++) {
 <div class="col-8 border-left border-right border-bottom  border-dark border-top text-middle" id="motor_vehicle_no">
 <?php if($total_leave['absent']!=''){ ?>
 <span class="text-val"><?=$working_days-($total_leave['absent']-1)?></span>
+<?php }else{ ?>
+<span class="text-val"><?=$working_days?></span>
+
 <?php } ?>
 </div>
 </div>

@@ -4,7 +4,7 @@ include '../tables/config.php';
 
 $obj = new Expenses();
 $obj1 = new ExpenseCategory(); 
-$result = $obj->get_expenses_date($_POST['fdate'],$_POST['tdate']);
+$result = $obj->get_expenses_date($_POST['fdate'],$_POST['tdate'],$_POST['branch_id'],$_POST['category_id']);
 
 if(count($result)>0){
 

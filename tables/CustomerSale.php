@@ -279,6 +279,24 @@ $result=$this->db->GetResultsArray($sql);
 
 return $result;
 }
+public function get_item_name($it_id,$fdate,$tdate,$b_id){
+  
+ $sql = "select a.*,b.* from customer_sale a left join customer_sale_details b on a.sale_id=b.sale_id where b.item_id=".$it_id." and a.created_at>='".$fdate."' and a.created_at<='".$tdate."' and a.branch_id=".$b_id." and a.is_deleted='NO'";
+
+$result=$this->db->GetResultsArray($sql);
+
+return $result;
+
+}
+
+public function branch_sale_items_details($s_id,$b_id,$date,$item_id){
+$sql = "select * from ".$this->tablename2."where branch_id=".$b_id." and sale_id=".$s_id." and date(created_at)>='".date('Y-m-d',strtotime($date))."' and date(created_at)<='".date('Y-m-d',strtotime($date))."' and item_id=".$item_id." and is_deleted='NO'";
+$result=$this->db->GetResultsArray($sql);
+
+return $result;
+
+
+}
 
 
 }

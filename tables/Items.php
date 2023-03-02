@@ -247,5 +247,17 @@ $result = $this->db->getAsIsArray($sql);
  }
 
 }
+
+public function get_collection_items(){
+$sql = 'select * from '.$this->tablename.'where branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
+$result = $this->db->GetResultsArray($sql);
+
+return $result;
+
+
+
+}
+
+
 }
 ?>

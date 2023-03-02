@@ -414,10 +414,11 @@ if($result){
 }
 
 }
-public function get_expenses_date($fdate,$tdate){
+public function get_expenses_date($fdate,$tdate,$b_id,$c_id){
 
-$sql = 'select * from '.$this->tablename.' where exp_date>="'.date($fdate).'" and exp_date<="'.date($tdate).'" and status="ENABLED"';
+$sql = 'select * from '.$this->tablename.' where exp_date>="'.date($fdate).'" and exp_date<="'.date($tdate).'" and  branch_id='.$b_id.' and expenses_category='.$c_id.' and status="ENABLED"';
 $res = $this->db->GetResultsArray($sql);
+
 return $res;
 
 

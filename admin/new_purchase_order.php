@@ -246,14 +246,38 @@ $category =  $category_obj->get_category_data();
                    <label>Vendor Price&nbsp;<label class="text-danger">*</label></label>
               <input type="text" id='mrp' class="form-control enterKeyclass" placeholder="Vendor Price">
                 </div>
-                <div class="col-3 form-group mb-3">
+
+              <?php if($_GET['type']=='received'){ ?>
+                <div class="col-2 form-group mb-1">
+                   <label>Sale Price&nbsp;<label class="text-danger">&nbsp;</label></label>
+              <input type="text" id='updated_sale_price' class="form-control enterKeyclass" placeholder="sale price">
+                </div>
+              <?php }?>
+
+              <?php if($_GET['type']=='received'){ ?>
+                <div class="col-2 form-group mb-3">
                    <label>Mrp&nbsp;<label class="text-danger">&nbsp;</label></label>
               <input type="text" id='sale_price' class="form-control enterKeyclass" placeholder="Mrp">
                 </div>
+
+                <div class="col-1 form-group mb-3">
+                   <label>Discount&nbsp;<label class="text-danger">&nbsp;</label></label>
+              <input type="text" id='discount' class="form-control enterKeyclass" placeholder="Discount">
+                </div>
+
+               <?php } else {?> 
+                    <div class="col-3 form-group mb-3">
+                   <label>Mrp&nbsp;<label class="text-danger">&nbsp;</label></label>
+              <input type="text" id='sale_price' class="form-control enterKeyclass" placeholder="Mrp">
+                </div>
+
+              
                 <div class="col-2 form-group mb-3">
                    <label>Discount&nbsp;<label class="text-danger">&nbsp;</label></label>
               <input type="text" id='discount' class="form-control enterKeyclass" placeholder="Discount">
                 </div>
+
+                 <?php } ?>
                 <div class="col-2 form-group mb-3">
                    <label>GST&nbsp;<label class="text-danger">&nbsp;</label></label>
               
@@ -269,9 +293,17 @@ $category =  $category_obj->get_category_data();
                    <label>Quantity&nbsp;<label class="text-danger">*</label></label>
               <input type="text" id='quantity' class="form-control enterKeyclass" placeholder="Quantity">
                 </div>
-                <div class="col-3 form-group mb-3 text-center" style="vertical-align: center">
+                <?php if($_GET['type']=='received') {?>
+                <div class="col-3 form-group mb-3 text-center" style="vertical-align: center; margin-top: 40px;">
                    <button class="btn btn-primary" id="add_item">Add</button>
                 </div>
+                <?php }else{?>
+
+                 <div class="col-3 form-group mb-3 text-center" style="vertical-align: center">
+                   <button class="btn btn-primary" id="add_item">Add</button>
+                </div>
+
+                <?php } ?>  
               </form>
                 <br>
                 <div class="table-scroll">
@@ -597,9 +629,11 @@ success: function(res){
    if(res){
    $("#mrp").val(res.mrp);
     $("#sale_price").val(res.sale_price);
+    $("#updated_sale_price").val(res.updated_purchase_price);
   }else{
      $("#mrp").val(0);
     $("#sale_price").val(0);
+    $("#updated_sale_price").val(0);
    
   }
   }
@@ -1287,6 +1321,7 @@ success: function(res){
       $("#gst").val(res.gst);
       $("#sub_category").val(res.sub_category);
       $("#varieties_id").html(res.varieties);
+      $("#updated_sale_price").val(res.updated_sale_price);
   }
 
 });

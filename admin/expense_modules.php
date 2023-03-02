@@ -3,7 +3,11 @@ include 'header.php';
 $obj = new ExpenseCategory();
 $obj1 = new Shops();
 $result = $obj->get_catagory_data();
+
 $result1 = $obj1->branch_details();
+
+$branch = $obj1->show_branch();
+
 
 ?>
 <style type="text/css">
@@ -40,7 +44,7 @@ $result1 = $obj1->branch_details();
     </div>
     <!-- /.content-header -->
       <div class=" form-row col-lg-12 col-md-12 col-sm-12" id="sort">
-            <div class="col-lg-3 col-md-3 col-sm-3 mx-1 m-1">
+            <div class="col-lg-2 col-md-2 col-sm-2 mx-1 m-1">
               <div class="input-group input-group-sm">
                 <div class="input-group-prepend">
                   <span class="input-group-text ">From</span>
@@ -56,6 +60,43 @@ $result1 = $obj1->branch_details();
                 <input type="date" class="form-control" name="date" id="tdate" value='<?=date('Y-m-d')?>'>
               </div>
             </div>
+
+             <div class="col-lg-2 col-md-2 col-sm-2 mx-1 m-1">
+              <div class="input-group input-group-sm ">
+                
+                  <select class="form-control"  name='select_user' id='select_user' >
+                    <option value="0" selected>Select Branch</option>
+                    <?php
+                    foreach ($branch as $value) {
+                      
+                      echo "<option value='".$value['branch_id']."' data-id='".$value['branch_id']."'>". $value["name"]."</option>";
+                      
+                    }
+
+
+                    ?>
+                  </select>
+              </div>
+            </div>
+
+             <div class="col-lg-2 col-md-2 col-sm-2 mx-1 m-1">
+              <div class="input-group input-group-sm ">
+                
+                  <select class="form-control"  name='category' id='category' >
+                    <option value="0" selected>Select Category</option>
+                    <?php
+                    foreach ($result as $value) {
+                      
+                      echo "<option value='".$value['id']."' data-id='".$value['id']."'>". $value["name"]."</option>";
+                      
+                    }
+
+                    ?>
+                  </select>
+              </div>
+            </div>
+       
+
             <!-- <div class="col-lg-3 col-md-3 col-sm-3 mx-1 m-1">
               <div class="input-group input-group-sm ">
                 
@@ -914,13 +955,16 @@ $("#refund_value").keyup(function(){
   $("#search").on('click',function(){
   var fdate = $("#fdate").val();
   var tdate = $("#tdate").val();
+  var branch_id = $("#select_user").val();
 
+  var category_id = $("#category").val();
+ 
   $.ajax({
 
      type:"POST",
      dataType:"json",
      url:'../ajaxCalls/get_expenses_dt.php',
-     data:{"fdate":fdate,"tdate":tdate},
+     data:{"fdate":fdate,"tdate":tdate,"branch_id":branch_id,"category_id":category_id},
      success:function(res){
        
       var table = $("#example1").DataTable();

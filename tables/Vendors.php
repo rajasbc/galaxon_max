@@ -134,8 +134,10 @@ class Vendors extends Dbconnection {
 	}
 	public function get_vendor_dt($id)
 	{
+		
 		$sql='select * from '.$this->tablename.' where id='.$id.' and status="ENABLED"';
 		$result=$this->db->getAsIsArray($sql);
+
 		return $result;
 	}
 	public function get_Autocomplete_Vendor()

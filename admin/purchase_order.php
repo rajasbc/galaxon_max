@@ -1,6 +1,9 @@
 <?php 
 include 'header.php';
-// print_r($_SESSION);die();
+$obj = new SaveOrder();
+$result = $obj->get_save_id();
+// error_reporting(E_ALL);
+// print_r($result);die();
 
 ?>
   <!-- Content Wrapper. Contains page content -->
@@ -21,8 +24,16 @@ include 'header.php';
               <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
               <li class="breadcrumb-item active">Orders List</li>
              <?php if($_SESSION['type']=='ADMIN'){?>
-              <li class="breadcrumb-item"><a style="color: #007bff;text-decoration: none;background-color: transparent;cursor: pointer;" href="new_purchase_order.php?type=received">Received Order</a></li>
-                <?php }?>
+                   <?php if(count($result)>0){ ?>
+              <li class="breadcrumb-item"><a style="color: #007bff;text-decoration: none;background-color: transparent;cursor: pointer;" href="save_purchase_order.php?id=<?=$result[0]['id']?> & type=received">Saved Order</a></li>
+
+                  <?php }else{?>
+                     <li class="breadcrumb-item"><a style="color: #007bff;text-decoration: none;background-color: transparent;cursor: pointer;" href="new_purchase_order.php?type=received">Received Order</a></li>
+
+
+                   <?php } ?> 
+                <?php  }?>
+
           
               <li class="breadcrumb-item"><a style="color: #007bff;text-decoration: none;background-color: transparent;cursor: pointer;" href="new_purchase_order.php?type=new">New Order</a></li>
             </ol>

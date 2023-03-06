@@ -1,87 +1,66 @@
 <?php 
 include 'header.php';
 // error_reporting(E_ALL);
-// print_r($_GET);die();
+// print_r($_GET['id']);die();
+$obj = new SaveOrder();
+$obj1 = new Varieties();
+$obj2 = new Items();
+$result = $obj->get_saved_items($_GET['id']);
+$result1 = $obj->get_saved_order($_GET['id']);
+// print_r($result1);die();
 
-$obj = new PurchaseOrder();
-$obj1 = new Shops();
-$obj2 = new Varieties();
-$obj3 = new Items();
-
-$sale_details = $obj->get_details($_GET['id'],$_GET['branch_id']);
-
-$branch_name = $obj1->get_branch_name($sale_details[0]['branch_id']);
-
-
-$purchase_order_dt=$obj->get_branch_order($_GET['id'],$_GET['branch_id']);
-
-
-// print_r($purchase_order_dt);die();
-
-
-
-// $purchase_order_item_dt=$obj->get_purchase_order_item($purchase_order_dt[0]['id']);
-
-
-// // print_r($purchase_order_dt[0]['delivery_date']);die();
-// 
+$vendor_obj= new Vendors();
+$vendor= $vendor_obj->get_vendor_dt($result1[0]['vendor_id']); 
+// print_r($vendor);die();
 $brand_obj = new Brand();
 $brand =  $brand_obj->get_brand_data();
 $description_obj = new Description();
-$description =  $description_obj->get_description_data();
 $category_obj = new Category();
 $category =  $category_obj->get_category_data();
 
 $items=array();
 $i=0;
-foreach ($purchase_order_dt as $key => $value) {
+foreach ($result as $key => $value) {
 
-   $tot = $obj->get_total($value['purchase_id']);      
-    //     $total = $value['qty']*$value['sales_price'];
-   
-
-    //   if($value['var_id']!=0){
+    $i++;
  
-    //    $updated_price = $obj2->get_updated_price($value['var_id'],$value['branch_id']);
-    //    $total = $updated_price['updated_purchase_price']*$value['qty'];
-         
-    // }else{
-    //    $updated_price = $obj3->get_item_price($value['item_id'],$value['branch_id']);
-    //    // print_r($updated_price);die();
-    //    $total = $updated_price['updated_purchase_price']*$value['qty'];
-    // }
-   
- $i++;
- $ttl=$value['total']+$value['tax_amt'];
+  $items['sid'.$i]=[
+     
+      "item_id"=>$value['item_id'],
+      "item_name"=>$value['item_name'],
+      "item_code"=>$value['item_code'],
+      "varieties_id"=>$value['var_id'],
+      "varieties_name"=>$value['var_name'],
+      "brand"=>$value['brand'],
+      "category"=>$value['category'],
+      "sub_category"=>$value['sub_category'],
+      "units"=>$value['units'],
+      "updated_sale_price"=>$value['updated_sale_price'],
 
- $items['sid'.$i]=[
-  "item_id"=>$value['item_id'],
-  "item_name"=>$value['item_name'],
-  "item_code"=>$value['item_code'],
-  "varieties_id"=>$value['var_id'],
-  "varieties_name"=>$value['var_name'],
-  "brand"=>$value['brand'],
-  "category"=>$value['category'],
-  "sub_category"=>$value['sub_category'],
-  "units"=>$value['units'],
-  "mrp"=>$value['sales_price'],
-  "sale_price"=>$value['mrp'],
-  "discount"=>$value['discount'],
-  "gst"=>$value['gst'],
-  "gstpercentage"=>$value['gst']/100,
-  "order_qty"=>$value['qty'],
-  "rec_qty"=>$value['received_qty'],
-  "enter_qty"=>$value['qty']-$value['received_qty'],
-  "gstamount"=>$value['tax_amt'],
-  "total"=>$ttl,
-  "deleted"=>'no',
-  "flag"=>'old',
-  "main_id"=>$value['id'],
+      "mrp"=>$value['mrp'], 
 
-  "po_id"=>$_GET['id'],
- ];
+      "sale_price"=>$value['sales_price'],
+      "discount"=>$value['discount'],
+      "gst"=>$value['gst'],
+      "gstpercentage"=>$value['gst']/100,
+      "quantity"=>$value['qty'],
+      "rec_qty"=>$value['received_qty'],
+     
+      // "enter_qty"=>0,
+      "gstamount"=>$value['tax_amt'],
+      "flag"=>'old',
+      "save_id"=>$_GET['id'],
+      "total"=>$value['total']
+    ];
+
+     
 }
-$items=json_encode($items);
+
+
+$items = json_encode($items);
+
+
+
 ?>
 <style type="text/css">
 
@@ -159,7 +138,7 @@ $items=json_encode($items);
        <div class="container-fluid">
         <div class="row mb-2">
          <div class="col-sm-6">
-          <h1 class="m-0">Branch Order</h1>
+          <h1 class="m-0">Save Purchase Order</h1>
 
          </div><!-- /.col -->
          <div class="col-sm-6">
@@ -191,17 +170,17 @@ $items=json_encode($items);
             <div class="row col-10">
            
               <div class="col-12" id="vendor_dt">
-               <label>Branch Details</label><br>
+               <label>vendor Details</label><br>
                <div class="row col-12">
                 <div class="col-6">
-                 <label>Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label><span id="branch_name"> <?=$branch_name[0]['name']?> - <?=$branch_name[0]['branch_code']?></span>
+                 <label>Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label><span id="vendor_name"> <?=$vendor['name']?> - <?=$vendor['vendor_code']?></span>
                 </div>
                 <div class="col-6">
-                 <label>Company Name :</label><span id="branch_company_name"><?=$branch_name[0]['name']?></span>
+                 <label>Company Name :</label><span id="vendor_company_name"><?=$vendor['company_name']?></span>
                 </div>
 
                 <div class="col-6">
-                 <label>Mobile No :</label><span id="branch_mobile"> <?=$branch_name[0]['mobile_no']?></span>
+                 <label>Mobile No :</label><span id="branch_mobile"> <?=$vendor['mobile_no']?></span>
                 </div>
                <!--  <?php if ($vendor['email']!='') { ?>
                  <div class="col-6">
@@ -286,7 +265,11 @@ $items=json_encode($items);
                   <label>Vendor Price&nbsp;<label class="text-danger">*</label></label>
                   <input type="text" id='mrp' class="form-control enterKeyclass" placeholder="Vendor Price">
                  </div>
-                 <div class="col-3 form-group mb-3">
+                  <div class="col-2 form-group mb-1">
+                   <label>Sale Price&nbsp;<label class="text-danger">&nbsp;</label></label>
+              <input type="text" id='updated_sale_price' class="form-control enterKeyclass" placeholder="sale price">
+                </div>
+                 <div class="col-2 form-group mb-3">
                   <label>Mrp&nbsp;<label class="text-danger">&nbsp;</label></label>
                   <input type="text" id='sale_price' class="form-control enterKeyclass" placeholder="Mrp">
                  </div>
@@ -305,11 +288,11 @@ $items=json_encode($items);
                    <option value="28">28</option>
                   </select>
                  </div>
-                 <div class="col-2 form-group mb-3">
+                 <div class="col-1 form-group mb-3">
                   <label>Quantity&nbsp;<label class="text-danger">*</label></label>
                   <input type="text" id='quantity' class="form-control enterKeyclass" placeholder="Quantity">
                  </div>
-                 <div class="col-3 form-group mb-3 text-center" style="vertical-align: center">
+                 <div class="col-3 form-group mb-3 text-center" style="vertical-align: center; margin-top: 40px;">
                   <button class="btn btn-primary" id="add_item">Add</button>
                  </div>
                 </form>
@@ -329,16 +312,18 @@ $items=json_encode($items);
                     <th>Units</th>
                     <th>Tons</th>
                  <!--    <th>Vendor Price</th> -->
-                    
-                    <th>Mrp</th>
                     <th>Sales Price</th>
+                    <th>Mrp</th>
+                    <th>Vendor Price</th>
+                    
+                    
                     <th>Discount</th>
                     <th>Gst</th>
                     <th>Total</th>
                     <th>Actions</th>
                    </tr>
                   </thead>
-                  <tbody class="text-left css-serial" id="tdata">
+                   <tbody class="text-left css-serial" id="tdata">
                    <?php $sno=0;
                    $totalqty = 0;
                    $totalton = 0;
@@ -347,14 +332,14 @@ $items=json_encode($items);
                 
                    $taxtot = 0;
                    $grandtot = 0;
-                   foreach ($purchase_order_dt as $key => $row) {
-                      $tot = $obj->get_total($row['purchase_id'],$row['branch_id']);     
+                   foreach ($result as $key => $row) {
+                      $tot = $obj->get_total_value($row['save_id'],$row['branch_id']);     
                     // print_r($purchase_order_dt);die();
-                     $admin_var_qty = $obj2->get_qty($row['var_id']); 
+                     // $admin_var_qty = $obj2->get_qty($row['var_id']); 
                     $sno++;
                     $description='';
 
-                    $remain_qty = $row['qty']-$row['received_qty'];
+                    // $remain_qty = $row['qty']-$row['received_qty'];
 
                   
                     if ($row['sub_category']!='' && $row['sub_category']!=0) {
@@ -373,7 +358,8 @@ $items=json_encode($items);
 
                     $tns = $row['qty']/1000;
 
-                    $ttl=($row['mrp']* $remain_qty)+$row['tax_amt'];
+                    $ttl=($row['total'])+$row['tax_amt'];
+
                      
                          
                     echo '<tr id="trItem_'.$sno.'">';
@@ -386,12 +372,15 @@ $items=json_encode($items);
                     echo '<td class=" ch-4">'.$row['var_name'].'</td>';
                     echo '<td class="text-left ch-4">';
 
-                    echo '<input type="hidden" id="admin_qty'.$sno.'" value= "'.$admin_var_qty[0]['qty'].'"><input onkeyup=quantityupdate('.$sno.',this) class="form-control quantity" name="quantity[]" id="quantity'.$sno.'" value="'.$remain_qty.'" style="width:4rem; height:1.75rem; font-size:0.9rem;">';
+                    echo '<input type="hidden" id="admin_qty'.$sno.'" value= "'.$row['qty'].'"><input onkeyup=quantityupdate('.$sno.',this) class="form-control quantity" name="quantity[]" id="quantity'.$sno.'" value="'.$row['qty'].'" style="width:4rem; height:1.75rem; font-size:0.9rem;">';
 
                     echo '</td>';
                     echo '<td class="text-left ch-10">'.$description_name.'</td>';
                     echo '<td class="text-left ch-10">'.$row['units'].'</td>';
                     echo '<td class="text-left ch-10" id="tons'.$sno.'">'.$tns.'</td>';
+                    echo '<td class="text-left ch-4">';
+                  echo'<input onkeyup=fieldupdate('.$sno.',this) class="form-control updated_sale_price" name="updated_sale_price[]" id="updated_sale_price'.$sno.'" value="'.$row['updated_sale_price'].'" style="width:5rem; height:1.75rem">';
+                   echo'</td>';
 
                     echo '<td class="text-left ch-4">';
 
@@ -422,7 +411,8 @@ $items=json_encode($items);
 
                     echo '</tr>';
 
-                    $prt =  $remain_qty*$row['mrp'];
+                    $prt =  $row['qty']*$row['mrp'];
+
                     $disv = $prt*$row['discount']/100;
 
                     $taxable = $prt-$disv;
@@ -430,13 +420,13 @@ $items=json_encode($items);
                     $grand = $taxable+$row['tax_amt'];
 
 
-                    $totalqty+= $remain_qty;
-                    // $tot_qty =  $totalqty+$row['qty'];
+                    // $totalqty+= $remain_qty;
+                    $totalqty =  $totalqty+$row['qty'];
                     $totalton = $totalton+$tns;
                     $taxableamt = $taxableamt+$taxable;
                     $totdis = $totdis+$disv;
                     $taxtot = $taxtot+$row['tax_amt'];
-                    $grandtot = $grandtot+$grand;
+                    $grandtot = $tot[0]['grand_total'];
 
 
 
@@ -490,7 +480,7 @@ $items=json_encode($items);
                       <div class="col-lg-4 col-sm-4 col-md-4">
                        <div class="">
                         <span class="">Purchase Amount (Include Tax ₹)</span>
-                        <span class="" id="grandid"><?=$tot['grand_total']?></span>
+                        <span class="" id="grandid"><?=$grandtot?></span>
                         <input type='hidden' class="text" id="grandid1" value="<?=$grandtot?>">
                        </div>
                       </div>
@@ -502,17 +492,79 @@ $items=json_encode($items);
                   </tfoot>
                  </table>
                 </div>
-                <div class="row col-12 mt-2 text-right">
-                 <div class="col-6">
-                  &nbsp;
-                 </div>
-                 <div class="col-3">
-                  &nbsp;
-                 </div>
-                 <div class="col-3 text-center">
-                  <button class="col-12 btn btn-primary" id="place_order">SAVE</button>
-                 </div>
-
+               <div class="row col-12">
+                  <div class="col-4">&nbsp;</div>
+                  <div class="col-8 text-right">
+                    <div class="row col-12 mt-2">
+                      <div class="col-6">
+                        <label>Bill No :</label>
+                      </div>
+                       <div class="col-6">
+                        <input type="text" id='bill_no' class="form-control" placeholder="Enter Bill No">
+                      </div>
+                    </div>
+                     <div class="row col-12 mt-2">
+                      <div class="col-6">
+                        <label>Received Date :</label>
+                      </div>
+                       <div class="col-6">
+                        <input type="date" id='received_date' class="form-control" value="<?=date('Y-m-d')?>">
+                      </div>
+                    </div>
+                     <div class="row col-12 mt-2">
+                      <div class="col-6">
+                        <label>Paid Amount :</label>
+                      </div>
+                       <div class="col-6">
+                        <input type="text" id='paid_amt' class="form-control" placeholder="Paid Amount ">
+                      </div>
+                    </div>
+                     <div class="row col-12 mt-2">
+                      <div class="col-6">
+                        <label>Balance Amount :</label>
+                      </div>
+                       <div class="col-6">
+                        <input type="text" id='balance' class="form-control" placeholder="0.00" readonly>
+                      </div>
+                    </div>
+                    <div class="row col-12 mt-2">
+                      <div class="col-6">
+                        <label>Payment Mode :</label>
+                      </div>
+                       <div class="col-6">
+                       <select class="form-control" id='payment_mode'>
+                    <option value="Cash">Cash</option>
+                    <option value="Card">Card</option>
+                    <option value="Google Pay">Google Pay</option>
+                    <option value="Amazon Pay">Amazon Pay</option>
+                    <option value="PhonePe">PhonePe</option>
+                    <option value="Net Banking">Net Banking</option>
+                  </select>
+                      </div>
+                    </div>
+                    <div class="row col-12 mt-2 text-right">
+                       <div class="row col-12">
+                      <div class="col-6">
+                        <label>Notes :</label>
+                      </div>
+                       <div class="col-6">
+                        <textarea class="form-control" id="purchase_note"></textarea>
+                      </div>
+                    </div>
+                      <div class="col-6">
+                        &nbsp;
+                      </div>
+                      <div class="col-3 text-center mt-2">
+                      
+                        <button class="col-12 btn btn-primary" id="save">Save</button>
+         
+                      </div>
+                      <div class="col-3 text-center mt-2">
+                        <button class="col-12 btn btn-primary" id="place_order">Place Order</button>
+                      </div>
+                      
+                    </div>
+                  </div>
                 </div>
                </div>
                <!-- /.card-body -->
@@ -774,10 +826,13 @@ $items=json_encode($items);
           var item_name=$("#item_name").val();
           var brand=$("#brand").val();
           var category=$("#category").val();
+          
           var sub_category=$("#sub_category").val();
           var mrp=$("#mrp").val();
-
+     
           var sale_price=$("#sale_price").val();
+          var updated_sale_price = $("#updated_sale_price").val();
+
           var discount=$("#discount").val();
           var gst=$("#gst").val();
           var quantity=$("#quantity").val();
@@ -872,7 +927,10 @@ $items=json_encode($items);
       data["brand"]=brand;
       data["category"]=category;
       data["sub_category"]=sub_category;
+
       data["mrp"]=mrp;
+
+      data["updated_sale_price"] = updated_sale_price;
       data["sale_price"]=sale_price;
       data["discount"]=discount;
       data["gst"]=gst;
@@ -899,17 +957,19 @@ $items=json_encode($items);
         "category":category,
         "sub_category":sub_category,
         "units":units,
-        "mrp":sale_price,
-        "sale_price":mrp,
+        "mrp":mrp,
+        "updated_sale_price":updated_sale_price,
+        "sale_price":sale_price,
         "discount":discount,
         "gst":gst,
         "gstpercentage":gst/100,
-        "enter_qty":quantity,
+        "quantity":quantity,
+        "rec_qty":quantity,
         "gstamount":gstamount,
         "total":total,
         "deleted":'no',
         "flag":'new',
-        "main_id":''
+       
        };
        $('#tdata tr').each(function(index) {
         $(this).find('span.sn').html(index+1);
@@ -926,7 +986,18 @@ $items=json_encode($items);
        '<td class="text-left ch-10">{{description}}</td>',
        '<td class="text-left ch-10">{{units}}</td>',
        '<td class="text-left ch-10" id="tons{{sno}}">{{tons}}</td>',
+        
+        '<td class="text-left ch-4">',
+       
+
+       '<input onkeyup=fieldupdate({{sno}},this) class="form-control updated_sale_price" name="updated_sale_price[]" id="updated_sale_price{{sno}}" value="{{updated_sale_price}}" style="width:5rem; height:1.75rem">',
+
+       '</td>',
+
+
+
        '<td class="text-left ch-4">',
+
 
        '<input onkeyup=fieldupdate({{sno}},this) class="form-control mrp" name="mrp[]" id="mrp{{sno}}" value="{{mrp}}" style="width:5rem; height:1.75rem">',
 
@@ -962,6 +1033,7 @@ $items=json_encode($items);
        tr = tr.replace(getRegEx('variety'), data['varieties_name']);
        tr = tr.replace(getRegEx('units'), data['units']);
        tr = tr.replace(getRegEx('mrp'),data['sale_price']);
+       tr = tr.replace(getRegEx('updated_sale_price'),data["updated_sale_price"]);
        tr = tr.replace(getRegEx('description'), $("#sub_category option:selected").text());
        tr = tr.replace(getRegEx('sale_price'),data['mrp']);
        tr = tr.replace(getRegEx('discount'), data['discount']);
@@ -993,6 +1065,8 @@ $items=json_encode($items);
 
        var mrp = $("#mrp"+idval).val();
 
+       var updated_sale_price = $("#updated_sale_price"+idval).val(); 
+
 
 
        var sale_price = $("#sale_price"+idval).val();
@@ -1007,10 +1081,10 @@ $items=json_encode($items);
        $("#totalid"+idval).html((prototal+gstamount).toFixed(2));
        var tons=Number($("#quantity"+idval).val())/1000;
        $("#tons"+idval).html(tons);
-       items[ref].mrp=mrp;
-
-       items[ref].sale_price=sale_price;
-       items[ref].enter_qty=quantity;
+       items[ref].mrp=sale_price;
+       items[ref].sale_price= mrp;
+       items[ref].quantity=quantity;
+       items[ref].updated_sale_price=updated_sale_price;
        items[ref].discount=discount;
        items[ref].gst=gst;
        items[ref].gstpercentage=gst/100;
@@ -1035,16 +1109,6 @@ $items=json_encode($items);
     
 
 
-       if(quantity>admin_qty)
-     {
-         
-        global_alert_modal('warning','Available Variety are less than '+admin_qty);
-
-     }else{
-       quantity;
-
-     }
-
       // if ((Number($("#order_qty"+idval).text())-Number($("#rec_qty"+idval).text())) < quantity) {
       //   $("#quantity"+idval).val((Number($("#order_qty"+idval).text())-Number($("#rec_qty"+idval).text())));
       // }
@@ -1055,10 +1119,10 @@ $items=json_encode($items);
       $("#totalid"+idval).html((prototal+gstamount).toFixed(2));
       var tons=Number($("#quantity"+idval).val())/1000;
       $("#tons"+idval).html(tons);
-      items[ref].sale_price=sale_price;
-      items[ref].mrp=mrp;
+      items[ref].sale_price=mrp;
+      items[ref].mrp=sale_price;
      
-      items[ref].enter_qty=$("#quantity"+idval).val();
+      items[ref].quantity=$("#quantity"+idval).val();
       
       items[ref].discount=discount;
       items[ref].gst=gst;
@@ -1068,35 +1132,44 @@ $items=json_encode($items);
       calculation();
      }
      function removeItem(idval){
-      var id = idval;
-
-       // jQuery('#trItem_' + id).empty('');
-       // delete items["sid"+idval] ;
-
-
-
-       if ($("#remove_tr"+idval).data('id')=='old') {
-        var id = idval;
-        jQuery('#trItem_' + id).empty('');
-        var ref = "sid"+idval;
-        items[ref].deleted='yes';
-       // delete items[ref] ;
-
-      }else{
        var id = idval;
        jQuery('#trItem_' + id).empty('');
        delete items["sid"+idval] ;
-      }
+    $('#tdata tr').each(function(index) {
+     $(this).find('span.sn').html(index+1);
+   });
+    calculation();
+  }
+     // function removeItem(idval){
+     //  var id = idval;
+
+     //   // jQuery('#trItem_' + id).empty('');
+     //   // delete items["sid"+idval] ;
 
 
 
-      $('#tdata tr').each(function(index) {
-       $(this).find('span.sn').html(index+1);
-      });
+     //   if ($("#remove_tr"+idval).data('id')=='old') {
+     //    var id = idval;
+     //    jQuery('#trItem_' + id).empty('');
+     //    var ref = "sid"+idval;
+     //    items[ref].deleted='yes';
+     //   // delete items[ref] ;
+
+     //  }else{
+     //   var id = idval;
+     //   jQuery('#trItem_' + id).empty('');
+     //   delete items["sid"+idval] ;
+     //  }
 
 
-      calculation();
-     }
+
+     //  $('#tdata tr').each(function(index) {
+     //   $(this).find('span.sn').html(index+1);
+     //  });
+
+
+     //  calculation();
+     // }
      function calculation() {
       itemslist = items;
 
@@ -1119,17 +1192,17 @@ $items=json_encode($items);
 
        tempItem = itemslist[vale];
 
-       if (tempItem['deleted']=='no') {
+       
 
 
 
-        val=Number(tempItem["enter_qty"]);
+        val=Number(tempItem["quantity"]);
    
+ 
+       
+        total_qty=total_qty+Number(tempItem["quantity"]);
 
-
-        total_qty=total_qty+Number(tempItem["enter_qty"]);
-
-        total= Number(tempItem["sale_price"])*Number(tempItem["enter_qty"]);
+        total= Number(tempItem["mrp"])*Number(tempItem["quantity"]);
 
          // console.log(total);
      
@@ -1140,7 +1213,7 @@ $items=json_encode($items);
         subtotal1=Number(subtotal1)+Number(remamount);
         tax=Number(tax)+(Number(tempItem['gstpercentage'])*Number(remamount));
 
-       }
+  
 
        i++;
       }
@@ -1165,16 +1238,57 @@ $items=json_encode($items);
 
      $("#place_order").click(function(){
 
+         var bill_no = $("#bill_no").val();
+      var received_date = $("#received_date").val();
+      var paid_amt = $("#paid_amt").val();
+      var balance = $("#balance").val();
+      var payment_mode = $("#payment_mode option:selected").val();
+      var purchase_note = $("#purchase_note").val();
+
+
       if (jQuery.isEmptyObject(items)==true) {
        global_alert_modal('fail','Add One Product To Purchase...');
        $("#item_name").focus();
        return false;
+      }
+       if (bill_no=='' && bill_no==0) {
+      global_alert_modal('warning','Enter Bill Number...');
+      $("#bill_no").css("border","1px solid red");
+      $("#bill_no").focus();
+      return false;
+      }
+      else{
+      $("#bill_no").css("border","1px solid lightgray");
+      }
+      if (received_date=='') {
+      global_alert_modal('warning','Select Received Date...');
+      $("#received_date").css("border","1px solid red");
+      $("#received_date").focus();
+      return false;
+      }
+      else{
+      $("#received_date").css("border","1px solid lightgray");
+      }
+      if (paid_amt=='' && paid_amt==0) {
+      global_alert_modal('warning','Enter Paid Amount...');
+      $("#paid_amt").css("border","1px solid red");
+      $("#paid_amt").focus();
+      return false;
+      }
+      else{
+      $("#paid_amt").css("border","1px solid lightgray");
       }
 
 
  
 
       detailsarray = [];
+      detailsarray['vendor_id']="<?=$result1[0]['vendor_id']?>";
+      detailsarray['paid_amt']=paid_amt;
+      detailsarray['balance']=balance;
+      detailsarray['bill_no']=bill_no;
+      detailsarray['payment_mode']=payment_mode;
+      detailsarray['received_date']=received_date;
       detailsarray['branch_id']=Number($("#branch_id").val());
       detailsarray['purchase_no']=Number($("#purchase_no").val());     
       detailsarray['taxable_amount']=Number($("#subid").text());
@@ -1182,7 +1296,8 @@ $items=json_encode($items);
       detailsarray['discount']=Number($("#discid").text());
       detailsarray['tax_amount']=Number($("#taxid").text());
       detailsarray['grand_total']=Number($("#grandid").text());
-      detailsarray['po_id']="<?=$_GET['id']?>";
+      detailsarray['save_id']="<?=$_GET['id']?>";
+       detailsarray['order_type']="<?=$_GET['type']?>";
 
 
       detailsarray['note']=$("#note").val();
@@ -1193,12 +1308,12 @@ $items=json_encode($items);
       $.ajax({
        type: "POST",
        dataType:"json",
-       url: '../ajaxCalls/branch_sale_order.php',
+       url: '../ajaxCalls/add_purchase_order.php',
        data: $.param(obj)+'&'+$.param(dobj),
        success: function(res){
         if (res.status=='success') {
          global_alert_modal('success','Sale Order SuccessFully...');
-         window.location='branch_received_order.php';
+         window.location='purchase_order.php';
         }else{
 
            global_alert_modal('warning','Enter Available Quantity ...');
@@ -1251,10 +1366,12 @@ $items=json_encode($items);
         $('#item_name').val(res.item_name);
         $('#item_code').val(res.item_code);
         $("#brand").val(res.brand);
-        $("#category").val(res.category);        
+        $("#category").val(res.category);
+
         $("#mrp").val(res.mrp);
         $("#units").val(res.units);
         $("#sale_price").val(res.sales_price);
+        $("#updated_sale_price").val(res.updated_sale_price);
         $("#discount").val(res.discount);
         $("#gst").val(res.gst);
         $("#sub_category").val(res.sub_category);
@@ -1279,18 +1396,92 @@ success: function(res){
    $("#mrp").val(res.mrp);
 
     $("#sale_price").val(res.sale_price);
+    $("#updated_sale_price").val(res.updated_purchase_price);
   }else{
      $("#mrp").val(0);
     $("#sale_price").val(0);
-   
+    $("#updated_sale_price").val(0);
   }
   }
 
 });
 
   }); 
+</script>
+<script type="text/javascript">
+
+ $("#save").click(function(){
+      
+
+      var vendor_id = "<?=$result1[0]['vendor_id']?>";
+     
+
+        
+     
+      var nvendor_id = $("#nvendor_id").val();
+
+      var bill_no = $("#bill_no").val();
+      var received_date = $("#received_date").val();
+      var paid_amt = $("#paid_amt").val();
+      var balance = $("#balance").val();
+      var payment_mode = $("#payment_mode option:selected").val();
+      var purchase_note = $("#purchase_note").val();
+      // if (vendor_id==0) {
+      // global_alert_modal('warning','Select Vendor Name...');
+      // $("#vendor").css("border","1px solid red");
+      // $("#vendor").focus();
+      // return false;
+      // }
+      // else{
+      // $("#vendor").css("border","1px solid lightgray");
+      // }
+      // if (jQuery.isEmptyObject(items)==true) {
+      //   global_alert_modal('fail','Add One Product To Purchase...');
+      //   $("#item_name").focus();
+      //   return false;
+      // }
+
+      detailsarray = [];
+      detailsarray['vendor_id']=vendor_id;
+      detailsarray['nvendor_id']=nvendor_id;
+      
+      detailsarray['bill_no']=bill_no;
+      detailsarray['received_date']=received_date;
+      detailsarray['paid_amt']=paid_amt;
+      detailsarray['balance']=balance;
+      detailsarray['payment_mode']=payment_mode;
+      detailsarray['purchase_note']=purchase_note;
+      detailsarray['taxable_amount']=Number($("#subid").text());
+      detailsarray['discount']=Number($("#discid").text());
+      detailsarray['tax_amount']=Number($("#taxid").text());
+      detailsarray['grand_total']=Number($("#grandid").text());
+      detailsarray['save_id']="<?=$_GET['id']?>";
+   
 
 
+
+var dobj=$.extend({},detailsarray);
+var obj = $.extend({},items);
+// checkArray(shipping_data);
+// var shipobj = $.extend({}, shipping_data);
+
+
+$.ajax({
+type: "POST",
+dataType:"json",
+url: '../ajaxCalls/update_save_order.php',
+data: $.param(obj)+'&'+$.param(dobj),
+success: function(res){
+    if (res.status=='success') {
+      global_alert_modal('success','Save SuccessFully...');
+      window.location='purchase_order.php';
+    
+    }
+  }
+
+});
+
+});
 
 
 </script>

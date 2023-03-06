@@ -24,6 +24,7 @@ $output=array();
 $output['item_id']=$result[0]['id'];
 $output['brand']=$result[0]['brand'];
 $output['category']=$result[0]['category'];
+
 $output['sub_category']=$result[0]['sub_category'];
 $output['units']=$result[0]['units'];
 $output['item_name']=$result[0]['item_name'];

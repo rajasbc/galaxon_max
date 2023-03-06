@@ -179,38 +179,85 @@ if ($this->db->getpost('shipping_d_date')!='') {
                       $details_id=$this->db->mysql_insert($this->tablename2, $purchase_items);
 
                        if ($details_id!=0 && $this->db->getpost('order_type')=='received') {
-                       	$item_sql='select * from items where id='.$item_id;
-                       	$item_res=$this->db->GetResultsArray($item_sql);
-                       	$update_item=array();
-                       	$update_item['qty']=$item_res[0]['qty']+$itemvar['quantity'];
-                       	$this->db->mysql_update('items', $update_item,'id='.$item_id);
+                        $sql = 'select * from save_order where branch_id='.$_SESSION['branch_id'].' and status="save"';
+                        $res = $this->db->GetResultsArray($sql);
+                        if(count($res)>0){
+                         $save_order=array();
+                         $save_order['status']='received';
+                  $this->db->mysql_update('save_order',$save_order,'id='.$res[0]['id']);
+                }
+
+
+
+                       	// $item_sql='select * from items where id='.$item_id;
+                       	// $item_res=$this->db->GetResultsArray($item_sql);
+                       	// $update_item=array();
+                       	// $update_item['qty']=$item_res[0]['qty']+$itemvar['quantity'];
+                       	// $this->db->mysql_update('items', $update_item,'id='.$item_id);
 
 
 
                        	 if ($itemvar['varieties_id']!=0 && $itemvar['varieties_id']!='') {
 
 
-                         $var_sql='select * from variety_items where item_id='.$item_id.' and variety_id='.$itemvar['varieties_id'].' and branch_id='.$_SESSION['branch_id'].' and shop_id='.$_SESSION['shop_id'];
+                         $var_sql='select * from variety_items where  variety_id='.$itemvar['varieties_id'].' and branch_id='.$_SESSION['branch_id'].' and shop_id='.$_SESSION['shop_id'];
 
                        	$var_res=$this->db->GetResultsArray($var_sql);
 
-                // print_r($var_res);die();
-                          
+                         
                        	if (count($var_res)>0) {
                         $update_var=array();
-                       	$update_var['qty']=$var_res[0]['qty']+$itemvar['enter_qty'];
-                       	$this->db->mysql_update('variety_items', $update_var,'id='.$var_res[0]['id']);
+                       	$update_var['qty']=$var_res[0]['qty']+$itemvar['quantity'];
+
+                       	$this->db->mysql_update('variety_items',$update_var,'id='.$var_res[0]['id']);
+
+
+                          $item_sql = 'select * from items where id='.$itemvar['item_id'].' and branch_id='.$_SESSION['branch_id'].'';
+                         $item_res=$this->db->GetResultsArray($item_sql);
+                        
+                        $update_item=array();
+                     $update_item['qty'] = $item_res[0]['qty']+$itemvar['quantity'];
+
+                        $this->db->mysql_update('items',$update_item,'id='.$item_res[0]['id']);
+                       	}
+                      $update_price ='select * from varieties where id='.$itemvar['varieties_id'].' and branch_id='.$_SESSION['branch_id'];
+                      $price = $this->db->getAsIsArray($update_price);
+
+                       $purchase_price = array();
+                       $purchase_price['updated_purchase_price']=$itemvar['updated_sale_price'];
+
+                       $this->db->mysql_update('varieties',$purchase_price,'id='.$price['id']);
+                        // else{
+
+                       	// $update_var=array();
+                       	// $update_var['shop_id']=$_SESSION['shop_id'];
+                        // $update_var['branch_id']=$_SESSION['branch_id'];
+                       	// $update_var['item_id']=$item_id;
+                       	// $update_var['variety_id']=$itemvar['varieties_id'];
+                       	// $update_var['qty']=$itemvar['enter_qty'];
+                       	// $this->db->mysql_insert('variety_items', $update_var);
+                        //  }
                        	}else{
 
-                       	$update_var=array();
-                       	$update_var['shop_id']=$_SESSION['shop_id'];
-                        $update_var['branch_id']=$_SESSION['branch_id'];
-                       	$update_var['item_id']=$item_id;
-                       	$update_var['variety_id']=$itemvar['varieties_id'];
-                       	$update_var['qty']=$itemvar['enter_qty'];
-                       	$this->db->mysql_insert('variety_items', $update_var);
-                         }
-                       	}
+                            $item_sql = 'select * from items where id='.$itemvar['item_id'].' and branch_id='.$_SESSION['branch_id'].'';
+                         $item_res=$this->db->GetResultsArray($item_sql);
+                        
+                        $update_item=array();
+                     $update_item['qty'] = $item_res[0]['qty']+$itemvar['quantity'];
+
+                        $this->db->mysql_update('items',$update_item,'id='.$item_res[0]['id']);
+
+
+                         $update_price ='select * from items where id='.$itemvar['item_id'].' and branch_id='.$_SESSION['branch_id'];
+                      $price = $this->db->getAsIsArray($update_price);
+
+                       $purchase_price = array();
+                       $purchase_price['updated_purchase_price']=$itemvar['updated_sale_price'];
+
+                       $this->db->mysql_update('items',$purchase_price,'id='.$price['id']);
+
+
+                        }
                        }
 
                 // mrp and sale price update

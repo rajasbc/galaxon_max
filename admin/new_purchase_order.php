@@ -11,6 +11,7 @@ $category =  $category_obj->get_category_data();
 ?>
 <?php if($_SESSION['type']=='ADMIN'){?>
 <style type="text/css">
+ 
 .ui-autocomplete {
   max-height: 200px;
   overflow-y: auto;
@@ -135,6 +136,7 @@ $category =  $category_obj->get_category_data();
                    <label>Vendor Name&nbsp;<label class="text-danger">*</label></label>
                    <input type="hidden" name="sno" id="sno" value="0">
                    <input type="hidden" name="vendor_id" id="vendor_id" value="0">
+                
                   <input type="text" name="vendor" id="vendor" class="form-control" placeholder="Enter Vendor" autofocus>
                 </div><?php } else{ ?>
 
@@ -317,6 +319,9 @@ $category =  $category_obj->get_category_data();
                       <th>Description</th>
                       <th>Units</th>
                       <th>Tons</th>
+                      <?php if($_GET['type']=='received') {?>
+                      <th>Sale Price</th>
+                      <?php }?>
                       <th>Vendor Price</th>
                       <th>Mrp</th>
                       <th>Discount</th>
@@ -341,12 +346,19 @@ $category =  $category_obj->get_category_data();
      <td>&nbsp;</td>
      <td>&nbsp;</td>
      <td>&nbsp;</td>
+     <?php if($_GET['type']=='received'){ ?>
+    <td>&nbsp;</td>
+    <?php } ?>
    </tr>
  <?php }?>
 </tbody>
 <tfoot>
 <tr>
-  <td colspan="13" class="td-last-1">
+  <?php if($_GET['type']=='received'){?>
+  <td colspan="14" class="td-last-1">
+   <?php }else{?>
+   <td colspan="13" class="td-last-1">
+   <?php } ?> 
  <div class="row">
 <div class="col-lg-4 col-sm-4 col-md-4">
   <div class="">
@@ -461,7 +473,12 @@ $category =  $category_obj->get_category_data();
                       <div class="col-6">
                         &nbsp;
                       </div>
-                      <div class="col-6 text-center">
+                      <div class="col-3 text-center">
+                        <?php if($_GET['type']=='received'){?>
+                        <button class="col-12 btn btn-primary" id="save">Save</button>
+                        <?php } ?>
+                      </div>
+                      <div class="col-3 text-center">
                         <button class="col-12 btn btn-primary" id="place_order">Place Order</button>
                       </div>
                       
@@ -681,6 +698,89 @@ success: function(res){
 
 </script>
 <script type="text/javascript">
+
+ $("#save").click(function(){
+      
+      var vendor_id = $("#vendor_id").val();
+     
+      var nvendor_id = $("#nvendor_id").val();
+
+     
+
+         
+      var bill_no = $("#bill_no").val();
+      var received_date = $("#received_date").val();
+      var paid_amt = $("#paid_amt").val();
+      var balance = $("#balance").val();
+      var payment_mode = $("#payment_mode option:selected").val();
+      var purchase_note = $("#purchase_note").val();
+      if (vendor_id==0) {
+      global_alert_modal('warning','Select Vendor Name...');
+      $("#vendor").css("border","1px solid red");
+      $("#vendor").focus();
+      return false;
+      }
+      else{
+      $("#vendor").css("border","1px solid lightgray");
+      }
+      if (jQuery.isEmptyObject(items)==true) {
+        global_alert_modal('fail','Add One Product To Purchase...');
+        $("#item_name").focus();
+        return false;
+      }
+
+      detailsarray = [];
+      detailsarray['vendor_id']=vendor_id;
+      detailsarray['nvendor_id']=nvendor_id;
+      
+      detailsarray['bill_no']=bill_no;
+      detailsarray['received_date']=received_date;
+      detailsarray['paid_amt']=paid_amt;
+      detailsarray['balance']=balance;
+      detailsarray['payment_mode']=payment_mode;
+      detailsarray['purchase_note']=purchase_note;
+      detailsarray['taxable_amount']=Number($("#subid").text());
+      detailsarray['discount']=Number($("#discid").text());
+      detailsarray['tax_amount']=Number($("#taxid").text());
+      detailsarray['grand_total']=Number($("#grandid").text());
+      detailsarray['order_type']="<?=$_GET['type']?>";
+   
+
+
+if (jQuery.isEmptyObject(shipping_data)==true) {
+      var shipobj =  $.extend({}, shipping_data1);
+       
+      }else{
+         var shipobj = $.extend({}, shipping_data);
+
+      }
+
+var dobj=$.extend({},detailsarray);
+var obj = $.extend({}, items);
+// checkArray(shipping_data);
+// var shipobj = $.extend({}, shipping_data);
+
+
+$.ajax({
+type: "POST",
+dataType:"json",
+url: '../ajaxCalls/save_order.php',
+data: $.param(obj)+'&'+$.param(dobj)+'&'+$.param(shipobj),
+success: function(res){
+    if (res.status=='success') {
+      global_alert_modal('success','Save SuccessFully...');
+      window.location='purchase_order.php';
+    
+    }
+  }
+
+});
+
+});
+
+
+</script>
+<script type="text/javascript">
   $(document).ready(function(){
  items = [];
  shipping_data = [];
@@ -795,7 +895,9 @@ success: function(res){
      var category=$("#category").val();
      var sub_category=$("#sub_category").val();
      var mrp=parseFloat($("#mrp").val());
-
+    <?php if($_GET['type']=='received'){?>
+     var updated_sale_price = parseFloat($("#updated_sale_price ").val());
+    <?php } ?>
      var sale_price=parseFloat($("#sale_price").val());
      var discount=$("#discount").val();
      var gst=$("#gst").val();
@@ -873,6 +975,23 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
        else{
         $("#sale_price").css("border","1px solid lightgray");
        }
+    <?php if($_GET['type']=='received'){ ?>
+       if (updated_sale_price=='' && updated_sale_price==0) {
+      global_alert_modal('warning','Enter Sale Price...');
+
+      $("#updated_sale_price").css("border","1px solid red");
+                    $("#updated_sale_price").focus();
+                    return false;
+        }
+       else{
+        $("#updated_sale_price").css("border","1px solid lightgray");
+
+       }
+     <?php } ?>  
+
+
+
+
         if (quantity=='' && quantity==0) {
       global_alert_modal('warning','Enter Product Quantity...');
       $("#quantity").css("border","1px solid red");
@@ -893,6 +1012,9 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
        data["sub_category"]=sub_category;
        data["mrp"]=mrp;
        data["sale_price"]=sale_price;
+      <?php if($_GET['type']=='received'){?>
+       data["updated_sale_price"]= updated_sale_price;
+      <?php } ?>
        data["discount"]=discount;
        data["gst"]=gst;
        data["quantity"]=quantity;
@@ -916,6 +1038,9 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
       "varieties_name":$("#varieties_id option:selected").text(),
       "brand":brand,
       "category":category,
+      <?php if($_GET['type']=='received') {?>
+      "updated_sale_price":updated_sale_price,
+      <?php }?>
       "sub_category":sub_category,
       "units":units,
       "mrp":mrp,
@@ -944,6 +1069,15 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
             '<td class="text-left ch-10">{{description}}</td>',
             '<td class="text-left ch-10">{{units}}</td>',
             '<td class="text-left ch-10" id="tons{{sno}}">{{tons}}</td>',
+          
+           <?php if($_GET['type']=='received') {?>
+            '<td class="text-left ch-4">',
+            '<input onkeyup=fieldupdate({{sno}},this) class="form-control updated_sale_price" name="updated_sale_price[]" id="updated_sale_price{{sno}}" value="{{updated_sale_price}}" style="width:5rem; height:1.75rem">',
+            '</td>',
+            <?php } ?>
+
+
+
             '<td class="text-left ch-4">',
 
                 '<input onkeyup=fieldupdate({{sno}},this) class="form-control mrp" name="mrp[]" id="mrp{{sno}}" value="{{mrp}}" style="width:5rem; height:1.75rem">',
@@ -980,6 +1114,9 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
                 tr = tr.replace(getRegEx('units'), data['units']);
               tr = tr.replace(getRegEx('mrp'), data['mrp']);
               tr = tr.replace(getRegEx('description'), $("#sub_category option:selected").text());
+              <?php if($_GET['type']=='received'){?>
+               tr = tr.replace(getRegEx('updated_sale_price'), data['updated_sale_price']);
+              <?php }?>
               tr = tr.replace(getRegEx('sale_price'), data['sale_price']);
               tr = tr.replace(getRegEx('discount'), data['discount']);
               tr = tr.replace(getRegEx('gst'), data['gst']);
@@ -1009,7 +1146,9 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
 
       
       var mrp = $("#mrp"+idval).val();
-
+      <?php if($_GET['type']=='received'){?>
+      var updated_sale_price = $("#updated_sale_price"+idval).val();
+      <?php } ?>
       var sale_price = $("#sale_price"+idval).val();
       var discount = $("#discount"+idval).val();
       var gst = $("#gst"+idval).val();
@@ -1021,6 +1160,7 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
      $("#tons"+idval).html(tons);
     items[ref].sale_price=sale_price;
     items[ref].mrp=mrp;
+    items[ref].updated_sale_price = updated_sale_price;
     items[ref].quantity=quantity;
     items[ref].discount=discount;
     items[ref].gst=gst;

@@ -50,7 +50,8 @@ foreach ($result as $key => $value) {
       "gstamount"=>$value['tax_amt'],
       "flag"=>'old',
       "save_id"=>$_GET['id'],
-      "total"=>$value['total']
+      "total"=>$value['total'],
+      "deleted"=>$value['is_deleted']
     ];
 
      
@@ -364,12 +365,12 @@ $items = json_encode($items);
                          
                     echo '<tr id="trItem_'.$sno.'">';
                     echo '<td class=" ch-4"><span></span></td>';
-                    echo '<td class="text-left ch-10">'.$row['item_name'];
+                    echo '<td class="text-left ch-10 item">'.$row['item_name'];
                     if ($row['item_code']!='') {
                      echo ' - '.$row['item_code'];
                     }
                     echo '</td>';
-                    echo '<td class=" ch-4">'.$row['var_name'].'</td>';
+                    echo '<td class=" ch-4 var">'.$row['var_name'].'</td>';
                     echo '<td class="text-left ch-4">';
 
                     echo '<input type="hidden" id="admin_qty'.$sno.'" value= "'.$row['qty'].'"><input onkeyup=quantityupdate('.$sno.',this) class="form-control quantity" name="quantity[]" id="quantity'.$sno.'" value="'.$row['qty'].'" style="width:4rem; height:1.75rem; font-size:0.9rem;">';
@@ -823,6 +824,23 @@ $items = json_encode($items);
 
         <script type="text/javascript">
          $("#add_item").click(function(){
+       //     $('#tdata tr').each(function() {
+       //  var tvar_name = $(this).find('.var').text();
+       //  var titem_name = $(this).find('.item').text();
+       //  if(tvar_name==''){
+           
+       //      titem_name==$("#item_name").val();
+
+       //      $("#item_name").focus();
+       //     return false;
+
+       //  }else{
+       //     tvar_name==$("#varieties_id option:selected").text();
+       //     $("#varieties_id").focus();
+          
+       //     return false;
+       //  }
+       // });
           var item_name=$("#item_name").val();
           var brand=$("#brand").val();
           var category=$("#category").val();
@@ -967,7 +985,7 @@ $items = json_encode($items);
         "rec_qty":quantity,
         "gstamount":gstamount,
         "total":total,
-        "deleted":'no',
+        "deleted":'NO',
         "flag":'new',
        
        };
@@ -1131,45 +1149,50 @@ $items = json_encode($items);
       items[ref].total=prototal;
       calculation();
      }
+  //    function removeItem(idval){
+  //      var id = idval;
+  //      jQuery('#trItem_' + id).empty('');
+  //      delete items["sid"+idval] ;
+  //   $('#tdata tr').each(function(index) {
+  //    $(this).find('span.sn').html(index+1);
+  //  });
+  //   calculation();
+  // }
      function removeItem(idval){
+      var id = idval;
+
+       // jQuery('#trItem_' + id).empty('');
+       // delete items["sid"+idval] ;
+
+
+
+       if ($("#remove_tr"+idval).data('id')=='old') {
+
+        var id = idval;
+
+        jQuery('#trItem_' + id).empty('');
+
+        var ref = "sid"+idval;
+        items[ref].deleted='YES';
+        calculation();
+       // delete items[ref] ;
+
+      }else{
        var id = idval;
        jQuery('#trItem_' + id).empty('');
        delete items["sid"+idval] ;
-    $('#tdata tr').each(function(index) {
-     $(this).find('span.sn').html(index+1);
-   });
-    calculation();
-  }
-     // function removeItem(idval){
-     //  var id = idval;
-
-     //   // jQuery('#trItem_' + id).empty('');
-     //   // delete items["sid"+idval] ;
+         calculation();
+      }
 
 
 
-     //   if ($("#remove_tr"+idval).data('id')=='old') {
-     //    var id = idval;
-     //    jQuery('#trItem_' + id).empty('');
-     //    var ref = "sid"+idval;
-     //    items[ref].deleted='yes';
-     //   // delete items[ref] ;
-
-     //  }else{
-     //   var id = idval;
-     //   jQuery('#trItem_' + id).empty('');
-     //   delete items["sid"+idval] ;
-     //  }
+      $('#tdata tr').each(function(index) {
+       $(this).find('span.sn').html(index+1);
+      }); 
 
 
-
-     //  $('#tdata tr').each(function(index) {
-     //   $(this).find('span.sn').html(index+1);
-     //  });
-
-
-     //  calculation();
-     // }
+      calculation();
+     }
      function calculation() {
       itemslist = items;
 
@@ -1193,7 +1216,7 @@ $items = json_encode($items);
        tempItem = itemslist[vale];
 
        
-
+     if (tempItem['deleted']=='NO') {
 
 
         val=Number(tempItem["quantity"]);
@@ -1214,7 +1237,7 @@ $items = json_encode($items);
         tax=Number(tax)+(Number(tempItem['gstpercentage'])*Number(remamount));
 
   
-
+          }
        i++;
       }
       subtotal2=Number(subtotal1)+Number(tax);

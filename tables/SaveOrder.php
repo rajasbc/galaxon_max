@@ -189,6 +189,7 @@ $save_order=array();
                        $save_items['total']=$itemvar["total"];
                        $save_items['created_by']=$_SESSION['uid'];
                        $save_items['created_at']=date('Y-m-d H:i:s');
+                       $save_items['is_deleted']=$itemvar['deleted'];
 
 
 

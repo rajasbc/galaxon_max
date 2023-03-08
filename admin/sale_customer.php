@@ -16,12 +16,6 @@ $group_obj = new GroupName();
 $group_name = $group_obj->get_group_dt();
 ?>
 <style type="text/css">
-<?php if($branch_price['sale_price']=='yes'){
- ?>
- .hidden{
-  display: none;
- }
-<?php }?>
 
 .ui-autocomplete {
   max-height: 200px;
@@ -298,9 +292,14 @@ $group_name = $group_obj->get_group_dt();
                    <label>Mrp&nbsp;<label class="text-danger">*</label></label>
               <input type="text" id='mrp' class="form-control enterKeyclass" placeholder="Mrp">
                 </div>
-                <div class="col-3 form-group mb-3 hidden">
+                <div class="col-3 form-group mb-3 ">
                    <label>Branch Price&nbsp;<label class="text-danger">&nbsp;</label></label>
-              <input type="text" id='sale_price' class="form-control enterKeyclass " placeholder="Enter Branch Price">
+                   <?php if ($branch_price['sale_price']=='yes') { ?>
+                      <input type="text" id='sale_price' class="form-control enterKeyclass hidden" placeholder="Enter Branch Price" readonly>
+                  <?php }else{ ?>
+<input type="text" id='sale_price' class="form-control enterKeyclass hidden" placeholder="Enter Branch Price">
+                 <?php  } ?>
+              
                 </div>
                 <div class="col-2 form-group mb-3">
                    <label>Discount&nbsp;<label class="text-danger">&nbsp;</label></label>
@@ -934,11 +933,17 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
                 '<input onkeyup=fieldupdate({{sno}},this) class="form-control mrp" name="mrp[]" id="mrp{{sno}}" value="{{mrp}}" style="width:5rem; height:1.75rem">',
 
                 '</td>',
-                '<td class="text-left ch-4 hidden">',
-
-                '<input onkeyup=fieldupdate({{sno}},this) class="form-control sale_price" name="sale_price[]" id="sale_price{{sno}}" value="{{sale_price}}" style="width:5rem; height:1.75rem">',
-
+                <?php if($branch_price['sale_price']=='yes'){?>
+                '<td class="text-left ch-4">',
+                 
+                '<input onkeyup=fieldupdate({{sno}},this) class="form-control sale_price" name="sale_price[]"  readonly id="sale_price{{sno}}" value="{{sale_price}}" style="width:5rem; height:1.75rem">',
                 '</td>',
+              <?php } else{?>
+                  '<td class="text-left ch-4">',
+                 
+                '<input onkeyup=fieldupdate({{sno}},this) class="form-control sale_price" name="sale_price[]" id="sale_price{{sno}}" value="{{sale_price}}" style="width:5rem; height:1.75rem">',
+                '</td>',
+              <?php } ?>
                 '<td class="text-left ch-4">',
               
                 '<input onkeyup=fieldupdate({{sno}},this) class="form-control discount" name="discount[]" id="discount{{sno}}" value="{{discount}}" style="width:5rem; height:1.75rem">',

@@ -148,6 +148,7 @@ $item_name = $obj1->get_collection_items();
         <!-- /.modal-dialog -->
       </div>
       <!-- /.modal -->
+    </div>
 
 
 

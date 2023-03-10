@@ -30,7 +30,7 @@ if (count($result)>0) {
 			{
 
 
-			$editbtn = '<button type="button" id="'.$value['id'].'" class="btn btn-default btn-sm" onclick="edit_detail_page('.$value['id'].')"><span class="glyphicon glyphicon-pencil"><i class="fas fa-edit"></i></span></button>';
+			$editbtn = '<button type="button" id="'.$value['id'].'" class="btn btn-default btn-sm" onclick="edit_detail_page('.$value['id'].')" data-toggle="tooltip" data-placement="top" title="Edit Order"><span class="glyphicon glyphicon-pencil"><i class="fas fa-edit"></i></span></button>';
 			}
 			else
 			{
@@ -38,21 +38,21 @@ if (count($result)>0) {
 			}
 			if(count($get_sale)>0 && $_SESSION['type']!="ADMIN"){
 
-                $new_details = '<button type="button" id="'.$value['id'].'" class="btn btn-default btn-sm" onclick="new_detail_page('.$value['id'].')"><span class="glyphicon glyphicon-eye"><i class="fas fa-upload"></i></span></button>';
+                $new_details = '<button type="button" id="'.$value['id'].'" class="btn btn-default btn-sm" onclick="new_detail_page('.$value['id'].')" data-toggle="tooltip" data-placement="top" title="Received Order"><span class="glyphicon glyphicon-eye"><i class="fas fa-upload"></i></span></button>';
                 $editbtn1 = '';	
 
 			}else{
 
                 $new_details = '';
 
-                $editbtn1 = '<button type="button" id="'.$value['id'].'" class="btn btn-default btn-sm" onclick="edit_detail_page('.$value['id'].')"><span class="glyphicon glyphicon-pencil"><i class="fas fa-edit"></i></span></button>';
+                $editbtn1 = '<button type="button" id="'.$value['id'].'" class="btn btn-default btn-sm" onclick="edit_detail_page('.$value['id'].')" data-toggle="tooltip" data-placement="top" title="Edit Order"><span class="glyphicon glyphicon-pencil"><i class="fas fa-edit"></i></span></button>';
 
 			}
 
 
 
           if($_SESSION['type']=='ADMIN'){
-			$output [$j] =[$i,'<a  href= modify_purchase_order_view.php?id='.$value['id'].' id="'.$value['id'].'" >'.$value["purchase_no"].'</a>',($vendor_dt['name'].' - '. $vendor_dt['vendor_code']),$value['discount_amt'],$value['tax_amt'],$value['grand_total'],$value['paid_amt'],$value['balance_amt'],$value['order_type'],'<button type="button" id="'.$value['id'].'" class="btn btn-default btn-sm" onclick="new_detail_page('.$value['id'].')"><span class="glyphicon glyphicon-eye"><i class="fas fa-upload"></i></span></button> '.$editbtn.' <button type="button" id="'.$value['id'].'" class="btn btn-default btn-sm" onclick="new_detail_modal('.$value['id'].')"><span class="glyphicon glyphicon-eye"><i class="fas fa-eye"></i></span></button> <button type="button" id="'.$value['id'].'" class="btn btn-default btn-sm" onclick="print_page('.$value['id'].')"><span class="glyphicon glyphicon-eye"><i class="fas fa-print"></i></span></button>'];
+			$output [$j] =[$i,'<a  href= modify_purchase_order_view.php?id='.$value['id'].' id="'.$value['id'].'" >'.$value["purchase_no"].'</a>',($vendor_dt['name'].' - '. $vendor_dt['vendor_code']),$value['discount_amt'],$value['tax_amt'],$value['grand_total'],$value['paid_amt'],$value['balance_amt'],$value['order_type'],'<button type="button" id="'.$value['id'].'" class="btn btn-default btn-sm" onclick="new_detail_page('.$value['id'].')" data-toggle="tooltip" data-placement="top" title="Received Order"><span class="glyphicon glyphicon-eye"><i class="fas fa-upload"></i></span></button> '.$editbtn.' <button type="button" id="'.$value['id'].'" class="btn btn-default btn-sm" onclick="new_detail_modal('.$value['id'].')" data-toggle="tooltip" data-placement="top" title="View Purchase Details"><span class="glyphicon glyphicon-eye"><i class="fas fa-eye"></i></span></button> <button type="button" id="'.$value['id'].'" class="btn btn-default btn-sm" onclick="print_page('.$value['id'].')" data-toggle="tooltip" data-placement="top" title="Print"><span class="glyphicon glyphicon-eye"><i class="fas fa-print"></i></span></button>'];
 		}else{
             $output [$j] =[$i,'<a  href= modify_purchase_order_view.php?id='.$value['id'].' id="'.$value['id'].'" >'.$value["purchase_no"].'</a>',$item_qty[0]['qty'],$item_qty[0]['received_qty'],$value['order_type'],''.$new_details.''.$editbtn1.' <button type="button" id="'.$value['id'].'" class="btn btn-default btn-sm" onclick="new_detail_modal('.$value['id'].')"><span class="glyphicon glyphicon-eye"><i class="fas fa-eye"></i></span></button> <button type="button" id="'.$value['id'].'" class="btn btn-default btn-sm" onclick="print_page('.$value['id'].')"><span class="glyphicon glyphicon-eye"><i class="fas fa-print"></i></span></button>'];
 

@@ -61,7 +61,7 @@ if ($this->db->getpost('order_type')=='received') {
 	$purchase['order_orgin']='NEW';
 }
 if($this->db->getpost('shipping_id')==0){
-              if($this->db->getpost('shipping_id')!='empty'){
+              if($this->db->getpost('shipping_id')!='empty' && $_SESSION['type']=='ADMIN'){
       $shipping['name'] = $this->db->getpost('shipping_name');
       $shipping['email']= $this->db->getpost('email');
      $shipping['company_name'] = $this->db->getpost('shipping_company_name');

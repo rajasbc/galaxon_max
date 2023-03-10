@@ -17,7 +17,7 @@ $result=$obj->month_wise_report1($curPageName);
   padding-bottom: 30px!important;
 } 
 body{
-  overflow:auto ;
+  overflow-x:auto ;
 }
  
  }
@@ -90,8 +90,8 @@ body{
           <div class="col-12">
           <div class="card">
             
-              <div class="card-body">
-                <table  id="example1" style="overflow: scroll;" class="table  table-bordered table-striped">
+              <div class="card-body" style="overflow-x: auto;">
+                <table  id="example1"  class="table  table-bordered table-striped">
                    <thead class="text-center ">
         <tr><th class="check">S.No</th><th class="check">Staff Name</th>
           <?php
@@ -179,7 +179,7 @@ body{
               $present = "A";
              }
              if($val['attendance']=='Leave'){
-              $present = "L";
+              $present = "Leave";
              }
              if($val['attendance']=='Late'){
               $present = "Late";

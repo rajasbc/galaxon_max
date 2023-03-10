@@ -270,7 +270,7 @@ $items = json_encode($items);
                    <label>Sale Price&nbsp;<label class="text-danger">&nbsp;</label></label>
               <input type="text" id='updated_sale_price' class="form-control enterKeyclass" placeholder="sale price">
                 </div>
-                 <div class="col-2 form-group mb-3">
+                 <div class="col-1 form-group mb-3">
                   <label>Mrp&nbsp;<label class="text-danger">&nbsp;</label></label>
                   <input type="text" id='sale_price' class="form-control enterKeyclass" placeholder="Mrp">
                  </div>
@@ -278,7 +278,7 @@ $items = json_encode($items);
                   <label>Discount&nbsp;<label class="text-danger">&nbsp;</label></label>
                   <input type="text" id='discount' class="form-control enterKeyclass" placeholder="Discount">
                  </div>
-                 <div class="col-2 form-group mb-3">
+                 <div class="col-1 form-group mb-3">
                   <label>GST&nbsp;<label class="text-danger">&nbsp;</label></label>
 
                   <select class="form-control enterKeyclass" id="gst">
@@ -289,11 +289,11 @@ $items = json_encode($items);
                    <option value="28">28</option>
                   </select>
                  </div>
-                 <div class="col-1 form-group mb-3">
+                 <div class="col-sm-2 col-lg-2 col-md-2 form-group">
                   <label>Quantity&nbsp;<label class="text-danger">*</label></label>
                   <input type="text" id='quantity' class="form-control enterKeyclass" placeholder="Quantity">
                  </div>
-                 <div class="col-3 form-group mb-3 text-center" style="vertical-align: center; margin-top: 40px;">
+                 <div class="col-3 mt-10 form-group mb-3  text-center" style="margin-top: 40px" >
                   <button class="btn btn-primary" id="add_item">Add</button>
                  </div>
                 </form>

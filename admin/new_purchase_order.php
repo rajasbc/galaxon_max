@@ -2083,7 +2083,7 @@ success: function(res){
 <script type="text/javascript">
   $(document).ready(function(){
  items = [];
- shipping_data = [];
+
  data=[];
      $('#item_name').autocomplete({
       source: "../ajaxCalls/autocomplete_item_list.php",
@@ -2552,12 +2552,12 @@ $("#place_order").click(function(){
 $("#place_order").attr('disabled','disabled');
 var dobj=$.extend({},detailsarray);
 var obj = $.extend({}, items);
-var shipobj = $.extend({}, shipping_data);
+
 $.ajax({
 type: "POST",
 dataType:"json",
 url: '../ajaxCalls/add_purchase_order.php',
-data: $.param(obj)+'&'+$.param(dobj)+'&'+$.param(shipobj),
+data: $.param(obj)+'&'+$.param(dobj),
 success: function(res){
     if (res.status=='success') {
       global_alert_modal('success','Purchase Added SuccessFully...');

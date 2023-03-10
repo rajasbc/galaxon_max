@@ -88,6 +88,7 @@ $branch = $obj->show_branch();
     </section>
    
   </div>
+</div>
   
 
 

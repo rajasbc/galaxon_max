@@ -92,6 +92,7 @@ $result = $obj->get_group_name();
     </section>
    
   </div>
+</div>
   
 
 

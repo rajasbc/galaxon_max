@@ -58,6 +58,7 @@ $vendor_dt=$vendor_obj->get_vendor_dt($result[0]['vendor_id']);
                 <tr class="font-weight-bold" style="font-size:<?=$fontsize?>px">
                   <td>S.No</td>
                   <td class="text-left">Products</td>
+                  <td class="text-left">Variety</td>
                   <td class="text-rigth">Quantity</td>
                   <td class="text-rigth">Rate</td>
                   <td class="text-rigth">Discount</td>
@@ -71,6 +72,7 @@ $vendor_dt=$vendor_obj->get_vendor_dt($result[0]['vendor_id']);
                     <td class="border-center-0" ><?php echo $sno; ?></td>
                     
                     <td class="text-left" style="width:150px"><?php echo strtoupper($item['item_name']); ?></td>
+                     <td class="text-left" style="width:150px"><?php echo strtoupper($item['var_name']); ?></td>
                    
                  <td style="width:100px" class="text-center"><?php echo $item['qty']; ?></td>
  

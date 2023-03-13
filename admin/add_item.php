@@ -40,16 +40,16 @@ $group_name = $group_obj->get_group_data();
             <div class="card">
               <div class="card-body row col-12">
                 <div class="col-6 form-group mb-3">
-                   <label>Product Name&nbsp;<label class="text-danger enterAsTab">*</label></label>
+                   <span>Product Name&nbsp;<span class="text-danger enterAsTab">*</span></span>
               <input type="text" id='item_name' class="form-control enterKeyclass" placeholder="Product Name" autofocus>
                 </div>
                  <div class="col-6 form-group mb-3">
-                   <label>Product Code&nbsp;<label class="text-danger enterAsTab">*</label></label>
+                   <span>Product Code&nbsp;<span class="text-danger enterAsTab">*</span></span>
               <input type="text" id='item_code' class="form-control enterKeyclass" placeholder="Product Code" autofocus>
                 </div>
                  <div class="col-6 form-group mb-3">
-                  <label>Brand&nbsp;<label class="text-danger">*</label></label>
-                  <select class="form-control select2 enterKeyclass" id='brand' style="width: 100%;">
+                  <span>Brand&nbsp;<span class="text-danger">*</span></span>
+                  <select class="form-control enterKeyclass" id='brand' style="width: 100%;">
                     <option value="">Select Brand</option>
                     <?php foreach ($brand as $key => $value) {?>
                       <option  value="<?=$value['id']?>"><?=$value['name']?></option>
@@ -57,13 +57,13 @@ $group_name = $group_obj->get_group_data();
                     
                   </select>
                 </div>
-                 <div class="col-6 form-group mb-3">
+                 <!-- <div class="col-6 form-group mb-3">
                    <label>Sale Price/Vendor Price&nbsp;<label class="text-danger">&nbsp;</label></label>
               <input type="text" class="form-control enterKeyclass" id="mrp" placeholder="Sale Price/Vendor Price">
-                </div>
+                </div> -->
                 <div class="col-6 form-group mb-3">
-                  <label>Category&nbsp;<label class="text-danger">*</label></label>
-                  <select class="form-control select2 enterKeyclass" id="category" style="width: 100%;">
+                  <span>Category&nbsp;<span class="text-danger">*</span></span>
+                  <select class="form-control enterKeyclass" id="category" style="width: 100%;">
                     <option value="">Select Category</option>
                     <?php foreach ($category as $key => $value) {?> 
                       <option  value="<?=$value['id']?>"><?=$value['name']?></option>
@@ -72,27 +72,27 @@ $group_name = $group_obj->get_group_data();
                   </select>
                 </div>
                 
+                  <!-- <div class="col-6 form-group mb-3">
+                     <label>Mrp&nbsp;<label class="text-danger">&nbsp;</label></label>
+                <input type="text" class="form-control enterKeyclass" id="sale_price" placeholder="Mrp Price">
+                  </div> -->
                 <div class="col-6 form-group mb-3">
-                   <label>Mrp&nbsp;<label class="text-danger">&nbsp;</label></label>
-              <input type="text" class="form-control enterKeyclass" id="sale_price" placeholder="Mrp Price">
-                </div>
-                <div class="col-6 form-group mb-3">
-                  <label>Description</label>
-                  <select class="form-control select2 enterKeyclass" id="sub_category" style="width: 100%;">
+                  <span>Description</span>
+                  <select class="form-control enterKeyclass" id="sub_category" style="width: 100%;">
                     <option value="">Select Description</option>
                     <?php foreach ($description as $key => $value) {?>
                       <option  value="<?=$value['id']?>"><?=$value['name']?></option>
                     <?php }?>
                   </select>
                 </div>
-                <div class="col-6 form-group mb-3">
+               <!--  <div class="col-6 form-group mb-3">
                    <label>Discount</label>
               <input type="text" class="form-control enterKeyclass" id="discount" placeholder="Discount">
-                </div>
+                </div> -->
                
                
                 <div class="col-6 form-group mb-3">
-                   <label>Units&nbsp;<label class="text-danger">*</label></label>
+                   <span>Units&nbsp;<span class="text-danger">*</span></span>
                   <select class="form-control enterKeyclass" id="units" style="width: 100%;">
                     <option value="">Select Units</option>
                     <option value="Kg">Kg</option>
@@ -102,7 +102,7 @@ $group_name = $group_obj->get_group_data();
                     <option value="Box">Box</option>                  
                   </select>
                 </div>
-                <div class="col-6 form-group mb-3">
+               <!--  <div class="col-6 form-group mb-3">
                    <label>GST</label>
               <select class="form-control enterKeyclass" id="gst">
                 <option value="0">0</option>
@@ -111,10 +111,10 @@ $group_name = $group_obj->get_group_data();
                 <option value="18">18</option>
                 <option value="28">28</option>
               </select>
-                </div>
+                </div> -->
                  <div class="col-6 form-group mb-3">
-                  <label>Group Name&nbsp;<label class="text-danger">*</label></label>
-                  <select class="form-control select2 enterKeyclass" id="group_name" style="width: 100%;">
+                  <span>Group Name&nbsp;<span class="text-danger">*</span></span>
+                  <select class="form-control enterKeyclass" id="group_name" style="width: 100%;">
                     <option value="">Select Group Name</option>
                     <?php foreach ($group_name as $key => $value) {?>
                       <option  value="<?=$value['id']?>"><?=$value['group_name']?></option>
@@ -122,10 +122,10 @@ $group_name = $group_obj->get_group_data();
                     
                   </select>
                 </div>
-                <div class="col-6 form-group mb-3">
+                <!-- <div class="col-6 form-group mb-3">
                    <label>Quantity&nbsp;<label class="text-danger"></label></label>
               <input type="text" class="form-control enterKeyclass" id="quantity" placeholder="Quantity">
-                </div>
+                </div> -->
               </div>
               <!-- /.card-body -->
               <div class="card-footer">

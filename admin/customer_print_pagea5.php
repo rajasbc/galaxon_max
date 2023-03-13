@@ -473,12 +473,13 @@ if ($vendor['pincode']!='') {
       <th class="w-50 border border-dark">Product Name</th>
       <th class="border border-dark">Product Code</th>
       <th class="border border-dark">Variety</th>
-      <th class="border border-dark">Quantity</th>
+      <th class="border border-dark">Units</th>
+       <th class="border border-dark">Quantity</th>
+      <th class="border border-dark">Tons</th>   
       <th class="border border-dark">Mrp</th>
       <th class="border border-dark">Total Amount</th>
-      <th class="border border-dark">Description</th>
-      <th class="border border-dark">Units</th>
-      <th class="border border-dark">Tons</th>
+      <!-- <th class="border border-dark">Description</th> -->
+      
 <!-- <th>Vendor Price</th>
 <th>Mrp</th>
 <th>Discount %</th>
@@ -494,21 +495,23 @@ if ($vendor['pincode']!='') {
   $total_qty=$total_qty+$row['qty'];
   $total_ton=$total_ton+($row['qty']/1000);
   $total_amount=$total_amount+($row['total']);
-  if ($row['sub_category']!='' && $row['sub_category']!=0) {
-   $description =  $description_obj->get_description_dt($row['sub_category']);
-   $description_name=$description[0]['name'];
-  }?>
+  // if ($row['sub_category']!='' && $row['sub_category']!=0) {
+  //  $description =  $description_obj->get_description_dt($row['sub_category']);
+  //  $description_name=$description[0]['name'];
+  // }
+  ?>
   <tr class="border-right border-dark line_1">
    <td class="border-left-0"><?=$sno?></td>
    <td class="w-50 text-left"><b><?=$row['item_name']?></b></td>
    <td><?=$row['item_code']?></td>
    <td><?=$row['var_name']?></td>
+   <td class="text-right"><?=$row['units']?></td>
    <td ><?=$row['qty']?></td>
+   <td class="text-right"><?=($row['qty']/1000)?></td>
    <td class="text-right"><?=$row['mrp']?></td>
 <td class="text-right"><?=$row['total']?></td>
-   <td><?=$description_name?></td>
-   <td class="text-right"><?=$row['units']?></td>
-   <td class="text-right"><?=($row['qty']/1000)?></td>
+   <!-- <td><?=$description_name?></td> -->
+   
    
 <!-- <td class="text-right"><?=$row['mrp']?></td>
 <td class="text-right"><?=$row['sales_price']?></td> 
@@ -527,7 +530,7 @@ if ($vendor['pincode']!='') {
  <td class="text-right">&nbsp;</td>
  <td class="text-right">&nbsp;</td> 
  <td class="text-right">&nbsp;</td>
- <td class="text-right">&nbsp;</td> 
+ <!-- <td class="text-right">&nbsp;</td>  -->
 </tr>
 
 <?php if ($last_index==$temp) { ?>
@@ -541,12 +544,13 @@ if ($vendor['pincode']!='') {
 <td >&nbsp;</td> 
 <td >&nbsp;</td>
 <td >&nbsp;</td>
-<td class="text-right"><?=number_format($total_amount,2,".","")?></td>
 <!-- <td><?=$total_ton?></td> -->
 <td class="text-right">&nbsp;</td>
 <td class="text-right">&nbsp;</td>
-<td class="text-right">&nbsp;</td>
+<!-- <td class="text-right">&nbsp;</td> -->
 <!-- <td class="text-right">&nbsp;</td>  -->
+<td class="text-right"><?=number_format($total_amount,2,".","")?></td>
+
 
 </tr>
 </tfoot>

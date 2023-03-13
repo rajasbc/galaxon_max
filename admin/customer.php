@@ -128,7 +128,7 @@ $group_name = $group_obj->get_group_dt();
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Company Name&nbsp;<span class="text-danger">*</span></span>
+                    <span class="input-group-text">Company Name&nbsp;</span>
                   </div>
                   <input type="text" id='customer_company_name' name='customer_company_name' class="form-control enterKeyclass" placeholder="Enter Company Name">
                 </div>
@@ -291,15 +291,15 @@ include 'footer.php';
        else{
         $("#customer_name").css("border","1px solid lightgray");
        }
-       if (customer_company_name=='' && customer_company_name==0) {
-      global_alert_modal('warning','Enter customer Company Name...');
-      $("#customer_company_name").css("border","1px solid red");
-                    $("#customer_company_name").focus();
-                    return false;
-        }
-       else{
-        $("#customer_company_name").css("border","1px solid lightgray");
-       }
+      //  if (customer_company_name=='' && customer_company_name==0) {
+      // global_alert_modal('warning','Enter customer Company Name...');
+      // $("#customer_company_name").css("border","1px solid red");
+      //               $("#customer_company_name").focus();
+      //               return false;
+      //   }
+      //  else{
+      //   $("#customer_company_name").css("border","1px solid lightgray");
+      //  }
        if (mobile_no=='' && mobile_no==0) {
       global_alert_modal('warning','Enter customer Mobile No...');
       $("#mobile_no").css("border","1px solid red");
@@ -387,15 +387,15 @@ else{
        else{
         $("#customer_name").css("border","1px solid lightgray");
        }
-       if (customer_company_name=='' && customer_company_name==0) {
-      global_alert_modal('warning','Enter customer Company Name...');
-      $("#customer_company_name").css("border","1px solid red");
-                    $("#customer_company_name").focus();
-                    return false;
-        }
-       else{
-        $("#customer_company_name").css("border","1px solid lightgray");
-       }
+      //  if (customer_company_name=='' && customer_company_name==0) {
+      // global_alert_modal('warning','Enter customer Company Name...');
+      // $("#customer_company_name").css("border","1px solid red");
+      //               $("#customer_company_name").focus();
+      //               return false;
+      //   }
+      //  else{
+      //   $("#customer_company_name").css("border","1px solid lightgray");
+      //  }
        if (mobile_no=='' && mobile_no==0) {
       global_alert_modal('warning','Enter customer Mobile No...');
       $("#mobile_no").css("border","1px solid red");

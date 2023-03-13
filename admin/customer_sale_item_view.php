@@ -139,8 +139,8 @@ $sale_dt=$obj->get_sale_data($_GET['id']);
                       <th>Description</th>
                       <th>Units</th>
                       <th>Tons</th>
-                      <th>Price</th>
                       <th>Mrp</th>
+                      <th>Branch Price</th>
                       <th>Discount</th>
                       <th>Gst</th>
                       <th>Total</th>
@@ -164,7 +164,7 @@ $sale_dt=$obj->get_sale_data($_GET['id']);
 
    $tns = $row['qty']/1000;
 
-   $ttl=$row['total']+$row['tax_amt'];
+   $ttl=$row['total'];
    
    echo '<tr id="trItem_'.$sno.'">';
            echo '<td class=" ch-4">'.$sno.'</td>';

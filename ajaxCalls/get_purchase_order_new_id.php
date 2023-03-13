@@ -3,7 +3,7 @@ include '../tables/config.php';
 $obj = new PurchaseOrder();
 $result =  $obj->get_purchase_order($_GET['id']);
 $item_result =  $obj->get_purchase_order_item($_GET['id']);
-// print_r($item_result);die();
+
 $payment_result =  $obj->get_purchase_order_log($_GET['id']);
 $purchase_history_result =  $obj->get_purchase_order_history($_GET['id']);
 $vendor_obj=new Vendors();
@@ -65,6 +65,7 @@ $total_amount_dt=0;
                 <tr class="font-weight-bold" style="font-size:<?=$fontsize?>px">
                   <td>S.No</td>
                   <td class="text-left">Products</td>
+                  <td class="text-left">Variety</td>
                   <td class="text-rigth">Total Quantity</td>
                   <td class="text-rigth">Received Quantity</td>
                  <!--  <td class="text-rigth">Received Quantity</td> -->
@@ -79,6 +80,8 @@ $total_amount_dt=0;
                     <td class="text-left" style="width:150px"><?php echo strtoupper($item['item_name']); if ($item['item_code']!='') {
                     	echo strtoupper(' - '.$item['item_code']);
                     } ?></td>
+                    <td class="text-left" style="width:150px"><?php echo strtoupper($item['var_name']); ?></td>
+
                    
                  <td class="text-center">
                  	<?php echo $item['qty']; ?>

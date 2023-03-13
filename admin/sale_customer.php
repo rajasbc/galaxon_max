@@ -345,6 +345,7 @@ $group_name = $group_obj->get_group_dt();
                       <th class="hidden" id="branchprice">Branch Price</th>
                       <th>Discount</th>
                       <th id="test">Gst</th>
+                       <th id="test">Gst Amount</th>
                       <th>Total</th>
                       <th>Action</th>
                     </tr>
@@ -363,6 +364,7 @@ $group_name = $group_obj->get_group_dt();
      <td class="hidden">&nbsp;</td>
      <td>&nbsp;</td>
      <td class="temp_test">&nbsp;</td>
+      <td class="temp_test">&nbsp;</td>
      <td>&nbsp;</td>
      <td >&nbsp;</td>
    </tr>
@@ -370,7 +372,7 @@ $group_name = $group_obj->get_group_dt();
 </tbody>
 <tfoot>
 <tr>
-  <td colspan="13" class="td-last-1">
+  <td colspan="14" class="td-last-1">
  <div class="row">
 <div class="col-lg-4 col-sm-4 col-md-4">
   <div class="">
@@ -552,7 +554,7 @@ $group_name = $group_obj->get_group_dt();
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Company Name&nbsp;<span class="text-danger">*</span></span>
+                    <span class="input-group-text">Company Name&nbsp;</span>
                   </div>
                   <input type="text" id='customer_company_name' name='customer_company_name' class="form-control enterKeyclass" placeholder="Enter Company Name">
                 </div>
@@ -887,8 +889,10 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
     prototal=Number(($("#sale_price").val()*$("#quantity").val())-(($("#sale_price").val()*$("#quantity").val())*($("#discount").val()/100)));
 
      gstamount=prototal*(Number($("#gst").val())/100);
+    
 
      data["total"]=(total+gstamount).toFixed(2);
+     data["gst_amount"]= gstamount.toFixed(2);
 
 
       items["sid"+sno] = {
@@ -955,6 +959,9 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
                 '<input onkeyup=fieldupdate({{sno}},this) class="form-control gst" name="gst[]" id="gst{{sno}}" value="{{gst}}" style="width:5rem; height:1.75rem">',
 
                 '</td>',
+
+                '<td class="text-left ch-6 gst" id="gst_amt{{sno}}">{{gst_amt}}</td>',
+
                 '<td class="text-left ch-6" id="totalid{{sno}}">{{total}}</td>',
                 '<td class="text-center ch-4">',
                 '<button type="button" id="remove_tr{{sno}}" class="btn btn-default btn-sm" onclick="removeItem({{sno}})">',
@@ -976,6 +983,7 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
               tr = tr.replace(getRegEx('discount'), data['discount']);
     
               tr = tr.replace(getRegEx('gst'), data['gst']);
+              tr = tr.replace(getRegEx('gst_amt'),data['gst_amount']);
                tr = tr.replace(getRegEx('var_id'), data['varieties_id']);
                tr = tr.replace(getRegEx('item_id'), data['item_id']);
               tr = tr.replace(getRegEx('quantity'), data['quantity']);
@@ -1072,6 +1080,8 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
       var sale_price = $("#sale_price"+idval).val();
       var discount = $("#discount"+idval).val();
       var gst = $("#gst"+idval).val();
+      // var gst_amt = $("#gst_amt"+idval).val();
+  
       var quantity = $("#quantity"+idval).val();
       
       var item_id = $("#item"+idval).val();
@@ -1083,8 +1093,10 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
       var tons=Number($("#quantity"+idval).val())/1000;
      prototal=Number(sale_price*quantity)-(Number(sale_price*quantity)*(discount/100));
      gstamount=prototal*(gst/100);
+
      $("#totalid"+idval).html((prototal+gstamount).toFixed(2));
      $("#tons"+idval).html(tons);
+     $("#gst_amt"+idval).html((gstamount).toFixed(2));
      prototalamount=Number(prototal)+Number(gstamount);
     items[ref].sale_price=sale_price;
     items[ref].mrp=mrp;
@@ -1326,15 +1338,15 @@ success: function(res){
        else{
         $("#customer_name").css("border","1px solid lightgray");
        }
-       if (customer_company_name=='' && customer_company_name==0) {
-      global_alert_modal('warning','Enter customer Company Name...');
-      $("#customer_company_name").css("border","1px solid red");
-                    $("#customer_company_name").focus();
-                    return false;
-        }
-       else{
-        $("#customer_company_name").css("border","1px solid lightgray");
-       }
+      //  if (customer_company_name=='' && customer_company_name==0) {
+      // global_alert_modal('warning','Enter customer Company Name...');
+      // $("#customer_company_name").css("border","1px solid red");
+      //               $("#customer_company_name").focus();
+      //               return false;
+      //   }
+      //  else{
+      //   $("#customer_company_name").css("border","1px solid lightgray");
+      //  }
        if (mobile_no=='' && mobile_no==0) {
       global_alert_modal('warning','Enter customer Mobile No...');
       $("#mobile_no").css("border","1px solid red");

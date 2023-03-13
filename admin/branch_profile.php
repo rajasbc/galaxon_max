@@ -127,7 +127,7 @@ $result1 = $obj->get_shop_details();
             </div>
             
             <div class='form-row'>
-              <div class="form-group col-lg-4 mt-5">Signature</div>
+              <div class="form-group col-lg-4 mt-5">Image</div>
               <div class='form-group col-lg-4 mt-5'>
               <input type="file" name='shop_logo' id='shop_logo' value='' accept="image/*">
               </div>
@@ -143,7 +143,7 @@ $result1 = $obj->get_shop_details();
 
 
              <div class='form-row'>
-              <div class="form-group col-lg-4 mt-5">Image</div>
+              <div class="form-group col-lg-4 mt-5">Signature</div>
               <div class='form-group col-lg-4 mt-5'>
               <input type="file" name='shop_image' id='shop_image' value='' accept="image/*" >
               </div>

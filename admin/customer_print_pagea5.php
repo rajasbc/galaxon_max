@@ -519,7 +519,7 @@ $total_tax_amt=0;
    <!-- <td class="text-right"><?=($row['qty']/1000)?></td> -->
    <td class="text-right"><?=$discount_amt?></td>
 <td class="text-right"><?=$row['tax_amt']?></td>
-   <td class="text-right"><?=$row['mrp']?></td>
+   <td class="text-right"><?=$row['sales_price']?></td>
 <td class="text-right"><?=$row['total']?></td>
    <!-- <td><?=$description_name?></td> -->
    

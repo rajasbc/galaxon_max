@@ -281,7 +281,7 @@ return $result;
 }
 public function get_item_name($it_id,$fdate,$tdate,$b_id){
   
- $sql = "select a.*,b.* from customer_sale a left join customer_sale_details b on a.sale_id=b.sale_id where b.item_id=".$it_id." and a.created_at>='".$fdate."' and a.created_at<='".$tdate."' and a.branch_id=".$b_id." and a.is_deleted='NO'";
+   $sql = "select a.*,b.* from customer_sale a left join customer_sale_details b on a.sale_id=b.sale_id where b.item_id=".$it_id." and date(a.created_at)>='".$fdate."' and date(a.created_at)<='".$tdate."' and a.branch_id=".$b_id." and a.is_deleted='NO'";
 
 $result=$this->db->GetResultsArray($sql);
 

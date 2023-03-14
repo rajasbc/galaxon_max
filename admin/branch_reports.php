@@ -137,7 +137,7 @@ $item_name = $obj1->get_collection_items();
    
   </div>
   <div class="modal fade" id="order_modal" data-backdrop='static'>
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-xl">
           <div class="modal-content">
             <div class="modal-body">
              

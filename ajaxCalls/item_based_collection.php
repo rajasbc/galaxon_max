@@ -3,9 +3,12 @@ include '../tables/config.php';
 // error_reporting(E_ALL);
 $obj = new CustomerSale();
 $obj1 = new  Shops();
+
 if($_POST['item_id']!=0 && $_POST['item_id']!=''){
+
 $items_data = $obj->get_item_name($_POST['item_id'],$_POST['fdate'],$_POST['tdate'],$_POST['branch_id']);
 }else{
+
 $items_data = $obj->get_collection($_POST['fdate'],$_POST['tdate'],$_POST['branch_id']);
 }
 

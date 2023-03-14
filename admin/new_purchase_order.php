@@ -1160,7 +1160,9 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
      $("#tons"+idval).html(tons);
     items[ref].sale_price=sale_price;
     items[ref].mrp=mrp;
+    <?php if($_GET['type']=='received'){?>
     items[ref].updated_sale_price = updated_sale_price;
+    <?php } ?>
     items[ref].quantity=quantity;
     items[ref].discount=discount;
     items[ref].gst=gst;

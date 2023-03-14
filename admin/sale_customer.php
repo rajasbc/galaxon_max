@@ -889,6 +889,8 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
     prototal=Number(($("#sale_price").val()*$("#quantity").val())-(($("#sale_price").val()*$("#quantity").val())*($("#discount").val()/100)));
 
      gstamount=prototal*(Number($("#gst").val())/100);
+
+     total_amt = prototal+gstamount;
     
 
      data["total"]=(total+gstamount).toFixed(2);
@@ -912,7 +914,7 @@ if ($("#item_id").val()==0 || $("#item_id").val() =='') {
       "gstpercentage":gst/100,
       "quantity":quantity,
       "gstamount":gstamount,
-      "total":total
+      "total":total_amt
       };
             $('#tdata tr').each(function(index) {
               $(this).find('span.sn').html(index+1);

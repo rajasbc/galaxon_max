@@ -64,8 +64,11 @@ $result1 = $obj1->branch_customer_data($result[0]['customer_id']);
                   <td class="text-left">Variety</td>
                   <td class="text-left">Mrp</td>
                   <td class="text-left">Sale Price</td>
-                  <td class="text-left">Discount</td>
-                  <td class="text-left">Gst</td>
+                  <td class="text-left">Discount(%)</td>
+                   <td class="text-left">Discount Amt</td>
+
+                  <td class="text-left">Gst(%)</td>
+                   <td class="text-left">Gst Amt</td>
                   <td class="text-left">Qty</td>
                    <td class="text-left">Total</td>
 
@@ -76,7 +79,10 @@ $result1 = $obj1->branch_customer_data($result[0]['customer_id']);
                 <?php 
 
                   $total = 0 ;
+
+
                 foreach($result as $item){
+                    $discount_amt = ($item['sales_price'])*($item['discount']/100);
 ?>
                 <tr class=" border-dark line_1">
                     <td class="border-center-0" ><?php echo $sno; ?></td>
@@ -88,7 +94,9 @@ $result1 = $obj1->branch_customer_data($result[0]['customer_id']);
                     <td class="text-left"><?php echo $item['mrp'] ?></td> 
                      <td class="text-left"><?php echo $item['sales_price'] ?></td> 
                       <td class="text-left"><?php echo $item['discount'] ?></td> 
+                       <td class="text-left"><?php echo  $discount_amt ?></td> 
                       <td class="text-left"><?php echo $item['gst'] ?></td> 
+                       <td class="text-left"><?php echo $item['tax_amt'] ?></td>  
                         
                  <td class="text-left"><?php echo $item['qty']; ?></td>
                   <td class="text-left"><?php echo $item['total'] ?></td> </tr>
@@ -101,7 +109,7 @@ $result1 = $obj1->branch_customer_data($result[0]['customer_id']);
                   ?>
               </tbody>
               <tfoot>
-                 <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>Total</td><td><?php echo number_format($total,'2','.','') ?></td></tr>
+                 <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>Total</td><td><?php echo number_format($total,'2','.','') ?></td></tr>
 
               </tfoot>
           </table> 

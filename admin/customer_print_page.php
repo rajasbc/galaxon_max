@@ -565,7 +565,7 @@ $total_tax_amt=0;
 <td class="text-right">&nbsp;</td>
 <td class="text-right">&nbsp;</td>
 
-<td class="w-50 text-left"><b>Total Dicount</b></td>
+<td class="w-50 text-left"><b>Total Discount</b></td>
 <td class="text-right"><?=number_format($total_discount,2,".","")?></td>
 
 

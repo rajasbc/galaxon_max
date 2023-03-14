@@ -286,3 +286,31 @@ success: function(res){
     window.open('print_page.php?id='+btoa(e),'_blank');
   }
 </script>
+<script type="text/javascript">
+  
+function preview_edit_page(id){
+var po_id = id;
+
+$.ajax({
+type: "POST",
+dataType:"json",
+url: '../ajaxCalls/update_received_order.php',
+data: {'po_id':po_id},
+success: function(res){
+ if (res.status=='success') {
+  
+  
+ }
+}
+
+});
+
+}
+
+
+
+
+
+
+
+</script>

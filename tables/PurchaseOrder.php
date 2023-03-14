@@ -1258,6 +1258,14 @@ $result = $this->db->getAsIsArray($sql);
 return $result;
 
 }
+// public function update_rec_order($id){
+
+// $sql = 'select * from '.$this->tablename.' where ';
+
+
+
+
+// }
 
 
 

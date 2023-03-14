@@ -478,9 +478,10 @@ if ($customer_result[0]['pincode']!='') {
 <th class="border border-dark">Variety</th>
 <th class="border border-dark">Units</th>
 <th class="border border-dark">Quantity</th>
-<th class="border border-dark">Tons</th>
-<th class="border border-dark">Mrp</th>
-<th class="border border-dark">Total Amount</th>
+<th class="border border-dark">Dis Amt</th>
+<th class="border border-dark">GST Amt</th>
+<th class=" border border-dark">Price</th>
+<th class="border border-dark">Total</th>
 <!-- <th class="border border-dark">Description</th> -->
 
 <!-- <th>Vendor Price</th>
@@ -491,7 +492,11 @@ if ($customer_result[0]['pincode']!='') {
 </tr>
 </thead>
 <tbody class="text-center" id="tdata">
- <?php foreach (array_slice($sales_item_variety, $start_index, $end_index) as $row) {
+ <?php 
+$total_discount=0;
+$total_tax_amt=0;
+
+ foreach (array_slice($sales_item_variety, $start_index, $end_index) as $row) {
    $sno++;
    $temp++;
    $description='';
@@ -499,6 +504,10 @@ if ($customer_result[0]['pincode']!='') {
    $total_qty=$total_qty+$row['qty'];
    $total_ton=$total_ton+($row['qty']/1000);
    $total_amount=$total_amount+($row['total']);
+
+   $discount_amt = ($row['sales_price'])*($row['discount']/100);
+   $total_discount+=$discount_amt;
+   $total_tax_amt+=$row['tax_amt'];
    // if ($row['sub_category']!='' && $row['sub_category']!=0) {
    //   $description =  $description_obj->get_description_dt($row['sub_category']);
    //   $description_name=$description[0]['name'];
@@ -512,9 +521,11 @@ if ($customer_result[0]['pincode']!='') {
 
 <td class="text-right"><?=$row['units']?></td>
 <td ><?=$row['qty']?></td>
-<td class="text-right"><?=($row['qty']/1000)?></td>
+<!-- <td class="text-right"><?=($row['qty']/1000)?></td> -->
+<td class="text-right"><?=$discount_amt?></td>
+<td class="text-right"><?=$row['tax_amt']?></td>
 <td class="text-right"><?=$row['mrp']?></td>
-<td class="text-right"><?=($row['total'])?></td>
+<td class="text-right"><?=$row['total']?></td>
   
 <!-- <td class="text-right"><?=$row['mrp']?></td> -->
 <!-- <td class="text-right"><?=$row['sales_price']?></td> 
@@ -539,9 +550,10 @@ if ($customer_result[0]['pincode']!='') {
  <?php if ($last_index==$temp) { ?>
   </tbody>
 <tfoot>
-<tr class="border-right border-top border-dark font-weight-bold line_1">
+  <tr class=" border-top border-dark font-weight-bold line_1">
 <td class="border-left-0">&nbsp;</td>
-<td class="w-50 text-left"><b>Total</b></td>
+
+
 <!-- <td ><?=$total_qty?></td> -->
 <td >&nbsp;</td>
 <td >&nbsp;</td>
@@ -551,6 +563,47 @@ if ($customer_result[0]['pincode']!='') {
 <!-- <td><?=$total_ton?></td> -->
 <td class="text-right">&nbsp;</td>
 <td class="text-right">&nbsp;</td>
+<td class="text-right">&nbsp;</td>
+
+<td class="w-50 text-left"><b>Total Dicount</b></td>
+<td class="text-right"><?=number_format($total_discount,2,".","")?></td>
+
+
+</tr>
+  <tr class=" border-dark font-weight-bold line_1">
+<td class="border-left-0">&nbsp;</td>
+
+
+<!-- <td ><?=$total_qty?></td> -->
+<td >&nbsp;</td>
+<td >&nbsp;</td>
+<td >&nbsp;</td>
+<td >&nbsp;</td>
+
+<!-- <td><?=$total_ton?></td> -->
+<td class="text-right">&nbsp;</td>
+<td class="text-right">&nbsp;</td>
+<td class="text-right">&nbsp;</td>
+<td class="w-50 text-left"><b>Total GST</b></td>
+<td class="text-right"><?=number_format($total_tax_amt,2,".","")?></td>
+
+
+</tr>
+<tr class=" border-dark font-weight-bold line_1">
+<td class="border-left-0">&nbsp;</td>
+
+
+<!-- <td ><?=$total_qty?></td> -->
+<td >&nbsp;</td>
+<td >&nbsp;</td>
+<td >&nbsp;</td>
+<td >&nbsp;</td>
+
+<!-- <td><?=$total_ton?></td> -->
+<td class="text-right">&nbsp;</td>
+<td class="text-right">&nbsp;</td>
+<td class="text-right">&nbsp;</td>
+<td class="w-50 text-left"><b>Total Amount</b></td>
 <td class="text-right"><?=number_format($total_amount,2,".","")?></td>
 
 

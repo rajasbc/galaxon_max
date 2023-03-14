@@ -190,7 +190,7 @@ margin-bottom: 0px !important;
 </style>
 <style>
       .bill-table.large{
-        height: 650px;
+        height: 750px;
       }
     </style>
       <?php
@@ -469,19 +469,19 @@ if ($customer_result[0]['pincode']!='') {
 <div class="row">
 <div class="col-sm-12 col-md-12 col-lg-12 p-0">
 <div id="table-fixed" class="table-fixed">
-<table class="table text-center bill-table border w-100 border-dark  large  " id="bill-table">
+<table class="table text-center bill-table border  border-dark  large  " id="bill-table">
 <thead>
 <tr class="border border-dark font-weight-bold">
-<th class="border border-dark">S.No</th>
-<th class="w-50 border border-dark">Product Name</th>
-<th class="border border-dark">Product Code</th>
-<th class="border border-dark">Variety</th>
-<th class="border border-dark">Units</th>
-<th class="border border-dark">Quantity</th>
-<th class="border border-dark">Dis Amt</th>
-<th class="border border-dark">GST Amt</th>
-<th class=" border border-dark">Price</th>
-<th class="border border-dark">Total</th>
+<th class="border border-dark" style="width: 5%;">S.No</th>
+<!-- <th class="border border-dark" style="width: 15%;">Product Name</th> -->
+<th class="border border-dark" style="width: 30%;">Product Code</th>
+<th class="border border-dark" style="width: 20%;">Variety</th>
+<th class="border border-dark" style="width: 8%;">Units</th>
+<th class="border border-dark" style="width: 10%;">Qty</th>
+<th class="border border-dark" style="width: 12%;">Dis Amt</th>
+<th class="border border-dark" style="width: 30%;">GST Amt</th>
+<th class=" border border-dark" style="width: 10%;">Price</th>
+<th class="border border-dark" style="width: 10%;">Total</th>
 <!-- <th class="border border-dark">Description</th> -->
 
 <!-- <th>Vendor Price</th>
@@ -493,8 +493,8 @@ if ($customer_result[0]['pincode']!='') {
 </thead>
 <tbody class="text-center" id="tdata">
  <?php 
-$total_discount=0;
-$total_tax_amt=0;
+// $total_discount=0;
+// $total_tax_amt=0;
 
  foreach (array_slice($sales_item_variety, $start_index, $end_index) as $row) {
    $sno++;
@@ -506,8 +506,8 @@ $total_tax_amt=0;
    $total_amount=$total_amount+($row['total']);
 
    $discount_amt = ($row['sales_price'])*($row['discount']/100);
-   $total_discount+=$discount_amt;
-   $total_tax_amt+=$row['tax_amt'];
+   $total_discount=$total_discount+$discount_amt;
+   $total_tax_amt=$total_tax_amt+$row['tax_amt'];
    // if ($row['sub_category']!='' && $row['sub_category']!=0) {
    //   $description =  $description_obj->get_description_dt($row['sub_category']);
    //   $description_name=$description[0]['name'];
@@ -515,8 +515,8 @@ $total_tax_amt=0;
    ?>
 <tr class="border-right border-dark line_1">
 <td class="border-left-0"><?=$sno?></td>
-<td class="w-50 text-left"><b><?=$row['item_name']?></b></td>
-<td><?=$row['item_code']?></td>
+<td class="text-left"><b><?=$row['item_name']?></b></td>
+<!-- <td><?=$row['item_code']?></td> -->
 <td><?=$row['var_name']?></td>
 
 <td class="text-right"><?=$row['units']?></td>
@@ -536,14 +536,14 @@ $total_tax_amt=0;
 <?php }?>
 <tr class="border-right border-dark">
 <td class="border-left-0">&nbsp;</td>
-<td class="w-50 text-left"><b></b></td>
+<td class="text-left"><b></b></td>
 <td >&nbsp;</td>
 <td >&nbsp;</td>
 <td class="text-right">&nbsp;</td>
 <td class="text-right">&nbsp;</td>
 <td class="text-right">&nbsp;</td>
 <td class="text-right">&nbsp;</td> 
-<td class="text-right">&nbsp;</td>
+<!-- <td class="text-right">&nbsp;</td> -->
 <!-- <td class="text-right">&nbsp;</td>  -->
 </tr>
 
@@ -561,11 +561,11 @@ $total_tax_amt=0;
 <td >&nbsp;</td>
 
 <!-- <td><?=$total_ton?></td> -->
+<!-- <td class="text-right">&nbsp;</td> -->
 <td class="text-right">&nbsp;</td>
-<td class="text-right">&nbsp;</td>
-<td class="text-right">&nbsp;</td>
+<!-- <td class="text-right">&nbsp;</td> -->
 
-<td class="w-50 text-left"><b>Total Discount</b></td>
+<td class=" text-left" colspan="2"><b>Total Discount</b></td>
 <td class="text-right"><?=number_format($total_discount,2,".","")?></td>
 
 
@@ -581,10 +581,10 @@ $total_tax_amt=0;
 <td >&nbsp;</td>
 
 <!-- <td><?=$total_ton?></td> -->
+<!-- <td class="text-right">&nbsp;</td> -->
 <td class="text-right">&nbsp;</td>
-<td class="text-right">&nbsp;</td>
-<td class="text-right">&nbsp;</td>
-<td class="w-50 text-left"><b>Total GST</b></td>
+<!-- <td class="text-right">&nbsp;</td> -->
+<td class=" text-left" colspan="2"><b>Total GST</b></td>
 <td class="text-right"><?=number_format($total_tax_amt,2,".","")?></td>
 
 
@@ -600,10 +600,10 @@ $total_tax_amt=0;
 <td >&nbsp;</td>
 
 <!-- <td><?=$total_ton?></td> -->
+<!-- <td class="text-right">&nbsp;</td> --> 
 <td class="text-right">&nbsp;</td>
-<td class="text-right">&nbsp;</td>
-<td class="text-right">&nbsp;</td>
-<td class="w-50 text-left"><b>Total Amount</b></td>
+<!-- <td class="text-right">&nbsp;</td> -->
+<td class=" text-left" colspan="2"><b>Total Amount</b></td>
 <td class="text-right"><?=number_format($total_amount,2,".","")?></td>
 
 

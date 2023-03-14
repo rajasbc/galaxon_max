@@ -890,6 +890,23 @@ success: function(res){
 
 <script type="text/javascript">
   $("#add_item").click(function(){
+    var var_id = $("#varieties_id").val();
+     if(var_id==0){
+
+      global_alert_modal('warning','select Variety Name...');
+         $("#varieties_id").css('border','1px solid red');
+                    $("#varieties_id").focus();
+
+                    return false;
+
+
+     }else{
+
+        $("#varieties_id").css("border","1px solid lightgray");
+
+
+     }
+
     var item_name=$("#item_name").val();
      var brand=$("#brand").val();
      var category=$("#category").val();
@@ -1463,6 +1480,7 @@ success: function(res){
       $("#gst").val(res.gst);
       $("#sub_category").val(res.sub_category);
       $("#varieties_id").html(res.varieties);
+
       $("#updated_sale_price").val(res.updated_sale_price);
   }
 
@@ -2190,6 +2208,22 @@ success: function(res){
 
 <script type="text/javascript">
   $("#add_item").click(function(){
+   var var_id = $("#varieties_id").val();
+     if(var_id==0){
+
+      global_alert_modal('warning','select Variety Name...');
+         $("#varieties_id").css('border','1px solid red');
+                    $("#varieties_id").focus();
+
+                    return false;
+
+
+     }else{
+
+        $("#varieties_id").css("border","1px solid lightgray");
+
+
+     }
     var item_name=$("#item_name").val();
      var brand=$("#brand").val();
      var category=$("#category").val();

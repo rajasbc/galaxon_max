@@ -71,7 +71,7 @@ $items=json_encode($items);
  .table-scroll {
   position: relative;
   width:100%;
-  z-index: 1;
+  z-index: 0;
   margin: auto;
   overflow: auto;
   <?php if (count($purchase_order_item_dt)>=7) { ?>
@@ -739,6 +739,24 @@ $items=json_encode($items);
 
         <script type="text/javascript">
          $("#add_item").click(function(){
+           var var_id = $("#varieties_id").val();
+     if(var_id==0){
+
+      global_alert_modal('warning','select Variety Name...');
+         $("#varieties_id").css('border','1px solid red');
+                    $("#varieties_id").focus();
+
+                    return false;
+
+
+     }else{
+
+        $("#varieties_id").css("border","1px solid lightgray");
+
+
+     }
+
+
           var item_name=$("#item_name").val();
           var brand=$("#brand").val();
           var category=$("#category").val();

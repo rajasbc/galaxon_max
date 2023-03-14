@@ -30,6 +30,7 @@ $output['units']=$result[0]['units'];
 $output['item_name']=$result[0]['item_name'];
 $output['item_code']=$result[0]['item_code'];
 if(count($Vresult)>0){
+$output['id']=$result[0]['id'];	
 $output['mrp']=0;
 $output['sale_price']=0;
 $output['updated_sale_price']=$result[0]['updated_purchase_price'];

@@ -204,7 +204,7 @@ if ($this->db->getpost('shipping_d_date')!='') {
 
                        	$var_res=$this->db->GetResultsArray($var_sql);
 
-                         
+                     
                        	if (count($var_res)>0) {
                         $update_var=array();
                        	$update_var['qty']=$var_res[0]['qty']+$itemvar['quantity'];
@@ -219,7 +219,19 @@ if ($this->db->getpost('shipping_d_date')!='') {
                      $update_item['qty'] = $item_res[0]['qty']+$itemvar['quantity'];
 
                         $this->db->mysql_update('items',$update_item,'id='.$item_res[0]['id']);
-                       	}
+                       	}else{
+
+                           $rec_var = array();
+                           $rec_var['shop_id']=$_SESSION['shop_id'];
+                           $rec_var['branch_id']=$_SESSION['branch_id'];
+                           $rec_var['item_id']=$itemvar['item_id'];
+                           $rec_var['variety_id']=$itemvar['varieties_id'];
+                           $rec_var['qty']=$itemvar['quantity'];
+                          $this->db->mysql_insert('variety_items',$rec_var); 
+                         
+
+
+                        }
                       $update_price ='select * from varieties where id='.$itemvar['varieties_id'].' and branch_id='.$_SESSION['branch_id'];
                       $price = $this->db->getAsIsArray($update_price);
 
@@ -1258,15 +1270,26 @@ $result = $this->db->getAsIsArray($sql);
 return $result;
 
 }
-// public function update_rec_order($id){
+public function request_order(){
+  // $date = date('Y-m-d');
+  $filter_date = date('Y-m-d',strtotime('-5 days'));
 
-// $sql = 'select * from '.$this->tablename.' where ';
+$sql = "select * from ".$this->tablename." where branch_id!='".$_SESSION['branch_id']."' and is_deleted='NO' and date(created_at)<='".$filter_date."' and order_type='NEW'";
+$result = $this->db->GetResultsArray($sql);
+return $result;
+
+
+}
+public function get_sale_order($id){
+
+  $sql = "select * from branch_sale where branch_id!='".$_SESSION['branch_id']."' and po_id='".$id."'" ;
+
+$result = $this->db->GetResultsArray($sql);
 
 
 
-
-// }
-
+return $result;
+}
 
 
 }

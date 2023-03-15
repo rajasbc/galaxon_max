@@ -3,6 +3,9 @@ include '../tables/config.php';
 if (empty($_SESSION)==true) {
  header('location:../index.php');
 }
+$obj = new Shops();
+$shop_name = $obj->get_shop_name($_SESSION['branch_id']);
+
 ?>
 <?php if($_SESSION['type']=='ADMIN'){ ?>
 <!DOCTYPE html>
@@ -729,7 +732,8 @@ if (empty($_SESSION)==true) {
           <img src="../dist/img/userlogo.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a  class="d-block">Branch</a>
+
+          <a  class="d-block"><?= $shop_name[0]['name'] ?></a>
         </div>
       </div>
 

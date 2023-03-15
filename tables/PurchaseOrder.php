@@ -228,8 +228,12 @@ if ($this->db->getpost('shipping_d_date')!='') {
                            $rec_var['variety_id']=$itemvar['varieties_id'];
                            $rec_var['qty']=$itemvar['quantity'];
                           $this->db->mysql_insert('variety_items',$rec_var); 
-                         
 
+                         $item_sql = 'select * from items where id='.$itemvar['item_id'].' and branch_id='.$_SESSION['branch_id'].'';
+                         $item_res=$this->db->GetResultsArray($item_sql);
+                         $update_item=array();
+                     $update_item['qty'] = $item_res[0]['qty']+$itemvar['quantity'];
+                     $this->db->mysql_update('items',$update_item,'id='.$item_res[0]['id']);
 
                         }
                       $update_price ='select * from varieties where id='.$itemvar['varieties_id'].' and branch_id='.$_SESSION['branch_id'];
@@ -250,6 +254,7 @@ if ($this->db->getpost('shipping_d_date')!='') {
                        	// $this->db->mysql_insert('variety_items', $update_var);
                         //  }
                        	}else{
+
 
                             $item_sql = 'select * from items where id='.$itemvar['item_id'].' and branch_id='.$_SESSION['branch_id'].'';
                          $item_res=$this->db->GetResultsArray($item_sql);

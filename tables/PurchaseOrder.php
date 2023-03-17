@@ -1295,7 +1295,38 @@ $result = $this->db->GetResultsArray($sql);
 
 return $result;
 }
+public function get_request_order($po_id){
+  $filter_date = date('Y-m-d',strtotime('-5 days'));
 
+ $sql = "select a.*,b.* from purchase_order a left join branch_sale b on a.id = b.po_id where a.id='".$po_id."' and a.branch_id!='".$_SESSION['branch_id']."' and date(a.created_at)<='".$filter_date."' and a.is_deleted='NO' and order_type='NEW'";
+$result = $this->db->GetResultsArray($sql);
+
+return $result;
+}
+public function get_product_total($id,$item_id){
+
+ $sql = 'select * from '.$this->tablename5.' where purchase_id='.$id.' and branch_id='.$_SESSION['branch_id'].' and item_id='.$item_id.' and is_deleted="NO"';
+$result = $this->db->GetResultsArray($sql);
+
+return $result;
+
+
+}
+public function branch_order_notify(){
+
+$sql = 'select * from '.$this->tablename.' where branch_id='.$_SESSION['branch_id'].' and is_deleted="NO" and order_type="NEW"';
+$result = $this->db->GetResultsArray($sql);
+
+return $result;
+
+}
+public function get_branch_sale($po_id){
+ $sql = "select * from branch_sale where branch_id='".$_SESSION['branch_id']."' and po_id='".$po_id."'" ;
+
+$result = $this->db->GetResultsArray($sql);
+return $result;
+
+}
 
 }
 ?>

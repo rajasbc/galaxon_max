@@ -306,6 +306,12 @@ success: function(res){
 });
 
 }
+function edit_rec_order(id){
+window.location="edit_received_order.php?id="+btoa(id);
+
+
+
+}
 
 
 

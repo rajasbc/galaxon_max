@@ -143,9 +143,9 @@ if($update_id){
 
 }
 
-public function get_bill_no($b_id,$purchase_no){
+public function get_bill_no($b_id,$p_id){
 
-$sql = 'select * from '.$this->tablename.' where branch_id='.$b_id.' and purchase_no='.$purchase_no.'';
+$sql = 'select * from '.$this->tablename.' where branch_id='.$b_id.' and po_id='.$p_id.'';
 $result = $this->db->GetResultsArray($sql);
 
 // print_r($result);die();

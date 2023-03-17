@@ -7,7 +7,7 @@ $obj = new PurchaseOrder();
 $obj1 = new BranchSale();
 // $result = $obj->order_details($_GET['id'],$_GET['branch_id']);
 $result = $obj1->get_amount_details($_GET['id'],$_GET['branch_id']);
-// print_r($result);die();
+
 
 $result1 = $obj->branch_code($result[0]['branch_id']);
 

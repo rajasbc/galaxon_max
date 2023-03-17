@@ -1,6 +1,51 @@
 <?php 
 include 'header.php';
+$obj = new  PurchaseOrder();
+$result = $obj->request_order();
+$i=0;
+foreach ($result as $key => $value) {
+  // print_r($value);
+  // $i++;
+ $result2 = $obj->get_sale_order($value['id']);
+
+ 
+
+
+if(count($result2)==0)
+{
+  $i++;
+}
+
+}
+if($_SESSION['type']!='ADMIN'){
+
+$result3 = $obj->branch_order_notify();
+$i=0;
+foreach($result3 as $row){
+
+$res = $obj->get_branch_sale($row['id']);
+
+if(count($res)!=0)
+  $i++;
+
+}
+
+}
+
+;
+
+
 ?>
+<style type="text/css">
+  .dot {
+            height: 25px;
+            width: 25px;
+            background-color: #dc3545;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+</style>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper watermark_img">
     <!-- Content Header (Page header) -->
@@ -14,7 +59,13 @@ include 'header.php';
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
               <li class="breadcrumb-item active">Dashboard</li>
-               <li class="breadcrumb-item active">Request Order Notification</li>
+              <?php if($_SESSION['type']=='ADMIN'){?>
+              <?php if($i>0) {?>
+               <li class="breadcrumb-item"><a href="branch_received_order.php">Request Order Notification<span class="total-count dot text-center text-white"><?php  echo $i ?></span></a></li>
+             <?php } ?>
+           <?php }else{?>
+            <li class="breadcrumb-item"><a href="purchase_order.php?type=NEW">Notification<span class="total-count dot text-center text-white"><?php  echo $i ?></span></a></li>
+            <?php } ?>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->

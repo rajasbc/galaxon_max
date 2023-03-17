@@ -46,7 +46,6 @@ if (count($result)>0) {
                 if($value['order_type']=='NEW'){
                 $color = '<span style="color:red;">New Arrivals!</span>';
             }else{
-            	
             	$color='';
             }
 
@@ -54,7 +53,7 @@ if (count($result)>0) {
 
                 $new_details = '';
                 $editbtn1 = '<button type="button" id="'.$value['id'].'" class="btn btn-default btn-sm" onclick="edit_detail_page('.$value['id'].')" data-toggle="tooltip" data-placement="top" title="Edit Order"><span class="glyphicon glyphicon-pencil"><i class="fas fa-edit"></i></span></button>';
-
+               $color='';
                   
 			}
 

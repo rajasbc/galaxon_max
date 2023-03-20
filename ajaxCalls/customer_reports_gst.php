@@ -1,14 +1,16 @@
 <?php 
 include '../tables/config.php';
+// error_reporting(E_ALL);
 
 $obj = new CustomerSale();
 $obj1 = new Customers();
-$result = $obj->get_customer_collection($_POST['fdate'],$_POST['tdate'],$_POST['customer_id'],$_POST['gst']);
 $out=array();
 $out1=array();
 
-// print_r($result);die();
 
+$result = $obj->sale_customer_dt_gst($_POST['fdate'],$_POST['tdate'],$_POST['customer_id'],$_POST['gst']);
+
+// print_r($result);die();
 if(count($result)>0){
 
         $i=0;
@@ -18,14 +20,14 @@ if(count($result)>0){
         foreach ($result as $key => $value) {
                   
 
-                  $result1 =$obj1->customer_dt($value['customer_id']);
+                  $result = $obj1->customer_dt($value['customer_id']);
                   $date = date('d-m-Y',strtotime($value['created_at']));
             $i++;
-            $output[$j] = [$i,$date,$result1[0]['name'],$result1[0]['customer_code'],$value['grand_total'],'<button type="button"  class="btn btn-info" data-id="'.$value['sale_id'].'" data-date="'. $date.'" data-branch="'.$value['branch_id'].'" onclick="view_details(this);">View Details</button>'];       
+            $output[$j] = [$i,$date,$result[0]['name'],$result[0]['customer_code'],$value['grand_total'],'<button type="button"  class="btn btn-info" data-id="'.$value['sale_id'].'" data-date="'. $date.'" data-branch="'.$value['branch_id'].'" onclick="view_details(this);">View Details</button>'];       
      
-                
+                 $total+=($value['grand_total']);
           $j++;
-          $total+=($value['grand_total']);
+         
         }
             
      
@@ -35,7 +37,6 @@ if(count($result)>0){
       $output[$j] = ["No Data Found"];
 
 }
-
 
 $out = $output;
 $out1 = number_format($total,2,'.','');

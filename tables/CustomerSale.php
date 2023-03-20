@@ -46,6 +46,7 @@ $sql='select max(sale_id) as sale_id from '.$this->tablename.' where branch_id='
    // $sales['received_date']=$this->db->getpost('received_date');
    $sales['paid_amt']=$this->db->getpost('paid_amt');
    $sales['balance_amt']=$this->db->getpost('balance');
+   $sales['required_gst'] = $this->db->getpost('required_gst');
    
     if ($this->db->getpost('balance')==0) {
    $sales['status']='PAID';
@@ -139,7 +140,7 @@ $sql='select max(sale_id) as sale_id from '.$this->tablename.' where branch_id='
       }
 
   public function get_sale_details(){
-   $sql = 'select * from '.$this->tablename.'where branch_id='.$_SESSION['branch_id'].'';
+   $sql = 'select * from '.$this->tablename.'where branch_id='.$_SESSION['branch_id'].' and is_deleted="NO" ORDER BY id DESC';
    $result = $this->db->GetResultsArray($sql);
    return $result;
   }
@@ -271,9 +272,13 @@ $result=$this->db->GetResultsArray($sql);
 return $result;
 
 }
-public function get_customer_collection($fdate,$tdate,$c_id){
+public function get_customer_collection($fdate,$tdate,$c_id,$gst){
+if($c_id!=0){
+$sql = "select * from ".$this->tablename."where date(created_at)>='".$fdate."' and date(created_at)<='".$tdate."' and branch_id=".$_SESSION['branch_id']." and customer_id='".$c_id."' and required_gst='".$gst."' and is_deleted='NO'";
+}else{
+$sql = "select * from ".$this->tablename."where date(created_at)>='".$fdate."' and date(created_at)<='".$tdate."' and branch_id=".$_SESSION['branch_id']."  and required_gst='".$gst."' and is_deleted='NO'";
 
-$sql = "select * from ".$this->tablename."where date(created_at)>='".$fdate."' and date(created_at)<='".$tdate."' and branch_id=".$_SESSION['branch_id']." and customer_id='".$c_id."' and  is_deleted='NO'";
+}
 $result=$this->db->GetResultsArray($sql);
 
 
@@ -292,6 +297,20 @@ return $result;
 public function branch_sale_items_details($s_id,$b_id,$date,$item_id){
 $sql = "select * from ".$this->tablename2."where branch_id=".$b_id." and sale_id=".$s_id." and date(created_at)>='".date('Y-m-d',strtotime($date))."' and date(created_at)<='".date('Y-m-d',strtotime($date))."' and item_id=".$item_id." and is_deleted='NO'";
 $result=$this->db->GetResultsArray($sql);
+
+return $result;
+
+
+}
+public function sale_customer_dt_gst($fdate,$tdate,$c_id,$gst){
+  if($c_id!=0){
+$sql = "select * from ".$this->tablename."where date(created_at)>='".$fdate."' and date(created_at)<='".$tdate."' and branch_id=".$_SESSION['branch_id']." and customer_id='".$c_id."' and required_gst='".$gst."' and is_deleted='NO'";
+}else{
+$sql = "select * from ".$this->tablename."where date(created_at)>='".$fdate."' and date(created_at)<='".$tdate."' and branch_id=".$_SESSION['branch_id']."  and required_gst='".$gst."' and is_deleted='NO'";
+
+}
+$result=$this->db->GetResultsArray($sql);
+
 
 return $result;
 

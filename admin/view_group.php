@@ -109,7 +109,7 @@ include 'footer.php';
      
 <script>
   $(document).ready(function(){
-    get_data();
+    get_group_data();
   })
  
 </script>
@@ -163,11 +163,26 @@ var branch_id = $(e).val();
 window.location='view_branch_variety.php?item_id='+btoa(item_id)+'&branch_id='+btoa(branch_id);
   }
 
+</script>
+<script type="text/javascript">
+function get_group_data(){
+var id = $("#select_user").val();
+$.ajax({
+    type:'post',
+    dataType:'json',
+    url:'../ajaxCalls/view_group_product.php',
+    data:{'id':id},
+    success:function(res){
+      var table = $('#example1').DataTable();
+    table.clear();
+    table.rows.add(res).draw();
+   
+    }
+})
 
 
 
-
-
+}
 </script>
 
 

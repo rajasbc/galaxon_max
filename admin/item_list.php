@@ -111,6 +111,9 @@ $group_name = $group_obj->get_group_data();
                   <tr>
                     <th>S.No</th>
                     <th>Name</th>
+                    <th>Brand</th>
+                    <th>Category</th>
+                    <th>Description</th>
                     <th>SalePrice/VendorPrice</th>
                     <th>Mrp</th>
                     <th>Discount</th>

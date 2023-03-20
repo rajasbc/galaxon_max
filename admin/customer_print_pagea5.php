@@ -476,9 +476,10 @@ if ($vendor['pincode']!='') {
       <th class="border border-dark" style="width: 15%;">Variety</th>
       <th class="border border-dark" style="width: 5%;">Units</th>
        <th class="border border-dark" style="width: 5%;">Qty</th>
+        <th class="border border-dark" style="width: 10%;">Price</th>
      <th class="border border-dark" style="width: 10%;">Dis Amt</th>
 <th class="border border-dark" style="width: 10%;">GST Amt</th>
-      <th class="border border-dark" style="width: 10%;">Price</th>
+     
       <th class="border border-dark" style="width: 10%; ">Total</th>
       <!-- <th class="border border-dark">Description</th> -->
       
@@ -502,7 +503,7 @@ if ($vendor['pincode']!='') {
   $total_qty=$total_qty+$row['qty'];
   $total_ton=$total_ton+($row['qty']/1000);
   $total_amount=$total_amount+($row['total']);
-  $discount_amt = ($row['sales_price'])*($row['discount']/100);
+  $discount_amt = ($row['sales_price']*$row['qty'])*($row['discount']/100);
   $total_discount=$total_discount+$discount_amt;
    $total_tax_amt=$total_tax_amt+$row['tax_amt'];
   // if ($row['sub_category']!='' && $row['sub_category']!=0) {
@@ -518,9 +519,10 @@ if ($vendor['pincode']!='') {
    <td class="text-right"><?=$row['units']?></td>
    <td ><?=$row['qty']?></td>
    <!-- <td class="text-right"><?=($row['qty']/1000)?></td> -->
+    <td class="text-right"><?=$row['sales_price']?></td>
    <td class="text-right"><?=$discount_amt?></td>
 <td class="text-right"><?=$row['tax_amt']?></td>
-   <td class="text-right"><?=$row['sales_price']?></td>
+  
 <td class="text-right"><?=$row['total']?></td>
    <!-- <td><?=$description_name?></td> -->
    

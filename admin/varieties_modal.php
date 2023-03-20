@@ -3,9 +3,10 @@ include 'header.php';
 
 
 $obj = new Varieties();
+$obj1 = new Items();
 
 $result=$obj->get_branch_varieties_dt($_GET['id']);
-
+$result1 = $obj1->get_item_name($_GET['id']);
 
 ?>
 
@@ -15,10 +16,14 @@ $result=$obj->get_branch_varieties_dt($_GET['id']);
 	<div class="content-header">
 		<div class="container-fluid">
 			<div class="row mb-2">
-				<div class="col-sm-6">
+				<div class="col-sm-2">
 					<h1 class="m-0">Varieties</h1>
 				</div><!-- /.col -->
-				<div class="col-sm-6">
+					<div class="col-sm-4">
+					<h1 class="m-0">Product Name:<span><?=$result1['item_name']?></span></h1>
+					
+				</div><!-- /.col -->
+				<div class="col-sm-5">
 					<ol class="breadcrumb float-sm-right">
 
 
@@ -55,74 +60,74 @@ $result=$obj->get_branch_varieties_dt($_GET['id']);
 										<th>SalesPrice</th>
 										<!-- <th>Mrp</th>
 										<th>Sale Price</th>
- -->
+									-->
 
-									</tr>
+								</tr>
 
-								</thead>
-								<tbody>
+							</thead>
+							<tbody>
 
-									<?php 
-									$i=0;
-									$total_qty=0;
-									$total_mrp=0;
-									$total_sale=0;
-									foreach ($result as $key => $value) {
-										$result2 = $obj->get_price($value['variety_id']);
-
-
-
-										$i++;
-
-										echo "<tr><td>".$i."</td>
-										<td>".$value['name']."</td>";
+								<?php 
+								$i=0;
+								$total_qty=0;
+								$total_mrp=0;
+								$total_sale=0;
+								foreach ($result as $key => $value) {
+									$result2 = $obj->get_price($value['variety_id']);
 
 
-										if ($value['qty']==" " || $value['qty']==0) {
-											$null="0";
-											echo "<td>".$null."</td>";
-										}else{
 
-											echo "<td>".$value['qty']."</td>";
-										}
-										echo " <td>".$result2[0]['sale_price']."</td>
+									$i++;
 
-										 <td>".$result2[0]['updated_purchase_price']."</td>
-										 </tr>";
-										$total_qty+=$value['qty'];
+									echo "<tr><td>".$i."</td>
+									<td>".$value['name']."</td>";
+
+
+									if ($value['qty']==" " || $value['qty']==0) {
+										$null="0";
+										echo "<td>".$null."</td>";
+									}else{
+
+										echo "<td>".$value['qty']."</td>";
+									}
+									echo " <td>".$result2[0]['sale_price']."</td>
+
+									<td>".$result2[0]['updated_purchase_price']."</td>
+									</tr>";
+									$total_qty+=$value['qty'];
 										// $total_mrp+=$result2[0]['mrp'];
 										// $total_sale+=$result2[0]['sales_price'];
 
-									}
-
-									
-
-
-
-									?>
-									<tfoot>  
-          <?php echo "<tr><td colspan='1'></td><td><b>Total</b></td><td>".$total_qty."</td><td></td><td></td>
-         
-          </tr>";
-          ?> 
-         </tfoot>
+								}
 
 
 
 
 
+								?>
+								<tfoot>  
+									<?php echo "<tr><td colspan='1'></td><td><b>Total</b></td><td>".$total_qty."</td><td></td><td></td>
 
-								</tbody>
-							</table>
-						</div>
-						<!-- /.card-body -->
+									</tr>";
+									?> 
+								</tfoot>
+
+
+
+
+
+
+							</tbody>
+						</table>
 					</div>
+					<!-- /.card-body -->
 				</div>
 			</div>
-			<!-- /.row (main row) -->
-		</div><!-- /.container-fluid -->
-	</section>
-	<!-- /.content -->
+		</div>
+		<!-- /.row (main row) -->
+	</div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
   <!-- <div class="modal fade" id="order_modal" data-backdrop='static'>
@@ -135,18 +140,18 @@ $result=$obj->get_branch_varieties_dt($_GET['id']);
 
         </div>
  
-       </div> -->
+    </div> -->
 
 
-       <?php 
-       include 'footer.php';
-       ?>
-       <script type="text/javascript">
-       	$(function () {
-       		$("#example1").DataTable({
-       			"responsive": true, "lengthChange": false, "autoWidth": false,
-       			"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-       		}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-       	});
-       </script>
-       
+    <?php 
+    include 'footer.php';
+    ?>
+    <script type="text/javascript">
+    	$(function () {
+    		$("#example1").DataTable({
+    			"responsive": true, "lengthChange": false, "autoWidth": false,
+    			"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    		}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    	});
+    </script>
+

@@ -26,7 +26,7 @@ $customer = $obj->get_customer_detail();
        
 		
 					<div class=" form-row col-lg-12 col-md-12 col-sm-12" id="sort">
-						<div class="col-lg-3 col-md-3 col-sm-3 mx-1 m-1">
+						<div class="col-lg-2 col-md-2 col-sm-2 mx-1 m-1">
 							<div class="input-group input-group-sm">
 								<div class="input-group-prepend">
 									<span class="input-group-text ">From</span>
@@ -34,7 +34,7 @@ $customer = $obj->get_customer_detail();
 								<input type="date" class="form-control" name="date" id="fdate" value='<?=date('Y-m-d')?>'>
 							</div>
 						</div>
-						<div class="col-lg-3 col-md-3 col-sm-3 mx-1 m-1">
+						<div class="col-lg-2 col-md-2 col-sm-2 mx-1 m-1">
 							<div class="input-group input-group-sm">
 								<div class="input-group-prepend">
 									<span class="input-group-text ">To</span>
@@ -42,7 +42,7 @@ $customer = $obj->get_customer_detail();
 								<input type="date" class="form-control" name="date" id="tdate" value='<?=date('Y-m-d')?>' >
 							</div>
 						</div>
-						<div class="col-lg-3 col-md-3 col-sm-3 mx-1 m-1">
+						<div class="col-lg-2 col-md-2 col-sm-2 mx-1 m-1">
 							<div class="input-group input-group-sm ">
 								
 									<select class="form-control"  name='select_user' id='select_user' >
@@ -57,11 +57,18 @@ $customer = $obj->get_customer_detail();
 
 										?>
 									</select>
-
-
-							
 							</div>
 						</div>
+            <div class="col-lg-2 col-md-2 col-sm-2 mx-1 m-1">
+              <div class="input-group input-group-sm ">
+                
+                  <select class="form-control"  name='select_gst' id='select_gst' >
+                    
+                    <option value="yes">With GST</option>
+                    <option value="no">Without GST</option>
+                  </select>
+              </div>
+            </div>
 						<!-- <div class="col-lg-1 col-md-1 col-sm-1 mx-1 m-1">
 							<div class="input-group input-group-sm ">
 								<button class="form-control btn btn-danger btn-sm" id="search" name="Search" type="submit">Search</button>
@@ -135,6 +142,7 @@ $customer = $obj->get_customer_detail();
         </div>
         <!-- /.modal-dialog -->
       </div>
+    </div>
       <!-- /.modal -->
 
 
@@ -169,6 +177,7 @@ $("#select_user").change(function(){
 var fdate = $("#fdate").val();
 var tdate = $("#tdate").val();
 var customer_id = $(this).val();
+var gst = $('#select_gst').val();
 
 
 $.ajax({
@@ -176,7 +185,7 @@ $.ajax({
 	type:'post',
 	url:'../ajaxCalls/customer_sale_details.php',
 	dataType:'JSON',
-	data:{'fdate':fdate,'tdate':tdate,'customer_id':customer_id},
+	data:{'fdate':fdate,'tdate':tdate,'customer_id':customer_id,'gst':gst},
     success:function(res){
     var table = $('#example1').DataTable();
     table.clear();
@@ -226,22 +235,29 @@ $.ajax({
     $("#html_total").html(res.out1);
           
     }
-
-
 });
 
-
-
-
-
-
-
 }
+$("#select_gst").on('change',function(){
+var gst = $(this).val();
+var fdate = $("#fdate").val();
+var tdate = $("#tdate").val();
+var customer_id = $("#select_user").val();
+$.ajax({
+ type:'post',
+ dataType:'json',
+ url:'../ajaxCalls/customer_reports_gst.php',
+ data:{'gst':gst,'fdate':fdate,'tdate':tdate,'customer_id':customer_id},
+ success:function(res){
+   var table = $('#example1').DataTable();
+    table.clear();
+   table.rows.add(res.out).draw();
+      $("#html_total").html(res.out1);
+ }
 
+})
 
-
-
-
+});
 
 </script>
 

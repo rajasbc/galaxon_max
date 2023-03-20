@@ -228,6 +228,7 @@ $items=json_encode($items);
                   </thead>
                   <tbody class="text-left css-serial" id="tdata">
  <?php $sno=0;   $grand_total =0;foreach ($purchase_order_item_dt as $key => $row) {
+  $ton = $row['received_qty']/1000;
   $result = $obj->get_product_total($row['purchase_id'],$row['item_id']);
   $ttl1 = $result[0]['total']+$result[0]['tax_amt'];
   $tot_qty1 = $tot_qty1 +$row['received_qty'];
@@ -267,7 +268,7 @@ $items=json_encode($items);
             //     echo '</td>';
                 echo '<td class="text-left ch-10">'.$description_name.'</td>';
                 echo '<td class="text-left ch-10">'.$row['units'].'</td>';
-            echo '<td class="text-left ch-10" id="tons'.$sno.'">0</td>';
+            echo '<td class="text-left ch-10" id="tons'.$sno.'">'.$ton.'</td>';
              echo '<td class="text-left ch-10" id="order_qty'.$sno.'">'.$row['qty'].'</td>';
 
              echo '<td class="text-left ch-10">';
@@ -366,38 +367,38 @@ $items=json_encode($items);
                <div class="row col-12">
                   <div class="col-4">&nbsp;</div>
                   <div class="col-8 text-right ">
-                   <!--  <div class="row col-12 mt-2 hide">
+                    <div class="row col-12 mt-2 hide">
                       <div class="col-6 ">
                         <label>Bill No :</label>
                       </div>
                        <div class="col-6 ">
-                        <input type="text" id='bill_no' class="form-control " placeholder="Enter Bill No">
+                        <input type="text" id='bill_no' value="<?=$purchase_order_dt[0]['bill_no']?>" class="form-control " placeholder="Enter Bill No">
                       </div>
-                    </div> -->
-                    <!--  <div class="row col-12 mt-2 hide">
+                    </div>
+                     <div class="row col-12 mt-2 hide">
                       <div class="col-6">
                         <label>Received Date :</label>
                       </div>
                        <div class="col-6">
                         <input type="date" id='received_date' class="form-control" value="<?=date('Y-m-d')?>">
                       </div>
-                    </div> -->
-                     <!-- <div class="row col-12 mt-2 hide">
+                    </div>
+                     <div class="row col-12 mt-2 hide">
                       <div class="col-6">
                         <label>Paid Amount :</label>
                       </div>
                        <div class="col-6">
                         <input type="text" id='paid_amt' class="form-control" placeholder="Paid Amount ">
                       </div>
-                    </div> -->
-                     <!-- <div class="row col-12 mt-2 hide">
+                    </div>
+                     <div class="row col-12 mt-2 hide">
                       <div class="col-6">
                         <label>Balance Amount :</label>
-                      </div> -->
-                       <!-- <div class="col-6">
+                      </div>
+                       <div class="col-6">
                         <input type="text" id='balance' class="form-control" placeholder="0.00" readonly>
-                      </div> -->
-                   <!--  </div>
+                      </div>
+                    </div>
                     <div class="row col-12 mt-2 hide">
                       <div class="col-6">
                         <label>Payment Mode :</label>
@@ -412,7 +413,7 @@ $items=json_encode($items);
                     <option value="Net Banking">Net Banking</option>
                   </select>
                       </div>
-                    </div> -->
+                    </div>
                     <div class="row col-12 mt-2 text-right">
                       <div class="col-6">
                         &nbsp;
@@ -635,33 +636,33 @@ $("#place_order").click(function(){
         return false;
       }
 
-      //   if (bill_no=='' && bill_no==0) {
-      // global_alert_modal('warning','Enter Bill Number...');
-      // $("#bill_no").css("border","1px solid red");
-      // $("#bill_no").focus();
-      // return false;
-      // }
-      // else{
-      // $("#bill_no").css("border","1px solid lightgray");
-      // }
-      // if (received_date=='') {
-      // global_alert_modal('warning','Select Received Date...');
-      // $("#received_date").css("border","1px solid red");
-      // $("#received_date").focus();
-      // return false;
-      // }
-      // else{
-      // $("#received_date").css("border","1px solid lightgray");
-      // }
-      // if (paid_amt=='' && paid_amt==0) {
-      // global_alert_modal('warning','Enter Paid Amount...');
-      // $("#paid_amt").css("border","1px solid red");
-      // $("#paid_amt").focus();
-      // return false;
-      // }
-      // else{
-      // $("#paid_amt").css("border","1px solid lightgray");
-      // }
+        if (bill_no=='' && bill_no==0) {
+      global_alert_modal('warning','Enter Bill Number...');
+      $("#bill_no").css("border","1px solid red");
+      $("#bill_no").focus();
+      return false;
+      }
+      else{
+      $("#bill_no").css("border","1px solid lightgray");
+      }
+      if (received_date=='') {
+      global_alert_modal('warning','Select Received Date...');
+      $("#received_date").css("border","1px solid red");
+      $("#received_date").focus();
+      return false;
+      }
+      else{
+      $("#received_date").css("border","1px solid lightgray");
+      }
+      if (paid_amt=='' && paid_amt==0) {
+      global_alert_modal('warning','Enter Paid Amount...');
+      $("#paid_amt").css("border","1px solid red");
+      $("#paid_amt").focus();
+      return false;
+      }
+      else{
+      $("#paid_amt").css("border","1px solid lightgray");
+      }
 
     }  
       detailsarray = [];
@@ -676,6 +677,7 @@ $("#place_order").click(function(){
       detailsarray['tax_amount']=Number($("#taxid").text());
       detailsarray['grand_total']=Number($("#grandid").text());
       detailsarray['po_id']="<?=base64_decode($_GET['id'])?>";
+      detailsarray['purchase_no']="<?=$purchase_order_dt[0]['purchase_no']?>";
 $("#place_order").attr('disabled','disabled');
 var dobj=$.extend({},detailsarray);
 var obj = $.extend({}, items);

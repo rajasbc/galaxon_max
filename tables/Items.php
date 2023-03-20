@@ -56,7 +56,7 @@ $item['gst']=$this->db->getpost('gst');
 	}
 	public function get_items_data()
 	{
-		$sql='select * from '.$this->tablename.' where is_deleted="NO" and branch_id='.$_SESSION['branch_id'].'';
+		$sql='select * from '.$this->tablename.' where is_deleted="NO" and branch_id='.$_SESSION['branch_id'].' ORDER BY id DESC';
 		$result=$this->db->GetResultsArray($sql);
 		return $result;
 	}
@@ -214,6 +214,13 @@ return $result;
 
 
 }
+public function get_all_group_name($id){
+$sql = 'select * from '.$this->tablename.' where branch_id= '.$_SESSION['branch_id'].' and is_deleted="NO"';
+$result = $this->db->GetResultsArray($sql);
+
+return $result;
+
+}
 public function get_item_price($it_id,$b_id){
 
 $sql = 'select sales_price as sale_price,updated_purchase_price from '.$this->tablename.' where item_id='.$it_id.' and branch_id='.$b_id.' and is_deleted="NO"';
@@ -254,10 +261,20 @@ $result = $this->db->GetResultsArray($sql);
 
 return $result;
 
+}
+public function get_item_brand($id){
+ $sql = 'select b.name as cat_name,c.name as brand_name,d.name as desc_name from items a join category b on a.category=b.id join brand c on a.brand = c.id join description d on a.sub_category=d.id where a.id='.$id.' and a.branch_id='.$_SESSION['branch_id'].' and a.is_deleted="NO"';
+$result = $this->db->getAsIsArray($sql);
 
+return $result;
 
 }
+public function get_item_name($id){
+$sql = 'select item_name from '.$this->tablename.' where id='.$id.' and branch_id='.$_SESSION['branch_id'].'';
+$result = $this->db->getAsIsArray($sql);
 
+return $result;
+}
 
 }
 ?>

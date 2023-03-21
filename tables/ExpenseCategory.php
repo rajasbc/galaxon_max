@@ -79,7 +79,7 @@ class ExpenseCategory extends Dbconnection {
 		return $result;
 	}
 	public function get_catagory_data(){
-       $sql='select * from '.$this->tablename.' where branch_id="'.$_SESSION['branch_id'].'" and status="ENABLED"';
+       $sql='select * from '.$this->tablename.' where branch_id=0 and status="ENABLED"';
 		$result=$this->db->GetResultsArray($sql);
 		return $result;
 
@@ -88,9 +88,10 @@ class ExpenseCategory extends Dbconnection {
       if($_SESSION['type']=='ADMIN'){
       $sql='select * from '.$this->tablename.' where id="'.$id.'" and status="ENABLED"';
 		$result=$this->db->GetResultsArray($sql);
+		// print_r($result);die();
 	}else{
 
-      $sql='select * from '.$this->tablename.' where id="'.$id.'" and  branch_id='.$_SESSION['branch_id'].' and status="ENABLED"';
+      $sql='select * from '.$this->tablename.' where id="'.$id.'" and status="ENABLED"';
 		$result=$this->db->GetResultsArray($sql);
 
 

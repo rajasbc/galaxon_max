@@ -114,10 +114,10 @@ $group_name = $group_obj->get_group_data();
                     <th>Brand</th>
                     <th>Category</th>
                     <th>Description</th>
-                    <th>SalePrice/VendorPrice</th>
-                    <th>Mrp</th>
-                    <th>Discount</th>
-                    <th>Gst</th>
+                    <!-- <th>SalePrice/VendorPrice</th> -->
+                    <!-- <th>Mrp</th> -->
+                    <!-- <th>Discount</th> -->
+                    <!-- <th>Gst</th> -->
                     <th>Quantity</th>
                     <th>Varieties</th>
                     <th>Action</th>
@@ -217,36 +217,36 @@ $group_name = $group_obj->get_group_data();
                     <option value="Box">Box</option>
                   </select>
                 </div>
-                <div class="input-group mb-3">
+                <!-- <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text">SalePrice/VendorPrice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-danger">&nbsp;</span></span>
                   </div>
                   <input type="text" id='edit_item_mrp' class="form-control enterAsTab" placeholder="Enter MRP">
-                </div>
-                <div class="input-group mb-3">
+                </div> -->
+                <!-- <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text">Mrp&nbsp;&nbsp;&nbsp;<span class="text-danger">&nbsp;</span></span>
                   </div>
                   <input type="text" id='edit_item_sale_price' class="form-control enterAsTab" placeholder="Enter Sales Price">
-                </div>
-                <div class="input-group mb-3">
+                </div> -->
+               <!--  <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text">Discount&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                   </div>
                   <input type="text" id='edit_item_discount' class="form-control enterAsTab" placeholder="Enter Discount">
-                </div>
+                </div> -->
                 <div class="input-group mb-3">
-                  <div class="input-group-prepend">
+                  <!-- <div class="input-group-prepend">
                     <span class="input-group-text">GST&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                  </div>
+                  </div> -->
                   <!-- <input type="text" id='edit_item_gst' class="form-control enterAsTab" placeholder="Enter GST"> -->
-                  <select class="form-control" id="edit_item_gst">
+                 <!--  <select class="form-control" id="edit_item_gst">
                     <option value="0">0</option>
                 <option value="5">5</option>
                 <option value="12">12</option>
                 <option value="18">18</option>
                 <option value="28">28</option>
-                  </select>
+                  </select> -->
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">

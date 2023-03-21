@@ -6,7 +6,7 @@ include '../tables/config.php';
  $obj1 = new ExpenseCategory(); 
 if ($_POST['expenses_id']==0 && $_POST['expenses_id']=='') {
  $result =  $obj->customer_expenses_data();
-
+// print_r($result);die();
 $output=array();
 $main=array();
 

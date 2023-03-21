@@ -878,14 +878,14 @@ $shop_name = $obj->get_shop_name($_SESSION['branch_id']);
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-               <ul class="nav nav-treeview">
+              <!--  <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="customer_expenses_category.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add Category</p>
                 </a>
               </li>
-            </ul>
+            </ul> -->
              
             <ul class="nav nav-treeview">
               <li class="nav-item">

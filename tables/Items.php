@@ -275,6 +275,18 @@ $result = $this->db->getAsIsArray($sql);
 
 return $result;
 }
+public function total_admin_var_qty($var_id){
+$sql = 'select * from variety_items where branch_id='.$_SESSION['branch_id'].' and variety_id='.$var_id.'';
+$result = $this->db->getAsIsArray($sql);
+return ['status'=>'success','qty'=>$result['qty']];
+
+}
+public function total_admin_item_qty($item_id){
+$sql = 'select * from '.$this->tablename.' where branch_id='.$_SESSION['branch_id'].' and id='.$item_id.' and is_deleted="NO"';
+$result = $this->db->getAsIsArray($sql);
+return ['status'=>'success','qty'=>$result['qty']];
+
+}
 
 }
 ?>

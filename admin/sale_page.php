@@ -222,7 +222,7 @@ $items=json_encode($items);
                 </div>
                 
 
-                <form id="add_product" class="row col-12" onsubmit="return(false);">
+                <!-- <form id="add_product" class="row col-12" onsubmit="return(false);">
                  <div class="col-12 mb-3" style="border-bottom: 1px solid gray"></div>
                  <div class="col-3 form-group mb-3">
                   <label>Product Name&nbsp;<label class="text-danger">*</label></label>
@@ -312,10 +312,13 @@ $items=json_encode($items);
                  <div class="col-3 form-group mb-3 text-center" style="vertical-align: center">
                   <button class="btn btn-primary" id="add_item">Add</button>
                  </div>
-                </form>
+                </form> -->
                 <br>
                 
                 <br>
+                 <br>
+                  <br>
+
 
                 <div class="table-scroll">
                  <table class="table table-bordered">
@@ -332,8 +335,8 @@ $items=json_encode($items);
                     
                     <th>Mrp</th>
                     <th>Sales Price</th>
-                    <th>Discount</th>
-                    <th>Gst</th>
+                    <!-- <th>Discount</th>
+                    <th>Gst</th> -->
                     <th>Total</th>
                     <th>Actions</th>
                    </tr>
@@ -388,6 +391,9 @@ $items=json_encode($items);
 
                     echo '<input type="hidden" id="admin_qty'.$sno.'" value= "'.$admin_var_qty[0]['qty'].'"><input onkeyup=quantityupdate('.$sno.',this) class="form-control quantity" name="quantity[]" id="quantity'.$sno.'" value="'.$remain_qty.'" style="width:4rem; height:1.75rem; font-size:0.9rem;">';
 
+                     echo '<input type="hidden" class="form-control quantity" name="item[]" id="item'.$sno.'" value='.$row['item_id'].' style="width:5rem; height:1.75rem">';
+            echo '<input type="hidden" class="form-control quantity" name="variety[]" id="Variety'.$sno.'" value='.$row['var_id'].' style="width:5rem; height:1.75rem">';
+
                     echo '</td>';
                     echo '<td class="text-left ch-10">'.$description_name.'</td>';
                     echo '<td class="text-left ch-10">'.$row['units'].'</td>';
@@ -404,12 +410,12 @@ $items=json_encode($items);
                     echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control sale_price" name="sale_price[]" id="sale_price'.$sno.'" value="'.$row['mrp'].'" style="width:4.8rem; height:1.75rem; font-size:0.9rem;">';
 
                     echo '</td>';
-                    echo '<td class="text-left ch-4">';
+                    echo '<td class="text-left ch-4" style="display:none;">';
 
                     echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control discount" name="discount[]" id="discount'.$sno.'" value="'.$row['discount'].'" style="width:4rem; height:1.75rem; font-size:0.9rem;">';
 
                     echo '</td>';
-                    echo '<td class="text-left ch-4">';
+                    echo '<td class="text-left ch-4" style="display:none;">';
 
                     echo '<input onkeyup=fieldupdate('.$sno.',this) class="form-control gst" name="gst[]" id="gst'.$sno.'" value="'.$row['gst'].'" style="width:4rem; height:1.75rem; font-size:0.9rem;">';
 
@@ -464,13 +470,13 @@ $items=json_encode($items);
 
                       <div class="col-lg-4 col-sm-4 col-md-4">
                        <div class="">
-                        <span class="">Discount ₹</span>
-                        <span class="" id="discid"><?=$totdis?></span>
+                        <span class="">Purchase Amount (Include Tax ₹) </span>
+                        <span class="" id="grandid"><?=$tot['grand_total']?></span>
                        </div>
                       </div>
 
                      </div>
-                     <div class="row">
+                     <div class="row" style="display:none">
                       <div class="col-lg-4 col-sm-4 col-md-4">
                        <div class="">
                         <span class="">Taxable Amount ₹</span>
@@ -510,7 +516,7 @@ $items=json_encode($items);
                   &nbsp;
                  </div>
                  <div class="col-3 text-center">
-                  <button class="col-12 btn btn-primary" id="place_order">SAVE</button>
+                  <button class="col-12 btn btn-primary" disabled id="place_order">SAVE</button>
                  </div>
 
                 </div>
@@ -1029,21 +1035,27 @@ $items=json_encode($items);
 
        var quantity = $(ele).val()*1;
 
+        
+       var item_id = $("#item"+idval).val();
+        
+     
+      var var_id = $("#Variety"+idval).val();
 
-       var admin_qty = $("#admin_qty"+idval).val()*1;
+    
+      get_qty(item_id,var_id,idval);
 
     
 
 
-       if(quantity>admin_qty)
-     {
+     //   if(quantity>admin_qty)
+     // {
          
-        global_alert_modal('warning','Available Variety are less than '+admin_qty);
+     //    global_alert_modal('warning','Available Variety are less than '+admin_qty);
 
-     }else{
-       quantity;
+     // }else{
+     //   quantity;
 
-     }
+     // }
 
       // if ((Number($("#order_qty"+idval).text())-Number($("#rec_qty"+idval).text())) < quantity) {
       //   $("#quantity"+idval).val((Number($("#order_qty"+idval).text())-Number($("#rec_qty"+idval).text())));
@@ -1290,8 +1302,60 @@ success: function(res){
 
   }); 
 
+</script>
+<script type="text/javascript">
+   function get_qty(item_id,var_id,idval){
+
+  if ($("#quantity"+idval).val()=="") {
+   global_alert_modal('success','Enter Quantity...');
+   $("#quantity"+idval).css("border","1px solid red");
+   $("#quantity"+idval).focus();
+   $('#place_order').attr('disabled','disabled');
+   return false;
+
+  }else if($("#quantity"+idval).val()==0){
+   global_alert_modal('success','Enter valid Quantity...');
+   $("#quantity"+idval).css("border","1px solid red");
+   $("#quantity"+idval).focus();
+   $('#place_order').attr('disabled','disabled');
+   return false;
+
+  }
+  else{
+   $("#quantity"+idval).css("border","1px solid lightgray");
+   $('#place_order').removeAttr('disabled','');
+  }
+
+  $.ajax({
+   type:'post',
+   dataType:'json',
+   url: '../ajaxCalls/get_admin_item_qty.php',
+   data:{'item_id':item_id,'varieties_id':var_id,'type':idval},
+   success: function(res){
 
 
+    if(res.status=='success'){
+     var total_qty = res.qty*1;
+     var qty = $('#quantity'+idval).val()*1;
+     if(qty>total_qty){
+      global_alert_modal('success','Available Quantity is' +res.qty);
+      $('#quantity'+idval).val('');
+                  //  $('#quantity'+idval).focus();
+                  //   return false;
+                  $('#place_order').attr('disabled','disabled');
+
+                 }else{
+
+                  $('#place_order').removeAttr('disabled','');
+
+                 }
+
+                }
+
+               } 
+              });
+
+ }
 
 </script>
 

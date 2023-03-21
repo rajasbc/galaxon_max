@@ -3,6 +3,7 @@ include 'header.php';
 $obj = new ExpenseCategory();
 $obj1 = new Customers();
 $result = $obj->get_catagory_data();
+
 $result1 = $obj1->customer_details();
 
 ?>

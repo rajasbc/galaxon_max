@@ -148,7 +148,7 @@ public function get_bill_no($b_id,$p_id){
 $sql = 'select * from '.$this->tablename.' where branch_id='.$b_id.' and po_id='.$p_id.'';
 $result = $this->db->GetResultsArray($sql);
 
-// print_r($result);die();
+
 
 return $result;
 

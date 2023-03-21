@@ -92,10 +92,10 @@ if(count($result)>0){
 }
 
 public function get_expenses_data(){
- $fdate = date('Y-m-d');
- $tdate = date('Y-m-d');
+ // $fdate = date('Y-m-d');
+ // $tdate = date('Y-m-d');
 
- $sql = 'select * from '.$this->tablename.' where exp_date>="'.$fdate.'" and exp_date<="'.$tdate.'" and status="ENABLED"';
+ $sql = 'select * from '.$this->tablename.' where status="ENABLED"';
 
 
 $result = $this->db->GetResultsArray($sql);

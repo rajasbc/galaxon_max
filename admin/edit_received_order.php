@@ -9,8 +9,9 @@ $purchase_order_dt=$obj->get_purchase_order(base64_decode($_GET['id']));
 // print_r($purchase_order_dt);die();
 $purchase_order_item_dt=$obj->get_purchase_order_item(base64_decode($_GET['id']));
 
+$bill_no = $obj->get_bill_no(base64_decode($_GET['id']));
 
-
+$count = count($purchase_order_item_dt);
 $vendor_obj= new Vendors();
 $vendor= $vendor_obj->get_vendor_dt($purchase_order_dt[0]['vendor_id']); 
 $brand_obj = new Brand();
@@ -20,9 +21,14 @@ $description_obj = new Description();
 $items=array();
 $i=0;
 foreach ($purchase_order_item_dt as $key => $value) {
-   $result1 = $obj->get_product_total($value['purchase_id'],$value['item_id']);
+ 
+   $count;
+
+   $result1 = $obj->get_product_total($value['purchase_id'],$value['item_id'],$count);
+ 
+   $check = $check+$result1[0]['qty']+
   $ttl = $result1[0]['total']+$result1[0]['tax_amt'];
-  $tot_qty = $tot_qty+$value['received_qty'];
+  $tot_qty = $tot_qty+$result1[0]['qty'];
   $tot_ton =  $tot_ton+$value['received_qty']/1000;
   $tot_dis = $tot_dis+($value['received_qty']*$row['mrp'])*($row['discount']/100);
   $taxable_amount = $taxable_amount+$result1[0]['total'];
@@ -41,7 +47,7 @@ foreach ($purchase_order_item_dt as $key => $value) {
     }
   $i++;
   $items['sid'.$i]=[
-      "po_id"=>$value['id'],
+      "po_id"=>$result1[0]['id'],
       "item_id"=>$value['item_id'],
       "item_name"=>$value['item_name'],
       "item_code"=>$value['item_code'],
@@ -58,12 +64,13 @@ foreach ($purchase_order_item_dt as $key => $value) {
       "gst"=>$value['gst'],
       "gstpercentage"=>$value['gst']/100,
       "order_qty"=>$value['qty'],
-      "rec_qty"=>$value['received_qty'],
-      "enter_qty"=>0,
+      "rec_qty"=>$result1[0]['received_qty'],
+      "enter_qty"=>$result1[0]['qty'],
       "gstamount"=>$result1[0]['tax_amt'],
       "total"=>$result1[0]['total']
     ];
 }
+
 $items=json_encode($items);
 ?>
 <style type="text/css">
@@ -229,11 +236,11 @@ $items=json_encode($items);
                   <tbody class="text-left css-serial" id="tdata">
  <?php $sno=0;   $grand_total =0;foreach ($purchase_order_item_dt as $key => $row) {
   $ton = $row['received_qty']/1000;
-  $result = $obj->get_product_total($row['purchase_id'],$row['item_id']);
+  $result = $obj->get_product_total($row['purchase_id'],$row['item_id'],$count);
   $ttl1 = $result[0]['total']+$result[0]['tax_amt'];
-  $tot_qty1 = $tot_qty1 +$row['received_qty'];
-  $tot_ton1 =  $tot_ton1+$row['received_qty']/1000;
-  $tot_dis1 = $tot_dis1+($row['received_qty']*$row['mrp'])*($row['discount']/100);
+  $tot_qty1 = $tot_qty1 +$result[0]['qty'];
+  $tot_ton1 =  $tot_ton1+$result[0]['qty']/1000;
+  $tot_dis1 = $tot_dis1+($result[0]['qty']*$row['mrp'])*($result[0]['discount']/100);
   $taxable_amount1 = $taxable_amount1+$result[0]['total'];
   $tot_tax1 =  $tot_tax1+$result[0]['tax_amt'];
   $grand_total1+= $ttl1;
@@ -272,7 +279,7 @@ $items=json_encode($items);
              echo '<td class="text-left ch-10" id="order_qty'.$sno.'">'.$row['qty'].'</td>';
 
              echo '<td class="text-left ch-10">';
-             echo '<input onkeyup=quantityupdate('.$sno.',this) class="form-control quantity" name="quantity[]" id="quantity'.$sno.'" value="'.$row['received_qty'].'" style="width:5rem; height:1.75rem">';
+             echo '<input onkeyup=quantityupdate('.$sno.',this) class="form-control quantity" name="quantity[]" id="quantity'.$sno.'" value="'.$result[0]['qty'].'" style="width:5rem; height:1.75rem">';
              echo '</td>';
              // echo '<td class="text-left ch-10 hide">' .$updated_price['updated_purchase_price'].'</td>';
              echo '<td class="text-left ch-4 hide">';
@@ -372,7 +379,7 @@ $items=json_encode($items);
                         <label>Bill No :</label>
                       </div>
                        <div class="col-6 ">
-                        <input type="text" id='bill_no' value="<?=$purchase_order_dt[0]['bill_no']?>" class="form-control " placeholder="Enter Bill No">
+                        <input type="text" id='bill_no' value="<?=$bill_no['bill_no']?>" class="form-control " placeholder="Enter Bill No">
                       </div>
                     </div>
                      <div class="row col-12 mt-2 hide">

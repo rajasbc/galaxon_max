@@ -50,7 +50,7 @@ include 'header.php';
                     <th>Paid Amount</th>
                     <th style="width: 30px; padding-right: 25px;">Balance Amount</th> -->
                     <th style="width: 30px;  padding-right: 25px;">Status</th>
-                    <th style="width: 100px;">Details</th>
+                    <th style="width: 250px;">Details</th>
                   </tr>
                   </thead>
                   <tbody>

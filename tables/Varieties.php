@@ -220,6 +220,14 @@ return $result;
 
 
 }
+public function get_available_qty($var_id,$item_id){
+$sql = 'select qty from '.$this->tablename1.'where id='.$var_id.' and item_id='.$item_id.' and branch_id='.$_SESSION['branch_id'].'';
+$result = $this->db->getAsIsArray($sql);
+
+return $result;
+
+}
+
 
 
 }

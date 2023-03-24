@@ -243,6 +243,13 @@ $result=$this->db->GetResultsArray($sql);
 return $result;
 
  }
+ public function get_branch_collection(){
+$sql = "select * from ".$this->tablename." where is_deleted='NO'";
+$result=$this->db->GetResultsArray($sql);
+
+return $result;
+
+ }
  public function branch_sale_details($sale_id,$b_id){
 
  $sql = "select * from ".$this->tablename." where sale_id='".$sale_id."' and branch_id
@@ -291,6 +298,18 @@ public function get_item_name($it_id,$fdate,$tdate,$b_id){
 $result=$this->db->GetResultsArray($sql);
 
 return $result;
+
+}
+
+public function get_collection_item_name(){
+$sql = "select a.*,b.* from customer_sale a left join customer_sale_details b on a.sale_id=b.sale_id where a.is_deleted='NO'";
+
+$result=$this->db->GetResultsArray($sql);
+
+return $result;
+
+
+
 
 }
 

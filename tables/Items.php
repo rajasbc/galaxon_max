@@ -287,6 +287,12 @@ $result = $this->db->getAsIsArray($sql);
 return ['status'=>'success','qty'=>$result['qty']];
 
 }
+public function get_available_item($item_id){
+$sql = 'select qty from '.$this->tablename.'where branch_id='.$_SESSION['branch_id'].' and id='.$item_id.' and is_deleted="NO"';
+$result = $this->db->getAsIsArray($sql);
+return $result;
+
+}
 
 }
 ?>

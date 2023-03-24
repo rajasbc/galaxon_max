@@ -22,7 +22,12 @@ $result2= $obj->get_purchase_no($_GET['id'],$_GET['branch_id']);
 	<div class="form-row">
 		<div class="form-group col-lg-12">
 			<input type="hidden" name="po_id" id="po_id" value="<?=$result[0]['id']?>">
-		<h4>Branch Order Details<button type='button' class='close text-danger font-weight-bold' data-dismiss='modal'>&times;</button></h4></div></div>
+			<?php if($_SESSION['type']=='ADMIN'){ ?>
+		<h4>Branch Order Details<button type='button' class='close text-danger font-weight-bold' data-dismiss='modal'>&times;</button></h4>
+	<?php }else{ ?>
+        <h4>Received Order Details<button type='button' class='close text-danger font-weight-bold' data-dismiss='modal'>&times;</button></h4>
+  <?php } ?>		
+	</div></div>
 		<div class="form-row">
 		<div class="form-group col-lg-3">Purchase No</div><div class="form-group col-lg-3">: 
 			<span class="font-weight-bold"><?=$result2[0]['purchase_no']?></span>
@@ -55,11 +60,16 @@ $result2= $obj->get_purchase_no($_GET['id'],$_GET['branch_id']);
 						<th>S.No</th>
 						<th>Product Name</th>
 						<th>Variety Name</th>
+						<?php if($_SESSION['type']=='ADMIN'){ ?>
 						<th>Sale qty</th>
+						<?php }else{?>
+                        <th>Received qty</th>
+						<?php } ?>		
 						<th>Mrp</th>
+						
 						<th>Sale Price </th>
-						<th>Discount</th>
-						<th>GST</th>
+						<!-- <th>Discount</th>
+						<th>GST</th> -->
 						<th>Total Amount</th>
 					</tr>
 				</thead>
@@ -82,8 +92,7 @@ echo "<tr>
 
 <td>".$value['mrp']."</td>
 <td>".$value['sale_price']."</td>
-<td>".$value['discount']."</td>
-<td>".$value['gst']."</td>
+
 <td>".$ttl."</td>
 </tr>";
 

@@ -952,6 +952,7 @@ $items=json_encode($items);
         "enter_qty":quantity,
         "gstamount":gstamount,
         "total":total,
+        "item_qty":0,
         "deleted":'no',
         "flag":'new',
         "main_id":''
@@ -1130,6 +1131,7 @@ $items=json_encode($items);
       items[ref].gstpercentage=gst/100;
       items[ref].gstamount=gstamount;
       items[ref].total=prototal;
+      items[ref].item_qty=quantity;
       calculation();
      }
      function removeItem(idval){

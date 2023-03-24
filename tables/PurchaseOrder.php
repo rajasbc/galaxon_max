@@ -1,5 +1,5 @@
 <?php
-// error_reporting(E_ALL);
+
 class PurchaseOrder extends Dbconnection {
 	var $name;
 	var $db;
@@ -362,7 +362,7 @@ class PurchaseOrder extends Dbconnection {
 
    }
 
-   if ((isset($itemvar["item_name"]) && $itemvar["item_name"] !== '') && $item!= 0 && ($itemvar["enter_qty"] != 0 && $itemvar["enter_qty"] !='')) {
+   if ((isset($itemvar["item_name"]) && $itemvar["item_name"] !== '') && $item!= 0 ) {
     if ($itemvar['item_id']==0) {
 
      $items=array();
@@ -691,6 +691,7 @@ class PurchaseOrder extends Dbconnection {
 
   $history_sql='select bill_no,received_date,sum(taxable_amt) as taxable,sum(tax_amt) as tax,sum(discount_amt) as discount,sum(grand_total) as total from '.$this->tablename4.' where po_id='.$purchase_id.' and branch_id='.$_SESSION['branch_id'].' group by po_id order by id asc';
   $history_res=$this->db->GetResultsArray($history_sql);
+
   $log_sql='select sum(credit) as credit from '.$this->tablename3.' where purchase_id='.$purchase_id.' group by purchase_id order by id asc';
   $log_res=$this->db->GetResultsArray($log_sql);
   if (count($history_res)>0) {
@@ -934,6 +935,7 @@ class PurchaseOrder extends Dbconnection {
 
 
   $result=$this->db->GetResultsArray($sql);
+  // print_r($result);die();
   return $result;
 
  }
@@ -1258,10 +1260,10 @@ class PurchaseOrder extends Dbconnection {
   return $result;
 
  }
- public function get_total($id){
+ public function get_total($id,$b_id){
 
 
-  $sql = 'select * from '.$this->tablename.' where id='.$id.' and is_deleted="NO"';
+  $sql = 'select * from '.$this->tablename.' where id='.$id.' and is_deleted="NO" and branch_id='.$b_id.'';
   $result = $this->db->getAsIsArray($sql);
 // print_r($result);
 
@@ -1304,13 +1306,12 @@ class PurchaseOrder extends Dbconnection {
 
   return $result;
  }
- public function get_product_total($id,$item_id,$count){
+ public function get_product_total($id,$item_id,$count,$var_id){
 
 
-
-  $sql = 'select * from '.$this->tablename5.' where purchase_id='.$id.' and branch_id='.$_SESSION['branch_id'].' and item_id='.$item_id.' and is_deleted="NO" ORDER BY id DESC LIMIT 1 ';
+   $sql = 'select * from '.$this->tablename5.' where purchase_id='.$id.' and branch_id='.$_SESSION['branch_id'].' and item_id='.$item_id.' and is_deleted="NO" and var_id='.$var_id.' ORDER BY id DESC LIMIT 1 ';
   $result = $this->db->GetResultsArray($sql);
-
+// print_r($result);die();
   return $result;
 
 
@@ -1337,151 +1338,222 @@ class PurchaseOrder extends Dbconnection {
 
 
  }
-// public function update_received_order(){
-//  $item = array();
-//  $item = $_POST;
-//  $update_order_history=array();
-//  $i=0;
+ public function update_received_order(){
+  $item = array();
+  $item = $_POST;
+  $update_order_history=array();
+  $i=0;
 //  foreach ($item as $key => $value) {
 //   if ((isset($value["item_name"]) && $value["item_name"] != '')) {
 //    $i++;
 //  }
 //  }
-//  $sql = "select id from ".$this->tablename5." ORDER BY id DESC LIMIT $i";
-// $result = $this->db->GetResultsArray($sql);
-// // print_r($result);die();
 
-// $update_order_history['shop_id']=$_SESSION['shop_id'];
-//    $update_order_history['branch_id']=$_SESSION['branch_id'];
-//    $update_order_history['po_id']=$this->db->getpost('po_id');
-//     $update_order_history['discount_amt']=$this->db->getpost('discount');
-//    $update_order_history['taxable_amt']=$this->db->getpost('taxable_amount');
-//     $update_order_history['tax_amt']=$this->db->getpost('tax_amount');
-//     $update_order_history['grand_total']=$this->db->getpost('grand_total');
-//     $update_order_history['created_by']=$_SESSION['uid'];
-//     $update_order_history['created_at']=date('Y-m-d H:i:s');
-//     $update_order_history['bill_no']=$this->db->getpost('bill_no');
-
-//    $update_order_history['received_date']=$this->db->getpost('received_date');
-
-//     $update_order_history['paid_amt']=$this->db->getpost('paid_amt');
-//     $update_order_history['balance_amt']=$this->db->getpost('balance');
-
-//     $this->db->mysql_update($this->tablename4,$update_order_history,'po_id='.$this->db->getpost('po_id'));
-//     foreach ( $item as $key => $itemvar) {
-//        if ((isset($itemvar["item_name"]) && $itemvar["item_name"] != '')) {
-//             if($itemvar['varieties_id']!=0 && $itemvar['varieties_id']!=''){
-//               $update_qty=array();
-//               $sql='select * from variety_items where variety_id='.$itemvar['varieties_id'].' and branch_id='.$_SESSION['branch_id'].'';
-//                 $result = $this->db->GetResultsArray($sql);
+  foreach ( $item as $key => $itemvar) {
+   if ((isset($itemvar["item_name"]) && $itemvar["item_name"] != '')) {
+    if($itemvar['varieties_id']!=0 && $itemvar['varieties_id']!=''){
+     $update_qty=array();
+     $sql='select * from variety_items where variety_id='.$itemvar['varieties_id'].' and branch_id='.$_SESSION['branch_id'].'';
+     $result = $this->db->GetResultsArray($sql);
 
 
-//               $sql1 = 'select * from '.$this->tablename2.' where var_id='.$itemvar['varieties_id'].' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO" and id='.$itemvar['po_id'].'';
-//               $result1 = $this->db->GetResultsArray($sql1);
-//               $qty_substract = $result[0]['qty']-$result1[0]['received_qty'];
-//               $update_qty['qty'] =    $qty_substract+$itemvar['rec_qty'];
+     $sql1 = 'select * from '.$this->tablename5.' where var_id='.$itemvar['varieties_id'].' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO" and id='.$itemvar['po_id'];
 
-//              $this->db->mysql_update('variety_items',$update_qty,'id='.$result[0]['id']);
-//              $update_item_qty=array();
-//             $item_qty = 'select * from items where id='.$itemvar['item_id'].' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
-//                 $res = $this->db->GetResultsArray($item_qty);
-//               $item_qty_substract = $res[0]['qty']-$result1[0]['received_qty'];
-
-//               $update_item_qty['qty'] =  $item_qty_substract+$itemvar['rec_qty'];
-
-//              $this->db->mysql_update('items',$update_item_qty,'id='.$res[0]['id']);
-//             $purchase_items=array();
-//                        // $purchase_items['item_id']=$item_id;
-//                        $purchase_items['received_qty']=$itemvar["rec_qty"];
-//                       $details_id=$this->db->mysql_update($this->tablename2, $purchase_items,'id='.$itemvar['po_id']); 
+     $result1 = $this->db->GetResultsArray($sql1);
 
 
-//             }else{
-//                  $update_item_qty=array();
 
-//               $sql1 = 'select * from '.$this->tablename2.' where item_id='.$itemvar['item_id'].' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO" and id='.$itemvar['po_id'].'';
-//               $result1 = $this->db->GetResultsArray($sql1);    
-//             $item_qty = 'select * from items where id='.$itemvar['item_id'].' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
-//                 $res = $this->db->GetResultsArray($item_qty);
-//               $item_qty_substract = $res[0]['qty']-$result1[0]['received_qty'];
-
-//               $update_item_qty['qty'] =  $item_qty_substract+$itemvar['rec_qty'];
-
-//              $this->db->mysql_update('items',$update_item_qty,'id='.$res[0]['id']);
-//               $purchase_items['received_qty']=$itemvar["rec_qty"];
-//                       $details_id=$this->db->mysql_update($this->tablename2, $purchase_items,'id='.$itemvar['po_id']); 
+     $qty_substract = $result[0]['qty']-$result1[0]['qty'];
+     $update_qty['qty'] = $qty_substract+$itemvar['enter_qty'];
 
 
-//             }
-//              $purchase__history_items=array();
-//                        $purchase__history_items['shop_id']=$_SESSION['shop_id'];
-//                         $purchase__history_items['branch_id']=$_SESSION['branch_id'];
+     $this->db->mysql_update('variety_items',$update_qty,'id='.$result[0]['id']);
 
-//                         $purchase__history_items['purchase_id']=$this->db->getpost('po_id');
-//                        // $purchase__history_items['purchase_id']=$main_purchase_id;
-//                        $purchase__history_items['item_id']=$itemvar['item_id'];
-//                        $purchase__history_items['brand']=$itemvar["brand"];
-//                        $purchase__history_items['units']=$itemvar["units"];
-//                        $purchase__history_items['var_id']=$itemvar["varieties_id"];
-//                        $purchase__history_items['var_name']=$itemvar["varieties_name"];
-//                        $purchase__history_items['category']=$itemvar["category"];
-//                        if ($itemvar['sub_category']!='') {
-//                         $purchase__history_items['sub_category']=$itemvar["sub_category"];
-//                        }else{
-//                         $purchase__history_items['sub_category']=0;
-//                        }
+     $update_item_qty=array();
+     $item_qty = 'select * from items where id='.$itemvar['item_id'].' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
+     $res = $this->db->GetResultsArray($item_qty);
+     $item_qty_substract = $res[0]['qty']-$result1[0]['qty'];
 
-//                        $purchase__history_items['item_name']=$itemvar["item_name"];
-//                        $purchase__history_items['item_code']=$itemvar["item_code"];
-//                     $purchase__history_items['update_sale_price'] = $itemvar["update_sale_price"];
-//                        $purchase__history_items['mrp']=$itemvar["mrp"];
-//                        $purchase__history_items['sales_price']=$itemvar["sale_price"];
+     $update_item_qty['qty'] =  $item_qty_substract+$itemvar['enter_qty'];
 
-//                        $purchase__history_items['discount']=$itemvar["discount"];
-//                        $purchase__history_items['gst']=$itemvar["gst"];
-//                        $purchase__history_items['qty']=$itemvar["quantity"];
-//                        if ($this->db->getpost('order_type')=='received') {
-//                         $purchase__history_items['received_qty']=$itemvar["quantity"];
-//                        }
-//                        $purchase__history_items['taxable_amt']=$itemvar['total']-$itemvar["gstamount"];
-//                        $purchase__history_items['tax_amt']=$itemvar["gstamount"];
-//                        $purchase__history_items['total']=$itemvar["total"];
-//                        $purchase__history_items['created_by']=$_SESSION['uid'];
-//                        $purchase__history_items['created_at']=date('Y-m-d H:i:s');
-//                       $this->db->mysql_update($this->tablename5, $purchase__history_items,'id='.$itemvar['po_id']);
+     $this->db->mysql_update('items',$update_item_qty,'id='.$res[0]['id']);
+            // $purchase_items=array();
+            //            // $purchase_items['item_id']=$item_id;
+            //            $purchase_items['received_qty']=$itemvar["rec_qty"];
+            //           $details_id=$this->db->mysql_update($this->tablename2, $purchase_items,'id='.$itemvar['po_id']); 
 
-//        }
-//     }
 
-//     if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
-//       // $sql = 'select * from '.$this->tablename3.'where purchase_id='.$this->db->getpost('po_id')' and branch_id='.$_SESSION['branch_id'].'';
-//     $purchase_log['branch_id']=$_SESSION['branch_id'];
-//     $purchase_log['purchase_id']=$purchase_id;
-//     $purchase_log['credit']=$this->db->getpost('paid_amt');
-//     $purchase_log['payment_mode']=$this->db->getpost('payment_mode');
-//     $purchase_log['description']='Balance Collection';
-//     $purchase_log['created_by']=$_SESSION['uid'];
-//     $purchase_log['created_at']=date('Y-m-d H:i:s');
-//     $this->db->mysql_insert($this->tablename3, $purchase_log);
-// }
+    }else{
+     $update_item_qty=array();
 
-//  // $update_order = array();
-//  // $update_order['shop_id']=$_SESSION['shop_id'];
-//  // $update_order['branch_id']=$_SESSION['branch_id'];
-//  // $update_order['purchase_no']=$this->db->getpost('purchase_no');
-//  // $update_order['bill_no']=$this->db->getpost('bill_no');
-//  // $update_order['discount_amt']=$this->db->getpost('discount');
-//  // $update_order['taxable_amt']=$this->db->getpost('taxable_amount');
-//  // $update_order['tax_amt']=$this->db->getpost('tax_amount');
-//  // $update_order['grand_total']=$this->db->getpost('grand_total');
-//  // $update_order['received_date']=$this->db->getpost('received_date');
-//  // $update_order['paid_amt']=$this->db->getpost('paid_amt');
-//  // $update_order['balance_amt']=$this->db->getpost('balance');
+     $sql1 = 'select * from '.$this->tablename5.' where item_id='.$itemvar['item_id'].' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO" and id='.$itemvar['po_id'].'';
+     $result1 = $this->db->GetResultsArray($sql1);    
+     $item_qty = 'select * from items where id='.$itemvar['item_id'].' and branch_id='.$_SESSION['branch_id'].' and is_deleted="NO"';
+     $res = $this->db->GetResultsArray($item_qty);
+     $item_qty_substract = $res[0]['qty']-$result1[0]['qty'];
+
+     $update_item_qty['qty'] =  $item_qty_substract+$itemvar['enter_qty'];
+
+     $this->db->mysql_update('items',$update_item_qty,'id='.$res[0]['id']);
+
+              // $purchase_items['received_qty']=$itemvar["rec_qty"];
+              //         $details_id=$this->db->mysql_update($this->tablename2, $purchase_items,'id='.$itemvar['po_id']); 
+    }
+    $purchase_order_details=array();
+
+     $sql = 'select * from '.$this->tablename2.'where branch_id='.$_SESSION['branch_id'].' and purchase_id='.$this->db->getpost('po_id').' and item_id='.$itemvar['item_id'].' and is_deleted="NO"';
+      $order_id = $this->db->GetResultsArray($sql);
+
+     $sql1 = 'select * from '.$this->tablename5.' where branch_id='.$_SESSION['branch_id'].' and item_id='.$itemvar['item_id'].' and    id='.$itemvar['po_id'].' and is_deleted="NO"';
+      $prev_qty = $this->db->getAsIsArray($sql1);
+      
+      $sub_qty = $order_id[0]['received_qty']-$prev_qty['qty'];
+     
+    
+
+     $purchase_order_details['received_qty'] = $itemvar['enter_qty']+$sub_qty;
+  
+
+    $this->db->mysql_update($this->tablename2,$purchase_order_details,'id='.$order_id[0]['id']);
+
+    
+  
 
 
 
 
-// }
 
+    $purchase__history_items=array();
+    $purchase__history_items['shop_id']=$_SESSION['shop_id'];
+    $purchase__history_items['branch_id']=$_SESSION['branch_id'];
+
+    $purchase__history_items['purchase_id']=$this->db->getpost('po_id');
+                       // $purchase__history_items['purchase_id']=$main_purchase_id;
+    $purchase__history_items['item_id']=$itemvar['item_id'];
+    $purchase__history_items['brand']=$itemvar["brand"];
+    $purchase__history_items['units']=$itemvar["units"];
+    $purchase__history_items['var_id']=$itemvar["varieties_id"];
+    $purchase__history_items['var_name']=$itemvar["varieties_name"];
+    $purchase__history_items['category']=$itemvar["category"];
+    if ($itemvar['sub_category']!='') {
+     $purchase__history_items['sub_category']=$itemvar["sub_category"];
+    }else{
+     $purchase__history_items['sub_category']=0;
+    }
+
+    $purchase__history_items['item_name']=$itemvar["item_name"];
+    $purchase__history_items['item_code']=$itemvar["item_code"];
+    $purchase__history_items['update_sale_price'] = $itemvar["update_sale_price"];
+    $purchase__history_items['mrp']=$itemvar["mrp"];
+    $purchase__history_items['sales_price']=$itemvar["sale_price"];
+
+    $purchase__history_items['discount']=$itemvar["discount"];
+    $purchase__history_items['gst']=$itemvar["gst"];
+    $purchase__history_items['qty']=$itemvar["enter_qty"];
+    if ($this->db->getpost('order_type')=='received') {
+     $purchase__history_items['received_qty']=$itemvar["quantity"];
+    }
+    $purchase__history_items['taxable_amt']=$itemvar['total']-$itemvar["gstamount"];
+    $purchase__history_items['tax_amt']=$itemvar["gstamount"];
+    $purchase__history_items['total']=$itemvar["total"];
+    $purchase__history_items['created_by']=$_SESSION['uid'];
+    $purchase__history_items['created_at']=date('Y-m-d H:i:s');
+    $this->db->mysql_update($this->tablename5, $purchase__history_items,'id='.$itemvar['po_id']);
+
+   }
+     
+
+  }
+
+
+
+
+  $sql = "select id from ".$this->tablename4." ORDER BY id DESC LIMIT 1";
+  $result = $this->db->getAsIsArray($sql);
+
+
+
+
+  $update_order_history['shop_id']=$_SESSION['shop_id'];
+  $update_order_history['branch_id']=$_SESSION['branch_id'];
+  $update_order_history['po_id']=$this->db->getpost('po_id');
+  $update_order_history['discount_amt']=$this->db->getpost('discount');
+  $update_order_history['taxable_amt']=$this->db->getpost('taxable_amount');
+  $update_order_history['tax_amt']=$this->db->getpost('tax_amount');
+  $update_order_history['grand_total']=$this->db->getpost('grand_total');
+  $update_order_history['created_by']=$_SESSION['uid'];
+  $update_order_history['created_at']=date('Y-m-d H:i:s');
+  $update_order_history['bill_no']=$this->db->getpost('bill_no');
+
+  $update_order_history['received_date']=$this->db->getpost('received_date');
+
+  $update_order_history['paid_amt']=$this->db->getpost('paid_amt');
+  $update_order_history['balance_amt']=$this->db->getpost('balance');
+
+  $this->db->mysql_update($this->tablename4,$update_order_history,'id='.$result['id']);
+
+    if ($this->db->getpost('paid_amt')!='' && $this->db->getpost('paid_amt')!=0) {
+     $purchase_log = array();
+      $sql = 'select * from '.$this->tablename3.'where purchase_id='.$this->db->getpost('po_id').' and branch_id='.$_SESSION['branch_id'].' ORDER BY id DESC LIMIT 1'; 
+      $result=$this->db->getAsIsArray($sql);
+    // print_r($result);die();
+    $purchase_log['branch_id']=$_SESSION['branch_id'];
+    $purchase_log['purchase_id']=$this->db->getpost('po_id');
+    $purchase_log['credit']=$this->db->getpost('paid_amt');
+    $purchase_log['payment_mode']=$this->db->getpost('payment_mode');
+    $purchase_log['description']='Balance Collection';
+    $purchase_log['created_by']=$_SESSION['uid'];
+    $purchase_log['created_at']=date('Y-m-d H:i:s');
+    $this->db->mysql_update($this->tablename3, $purchase_log,'id='.$result['id']);
+}
+$item_check_sql = "select sum(qty)as qty,sum(received_qty)as received_qty from ".$this->tablename2." where purchase_id=".$this->db->getpost('po_id')." and branch_id=".$_SESSION['branch_id']."";
+  $item_check_res=$this->db->GetResultsArray($item_check_sql);
+ 
+  $total = $item_check_res[0]['qty']-$item_check_res[0]['received_qty'];
+  if($total==0){
+   $purchase_update=array();
+   $purchase_update['order_type']='RECEIVED';
+   $this->db->mysql_update($this->tablename, $purchase_update,'id='.$this->db->getpost('po_id'));
+
+  }else{
+   $purchase_update=array();
+   $purchase_update['order_type']='PARTIAL COMPLETE';
+   $this->db->mysql_update($this->tablename, $purchase_update,'id='.$this->db->getpost('po_id'));
+
+  }
+  $history_sql='select bill_no,received_date,sum(taxable_amt) as taxable,sum(tax_amt) as tax,sum(discount_amt) as discount,sum(grand_total) as total from '.$this->tablename4.' where po_id='.$this->db->getpost('po_id').' and branch_id='.$_SESSION['branch_id'].' group by po_id order by id asc';
+  $history_res=$this->db->GetResultsArray($history_sql);
+
+  $log_sql='select sum(credit) as credit from '.$this->tablename3.' where purchase_id='.$this->db->getpost('po_id').' group by purchase_id order by id asc';
+  $log_res=$this->db->GetResultsArray($log_sql);
+
+  if (count($history_res)>0) {
+   $purchase_update=array();
+   $purchase_update['bill_no']=$history_res[0]['bill_no'];
+   $purchase_update['received_date']=$history_res[0]['received_date'];
+   $purchase_update['taxable_amt']=$history_res[0]['taxable'];
+   $purchase_update['tax_amt']=$history_res[0]['tax'];
+   $purchase_update['discount_amt']=$history_res[0]['discount'];
+   $purchase_update['grand_total']=$history_res[0]['total'];
+   $purchase_update['paid_amt']=$log_res[0]['credit'];
+   $purchase_update['balance_amt']=$history_res[0]['total']-$log_res[0]['credit'];
+      // print_r($purchase_update['balance_amt']);die();
+   if($purchase_update['balance_amt']==0){
+
+    $purchase_update['status']="PAID";
+
+   }else{
+
+    $purchase_update['status']="PENDING";
+
+   }
+
+   $this->db->mysql_update($this->tablename, $purchase_update,'id='.$this->db->getpost('po_id'));
+
+ 
+}
+return ['status'=>'success'];
+ }
+ 
 }
 ?>

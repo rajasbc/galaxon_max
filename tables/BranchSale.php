@@ -145,7 +145,7 @@ if($update_id){
 
 public function get_bill_no($b_id,$p_id){
 
-$sql = 'select * from '.$this->tablename.' where branch_id='.$b_id.' and po_id='.$p_id.'';
+ $sql = 'select * from '.$this->tablename.' where branch_id='.$b_id.' and po_id='.$p_id.'';
 $result = $this->db->GetResultsArray($sql);
 
 
@@ -205,6 +205,14 @@ return $result;
 }
 public function get_amount_details($p_id,$b_id){
 $sql = 'select * from '.$this->tablename2.'where po_id='.$p_id.' and branch_id='.$b_id.'';
+
+$result = $this->db->GetResultsArray($sql);
+
+return $result;
+
+}
+public function get_transfer_qty($id,$b_id,$item_id){
+ $sql = 'select sum(qty) as qty from '.$this->tablename2.'where po_id='.$id.' and branch_id='.$b_id.' and item_id='.$item_id.'';
 
 $result = $this->db->GetResultsArray($sql);
 

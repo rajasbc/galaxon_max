@@ -405,7 +405,7 @@ $result1 = $obj1->get_department_data();
             foreach ($result1 as $value) { 
 
              // $sel = $value['name']==$result[0]['department_name']?'selected':'';
-              // $sel = $value['name'] == $result[0]['department_name']?'selected':'';
+             //  $sel = $value['name'] == $result[0]['department_name']?'selected':'';
              $selected = "<option value='".$value['name']."' ".$sel." >" . $value["name"]."</option>";
              $selected = str_replace("<option value='".$result[0]['department_name']."'","<option value='".$result[0]['department_name']."' selected", $selected);
 

@@ -7,6 +7,7 @@ $obj = new PurchaseOrder();
 $obj1 = new Shops();
 $obj2 = new Varieties();
 $obj3 = new Items();
+$obj4= new  BranchSale();
 
 $sale_details = $obj->get_details($_GET['id'],$_GET['branch_id']);
 
@@ -36,10 +37,23 @@ $items=array();
 $i=0;
 foreach ($purchase_order_dt as $key => $value) {
 
-   $tot = $obj->get_total($value['purchase_id']);      
-    //     $total = $value['qty']*$value['sales_price'];
-   
+   $tot = $obj->get_total($value['purchase_id'],$value['branch_id']); 
+   $transfer_qty = $obj4->get_transfer_qty($value['purchase_id'],$value['branch_id'],$value['item_id']);
 
+   $balance_qty = $value['qty']-$transfer_qty[0]['qty'];   
+        
+        // $total = $value['qty']*$value['sales_price'];
+        $ttl=($value['mrp']*$balance_qty)+$value['tax_amt'];
+
+        if($value['var_id']!='' && $value['var_id']!=0){
+
+          $item_qty = $obj2->get_available_qty($value['var_id'],$value['item_id']);
+                 }else{
+                   $item_qty=$obj3->get_available_item($value['item_id']);
+
+                      }
+      
+    
     //   if($value['var_id']!=0){
  
     //    $updated_price = $obj2->get_updated_price($value['var_id'],$value['branch_id']);
@@ -52,7 +66,7 @@ foreach ($purchase_order_dt as $key => $value) {
     // }
    
  $i++;
- $ttl=$value['total']+$value['tax_amt'];
+ // $ttl=$value['total']+$value['tax_amt'];
 
  $items['sid'.$i]=[
   "item_id"=>$value['item_id'],
@@ -70,13 +84,15 @@ foreach ($purchase_order_dt as $key => $value) {
   "gst"=>$value['gst'],
   "gstpercentage"=>$value['gst']/100,
   "order_qty"=>$value['qty'],
+  "transfer_qty"=>$transfer_qty[0]['qty'],
   "rec_qty"=>$value['received_qty'],
-  "enter_qty"=>$value['qty']-$value['received_qty'],
+  "enter_qty"=>$balance_qty,
   "gstamount"=>$value['tax_amt'],
   "total"=>$ttl,
   "deleted"=>'no',
   "flag"=>'old',
   "main_id"=>$value['id'],
+  "item_qty"=>$item_qty['qty'],
 
   "po_id"=>$_GET['id'],
  ];
@@ -327,7 +343,10 @@ $items=json_encode($items);
                     <th>S.No</th>
                     <th>Product</th>
                     <th>Variety</th>
-                    <th>Qty</th>
+                    <th>Order Qty</th>
+                    <th>Delivered Qty</th>
+                     <th>Stock</th>
+                    <th>Balance Qty</th>
                     <th>Description</th>
                     <th>Units</th>
                     <th>Tons</th>
@@ -341,7 +360,7 @@ $items=json_encode($items);
                     <th>Actions</th>
                    </tr>
                   </thead>
-                  <tbody class="text-left css-serial" id="tdata">
+                  <tbody class="text-left css-serial" id="atdat">
                    <?php $sno=0;
                    $totalqty = 0;
                    $totalton = 0;
@@ -352,12 +371,16 @@ $items=json_encode($items);
                    $grandtot = 0;
                    foreach ($purchase_order_dt as $key => $row) {
                       $tot = $obj->get_total($row['purchase_id'],$row['branch_id']);     
+
                     // print_r($purchase_order_dt);die();
-                     $admin_var_qty = $obj2->get_qty($row['var_id']); 
+                     // $admin_var_qty = $obj2->get_qty($row['var_id']); 
+                      $transfer_qty = $obj4->get_transfer_qty($row['purchase_id'],$row['branch_id'],$row['item_id']);
+
+                      $balance_qty = $row['qty']-$transfer_qty[0]['qty'];
                     $sno++;
                     $description='';
 
-                    $remain_qty = $row['qty']-$row['received_qty'];
+                    $remain_qty = $row['qty'];
 
                   
                     if ($row['sub_category']!='' && $row['sub_category']!=0) {
@@ -376,10 +399,17 @@ $items=json_encode($items);
 
                     $tns = $row['qty']/1000;
 
-                    $ttl=($row['mrp']* $remain_qty)+$row['tax_amt'];
+                    $ttl=($row['mrp']*$balance_qty)+$row['tax_amt'];
                      
+            if($row['var_id']!='' && $row['var_id']!=0){
+
+          $item_qty = $obj2->get_available_qty($row['var_id'],$row['item_id']);
+                 }else{
+                   $item_qty=$obj3->get_available_item($row['item_id']);
+
+                      }
                          
-                    echo '<tr id="trItem_'.$sno.'">';
+                    echo '<tr id="trItem_'.$sno.'" class="quantity_check">';
                     echo '<td class=" ch-4"><span></span></td>';
                     echo '<td class="text-left ch-10">'.$row['item_name'];
                     if ($row['item_code']!='') {
@@ -387,12 +417,21 @@ $items=json_encode($items);
                     }
                     echo '</td>';
                     echo '<td class=" ch-4">'.$row['var_name'].'</td>';
+
+                     echo '</td>';
+                  
+
+                    echo '<td class=" ch-4" id="order_qty'.$sno.'">'.$remain_qty.'</td>';
+
+                      echo '<td class=" ch-4" id="transfer_qty'.$sno.'">'.$transfer_qty[0]['qty'].'</td>';
+                     echo '<td class=" ch-4 qty" id="stock_qty">'.$item_qty['qty'].'</td>';
+
                     echo '<td class="text-left ch-4">';
 
-                    echo '<input type="hidden" id="admin_qty'.$sno.'" value= "'.$admin_var_qty[0]['qty'].'"><input onkeyup=quantityupdate('.$sno.',this) class="form-control quantity" name="quantity[]" id="quantity'.$sno.'" value="'.$remain_qty.'" style="width:4rem; height:1.75rem; font-size:0.9rem;">';
+                    echo '<input type="hidden" id="admin_qty'.$sno.'" value= "'.$admin_var_qty[0]['qty'].'"><input type="text" onkeyup=quantityupdate('.$sno.',this) class="form-control quantity" name="quantity[]" id="quantity'.$sno.'" value="'.$balance_qty.'" style="width:4rem; height:1.75rem; font-size:0.9rem;">';
 
-                     echo '<input type="hidden" class="form-control quantity" name="item[]" id="item'.$sno.'" value='.$row['item_id'].' style="width:5rem; height:1.75rem">';
-            echo '<input type="hidden" class="form-control quantity" name="variety[]" id="Variety'.$sno.'" value='.$row['var_id'].' style="width:5rem; height:1.75rem">';
+                     echo '<input type="hidden" class="form-control" name="item[]" id="item'.$sno.'" value='.$row['item_id'].' style="width:5rem; height:1.75rem">';
+            echo '<input type="hidden" class="form-control " name="variety[]" id="Variety'.$sno.'" value='.$row['var_id'].' style="width:5rem; height:1.75rem">';
 
                     echo '</td>';
                     echo '<td class="text-left ch-10">'.$description_name.'</td>';
@@ -433,13 +472,13 @@ $items=json_encode($items);
 
                     $taxable = $prt-$disv;
 
-                    $grand = $taxable+$row['tax_amt'];
+                    // $grand = $taxable+$row['tax_amt'];
+                      $grand = $grand+$ttl;
 
-
-                    $totalqty+= $remain_qty;
+                    $totalqty+= $balance_qty;
                     // $tot_qty =  $totalqty+$row['qty'];
                     $totalton = $totalton+$tns;
-                    $taxableamt = $taxableamt+$taxable;
+                    // $taxableamt = $taxableamt+$taxable;
                     $totdis = $totdis+$disv;
                     $taxtot = $taxtot+$row['tax_amt'];
                     $grandtot = $grandtot+$grand;
@@ -471,7 +510,7 @@ $items=json_encode($items);
                       <div class="col-lg-4 col-sm-4 col-md-4">
                        <div class="">
                         <span class="">Purchase Amount (Include Tax ₹) </span>
-                        <span class="" id="grandid"><?=$tot['grand_total']?></span>
+                        <span class="" id="grandid"><?=$grand?></span>
                        </div>
                       </div>
 
@@ -480,8 +519,8 @@ $items=json_encode($items);
                       <div class="col-lg-4 col-sm-4 col-md-4">
                        <div class="">
                         <span class="">Taxable Amount ₹</span>
-                        <span class="" id="subid"><?=$taxableamt?></span>
-                        <input type="hidden" name="subid1" id="subid1" value="<?=$taxableamt?>">
+                        <span class="" id="subid"><?=$grand?></span>
+                        <input type="hidden" name="subid1" id="subid1" value="<?=$grand?>">
                        </div>
                       </div>
 
@@ -1043,8 +1082,22 @@ $items=json_encode($items);
 
     
       get_qty(item_id,var_id,idval);
+     
+      var tranfer_qty = $("#transfer_qty"+idval).text();
+      var order_qty = $("#order_qty"+idval).text();
+      var balance_qty =order_qty-tranfer_qty;
 
-    
+     var enter_qty = $("#quantity"+idval).val();
+       if(enter_qty>balance_qty){
+         global_alert_modal('warning','Enter Quantity is More Than Balance Quantity ');
+          
+            $('#quantity'+idval).val('');
+             $('#place_order').attr('disabled','disabled');
+           return false;
+
+       }else{
+         $('#place_order').removeAttr('disabled','');
+       }
 
 
      //   if(quantity>admin_qty)
@@ -1182,9 +1235,41 @@ $items=json_encode($items);
        $("#item_name").focus();
        return false;
       }
+       itemslist = items;
+       
+        for(vale in itemslist) {
 
+       tempItem = itemslist[vale];
+       var qty = tempItem["enter_qty"];
+       var stock = tempItem["item_qty"];
+        if(stock<qty){
+            global_alert_modal('fail','Quantity is More Than Available Quantity ...');
+       $(".quantity").css('border','1px solid red');     
+       $(".quantity").focus();
+       return false;
+      }
+      
+}
+     // $('.quantity_check').each(function() {
+     //     i=1;
+     //    var row = $(this).parents();
+     //    // alert(stock);
+     //    var stock = row.find('#stock_qty').text()*1;
 
- 
+     //    var qty = $("#quantity"+i).val()*1;
+
+     //    // if(qty>stock){
+     //    //  alert('good');
+     //    // }else{
+
+     //    //  alert('bad');
+     //    // }
+       
+     //    i+1;
+         
+     //  });
+       
+       
 
       detailsarray = [];
       detailsarray['branch_id']=Number($("#branch_id").val());

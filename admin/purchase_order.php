@@ -53,9 +53,9 @@ $result = $obj->get_save_id();
         
           <select class="form-control" id="select_type">
             <option value="NEW" <?php echo $_GET['type']!='RECEIVED'?'selected="seleted"':''?>>NEW</option>
-            <?php if($_SESSION['type']=='ADMIN'){ ?>
+            
             <option value="RECEIVED" <?php echo $_GET['type']=='RECEIVED'?'selected="seleted"':''?>>RECEIVED</option>
-          <?php } ?>
+         
           </select>
 
              <!--  <select class="form-control" id="select_type">
@@ -81,19 +81,25 @@ $result = $obj->get_save_id();
                   <tr>
                     <th>S.No</th>
                     <th>Purchase No</th>
-                    <th>Bill No</th>
                     <?php if($_SESSION['type']=='ADMIN'){ ?> 
+                    <th>Bill No</th>
+                    
                     <th>Vendor Name</th>
                     <?php }?>
                     <th>Received Date</th>
+                     <?php if($_SESSION['type']=='ADMIN'){ ?> 
                     <th>Discount</th>
                     <th>Tax Amount</th>
+                       <?php }?>
                     <th>Total Amount</th>
+                    <?php if($_SESSION['type']=='ADMIN'){ ?>
                     <th>Paid Amount</th>
                     <th>Balance Amount</th>
-                  
+                  <?php }?>
                     <th >Details</th>
-                    <th >Pay</th>
+                    <?php if($_SESSION['type']=='ADMIN'){ ?>
+                    <th class="w-50" >Pay</th>
+                   <?php }?>
                   </tr>
                 <?php }else{?>
                    <?php if($_SESSION['type']=='ADMIN'){ ?>
@@ -123,7 +129,7 @@ $result = $obj->get_save_id();
                     <th width="30%">Details</th>
                   </tr>
 
-                <?php } ?>  
+                <?php } ?>    
                 <?php }?>
                   </thead>
                   <tbody>
@@ -166,6 +172,7 @@ include 'footer.php';
 </script>
 <script type="text/javascript">
   function detail_modal(e){
+
 $.ajax({
 type: "GET",
 dataType:"html",
@@ -312,7 +319,29 @@ window.location="edit_received_order.php?id="+btoa(id);
 
 
 }
+function order_detail(e){
 
+
+var po_id = $(e).data('id');
+
+
+var branch_id = $(e).val();
+
+
+
+$.ajax({
+type: "GET",
+dataType:"html",
+url: '../ajaxCalls/branch_sale_details.php',
+data: {'id':po_id,'branch_id':branch_id},
+success: function(res){
+  $("#order_modal .modal-body").html(res);
+$("#order_modal").modal('show');
+}
+
+});
+ 
+}
 
 
 

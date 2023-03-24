@@ -24,13 +24,21 @@ foreach ($purchase_order_item_dt as $key => $value) {
  
    $count;
 
-   $result1 = $obj->get_product_total($value['purchase_id'],$value['item_id'],$count);
+   $result1 = $obj->get_product_total($value['purchase_id'],$value['item_id'],$count,$value['var_id']);
  
-   $check = $check+$result1[0]['qty']+
-  $ttl = $result1[0]['total']+$result1[0]['tax_amt'];
+   // $check = $check+$result1[0]['qty']+
+   if($result1[0]['qty']!=0){
+  $ttl1 = $result1[0]['total']+$result1[0]['tax_amt'];
+  $total = $result1[0]['total'];
+
+}else{
+  $ttl1=0;
+   $total=0;
+}
+  
   $tot_qty = $tot_qty+$result1[0]['qty'];
   $tot_ton =  $tot_ton+$value['received_qty']/1000;
-  $tot_dis = $tot_dis+($value['received_qty']*$row['mrp'])*($row['discount']/100);
+  // $tot_dis = $tot_dis+($value['received_qty']*$value['mrp'])*($value['discount']/100);
   $taxable_amount = $taxable_amount+$result1[0]['total'];
   $tot_tax =  $tot_tax+$result1[0]['tax_amt'];
   $grand_total+= $ttl;
@@ -67,7 +75,8 @@ foreach ($purchase_order_item_dt as $key => $value) {
       "rec_qty"=>$result1[0]['received_qty'],
       "enter_qty"=>$result1[0]['qty'],
       "gstamount"=>$result1[0]['tax_amt'],
-      "total"=>$result1[0]['total']
+      "total"=>$total,
+
     ];
 }
 
@@ -223,6 +232,7 @@ $items=json_encode($items);
                       <th>Tons</th>
                       <th>Order Qty</th>
                       <th>Received Qty</th>
+                      <th>Last Received Qty</th>
                        <th class='hide'>Sales Price</th>
                       <th class='hide'>Vendor Price</th>
                      
@@ -236,14 +246,25 @@ $items=json_encode($items);
                   <tbody class="text-left css-serial" id="tdata">
  <?php $sno=0;   $grand_total =0;foreach ($purchase_order_item_dt as $key => $row) {
   $ton = $row['received_qty']/1000;
-  $result = $obj->get_product_total($row['purchase_id'],$row['item_id'],$count);
+  $result = $obj->get_product_total($row['purchase_id'],$row['item_id'],$count,$row['var_id']);
+  if($result[0]['qty']!=0){
   $ttl1 = $result[0]['total']+$result[0]['tax_amt'];
+  $total1 = $result[0]['total'];
+  $total_tax = $result[0]['tax_amt'];
+}else{
+  $ttl1=0;
+   $total1=0;
+    $total_tax=0;
+}
   $tot_qty1 = $tot_qty1 +$result[0]['qty'];
   $tot_ton1 =  $tot_ton1+$result[0]['qty']/1000;
   $tot_dis1 = $tot_dis1+($result[0]['qty']*$row['mrp'])*($result[0]['discount']/100);
-  $taxable_amount1 = $taxable_amount1+$result[0]['total'];
-  $tot_tax1 =  $tot_tax1+$result[0]['tax_amt'];
+  $taxable_amount1 = $taxable_amount1+$total1;
+  $tot_tax1 =  $tot_tax1+$total_tax;
   $grand_total1+= $ttl1;
+
+  $qty_after_substract = $row['received_qty']-$result[0]['qty'];
+
    $sno++;
    $description='';
    if ($row['sub_category']!='' && $row['sub_category']!=0) {
@@ -277,10 +298,13 @@ $items=json_encode($items);
                 echo '<td class="text-left ch-10">'.$row['units'].'</td>';
             echo '<td class="text-left ch-10" id="tons'.$sno.'">'.$ton.'</td>';
              echo '<td class="text-left ch-10" id="order_qty'.$sno.'">'.$row['qty'].'</td>';
-
+             echo '<td clas="text-left ch-10" id="received_qty'.$sno.'">'.$row['received_qty'].'
+             </td>';
              echo '<td class="text-left ch-10">';
              echo '<input onkeyup=quantityupdate('.$sno.',this) class="form-control quantity" name="quantity[]" id="quantity'.$sno.'" value="'.$result[0]['qty'].'" style="width:5rem; height:1.75rem">';
+             echo '<input type="hidden" class="form-control quantity" name="qty_sub[]" id="qty_sub'.$sno.'" value="'. $qty_after_substract.'" style="width:5rem; height:1.75rem">';
              echo '</td>';
+
              // echo '<td class="text-left ch-10 hide">' .$updated_price['updated_purchase_price'].'</td>';
              echo '<td class="text-left ch-4 hide">';
 
@@ -554,9 +578,24 @@ if (val!=0 && val!='') {
       var discount = $("#discount"+idval).val();
       var gst = $("#gst"+idval).val();
       var quantity = $("#quantity"+idval).val();
-      if ((Number($("#order_qty"+idval).text())-Number($("#rec_qty"+idval).text())) < quantity) {
-        $("#quantity"+idval).val((Number($("#order_qty"+idval).text())-Number($("#rec_qty"+idval).text())));
+      // if ((Number($("#order_qty"+idval).text())-Number($("#received_qty"+idval).text())) < quantity) {
+      //   $("#quantity"+idval).val((Number($("#order_qty"+idval).text())-Number($("#received_qty"+idval).text())));
+      // }
+
+     var qty_sub =$("#qty_sub"+idval).val();
+     var max_qty = $("#order_qty"+idval).text()-qty_sub;
+      if(quantity>max_qty){
+         $("#quantity"+idval).val(max_qty);
       }
+
+     // if(Number($("#received_qty"+idval).text())- ){
+
+
+
+
+     // }
+  
+
      prototal=Number(mrp*quantity)-(Number(mrp*quantity)*(discount/100));
 
      gstamount=prototal*(gst/100);
@@ -567,7 +606,7 @@ if (val!=0 && val!='') {
     items[ref].sale_price=sale_price;
     items[ref].updated_price;
     items[ref].mrp=mrp;
-    items[ref].rec_qty=$("#quantity"+idval).val();
+    items[ref].enter_qty=$("#quantity"+idval).val();
     items[ref].discount=discount;
     items[ref].gst=gst;
     items[ref].gstpercentage=gst/100;
@@ -603,9 +642,9 @@ if (val!=0 && val!='') {
     var tempItem;
      for(vale in itemslist) {
         tempItem = itemslist[vale];
-        val=Number(tempItem["rec_qty"]);
-        total_qty=total_qty+Number(tempItem["rec_qty"]);
-        total= Number(tempItem["mrp"])*Number(tempItem["rec_qty"]);
+        val=Number(tempItem["enter_qty"]);
+        total_qty=total_qty+Number(tempItem["enter_qty"]);
+        total= Number(tempItem["mrp"])*Number(tempItem["enter_qty"]);
 
 
         discount=Number(discount)+(Number(total)*Number(tempItem["discount"]/100));

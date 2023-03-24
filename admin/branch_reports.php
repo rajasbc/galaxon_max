@@ -162,12 +162,12 @@ include 'footer.php';
 
 
      
-<!-- <script>
+<script>
   $(document).ready(function(){
     get_data();
   })
  
-</script> -->
+</script>
 <script>
   $(function () {
     $("#example1").DataTable({
@@ -268,6 +268,26 @@ $.ajax({
 
 
 }
+</script>
+<script type="text/javascript">
+  function get_data(){
+      $.ajax({
+type: "POST",
+dataType:"json",
+url: '../ajaxCalls/get_branch_collection_data.php',
+data: {},
+success: function(res){
+ var table = $('#example1').DataTable();
+    table.clear();
+    table.rows.add(res).draw();
+    var table = $('#example1').DataTable();
+    table.clear();
+    table.rows.add(res.out).draw();
+    $("#html_total").html(res.out1);
+}
+
+});
+  }
 </script>
 
 

@@ -1280,9 +1280,9 @@ class PurchaseOrder extends Dbconnection {
  }
  public function request_order(){
   // $date = date('Y-m-d');
-  $filter_date = date('Y-m-d',strtotime('-5 days'));
-
-  $sql = "select * from ".$this->tablename." where branch_id!='".$_SESSION['branch_id']."' and is_deleted='NO' and date(created_at)<='".$filter_date."' and order_type='NEW'";
+  // $filter_date = date('Y-m-d',strtotime('-5 days'));
+$filter_date = date('Y-m-d');
+   $sql = "select * from ".$this->tablename." where branch_id!='".$_SESSION['branch_id']."' and is_deleted='NO' and date(created_at)<='".$filter_date."' and order_type='NEW'";
   $result = $this->db->GetResultsArray($sql);
   return $result;
 
@@ -1293,7 +1293,7 @@ class PurchaseOrder extends Dbconnection {
   $sql = "select * from branch_sale where branch_id!='".$_SESSION['branch_id']."' and po_id='".$id."'" ;
 
   $result = $this->db->GetResultsArray($sql);
-
+  
 
 
   return $result;

@@ -1,12 +1,16 @@
 <?php 
 include 'header.php';
 $obj = new  PurchaseOrder();
+$obj1 = new Vendors();
+$obj2 = new Shops();
+$obj3 = new Items();
+$obj4 = new Employee();
+$obj5 = new Customers();
 $result = $obj->request_order();
 $i=0;
 foreach ($result as $key => $value) {
-  // print_r($value);
-  // $i++;
- $result2 = $obj->get_sale_order($value['id']);
+  
+$result2 = $obj->get_sale_order($value['id']);
 
  
 
@@ -14,12 +18,16 @@ foreach ($result as $key => $value) {
 if(count($result2)==0)
 {
   $i++;
+
 }
 
 }
+
+
 if($_SESSION['type']!='ADMIN'){
 
 $result3 = $obj->branch_order_notify();
+
 $i=0;
 foreach($result3 as $row){
 
@@ -34,6 +42,11 @@ if(count($res)!=0)
 
 ;
 
+$total_vendor = $obj1->get_vendor_count();
+$total_branch = $obj2->get_branch_count();
+$total_product = $obj3->get_product_count();
+$total_employe = $obj4->get_employe_count();
+$total_customer = $obj5->get_customer_count();
 
 ?>
 <style type="text/css">
@@ -60,9 +73,9 @@ if(count($res)!=0)
               <li class="breadcrumb-item"><a href="#">Home</a></li>
               <li class="breadcrumb-item active">Dashboard</li>
               <?php if($_SESSION['type']=='ADMIN'){?>
-              <?php if($i>0) {?>
+             
                <li class="breadcrumb-item"><a href="branch_received_order.php">Request Order Notification<span class="total-count dot text-center text-white"><?php  echo $i ?></span></a></li>
-             <?php } ?>
+             
            <?php }else{?>
             <li class="breadcrumb-item"><a href="purchase_order.php?type=NEW">Notification<span class="total-count dot text-center text-white"><?php  echo $i ?></span></a></li>
             <?php } ?>
@@ -78,33 +91,53 @@ if(count($res)!=0)
       <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
         <div class="row">
+          <?php if($_SESSION['type']=='ADMIN'){ ?>
           <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>150</h3>
+                <h3><?php echo $total_vendor ?></h3>
 
-                <p>New Orders</p>
+                <p>Total Vendors</p>
               </div>
               <div class="icon">
                 <i class="ion ion-bag"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="vendor.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
+         <?php }else{ ?>
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h3><?php echo $total_customer ?></h3>
+
+                <p>Total Customer</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-bag"></i>
+              </div>
+              <a href="customer.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+
+
+         <?php }?> 
+
           <!-- ./col -->
           <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
+                <h3><?php echo $total_branch?></h3>
 
-                <p>Bounce Rate</p>
+                <p>Total Branch</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="branch.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -112,14 +145,14 @@ if(count($res)!=0)
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>44</h3>
+                <h3><?php echo $total_product ?></h3>
 
-                <p>User Registrations</p>
+                <p>Total Product</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-add"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="item_list.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -127,14 +160,14 @@ if(count($res)!=0)
             <!-- small box -->
             <div class="small-box bg-danger">
               <div class="inner">
-                <h3>65</h3>
+                <h3><?php echo $total_employe[0]['count'] ?></h3>
 
-                <p>Unique Visitors</p>
+                <p>Total Employee</p>
               </div>
               <div class="icon">
                 <i class="ion ion-pie-graph"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="add_employee.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -175,9 +208,9 @@ if(count($res)!=0)
             </div>
             <!-- /.card -->
            </section>
-          <section class="col-lg-7 connectedSortable">
+         <!--  <section class="col-lg-7 connectedSortable"> -->
             <!-- Custom tabs (Charts with tabs)-->
-            <div class="card">
+           <!--  <div class="card">
               <div class="card-header">
                 <h3 class="card-title">
                   <i class="fas fa-chart-pie mr-1"></i>
@@ -193,11 +226,11 @@ if(count($res)!=0)
                     </li>
                   </ul>
                 </div>
-              </div><!-- /.card-header -->
-              <div class="card-body">
-                <div class="tab-content p-0">
+              </div> --><!-- /.card-header -->
+              <!-- <div class="card-body">
+                <div class="tab-content p-0"> -->
                   <!-- Morris chart - Sales -->
-                  <div class="chart tab-pane active" id="revenue-chart"
+                  <!-- <div class="chart tab-pane active" id="revenue-chart"
                        style="position: relative; height: 300px;">
                       <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>
                    </div>
@@ -205,19 +238,19 @@ if(count($res)!=0)
                     <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
                   </div>
                 </div>
-              </div><!-- /.card-body -->
-            </div>
+              </div> --><!-- /.card-body -->
+           <!--  </div> -->
             <!-- /.card -->
 
-               </section>
+              <!--  </section> -->
           <!-- /.Left col -->
           <!-- right col (We are only adding the ID to make the widgets sortable)-->
-          <section class="col-lg-5 connectedSortable">
+          <!-- <section class="col-lg-5 connectedSortable"> -->
 
            
 
             <!-- solid sales graph -->
-            <div class="card bg-gradient-info">
+           <!--  <div class="card bg-gradient-info">
               <div class="card-header border-0">
                 <h3 class="card-title">
                   <i class="fas fa-th mr-1"></i>
@@ -235,39 +268,39 @@ if(count($res)!=0)
               </div>
               <div class="card-body">
                 <canvas class="chart" id="line-chart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-              </div>
+              </div> -->
               <!-- /.card-body -->
-              <div class="card-footer bg-transparent">
+             <!--  <div class="card-footer bg-transparent">
                 <div class="row">
                   <div class="col-4 text-center">
                     <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60"
                            data-fgColor="#39CCCC">
 
                     <div class="text-white">Mail-Orders</div>
-                  </div>
+                  </div> -->
                   <!-- ./col -->
-                  <div class="col-4 text-center">
+                 <!--  <div class="col-4 text-center">
                     <input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60"
                            data-fgColor="#39CCCC">
 
                     <div class="text-white">Online</div>
-                  </div>
+                  </div> -->
                   <!-- ./col -->
-                  <div class="col-4 text-center">
+                 <!--  <div class="col-4 text-center">
                     <input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60"
                            data-fgColor="#39CCCC">
 
                     <div class="text-white">In-Store</div>
-                  </div>
+                  </div> -->
                   <!-- ./col -->
-                </div>
+              <!--   </div> -->
                 <!-- /.row -->
-              </div>
+             <!--  </div> -->
               <!-- /.card-footer -->
-            </div>
+         <!--    </div> -->
             <!-- /.card -->
 
-          </section>
+        <!--   </section> -->
           <!-- right col -->
         </div>
         <!-- /.row (main row) -->

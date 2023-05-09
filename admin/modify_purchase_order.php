@@ -849,6 +849,7 @@ $items=json_encode($items);
        $("#quantity").css("border","1px solid lightgray");
       }
       sno=Number($("#sno").val())+1;
+    
       data["item_id"]=$("#item_id").val();
       data["item_name"]=item_name;
       data["varieties_id"]=varieties_id;

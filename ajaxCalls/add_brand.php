@@ -1,6 +1,8 @@
 <?php
 include '../tables/config.php';
 
+
+
  $obj = new Brand();
 if ($_POST['type']=='add') {
 	 $result =  $obj->add_brand();

@@ -70,8 +70,8 @@ $item['gst']=$this->db->getpost('gst');
 	{
 		$sql = "select  * from ".$this->tablename." where item_name like '%" . $this->db->getpost('term') . "%' and branch_id = 0 and is_deleted = 'NO' ";
 
-
 	$result = $this->db->GetResultsArray($sql);
+	
 	return $result;
 	}
 	public function edit_items()
@@ -293,6 +293,15 @@ $result = $this->db->getAsIsArray($sql);
 return $result;
 
 }
+public function get_product_count(){
+
+$sql = "select * from ".$this->tablename." where branch_id='".$_SESSION['branch_id']."' and is_deleted='NO'";
+$result = $this->db->GetResultsArray($sql);
+return count($result);
+}
+
+
+
 
 }
 ?>

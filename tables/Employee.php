@@ -166,6 +166,14 @@ public function update_employee()
        return 'success';
      }
 	}
+  public function  get_employe_count(){
+
+   $sql = "select count(id) as count from ".$this->tablename." where branch_id='".$_SESSION['branch_id']."' and is_delete='no'";
+   $result = $this->db->GetResultsArray($sql);
+   return $result;
+
+
+  }	
 	
 }
 ?>

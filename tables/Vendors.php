@@ -162,7 +162,13 @@ public function get_name($id){
 		$result=$this->db->GetResultsArray($sql);
 		return $result;
 
+}
+public function get_vendor_count(){
 
+$sql = "select * from ".$this->tablename." where status='ENABLED'";
+$result = $this->db->GetResultsArray($sql);
+
+return count($result);
 
 }
 

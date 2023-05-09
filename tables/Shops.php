@@ -545,6 +545,13 @@ $result = $this->db->GetResultsArray($sql);
 return $result;
 
 }
+public function get_branch_count(){
+$sql = "select * from ".$this->tablename." where branch_id!='".$_SESSION['branch_id']."' and status='ENABLED'";
+$result = $this->db->GetResultsArray($sql);
+return count($result); 
+}
+
+
 
 
 

@@ -134,8 +134,11 @@ $items=json_encode($items);
        <div class="container-fluid">
         <div class="row mb-2">
          <div class="col-sm-6">
-          <h1 class="m-0">Receiving Order</h1>
-
+          <?php if($_SESSION['type']=="ADMIN") {?>
+                  <h1 class="m-0">Edit Order</h1>
+               <?php }else{ ?>
+                <h1 class="m-0">Receiving Order</h1>
+              <?php } ?>  
          </div><!-- /.col -->
          <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
@@ -1292,9 +1295,34 @@ $.ajax({
    .appendTo(ul);
   };
 
-
-
-
-
-
  </script>
+ <script type="text/javascript">
+ $("#varieties_id").on('change',function(){
+
+ var var_id = $(this).val();
+$.ajax({
+type: "POST",
+dataType:"json",
+url: '../ajaxCalls/get_variety_price.php',
+data: {'var_id':var_id},
+success: function(res){
+   console.log(res);
+   if(res){
+   $("#mrp").val(res.mrp);
+
+    $("#sale_price").val(res.sale_price);
+  }else{
+     $("#mrp").val(0);
+    $("#sale_price").val(0);
+   
+  }
+  }
+
+});
+
+  }); 
+
+
+
+
+</script>
